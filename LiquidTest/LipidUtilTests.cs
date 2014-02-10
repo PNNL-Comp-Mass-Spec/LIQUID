@@ -109,11 +109,13 @@ namespace LiquidTest
 			Assert.Contains(new MsMsSearchUnit(321.279355555, "[RCOO+58]-H2O"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(339.289920255, "[RCOO+58]"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(375.23003641, "plasmalogen (no head)-H2O"), msMsSearchUnitList);
+			Assert.Contains(new MsMsSearchUnit(388.298056395, "plasmalogen (rearranged)-H2O"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(393.24060111, "plasmalogen (no head)"), msMsSearchUnitList);
+			Assert.Contains(new MsMsSearchUnit(406.308621095, "plasmalogen (rearranged)"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(417.24060111, "LPA-H2O-H"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(435.25116581, "LPA-H"), msMsSearchUnitList);
-			Assert.Contains(new MsMsSearchUnit(462.334835865, "LPC(P-)-H2O"), msMsSearchUnitList);
-			Assert.Contains(new MsMsSearchUnit(480.345400565, "LPC(P-)"), msMsSearchUnitList);
+			Assert.Contains(new MsMsSearchUnit(458.303535725, "LPC(P-)-H2O"), msMsSearchUnitList);
+			Assert.Contains(new MsMsSearchUnit(476.314100425, "LPC(P-)"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(504.345400565, "Lipid-FA"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(522.355965265, "Lipid-Ketene"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(685.517184485, "Lipid-(CH2)3NH3"), msMsSearchUnitList);
@@ -282,11 +284,13 @@ namespace LiquidTest
 			Assert.Contains(new MsMsSearchUnit(265.253140785, "FA"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(321.279355555, "[RCOO+58]-H2O"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(339.289920255, "[RCOO+58]"), msMsSearchUnitList);
-			Assert.Contains(new MsMsSearchUnit(346.251106185, "plasmalogen-H2O"), msMsSearchUnitList);
-			Assert.Contains(new MsMsSearchUnit(364.261670885, "plasmalogen"), msMsSearchUnitList);
+			Assert.Contains(new MsMsSearchUnit(346.251106185, "plasmalogen (rearranged)-H2O"), msMsSearchUnitList);
+			Assert.Contains(new MsMsSearchUnit(364.261670885, "plasmalogen (rearranged)"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(375.23003641, "plasmalogen (no head)-H2O"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(393.24060111, "plasmalogen (no head)"), msMsSearchUnitList);
+			Assert.Contains(new MsMsSearchUnit(416.256585515, "LPE(P-)-H2O"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(417.24060111, "LPA-H2O-H"), msMsSearchUnitList);
+			Assert.Contains(new MsMsSearchUnit(434.267150215, "LPE(P-)"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(435.25116581, "LPA-H"), msMsSearchUnitList);
 			Assert.Contains(new MsMsSearchUnit(684.5331715, "Lipid-H2O"), msMsSearchUnitList);
 		}
