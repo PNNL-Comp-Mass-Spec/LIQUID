@@ -49,6 +49,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="InformedProteomics.Backend, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\x64\InformedProteomics.Backend.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -62,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcylChainTests.cs" />
+    <Compile Include="InformedWorkflowTests.cs" />
     <Compile Include="LipidUtilTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

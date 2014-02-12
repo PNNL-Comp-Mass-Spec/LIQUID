@@ -52,6 +52,9 @@
     <Reference Include="InformedProteomics.Backend">
       <HintPath>..\lib\x64\InformedProteomics.Backend.dll</HintPath>
     </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\lib\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -66,8 +69,12 @@
     <Compile Include="Domain\FragmentationMode.cs" />
     <Compile Include="Domain\FragmentationType.cs" />
     <Compile Include="Domain\LipidClass.cs" />
+    <Compile Include="Domain\LipidTarget.cs" />
+    <Compile Include="Domain\MsMsSearchResult.cs" />
     <Compile Include="Domain\MsMsSearchUnit.cs" />
+    <Compile Include="Domain\SpectrumSearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\InformedWorkflow.cs" />
     <Compile Include="Util\LipidUtil.cs" />
   </ItemGroup>
   <ItemGroup>
