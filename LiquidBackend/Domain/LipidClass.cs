@@ -8,9 +8,27 @@ namespace LiquidBackend.Domain
 {
 	public enum LipidClass
 	{
+		PA,
 		PC,
 		PE,
+		PI,
 		PG,
-		PS
+		PS,
+		Cer,
+		SM,
+		GlcCer,
+		LacCer,
+		CerP,
+		CE,
+		MG,
+		TG,
+		DG,
+		MGDG,
+		SQDG,
+		DGDG,
+		PIP,
+		PIP2,
+		PIP3,
+		CL
 	}
 }
