@@ -22,6 +22,11 @@ namespace LiquidBackend.Domain
 			get { return GetNumMatchingMsMsPeaks(); }
 		}
 
+		public int ApexScanNum
+		{
+			get { return this.Xic.GetApexScanNum(); }
+		}
+
 		public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, Spectrum precursorSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, Xic xic)
 		{
 			this.HcdSpectrum = hcdSpectrum;

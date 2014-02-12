@@ -189,9 +189,15 @@ namespace LiquidBackend.Util
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 3 - (2 * doubleBonds), 0, 4, 0, 0).Mass, "DAG"));
 					}
 				}
-				else if (lipidClass == LipidClass.PS)
+				else if (lipidClass == LipidClass.PS || lipidClass == LipidClass.PG)
 				{
-					msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(3, 8, 1, 0, 0, 1).Mass, "C3H8NO6P"));
+					if (lipidClass == LipidClass.PS) msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 8, 1, 0, 0, 1).Mass, "Lipid-C3H8NO6P"));
+					if (lipidClass == LipidClass.PG)
+					{
+						msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 12, 1, 6, 0, 1).Mass, "Lipid-C3H12O6NP"));
+						msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz + new Composition(0, 4, 1, 0, 0, 0).Mass, "Lipid+NH4"));
+					}
+
 					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "Lipid-H2O"));
 
 					int countOfChains = acylChainList.Count(x => x.NumCarbons > 0);

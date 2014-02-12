@@ -36,9 +36,10 @@
                 </DockPanel>
                 <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Center">
                     <TextBlock Name="NumberOfResultsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=SpectrumSearchResultList.Count, StringFormat='  # of Results: {0}'}" Margin="0,5,0,0" />
-                    <DataGrid Name="SpectrumSearchResultsDataGrid" ItemsSource="{Binding Path=SpectrumSearchResultList}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="300" Width="Auto" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="0,5,0,0" HorizontalAlignment="Left">
+                    <DataGrid Name="SpectrumSearchResultsDataGrid" ItemsSource="{Binding Path=SpectrumSearchResultList}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="300" Width="Auto" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Scan" Binding="{Binding Path=PrecursorSpectrum.ScanNum}" Width="50" />
+                            <DataGridTextColumn Header="Precursor Scan" Binding="{Binding Path=PrecursorSpectrum.ScanNum}" Width="90" />
+                            <DataGridTextColumn Header="Apex Scan" Binding="{Binding Path=ApexScanNum}" Width="70" />
                             <DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=NumMatchingMsMsPeaks, StringFormat=0}" Width="60" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -55,7 +56,7 @@
                 </TabControl>
                 <StackPanel Height="Auto" Margin="5,0,5,0" Name="AnnotatedPeaksPanel" Width="Auto" HorizontalAlignment="Center">
                     <Label Content="Annotated MS/MS Peaks" FontWeight="Bold" Name="AnnotationLabel" Width="Auto" Padding="5,5,5,5" HorizontalAlignment="Center"/>
-                    <DataGrid ItemsSource="{Binding Path=MsMsAnnotationList}" AutoGenerateColumns="False" Name="MsMsPeaksDataGrid" Width="500" Margin="0,0,0,0" HorizontalAlignment="Right" Height="Auto" MaxHeight="150" HeadersVisibility="Column">
+                    <DataGrid ItemsSource="{Binding Path=MsMsAnnotationList}" AutoGenerateColumns="False" Name="MsMsPeaksDataGrid" Width="500" Margin="0,0,0,0" HorizontalAlignment="Right" Height="Auto" MaxHeight="200" HeadersVisibility="Column">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Type" Binding="{Binding Path=FragmentionType}" Width="75" />
                             <DataGridTextColumn Header="m/z" Binding="{Binding Path=Position.X, StringFormat=0.###}" Width="75" />
@@ -66,8 +67,8 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Height="Auto" HorizontalAlignment="Right" Margin="10,0,5,5" Name="msFeaturePanel" VerticalAlignment="Stretch" Width="Auto" Orientation="Vertical">
-                <oxy:Plot Model="{Binding IsotopicProfilePlot}" Margin="0,0,0,0" Height="Auto" MinHeight="200" Width="Auto" MinWidth="250" />
-                <oxy:Plot Model="{Binding XicPlot}" Margin="0,0,0,20" Height="Auto" MinHeight="200" Width="Auto" MinWidth="250" />
+                <oxy:Plot Model="{Binding IsotopicProfilePlot}" Margin="0,0,0,0" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
+                <oxy:Plot Model="{Binding XicPlot}" Margin="0,0,0,20" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
                 <!--StackPanel Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="msFeatureInfoPanel" VerticalAlignment="Bottom" Width="Auto" Orientation="Vertical">
                     <Label Content="MS Feature Info" Height="Auto" Padding="5,5,5,5" Name="msFeatureInfoLabel" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Width="Auto" />
                     <Grid Height="Auto" MinHeight="150" HorizontalAlignment="Left" Margin="0,0,0,0" Name="msFeatureInfoGrid" VerticalAlignment="Bottom" Width="Auto" MinWidth="300">
