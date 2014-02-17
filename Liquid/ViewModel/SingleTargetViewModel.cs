@@ -59,9 +59,9 @@ namespace Liquid.ViewModel
 			this.SpectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(this.CurrentLipidTarget, this.LcMsRun, hcdMassError, cidMassError);
 			OnPropertyChanged("SpectrumSearchResultList");
 
-			SpectrumSearchResult spectrumSearchResult = this.SpectrumSearchResultList.OrderByDescending(x => x.NumMatchingMsMsPeaks).First();
-			if (spectrumSearchResult != null)
+			if (this.SpectrumSearchResultList.Any())
 			{
+				SpectrumSearchResult spectrumSearchResult = this.SpectrumSearchResultList.OrderByDescending(x => x.NumMatchingMsMsPeaks).First();
 				OnSpectrumSearchResultChange(spectrumSearchResult);
 			}
 			else
