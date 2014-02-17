@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InformedProteomics.Backend.Data.Biology;
+using InformedProteomics.Backend.Data.Sequence;
 using InformedProteomics.Backend.Data.Spectrometry;
 using InformedProteomics.Backend.MassSpecData;
 using LiquidBackend.Domain;
@@ -27,7 +28,9 @@ namespace LiquidBackend.Util
 		public static List<SpectrumSearchResult> RunInformedWorkflow(LipidTarget target, LcMsRun lcmsRun, double hcdMassError, double cidMassError)
 		{
 			IEnumerable<MsMsSearchUnit> msMsSearchUnits = target.GetMsMsSearchUnits();
-			var targetIon = new Ion(target.Composition, 1);
+
+			// I have to subtract an H for the target Ion since InformedProteomics will assume protenated
+			var targetIon = new Ion(target.Composition - Composition.Hydrogen, 1);
 			double targetMz = targetIon.GetMonoIsotopicMz();
 			Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
 			Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
@@ -49,9 +52,6 @@ namespace LiquidBackend.Util
 					continue;
 				}
 
-				// No need to move on if no MS1 data is found
-				if (!lcmsRun.CheckMs1Signature(targetIon, firstScanNumber, hcdTolerance)) continue;
-
 				// Lookup the MS/MS Spectrum
 				ProductSpectrum firstMsMsSpectrum = lcmsRun.GetSpectrum(firstScanNumber) as ProductSpectrum;
 				if (firstMsMsSpectrum == null) continue;
@@ -59,6 +59,15 @@ namespace LiquidBackend.Util
 				// Lookup the MS/MS Spectrum
 				ProductSpectrum secondMsMsSpectrum = lcmsRun.GetSpectrum(secondScanNumber) as ProductSpectrum;
 				if (secondMsMsSpectrum == null) continue;
+
+				// Filter MS/MS Spectrum based on mass error
+				double msMsPrecursorMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
+				//if (Math.Abs(msMsPrecursorMz - targetMz) > 0.4) continue;
+				double ppmError = LipidUtil.PpmError(targetMz, msMsPrecursorMz);
+				if (Math.Abs(ppmError) > hcdMassError) continue;
+
+				// No need to move on if no MS1 data is found
+				if (!lcmsRun.CheckMs1Signature(targetIon, firstScanNumber, hcdTolerance)) continue;
 
 				// Assign each MS/MS spectrum to HCD or CID
 				ProductSpectrum hcdSpectrum;
