@@ -119,8 +119,8 @@ namespace LiquidBackend.Util
 								{
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 3 - (2 * doubleBonds), 1, 4, 0, 1).Mass, "plasmalogen (rearranged)", acylChain));
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 3, 0, 1).Mass, "plasmalogen (rearranged)-H2O", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) - 1 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "LPC(P-)", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) - 3 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPC(P-)-H2O", acylChain));
+									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 2 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "LPC(P-)", acylChain));
+									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) - 0 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPC(P-)-H2O", acylChain));
 								}
 								break;
 							case AcylChainType.Ether:
@@ -128,8 +128,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 0 - (2 * doubleBonds), 0, 5, 0, 1).Mass, "ether (no head)-H2O", acylChain));
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 5 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "LPC(O-)", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 3 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPC(O-)-H2O", acylChain));
+									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 4 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "LPC(O-)", acylChain));
+									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 2 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPC(O-)-H2O", acylChain));
 								}
 								break;
 						}
@@ -169,8 +169,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 3 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "Lipid-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "Lipid-FA", acylChain));
+									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "Lipid-Ketene", acylChain));
+									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) - 1 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "Lipid-FA", acylChain));
 								}
 								break;
 							case AcylChainType.Plasmalogen:
