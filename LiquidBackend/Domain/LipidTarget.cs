@@ -21,6 +21,11 @@ namespace LiquidBackend.Domain
 			get { return Math.Round(this.Composition.Mass, 3); }
 		}
 
+		public List<MsMsSearchUnit> SortedMsMsSearchUnits
+		{
+			get { return this.GetMsMsSearchUnits().OrderBy(x => x.Mz).ToList(); }
+		}
+
 		public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList)
 		{
 			CommonName = commonName;
