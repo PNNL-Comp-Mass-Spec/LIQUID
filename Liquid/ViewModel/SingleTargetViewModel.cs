@@ -55,6 +55,7 @@ namespace Liquid.ViewModel
 		public void SearchForTarget(string commonName, string empiricalFormula, FragmentationMode fragmentationMode, double hcdMassError, double cidMassError)
 		{
 			this.CurrentLipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			OnPropertyChanged("CurrentLipidTarget");
 
 			this.SpectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(this.CurrentLipidTarget, this.LcMsRun, hcdMassError, cidMassError);
 			OnPropertyChanged("SpectrumSearchResultList");

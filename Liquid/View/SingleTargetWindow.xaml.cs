@@ -35,6 +35,7 @@ namespace Liquid.View
 			this.DataContext = this.SingleTargetViewModel;
 
 			this.FragmentationModeComboBox.SelectedValue = FragmentationMode.Positive;
+			this.TargetMzTextBlock.Visibility = Visibility.Collapsed;
 			this.NumberOfResultsTextBlock.Visibility = Visibility.Collapsed;
 			this.SpectrumSearchResultsDataGrid.Visibility = Visibility.Collapsed;
 			this.SpectrumResultPanel.Visibility = Visibility.Collapsed;
@@ -87,6 +88,7 @@ namespace Liquid.View
 				dataGrid.ScrollIntoView(this.SingleTargetViewModel.CurrentSpectrumSearchResult);
 			}
 
+			this.TargetMzTextBlock.Visibility = Visibility.Visible;
 			this.NumberOfResultsTextBlock.Visibility = Visibility.Visible;
 			this.SpectrumSearchResultsDataGrid.Visibility = Visibility.Visible;
 		}

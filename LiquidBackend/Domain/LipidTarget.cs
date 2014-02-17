@@ -16,6 +16,11 @@ namespace LiquidBackend.Domain
 		public Composition Composition { get; private set; }
 		public IEnumerable<AcylChain> AcylChainList { get; private set; }
 
+		public double MzRounded
+		{
+			get { return Math.Round(this.Composition.Mass, 3); }
+		}
+
 		public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList)
 		{
 			CommonName = commonName;
