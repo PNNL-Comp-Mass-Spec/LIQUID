@@ -423,6 +423,204 @@ namespace LiquidTest
 		}
 
 		[Test]
+		public void TestCreateMsMsMsSearchUnitsForAllNegative()
+		{
+			const FragmentationMode fragmentationMode = FragmentationMode.Negative;
+
+			string commonName;
+			string empiricalFormula;
+			LipidTarget lipidTarget;
+			List<MsMsSearchUnit> msMsSearchUnitList;
+
+			commonName = "PC(16:0/18:1(9Z))";
+			empiricalFormula = "C42H81NO8P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PC(16:0/0:0)";
+			empiricalFormula = "C24H49NO7P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PE(16:0/18:1)";
+			empiricalFormula = "C39H75NO8P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PE(P-16:0/18:1(9Z))";
+			empiricalFormula = "C39H75NO7P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PE(16:0/0:0)";
+			empiricalFormula = "C21H43NO7P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PI(16:0/18:1)";
+			empiricalFormula = "C43H80O13P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PI(16:0/0:0)";
+			empiricalFormula = "C25H48O12P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PIP[3'](17:0/20:4(5Z,8Z,11Z,14Z))";
+			empiricalFormula = "C46H81O16P2";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PIP2[3',5'](17:0/20:4(5Z,8Z,11Z,14Z))";
+			empiricalFormula = "C46H82O19P3";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PIP3[3',4',5'](17:0/20:4(5Z,8Z,11Z,14Z))";
+			empiricalFormula = "C46H83O22P4";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PG(16:0/18:1)";
+			empiricalFormula = "C40H76O10P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PG(16:0/0:0)";
+			empiricalFormula = "C22H44O9P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PA(16:0/18:1)";
+			empiricalFormula = "C37H70O8P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PA(16:0/0:0)";
+			empiricalFormula = "C19H38O7P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PS(16:0/18:1)";
+			empiricalFormula = "C40H75NO10P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PS(P-16:0/18:1(9Z))";
+			empiricalFormula = "C40H75NO9P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "PS(16:0/0:0)";
+			empiricalFormula = "C22H43NO9P";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+		}
+
+		[Test]
 		public void TestCreateMsMsMsSearchUnitsForPcPositive()
 		{
 			// Testing PC(16:0/18:1) +H
