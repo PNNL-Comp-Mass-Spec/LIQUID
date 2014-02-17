@@ -59,7 +59,7 @@ namespace LiquidBackend.Util
 
 		public static IEnumerable<AcylChain> ParseLipidCommonNameIntoAcylChains(string commonName)
 		{
-			MatchCollection matchCollection = Regex.Matches(commonName, "\\d+:\\d+");
+			MatchCollection matchCollection = Regex.Matches(commonName, "([A-z]-?)?\\d+:\\d+");
 
 			IEnumerable<AcylChain> acylChains = (from object match in matchCollection select new AcylChain(match.ToString()));
 			return acylChains;

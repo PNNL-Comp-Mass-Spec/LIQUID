@@ -22,6 +22,36 @@ namespace LiquidTest
 		}
 
 		[Test]
+		public void TestParseLipidCommonNameIntoAcylChainsTwoChainsOnePlasmogen()
+		{
+			const string commonName = "PC(P-16:0/18:1)";
+			List<AcylChain> acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+
+			Assert.Contains(new AcylChain("P-16:0"), acylChains);
+			Assert.Contains(new AcylChain("18:1"), acylChains);
+		}
+
+		[Test]
+		public void TestParseLipidCommonNameIntoAcylChainsTwoChainsOneEther()
+		{
+			const string commonName = "PC(O-16:0/18:1)";
+			List<AcylChain> acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+
+			Assert.Contains(new AcylChain("O-16:0"), acylChains);
+			Assert.Contains(new AcylChain("18:1"), acylChains);
+		}
+
+		[Test]
+		public void TestParseLipidCommonNameIntoAcylChainsTwoChainsOneDihydro()
+		{
+			const string commonName = "SM(d18:1/25:0)";
+			List<AcylChain> acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+
+			Assert.Contains(new AcylChain("d18:1"), acylChains);
+			Assert.Contains(new AcylChain("25:0"), acylChains);
+		}
+
+		[Test]
 		public void TestParseLipidCommonNameIntoAcylChainsThreeChains()
 		{
 			const string commonName = "TG(12:0/16:0/18:0)";
