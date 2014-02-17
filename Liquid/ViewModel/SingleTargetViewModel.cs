@@ -159,7 +159,7 @@ namespace Liquid.ViewModel
 				foreach (var matchedSearchResult in matchedPeaks)
 				{
 					MsMsAnnotation annotation = new MsMsAnnotation(fragmentationType);
-					annotation.Text = matchedSearchResult.TheoreticalPeak.Description;
+					annotation.Text = matchedSearchResult.TheoreticalPeak.DescriptionForUi;
 					annotation.Position = dataPoint;
 					annotation.VerticalAlignment = VerticalAlignment.Middle;
 					annotation.HorizontalAlignment = HorizontalAlignment.Left;

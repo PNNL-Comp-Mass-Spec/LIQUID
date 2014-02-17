@@ -10,16 +10,34 @@ namespace LiquidBackend.Domain
 	{
 		public double Mz { get; private set; }
 		public string Description { get; private set; }
+		public AcylChain AcylChain { get; private set; }
+
+		public string DescriptionForUi
+		{
+			get
+			{
+				if (this.AcylChain == null) return this.Description;
+				return this.Description + " (" + this.AcylChain.ToString() + ")";
+			}
+		}
 
 		public MsMsSearchUnit(double mz, string description)
 		{
 			this.Mz = mz;
 			this.Description = description;
+			this.AcylChain = null;
+		}
+
+		public MsMsSearchUnit(double mz, string description, AcylChain acylChain)
+		{
+			this.Mz = mz;
+			this.Description = description;
+			this.AcylChain = acylChain;
 		}
 
 		public override string ToString()
 		{
-			return string.Format("Mz: {0}, Description: {1}", Mz, Description);
+			return string.Format("Mz: {0}, Description: {1}, AcylChain: {2}", Mz, Description, AcylChain);
 		}
 
 		protected bool Equals(MsMsSearchUnit other)
