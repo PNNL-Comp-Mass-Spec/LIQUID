@@ -30,6 +30,7 @@ namespace LiquidBackend.Domain
 		PIP,
 		PIP2,
 		PIP3,
-		CL
+		CL,
+		Cholesterol
 	}
 }
