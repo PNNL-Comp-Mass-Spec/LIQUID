@@ -38,6 +38,12 @@ namespace LiquidBackend.Domain
 				acylChainString = acylChainString.Substring(2);
 			}
 
+			if (acylChainString.Contains("(2OH)"))
+			{
+				this.AcylChainType = AcylChainType.Dihydroxy;
+				acylChainString = acylChainString.Replace("(2OH)", "");
+			}
+
 			string[] splitString = acylChainString.Split(':');
 
 			this.NumCarbons = int.Parse(splitString[0]);
@@ -54,6 +60,7 @@ namespace LiquidBackend.Domain
 			if (AcylChainType == AcylChainType.Monohydro) return "m" + carbonDoubleBond;
 			if (AcylChainType == AcylChainType.Dihydro) return "d" + carbonDoubleBond;
 			if (AcylChainType == AcylChainType.Trihydro) return "t" + carbonDoubleBond;
+			if (AcylChainType == AcylChainType.Dihydroxy) return carbonDoubleBond + "(2OH)";
 
 			throw new SystemException("Unknown AcylChainType for given AcylChain");
 		}

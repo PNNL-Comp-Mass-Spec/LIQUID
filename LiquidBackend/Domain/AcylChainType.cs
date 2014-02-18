@@ -13,6 +13,7 @@ namespace LiquidBackend.Domain
 		Ether,
 		Monohydro,
 		Dihydro,
-		Trihydro
+		Trihydro,
+		Dihydroxy
 	}
 }

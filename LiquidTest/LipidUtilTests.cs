@@ -618,6 +618,61 @@ namespace LiquidTest
 				Console.WriteLine(msMsSearchUnit);
 			}
 			Console.WriteLine("**************************************************************************************");
+
+			commonName = "CL(1'-[18:2(9Z,12Z)/16:0(9Z,12Z)],3'-[18:0(9Z,12Z)/14:0(9Z,12Z)])";
+			empiricalFormula = "C75H129O17P2";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "(3'-sulfo)Galβ-Cer(d18:1/16:0)";
+			empiricalFormula = "C40H76NO11S";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "Cer(d18:1/25:0)";
+			empiricalFormula = "C43H84NO3";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "Cer(d18:0/20:0(2OH))";
+			empiricalFormula = "C38H76NO4";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "GlcCer(d18:1/12:0)";
+			empiricalFormula = "C36H68NO8";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
 		}
 
 		[Test]
