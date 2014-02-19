@@ -231,7 +231,7 @@ namespace LiquidBackend.Util
 					}
 					break;
 				case LipidClass.SM:
-					return new Composition(numCarbons + 4, (2 * (numCarbons + 4)) + 3 - (2 * numDoubleBonds), 2, 6, 0, 1);
+					return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 3 - (2 * numDoubleBonds), 2, 6, 0, 1);
 					break;
 				case LipidClass.GalCer:
 				case LipidClass.GlcCer:
