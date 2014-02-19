@@ -96,6 +96,8 @@ namespace LiquidBackend.Util
 				if (classAbbrev.Contains("PIP")) return LipidClass.PIP;
 				if (classAbbrev.Contains("cholest")) return LipidClass.Cholesterol;
 				if (classAbbrev.Contains("sulf")) return LipidClass.Sulfatide;
+
+				throw new SystemException("Unrecognized lipid class for " + commonName);
 			}
 
 			return lipidClass;
