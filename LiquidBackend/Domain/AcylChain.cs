@@ -26,6 +26,7 @@ namespace LiquidBackend.Domain
 			{
 				this.AcylChainType = AcylChainType.Trihydro;
 				acylChainString = acylChainString.Substring(1);
+				throw new SystemException("Unable to process Trihydro acyl chain. Please use the 2OH format e.g. Cer(d18:0/20:0(2OH))");
 			}
 			else if (acylChainString.Contains("O-"))
 			{
