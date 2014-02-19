@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:VM="clr-namespace:Liquid.ViewModel"
         xmlns:oxy="http://oxyplot.codeplex.com"
-        Title="SingleTargetWindow" Height="700" Width="1020">
+        Title="SingleTargetWindow" Height="750" Width="1050">
     <Grid VerticalAlignment="Top" Height="Auto" Width="Auto" HorizontalAlignment="Left">
         <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
             <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left">
@@ -24,8 +24,8 @@
                     <TextBox Text="PE(18:3/20:5)" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" Name="CommonNameTextBox" VerticalAlignment="Top" Width="110" />
                 </DockPanel>
                 <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="EmpiricalFormulaTextBlock" Text="Empirical Formula:" VerticalAlignment="Top" Width="100" />
-                    <TextBox Text="C43H71NO8P" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" Name="EmpiricalFormulaTextBox" VerticalAlignment="Top" Width="110" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="AdductTextBlock" Text="Adduct:" VerticalAlignment="Top" Width="100" />
+                    <ComboBox ItemsSource="{Binding AdductList}" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" Name="AdductComboBox" VerticalAlignment="Top" Width="110" />
                 </DockPanel>
                 <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="FragmentationModeTextBlock" Text="Ionization Mode:" VerticalAlignment="Top" Width="100" />
@@ -35,6 +35,7 @@
                     <Button Content="Search For Target!" Click="SearchForTargetButtonClick" Height="23" HorizontalAlignment="Center" Name="SearchForTargetButton" VerticalAlignment="Top" Width="120" Margin="0,5,0,0" DockPanel.Dock="Right" />
                 </DockPanel>
                 <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Center">
+                    <TextBlock Name="EmpiricalFormulaTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=CurrentLipidTarget.EmpiricalFormula, StringFormat='  Formula: {0}'}" Margin="0,5,0,0" />
                     <TextBlock Name="TargetMzTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=CurrentLipidTarget.MzRounded, StringFormat='  Target m/z: {0}'}" Margin="0,5,0,0" />
                     <TextBlock Name="NumberOfResultsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=SpectrumSearchResultList.Count, StringFormat='  # of Results: {0}'}" Margin="0,5,0,0" />
                     <DataGrid Name="SpectrumSearchResultsDataGrid" ItemsSource="{Binding Path=SpectrumSearchResultList}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="300" Width="Auto" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">

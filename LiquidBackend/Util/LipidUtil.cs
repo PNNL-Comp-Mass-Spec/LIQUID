@@ -43,6 +43,38 @@ namespace LiquidBackend.Util
 			return new LipidTarget(commonName, lipidClass, fragmentationModeAsEnum, composition, acylChainList);
 		}
 
+		public static LipidTarget CreateLipidTarget(string commonName, FragmentationMode fragmentationMode, Adduct adduct)
+		{
+			Composition composition = ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName);
+			Composition compositionOfAdduct = GetCompositionOfAdduct(adduct);
+
+			if (fragmentationMode == FragmentationMode.Negative) composition -= compositionOfAdduct;
+			else if (fragmentationMode == FragmentationMode.Positive) composition += compositionOfAdduct;
+
+			IEnumerable<AcylChain> acylChainList = ParseLipidCommonNameIntoAcylChains(commonName);
+			LipidClass lipidClass = ParseLipidCommonNameIntoClass(commonName);
+
+			return new LipidTarget(commonName, lipidClass, fragmentationMode, composition, acylChainList);
+		}
+
+		public static Composition GetCompositionOfAdduct(Adduct adduct)
+		{
+			if (adduct == Adduct.Hydrogen)
+			{
+				return Composition.Hydrogen;
+			}
+			if (adduct == Adduct.Ammonium)
+			{
+				return new Composition(0, 4, 1, 0, 0);
+			}
+			if (adduct == Adduct.Acetate)
+			{
+				return new Composition(2, 3, 0, 2, 0);
+			}
+
+			throw new SystemException("Unrecognized Adduct: " + adduct);
+		}
+
 		public static LipidClass ParseLipidCommonNameIntoClass(string commonName)
 		{
 			string[] commonNameSplit = commonName.Split('(');
@@ -75,6 +107,204 @@ namespace LiquidBackend.Util
 
 			IEnumerable<AcylChain> acylChains = (from object match in matchCollection select new AcylChain(match.ToString()));
 			return acylChains;
+		}
+
+		public static Composition ParseLipidCommonNameIntoCompositionWithoutAdduct(string commonName)
+		{
+			LipidClass lipidClass = ParseLipidCommonNameIntoClass(commonName);
+			IEnumerable<AcylChain> fattyAcylChains = ParseLipidCommonNameIntoAcylChains(commonName);
+
+			int numCarbons = fattyAcylChains.Sum(x => x.NumCarbons);
+			int numDoubleBonds = fattyAcylChains.Sum(x => x.NumDoubleBonds);
+
+			int numChains = fattyAcylChains.Count();
+			bool containsEther = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) > 0;
+			bool containsPlasmogen = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Plasmalogen) > 0;
+
+			switch (lipidClass)
+			{
+				case LipidClass.PC:
+					if (numChains > 1)
+					{
+						if (containsEther)
+						{
+							return new Composition(numCarbons + 8, (2 * (numCarbons + 8)) + 2 - (2 * numDoubleBonds), 1, 7, 0, 1);
+						}
+						else if (containsPlasmogen)
+						{
+							return new Composition(numCarbons + 8, (2*(numCarbons + 8)) + 0 - (2*numDoubleBonds), 1, 7, 0, 1);
+						}
+						else
+						{
+							return new Composition(numCarbons + 8, (2 * (numCarbons + 8)) + 0 - (2 * numDoubleBonds), 1, 8, 0, 1);
+						}
+					}
+					else
+					{
+						if (containsEther)
+						{
+							return new Composition(numCarbons + 8, (2 * (numCarbons + 8)) + 4 - (2 * numDoubleBonds), 1, 6, 0, 1);
+						}
+						else if (containsPlasmogen)
+						{
+							return new Composition(numCarbons + 8, (2*(numCarbons + 8)) + 2 - (2*numDoubleBonds), 1, 6, 0, 1);
+						}
+						else
+						{
+							return new Composition(numCarbons + 8, (2 * (numCarbons + 8)) + 2 - (2 * numDoubleBonds), 1, 7, 0, 1);
+						}
+					}
+					break;
+				case LipidClass.PE:
+					if (numChains > 1)
+					{
+						if (containsEther)
+						{
+							return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 2 - (2 * numDoubleBonds), 1, 7, 0, 1);
+						}
+						else if (containsPlasmogen)
+						{
+							return new Composition(numCarbons + 5, (2*(numCarbons + 5)) + 0 - (2*numDoubleBonds), 1, 7, 0, 1);
+						}
+						else
+						{
+							return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 0 - (2 * numDoubleBonds), 1, 8, 0, 1);
+						}
+					}
+					else
+					{
+						if (containsEther)
+						{
+							return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 4 - (2 * numDoubleBonds), 1, 6, 0, 1);
+						}
+						else if (containsPlasmogen)
+						{
+							return new Composition(numCarbons + 5, (2*(numCarbons + 5)) + 2 - (2*numDoubleBonds), 1, 6, 0, 1);
+						}
+						else
+						{
+							return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 2 - (2 * numDoubleBonds), 1, 7, 0, 1);
+						}
+					}
+					break;
+				case LipidClass.PS:
+					if (numChains > 1)
+					{
+						if (containsEther)
+						{
+							return new Composition(numCarbons + 6, (2*(numCarbons + 6)) + 0 - (2*numDoubleBonds), 1, 9, 0, 1);
+						}
+						else if (containsPlasmogen)
+						{
+							return new Composition(numCarbons + 6, (2*(numCarbons + 6)) - 2 - (2*numDoubleBonds), 1, 9, 0, 1);
+						}
+						else
+						{
+							return new Composition(numCarbons + 6, (2*(numCarbons + 6)) - 2 - (2*numDoubleBonds), 1, 10, 0, 1);
+						}
+					}
+					else
+					{
+						return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 0 - (2 * numDoubleBonds), 1, 9, 0, 1);
+					}
+					break;
+				case LipidClass.PG:
+					if (numChains > 1)
+					{
+						return new Composition(numCarbons + 6, (2*(numCarbons + 6)) - 1 - (2*numDoubleBonds), 0, 10, 0, 1);
+					}
+					else
+					{
+						return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 1 - (2 * numDoubleBonds), 0, 9, 0, 1);
+					}
+					break;
+				case LipidClass.Cer:
+					if (fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Dihydroxy) > 0)
+					{
+						return new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 4, 0, 0);	
+					}
+					else
+					{
+						return new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 3, 0, 0);	
+					}
+					break;
+				case LipidClass.SM:
+					return new Composition(numCarbons + 4, (2 * (numCarbons + 4)) + 3 - (2 * numDoubleBonds), 2, 6, 0, 1);
+					break;
+				case LipidClass.GalCer:
+				case LipidClass.GlcCer:
+					return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 8, 0, 0);
+					break;
+				case LipidClass.LacCer:
+					return new Composition(numCarbons + 12, (2 * (numCarbons + 12)) - 1 - (2 * numDoubleBonds), 1, 13, 0, 0);
+					break;
+				case LipidClass.CerP:
+					return new Composition(numCarbons, (2 * (numCarbons + 0)) + 2 - (2 * numDoubleBonds), 1, 6, 0, 1);
+					break;
+				case LipidClass.Cholesterol:
+					return new Composition(27, 46, 0, 1, 0, 0);
+					break;
+				case LipidClass.CE:
+					return new Composition(numCarbons + 27, (2 * (numCarbons + 27)) - 10 - (2 * numDoubleBonds), 0, 2, 0, 0);
+					break;
+				case LipidClass.Ubiquitones:
+					break;
+				case LipidClass.MG:
+					return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) + 0 - (2 * numDoubleBonds), 0, 4, 0, 0);
+					break;
+				case LipidClass.DG:
+					return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) - 2 - (2 * numDoubleBonds), 0, 5, 0, 0);
+					break;
+				case LipidClass.TG:
+					return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) - 4 - (2 * numDoubleBonds), 0, 6, 0, 0);
+					break;
+				case LipidClass.MGDG:
+					return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 4 - (2 * numDoubleBonds), 0, 10, 0, 0);
+					break;
+				case LipidClass.SQDG:
+					return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 4 - (2 * numDoubleBonds), 0, 12, 1, 0);
+					break;
+				case LipidClass.DGDG:
+					return new Composition(numCarbons + 15, (2 * (numCarbons + 15)) - 6 - (2 * numDoubleBonds), 0, 15, 0, 0);
+					break;
+				case LipidClass.PI:
+					if (numChains > 1)
+					{
+						return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 3 - (2 * numDoubleBonds), 0, 13, 0, 1);
+					}
+					else
+					{
+						return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 1 - (2 * numDoubleBonds), 0, 12, 0, 1);
+					}
+					break;
+				case LipidClass.PIP:
+					return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 2 - (2 * numDoubleBonds), 0, 16, 0, 2);
+					break;
+				case LipidClass.PIP2:
+					return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 1 - (2 * numDoubleBonds), 0, 19, 0, 3);
+					break;
+				case LipidClass.PIP3:
+					return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) + 0 - (2 * numDoubleBonds), 0, 22, 0, 4);
+					break;
+				case LipidClass.PA:
+					if (numChains > 1)
+					{
+						return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) - 1 - (2 * numDoubleBonds), 0, 8, 0, 1);
+					}
+					else
+					{
+						return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) + 1 - (2 * numDoubleBonds), 0, 7, 0, 1);
+					}
+					break;
+				case LipidClass.CL:
+					return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 4 - (2 * numDoubleBonds), 0, 17, 0, 2);
+					break;
+				case LipidClass.Sulfatide:
+					return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 11, 1, 0);
+					break;
+			}
+
+			throw new SystemException("No empirical formula calculator found for " + commonName);
 		}
 
 		public static List<MsMsSearchUnit> CreateMsMsSearchUnits(double precursorMz, LipidClass lipidClass, FragmentationMode fragmentationMode, IEnumerable<AcylChain> acylChainList)

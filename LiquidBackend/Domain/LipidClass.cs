@@ -32,6 +32,7 @@ namespace LiquidBackend.Domain
 		PIP3,
 		CL,
 		Cholesterol,
-		Sulfatide
+		Sulfatide,
+		Ubiquitones
 	}
 }

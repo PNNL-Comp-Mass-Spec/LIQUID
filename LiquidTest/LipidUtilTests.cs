@@ -82,6 +82,177 @@ namespace LiquidTest
 		}
 
 		[Test]
+		public void TestCreateEmpiricalFormulaFromCommonName()
+		{
+			string commonName;
+			string empiricalFormula;
+
+			commonName = "PC(11:0/11:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PC(O-16:0/18:1(9Z))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PC(P-18:0/18:1(9Z))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PC(16:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PC(P-18:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PC(O-16:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PE(16:0/16:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PE(O-16:0/18:1(9Z))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PE(P-18:0/18:1(9Z))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PE(18:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PE(O-16:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PE(P-16:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PS(12:0/12:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PS(16:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PS(P-16:0/13:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PS(O-16:0/14:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PG(18:0/18:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PG(18:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "Cer(d18:1/12:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "SM(d18:1/18:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "GlcCer(d18:1/12:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "LacCer(d18:1/12:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "CerP(d18:1/12:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "Cholesterol";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "CE(18:1(9Z))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "MG(16:0/0:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "DG(16:0/16:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "TG(16:0/16:0/16:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "MGDG(16:0/18:1(9Z))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "SQDG(16:0/14:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "DGDG(18:5/18:4)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PI(16:0/16:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PI(18:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PIP[3'](17:0/20:4(5Z,8Z,11Z,14Z))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PIP2[3',5'](17:0/20:4(5Z,8Z,11Z,14Z))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PIP3[3',4',5'](17:0/20:4(5Z,8Z,11Z,14Z))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PA(18:0/18:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "PA(18:0/0:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "CL(1'-[18:2/18:2],3'-[18:2/18:2])";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "(3'-sulfo)Galβ-Cer(d18:1/16:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
+			commonName = "Cer(d18:0/20:0(2OH))";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+		}
+
+		[Test]
 		public void TestCreateMsMsMsSearchUnitsForAllPositive()
 		{
 			const FragmentationMode fragmentationMode = FragmentationMode.Positive;

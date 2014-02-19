@@ -35,7 +35,9 @@ namespace Liquid.View
 			this.DataContext = this.SingleTargetViewModel;
 
 			this.FragmentationModeComboBox.SelectedValue = FragmentationMode.Positive;
+			this.AdductComboBox.SelectedValue = Adduct.Hydrogen;
 			this.TargetMzTextBlock.Visibility = Visibility.Collapsed;
+			this.EmpiricalFormulaTextBlock.Visibility = Visibility.Collapsed;
 			this.NumberOfResultsTextBlock.Visibility = Visibility.Collapsed;
 			this.SpectrumSearchResultsDataGrid.Visibility = Visibility.Collapsed;
 			this.SpectrumResultPanel.Visibility = Visibility.Collapsed;
@@ -73,12 +75,12 @@ namespace Liquid.View
 		private void SearchForTargetButtonClick(object sender, RoutedEventArgs e)
 		{
 			string commonName = this.CommonNameTextBox.Text;
-			string empiricalFormula = this.EmpiricalFormulaTextBox.Text;
-			FragmentationMode fragmentationMode = (FragmentationMode)this.FragmentationModeComboBox.SelectedItem;
+			Adduct adduct = (Adduct) this.AdductComboBox.SelectedItem;
+			FragmentationMode fragmentationMode = (FragmentationMode) this.FragmentationModeComboBox.SelectedItem;
 			double hcdMassError = double.Parse(this.HcdErrorTextBox.Text);
 			double cidMassError = double.Parse(this.CidErrorTextBox.Text);
 
-			this.SingleTargetViewModel.SearchForTarget(commonName, empiricalFormula, fragmentationMode, hcdMassError, cidMassError);
+			this.SingleTargetViewModel.SearchForTarget(commonName, adduct, fragmentationMode, hcdMassError, cidMassError);
 
 			if (this.SingleTargetViewModel.CurrentSpectrumSearchResult != null)
 			{
@@ -89,6 +91,7 @@ namespace Liquid.View
 			}
 
 			this.TargetMzTextBlock.Visibility = Visibility.Visible;
+			this.EmpiricalFormulaTextBlock.Visibility = Visibility.Visible;
 			this.NumberOfResultsTextBlock.Visibility = Visibility.Visible;
 			this.SpectrumSearchResultsDataGrid.Visibility = Visibility.Visible;
 		}

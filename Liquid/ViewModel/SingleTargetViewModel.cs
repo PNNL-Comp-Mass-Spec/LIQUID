@@ -30,11 +30,13 @@ namespace Liquid.ViewModel
 		public PlotModel IsotopicProfilePlot { get; set; }
 		public PlotModel XicPlot { get; set; }
 		public List<MsMsAnnotation> MsMsAnnotationList { get; set; }
+		public List<Adduct> AdductList { get; set; }
 
 		public SingleTargetViewModel()
 		{
 			this.RawFileName = "None Loaded";
 			this.FragmentationModeList = new List<FragmentationMode> { FragmentationMode.Positive, FragmentationMode.Negative };
+			this.AdductList = new List<Adduct> { Adduct.Hydrogen, Adduct.Ammonium, Adduct.Acetate };
 			this.SpectrumSearchResultList = new List<SpectrumSearchResult>();
 
 			// Run asynchronously inside constructor to avoid slow functionality on first target search
@@ -52,9 +54,9 @@ namespace Liquid.ViewModel
 			OnPropertyChanged("LcMsRun");
 		}
 
-		public void SearchForTarget(string commonName, string empiricalFormula, FragmentationMode fragmentationMode, double hcdMassError, double cidMassError)
+		public void SearchForTarget(string commonName, Adduct adduct, FragmentationMode fragmentationMode, double hcdMassError, double cidMassError)
 		{
-			this.CurrentLipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			this.CurrentLipidTarget = LipidUtil.CreateLipidTarget(commonName, fragmentationMode, adduct);
 			OnPropertyChanged("CurrentLipidTarget");
 
 			this.SpectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(this.CurrentLipidTarget, this.LcMsRun, hcdMassError, cidMassError);

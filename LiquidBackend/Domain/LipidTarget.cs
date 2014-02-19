@@ -18,12 +18,17 @@ namespace LiquidBackend.Domain
 
 		public double MzRounded
 		{
-			get { return Math.Round(this.Composition.Mass, 3); }
+			get { return Math.Round(this.Composition.Mass, 4); }
 		}
 
 		public List<MsMsSearchUnit> SortedMsMsSearchUnits
 		{
 			get { return this.GetMsMsSearchUnits().OrderBy(x => x.Mz).ToList(); }
+		}
+
+		public string EmpiricalFormula
+		{
+			get { return this.Composition.ToPlainString(); }
 		}
 
 		public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList)
