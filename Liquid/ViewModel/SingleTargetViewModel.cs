@@ -111,7 +111,7 @@ namespace Liquid.ViewModel
 			string commonName = lipidTarget.CommonName;
 			int parentScan = spectrumSearchResult.PrecursorSpectrum.ScanNum;
 			var peakList = productSpectrum.Peaks;
-			var fragmentationType = productSpectrum.ActivationMethod == ActivationMethod.CID ? FragmentationType.Cid : FragmentationType.Hcd;
+			var fragmentationType = productSpectrum.ActivationMethod == ActivationMethod.CID ? FragmentationType.CID : FragmentationType.HCD;
 
 			string plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + " // Parent Scan - " + parentScan + " (" + productSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString("0.000") + " m/z)";
 
@@ -298,6 +298,17 @@ namespace Liquid.ViewModel
 			peakCenterSeries.Color = OxyColors.Red;
 			peakCenterSeries.StrokeThickness = 0.5;
 			peakCenterSeries.LineStyle = LineStyle.Dash;
+			peakCenterSeries.Title = "Apex";
+
+			var precursorSeries = new StemSeries();
+			precursorSeries.Color = OxyColors.Green;
+			precursorSeries.StrokeThickness = 0.5;
+			precursorSeries.LineStyle = LineStyle.Dash;
+			precursorSeries.Title = "Precursor";
+
+			plotModel.IsLegendVisible = true;
+			plotModel.LegendPosition = LegendPosition.TopRight;
+			plotModel.LegendPlacement = LegendPlacement.Inside;
 
 			double peakCenter = this.CurrentSpectrumSearchResult.ApexScanNum;
 			double localMinScanLc = peakCenter - 500;
@@ -327,8 +338,13 @@ namespace Liquid.ViewModel
 			DataPoint peakCenterDataPoint = new DataPoint(peakCenter, maxIntensity);
 			peakCenterSeries.Points.Add(peakCenterDataPoint);
 
+			int precursorScan = this.CurrentSpectrumSearchResult.PrecursorSpectrum.ScanNum;
+			DataPoint precursorDataPoint = new DataPoint(precursorScan, maxIntensity);
+			precursorSeries.Points.Add(precursorDataPoint);
+
 			plotModel.Series.Add(mzPeakSeries);
 			plotModel.Series.Add(peakCenterSeries);
+			plotModel.Series.Add(precursorSeries);
 
 			var yAxis = new InvisibleAxis(AxisPosition.Left, "Intensity");
 			yAxis.Minimum = 0;

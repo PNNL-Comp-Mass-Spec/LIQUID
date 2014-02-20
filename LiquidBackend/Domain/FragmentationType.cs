@@ -9,8 +9,8 @@ namespace LiquidBackend.Domain
 	public enum FragmentationType
 	{
 		None,
-		Hcd,
-		Cid,
-		Etd
+		HCD,
+		CID,
+		ETD
 	}
 }
