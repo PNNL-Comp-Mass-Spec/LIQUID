@@ -299,7 +299,7 @@ namespace Liquid.ViewModel
 			peakCenterSeries.StrokeThickness = 0.5;
 			peakCenterSeries.LineStyle = LineStyle.Dash;
 
-			double peakCenter = this.CurrentSpectrumSearchResult.Xic.GetApexScanNum();
+			double peakCenter = this.CurrentSpectrumSearchResult.ApexScanNum;
 			double localMinScanLc = peakCenter - 500;
 			double localMaxScanLc = peakCenter + 500;
 
