@@ -48,7 +48,8 @@ namespace LiquidBackend.Util
 			Composition composition = ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName);
 			Composition compositionOfAdduct = GetCompositionOfAdduct(adduct);
 
-			if (fragmentationMode == FragmentationMode.Negative) composition -= compositionOfAdduct;
+			if (adduct == Adduct.Acetate) composition += compositionOfAdduct;
+			else if (fragmentationMode == FragmentationMode.Negative) composition -= compositionOfAdduct;
 			else if (fragmentationMode == FragmentationMode.Positive) composition += compositionOfAdduct;
 
 			IEnumerable<AcylChain> acylChainList = ParseLipidCommonNameIntoAcylChains(commonName);
