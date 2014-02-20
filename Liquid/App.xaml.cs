@@ -21,7 +21,7 @@ namespace Liquid
 
 		void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
-			string errorMessage = string.Format("An unhandled exception occurred: {0}", e.Exception.Message);
+			string errorMessage = string.Format("An unhandled exception occurred: {0}\n{1}", e.Exception.Message, e.Exception.StackTrace);
 			MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 			e.Handled = true;
 		}
