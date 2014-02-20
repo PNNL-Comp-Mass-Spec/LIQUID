@@ -38,6 +38,7 @@ namespace Liquid.View
 			this.AdductComboBox.SelectedValue = Adduct.Hydrogen;
 			this.TargetMzTextBlock.Visibility = Visibility.Collapsed;
 			this.EmpiricalFormulaTextBlock.Visibility = Visibility.Collapsed;
+			this.EmpiricalFormulaRichTextBlock.Visibility = Visibility.Collapsed;
 			this.NumberOfResultsTextBlock.Visibility = Visibility.Collapsed;
 			this.SpectrumSearchResultsDataGrid.Visibility = Visibility.Collapsed;
 			this.SpectrumResultPanel.Visibility = Visibility.Collapsed;
@@ -90,8 +91,11 @@ namespace Liquid.View
 				dataGrid.ScrollIntoView(this.SingleTargetViewModel.CurrentSpectrumSearchResult);
 			}
 
+			UpdateEmpiricalFormula(this.SingleTargetViewModel.CurrentLipidTarget.EmpiricalFormula);
+
 			this.TargetMzTextBlock.Visibility = Visibility.Visible;
 			this.EmpiricalFormulaTextBlock.Visibility = Visibility.Visible;
+			this.EmpiricalFormulaRichTextBlock.Visibility = Visibility.Visible;
 			this.NumberOfResultsTextBlock.Visibility = Visibility.Visible;
 			this.SpectrumSearchResultsDataGrid.Visibility = Visibility.Visible;
 		}
@@ -111,6 +115,28 @@ namespace Liquid.View
 					this.SpectrumResultPanel.Visibility = Visibility.Visible;
 				}
 			}
+		}
+
+		private void UpdateEmpiricalFormula(string empiricalFormula)
+		{
+			Paragraph paragraph = new Paragraph();
+			FontFamilyConverter ffc = new FontFamilyConverter();
+			paragraph.FontFamily = (FontFamily)ffc.ConvertFromString("Palatino Linotype");
+
+			foreach (var empiricalCharacter in empiricalFormula)
+			{
+				Run run = new Run(empiricalCharacter.ToString());
+
+				// Subscript any numbers
+				if (Char.IsNumber(empiricalCharacter)) run.Typography.Variants = FontVariants.Subscript;
+
+				paragraph.Inlines.Add(run);
+			}
+
+			FlowDocument flowDocument = new FlowDocument();
+			flowDocument.Blocks.Add(paragraph);
+
+			this.EmpiricalFormulaRichTextBlock.Document = flowDocument;
 		}
 	}
 }

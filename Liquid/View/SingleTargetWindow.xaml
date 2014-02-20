@@ -35,7 +35,10 @@
                     <Button Content="Search For Target!" Click="SearchForTargetButtonClick" Height="23" HorizontalAlignment="Center" Name="SearchForTargetButton" VerticalAlignment="Top" Width="120" Margin="0,5,0,0" DockPanel.Dock="Right" />
                 </DockPanel>
                 <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Center">
-                    <TextBox Name="EmpiricalFormulaTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=CurrentLipidTarget.EmpiricalFormula, StringFormat='  Formula: {0}', Mode=OneWay}" Margin="0,5,0,0" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
+                        <TextBox Name="EmpiricalFormulaTextBlock" Width="Auto" FontWeight="Bold" Text="  Formula:" Margin="0,5,0,0" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                        <RichTextBox Name="EmpiricalFormulaRichTextBlock" FontWeight="Bold" Width="170" Margin="0,5,0,0" Style="{StaticResource SelectableRichTextBlockLikeStyle}"></RichTextBox>
+                    </DockPanel>
                     <TextBox Name="TargetMzTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=CurrentLipidTarget.MzRounded, StringFormat='  Target m/z: {0}', Mode=OneWay}" Margin="0,5,0,0" Style="{StaticResource SelectableTextBlockLikeStyle}" />
                     <TextBlock Name="NumberOfResultsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=SpectrumSearchResultList.Count, StringFormat='  # of Results: {0}'}" Margin="0,5,0,0" />
                     <DataGrid Name="SpectrumSearchResultsDataGrid" ItemsSource="{Binding Path=SpectrumSearchResultList}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="300" Width="Auto" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
