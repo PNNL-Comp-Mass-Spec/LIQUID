@@ -46,7 +46,7 @@
                             <DataGridTextColumn Header="Precursor" Binding="{Binding Path=PrecursorSpectrum.ScanNum}" Width="60" />
                             <DataGridTextColumn Header="Apex" Binding="{Binding Path=ApexScanNum}" Width="40" />
                             <DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=NumMatchingMsMsPeaks, StringFormat=0}" Width="60" />
-                            <DataGridTextColumn Header="Score" Binding="{Binding Path=Score, StringFormat=0.0E00}" Width="60" />
+                            <DataGridTextColumn Header="Score" Binding="{Binding Path=Score, StringFormat=0.00E00}" Width="60" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

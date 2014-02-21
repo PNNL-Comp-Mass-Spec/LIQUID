@@ -198,7 +198,7 @@ namespace Liquid.ViewModel
 			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
 			yAxis.Maximum = secondMaxIntensity + (secondMaxIntensity * .25);
 			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
-
+			yAxis.StringFormat = "0E00";
 			yAxis.AxisChanged += OnYAxisChange;
 
 			var xAxis = new LinearAxis(AxisPosition.Bottom, "m/z");
