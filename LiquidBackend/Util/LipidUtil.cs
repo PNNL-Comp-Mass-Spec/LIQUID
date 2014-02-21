@@ -93,6 +93,7 @@ namespace LiquidBackend.Util
 			if (!classFound)
 			{
 				// Add in any extra search criteria for classes that may not have straight forward parsing
+				if (classAbbrev.Contains("Cer-H2O")) return LipidClass.CerH2O;
 				if (classAbbrev.Contains("PIP2")) return LipidClass.PIP2;
 				if (classAbbrev.Contains("PIP3")) return LipidClass.PIP3;
 				if (classAbbrev.Contains("PIP")) return LipidClass.PIP;
@@ -231,6 +232,9 @@ namespace LiquidBackend.Util
 					{
 						return new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 3, 0, 0);	
 					}
+					break;
+				case LipidClass.CerH2O:
+					return new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 3, 0, 0) - Composition.H2O;
 					break;
 				case LipidClass.SM:
 					return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 3 - (2 * numDoubleBonds), 2, 6, 0, 1);
@@ -556,7 +560,7 @@ namespace LiquidBackend.Util
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 3 - (2 * doubleBonds), 0, 4, 0, 0).Mass, "DAG", combinedChain));
 					}
 				}
-				else if (lipidClass == LipidClass.Cer || lipidClass == LipidClass.GlcCer || lipidClass == LipidClass.LacCer || lipidClass == LipidClass.CerP || lipidClass == LipidClass.SM)
+				else if (lipidClass == LipidClass.Cer || lipidClass == LipidClass.CerH2O || lipidClass == LipidClass.GlcCer || lipidClass == LipidClass.LacCer || lipidClass == LipidClass.CerP || lipidClass == LipidClass.SM)
 				{
 					if (lipidClass == LipidClass.GlcCer || lipidClass == LipidClass.LacCer)
 					{
@@ -580,7 +584,7 @@ namespace LiquidBackend.Util
 					}
 					
 					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "Lipid-H2O"));
-					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 4, 0, 2, 0, 0).Mass, "Lipid-2(H2O)"));
+					if(lipidClass != LipidClass.CerH2O) msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 4, 0, 2, 0, 0).Mass, "Lipid-2(H2O)"));
 
 					int countOfChains = acylChainList.Count(x => x.NumCarbons > 0);
 
@@ -602,7 +606,7 @@ namespace LiquidBackend.Util
 							case AcylChainType.Dihydro:
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) + 0 - (2 * doubleBonds), 1, 0, 0, 0).Mass, "LCB", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) + 2 - (2 * doubleBonds), 1, 1, 0, 0).Mass, "LCB+H2O", acylChain));
-								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, (2 * (carbons - 1)) + 2 - (2 * doubleBonds), 1, 0, 0, 0).Mass, "LCB-C, acylChain"));
+								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, (2 * (carbons - 1)) + 2 - (2 * doubleBonds), 1, 0, 0, 0).Mass, "LCB-CH2, acylChain"));
 								break;
 						}
 					}
@@ -614,7 +618,7 @@ namespace LiquidBackend.Util
 
 						AcylChain combinedChain = new AcylChain(carbons + ":" + doubleBonds);
 
-						if (lipidClass != LipidClass.Cer) {
+						if (lipidClass != LipidClass.Cer && lipidClass != LipidClass.CerH2O) {
 							if (lipidClass == LipidClass.SM) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 1, 2, 0, 0).Mass, "both chains", combinedChain));
 							msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 1, 1, 0, 0).Mass, "both chains - H2O", combinedChain));
 						}

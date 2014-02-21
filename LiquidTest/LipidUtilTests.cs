@@ -163,6 +163,10 @@ namespace LiquidTest
 			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
 			Console.WriteLine(commonName + " = " + empiricalFormula);
 
+			commonName = "Cer-H2O(d18:1/12:0)";
+			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+			Console.WriteLine(commonName + " = " + empiricalFormula);
+
 			commonName = "SM(d18:1/18:0)";
 			empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
 			Console.WriteLine(commonName + " = " + empiricalFormula);
@@ -462,6 +466,17 @@ namespace LiquidTest
 
 			commonName = "Cer(d18:1/25:0)";
 			empiricalFormula = "C43H86NO3";
+			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+			Console.WriteLine(commonName + "\t" + empiricalFormula);
+			foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+			{
+				Console.WriteLine(msMsSearchUnit);
+			}
+			Console.WriteLine("**************************************************************************************");
+
+			commonName = "Cer-H2O(d18:1/25:0)";
+			empiricalFormula = "C43H84NO2";
 			lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
 			msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
 			Console.WriteLine(commonName + "\t" + empiricalFormula);

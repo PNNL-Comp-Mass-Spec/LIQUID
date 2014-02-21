@@ -31,10 +31,11 @@ namespace LiquidBackend.Domain
 		{
 			get
 			{
-				XicPoint searchPoint = new XicPoint(this.PrecursorSpectrum.ScanNum, 0);
-				int index = this.Xic.BinarySearch(searchPoint);
-				double intensityOfPrecursor = this.Xic[index].Intensity;
-				return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + this.CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity)) / intensityOfPrecursor;
+				//XicPoint searchPoint = new XicPoint(this.PrecursorSpectrum.ScanNum, 0);
+				//int index = this.Xic.BinarySearch(searchPoint);
+				//double intensityOfPrecursor = this.Xic[index].Intensity;
+				//return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + this.CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity)) / intensityOfPrecursor;
+				return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + this.CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity));
 			}
 		}
 

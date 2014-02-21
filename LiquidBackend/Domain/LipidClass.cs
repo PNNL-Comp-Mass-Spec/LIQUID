@@ -15,6 +15,7 @@ namespace LiquidBackend.Domain
 		PG,
 		PS,
 		Cer,
+		CerH2O,
 		SM,
 		GalCer,
 		GlcCer,
