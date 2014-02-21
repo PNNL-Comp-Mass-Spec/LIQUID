@@ -134,6 +134,8 @@ namespace Liquid.ViewModel
 			plotModel.IsLegendVisible = true;
 			plotModel.LegendPosition = LegendPosition.TopRight;
 			plotModel.LegendPlacement = LegendPlacement.Inside;
+			plotModel.LegendMargin = 0;
+			plotModel.LegendFontSize = 10;
 
 			double minMz = double.MaxValue;
 			double maxMz = double.MinValue;
@@ -310,6 +312,8 @@ namespace Liquid.ViewModel
 			plotModel.IsLegendVisible = true;
 			plotModel.LegendPosition = LegendPosition.TopRight;
 			plotModel.LegendPlacement = LegendPlacement.Inside;
+			plotModel.LegendMargin = 0;
+			plotModel.LegendFontSize = 10;
 
 			double peakCenter = this.CurrentSpectrumSearchResult.ApexScanNum;
 			double localMinScanLc = peakCenter - 500;
