@@ -27,6 +27,17 @@ namespace LiquidBackend.Domain
 			get { return this.Xic.GetNearestApexScanNum(this.PrecursorSpectrum.ScanNum, true); }
 		}
 
+		public double Score
+		{
+			get
+			{
+				XicPoint searchPoint = new XicPoint(this.PrecursorSpectrum.ScanNum, 0);
+				int index = this.Xic.BinarySearch(searchPoint);
+				double intensityOfPrecursor = this.Xic[index].Intensity;
+				return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + this.CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity)) / intensityOfPrecursor;
+			}
+		}
+
 		public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, Spectrum precursorSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, Xic xic)
 		{
 			this.HcdSpectrum = hcdSpectrum;
