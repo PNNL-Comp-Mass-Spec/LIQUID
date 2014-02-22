@@ -264,14 +264,16 @@ namespace Liquid.ViewModel
 
 			//plotModel.Series.Add(isotopicPeakSeries);
 
-			var yAxis = new InvisibleAxis(AxisPosition.Left, "Intensity");
+			var yAxis = new LinearAxis(AxisPosition.Left, "Intensity");
 			yAxis.Minimum = 0;
 			yAxis.AbsoluteMinimum = 0;
 			yAxis.Maximum = maxLocalIntensity + (maxLocalIntensity * .05);
 			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
 			yAxis.ShowMinorTicks = false;
-			yAxis.IsAxisVisible = false;
+			//yAxis.IsAxisVisible = false;
 			yAxis.AxisTickToLabelDistance = 0;
+			yAxis.StringFormat = "0E00";
+			yAxis.FontSize = 10;
 			yAxis.AxisChanged += OnYAxisChange;
 
 			var xAxis = new LinearAxis(AxisPosition.Bottom, "m/z");
@@ -351,14 +353,16 @@ namespace Liquid.ViewModel
 			plotModel.Series.Add(peakCenterSeries);
 			plotModel.Series.Add(precursorSeries);
 
-			var yAxis = new InvisibleAxis(AxisPosition.Left, "Intensity");
+			var yAxis = new LinearAxis(AxisPosition.Left, "Intensity");
 			yAxis.Minimum = 0;
 			yAxis.AbsoluteMinimum = 0;
 			yAxis.Maximum = localMaxIntensity + (localMaxIntensity * .05);
 			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
 			yAxis.ShowMinorTicks = false;
-			yAxis.IsAxisVisible = false;
+			//yAxis.IsAxisVisible = false;
 			yAxis.AxisTickToLabelDistance = 0;
+			yAxis.StringFormat = "0E00";
+			yAxis.FontSize = 10;
 			yAxis.AxisChanged += OnYAxisChange;
 
 			var xAxis = new LinearAxis(AxisPosition.Bottom, "Scan #");
