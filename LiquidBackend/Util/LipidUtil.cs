@@ -122,7 +122,7 @@ namespace LiquidBackend.Util
 			int numCarbons = fattyAcylChains.Sum(x => x.NumCarbons);
 			int numDoubleBonds = fattyAcylChains.Sum(x => x.NumDoubleBonds);
 
-			int numChains = fattyAcylChains.Count();
+			int numChains = fattyAcylChains.Count(x => x.NumCarbons > 0);
 			bool containsEther = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) > 0;
 			bool containsPlasmogen = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Plasmalogen) > 0;
 
