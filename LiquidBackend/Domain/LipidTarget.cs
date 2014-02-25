@@ -45,5 +45,30 @@ namespace LiquidBackend.Domain
 		{
 			return LipidUtil.CreateMsMsSearchUnits(this.Composition.Mass, this.LipidClass, this.FragmentationMode, this.AcylChainList);
 		}
+
+		protected bool Equals(LipidTarget other)
+		{
+			return LipidClass == other.LipidClass && FragmentationMode == other.FragmentationMode && Equals(Composition, other.Composition) && AcylChainList.OrderBy(x => x.NumCarbons).ThenBy(x => x.NumDoubleBonds).ThenBy(x => x.AcylChainType).SequenceEqual(other.AcylChainList.OrderBy(x => x.NumCarbons).ThenBy(x => x.NumDoubleBonds).ThenBy(x => x.AcylChainType));
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != this.GetType()) return false;
+			return Equals((LipidTarget) obj);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				int hashCode = (int) LipidClass;
+				hashCode = (hashCode*397) ^ (int) FragmentationMode;
+				hashCode = (hashCode*397) ^ (Composition != null ? Composition.GetHashCode() : 0);
+				hashCode = (hashCode*397) ^ (AcylChainList != null ? AcylChainList.GetHashCode() : 0);
+				return hashCode;
+			}
+		}
 	}
 }

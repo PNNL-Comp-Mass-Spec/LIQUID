@@ -2,7 +2,7 @@
 
 namespace LiquidBackend.Domain
 {
-	public class AcylChain
+	public class AcylChain : IComparable<AcylChain>
 	{
 		public int NumCarbons { get; private set; }
 		public int NumDoubleBonds { get; private set; }
@@ -88,6 +88,13 @@ namespace LiquidBackend.Domain
 				hashCode = (hashCode*397) ^ (int) AcylChainType;
 				return hashCode;
 			}
+		}
+
+		public int CompareTo(AcylChain other)
+		{
+			if (this.NumCarbons != other.NumCarbons) return this.NumCarbons.CompareTo(other.NumCarbons);
+			if (this.NumDoubleBonds != other.NumDoubleBonds) return this.NumDoubleBonds.CompareTo(other.NumDoubleBonds);
+			return this.AcylChainType.CompareTo(this.AcylChainType);
 		}
 	}
 }
