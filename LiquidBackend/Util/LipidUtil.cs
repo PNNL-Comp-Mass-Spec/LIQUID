@@ -560,9 +560,9 @@ namespace LiquidBackend.Util
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 3 - (2 * doubleBonds), 0, 4, 0, 0).Mass, "DAG", combinedChain));
 					}
 				}
-				else if (lipidClass == LipidClass.Cer || lipidClass == LipidClass.CerH2O || lipidClass == LipidClass.GlcCer || lipidClass == LipidClass.LacCer || lipidClass == LipidClass.CerP || lipidClass == LipidClass.SM)
+				else if (lipidClass == LipidClass.Cer || lipidClass == LipidClass.CerH2O || lipidClass == LipidClass.GlcCer || lipidClass == LipidClass.GalCer || lipidClass == LipidClass.LacCer || lipidClass == LipidClass.CerP || lipidClass == LipidClass.SM)
 				{
-					if (lipidClass == LipidClass.GlcCer || lipidClass == LipidClass.LacCer)
+					if (lipidClass == LipidClass.GlcCer || lipidClass == LipidClass.GalCer || lipidClass == LipidClass.LacCer)
 					{
 						msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(6, 10, 0, 5, 0, 0).Mass, "Lipid-sugar"));
 						msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(6, 12, 0, 6, 0, 0).Mass, "Lipid-sugar-H2O"));
