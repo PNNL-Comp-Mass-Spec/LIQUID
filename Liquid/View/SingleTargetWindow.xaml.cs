@@ -41,8 +41,8 @@ namespace Liquid.View
 			this.EmpiricalFormulaRichTextBlock.Visibility = Visibility.Collapsed;
 			this.NumberOfResultsTextBlock.Visibility = Visibility.Collapsed;
 			this.SpectrumSearchResultsDataGrid.Visibility = Visibility.Collapsed;
-			this.MsMsInfoUserControl.Visibility = Visibility.Collapsed;
-			this.MsOneInfoUserControl.Visibility = Visibility.Collapsed;
+			this.MsMsInfoUserControl.Visibility = Visibility.Hidden;
+			this.MsOneInfoUserControl.Visibility = Visibility.Hidden;
 		}
 
 		private async void RawFileButtonClick(object sender, RoutedEventArgs e)
@@ -147,6 +147,65 @@ namespace Liquid.View
 			flowDocument.Blocks.Add(paragraph);
 
 			this.EmpiricalFormulaRichTextBlock.Document = flowDocument;
+		}
+
+		private async void LoadTargetsFileButtonClick(object sender, RoutedEventArgs e)
+		{
+			// Create OpenFileDialog and Set filter for file extension and default file extension
+			var dialog = new VistaOpenFileDialog { DefaultExt = ".txt", Filter = "Text Files (*.txt)|*.txt|Tab Sparated Files (.tsv)|*.tsv|All Files (*.*)|*.*" };
+
+			// Get the selected file name and display in a TextBox 
+			DialogResult result = dialog.ShowDialog();
+			if (result == System.Windows.Forms.DialogResult.OK)
+			{
+				// Open file 
+				string fileName = dialog.FileName;
+
+				await Task.Run(() => this.SingleTargetViewModel.LoadMoreLipidTargets(fileName));
+			}
+		}
+
+		private async void ProcessAllTargetsButtonClick(object sender, RoutedEventArgs e)
+		{
+			FragmentationMode fragmentationMode = (FragmentationMode)this.FragmentationModeComboBox.SelectedItem;
+			double hcdMassError = double.Parse(this.HcdErrorTextBox.Text);
+			double cidMassError = double.Parse(this.CidErrorTextBox.Text);
+
+			await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(hcdMassError, cidMassError, fragmentationMode));
+
+			// Select the best spectrum search result
+			if (this.SingleTargetViewModel.LipidGroupSearchResultList.Count > 0)
+			{
+				var dataGrid = this.LipidGroupSearchResultsDataGrid;
+
+				dataGrid.SelectedItem = this.SingleTargetViewModel.LipidGroupSearchResultList[0];
+				dataGrid.ScrollIntoView(this.SingleTargetViewModel.LipidGroupSearchResultList[0]);
+			}
+		}
+
+		private void LipidGroupSearchResultSelectionChange(object sender, SelectionChangedEventArgs e)
+		{
+			var dataGrid = sender as DataGrid;
+			if (dataGrid != null)
+			{
+				var selectedItem = dataGrid.SelectedItem;
+
+				if (selectedItem != null && ReferenceEquals(selectedItem.GetType(), typeof(LipidGroupSearchResult)))
+				{
+					LipidGroupSearchResult lipidGroupSearchResult = (LipidGroupSearchResult)selectedItem;
+					SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
+
+					this.SingleTargetViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+
+					this.MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(lipidGroupSearchResult.LipidTarget);
+					this.MsMsInfoUserControl.MsMsInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+					this.MsMsInfoUserControl.Visibility = Visibility.Visible;
+
+					this.MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(lipidGroupSearchResult.LipidTarget);
+					this.MsOneInfoUserControl.MsOneInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+					this.MsOneInfoUserControl.Visibility = Visibility.Visible;
+				}
+			}
 		}
 	}
 }

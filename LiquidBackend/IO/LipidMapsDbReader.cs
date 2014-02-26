@@ -107,6 +107,9 @@ namespace LiquidBackend.IO
 			if (columnMapping.ContainsKey(ADDUCT)) lipidEntry.AdductFull = columns[columnMapping[ADDUCT]];
 			else throw new SystemException("Adduct is required for lipid import.");
 
+			// Create the lipid target
+			lipidEntry.CreateLipidTarget();
+
 			if (columnMapping.ContainsKey(LM_ID)) lipidEntry.LipidMapsId = columns[columnMapping[LM_ID]];
 			if (columnMapping.ContainsKey(PUBCHEM_SID)) lipidEntry.PubChemSid = columns[columnMapping[PUBCHEM_SID]];
 			if (columnMapping.ContainsKey(PUBCHEM_CID)) lipidEntry.PubChemCid = columns[columnMapping[PUBCHEM_CID]];

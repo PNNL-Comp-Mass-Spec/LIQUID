@@ -19,14 +19,15 @@ namespace LiquidBackend.Util
 			this.LcMsRun = LcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
 		}
 
-		public void RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double hcdMassError, double cidMassError)
+		public List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double hcdMassError, double cidMassError, IProgress<int> progress = null)
 		{
-			RunGlobalWorkflow(lipidList, this.LcMsRun, hcdMassError, cidMassError);
+			return RunGlobalWorkflow(lipidList, this.LcMsRun, hcdMassError, cidMassError, progress);
 		}
 
-		public static void RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError)
+		public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, IProgress<int> progress = null)
 		{
 			//TextWriter textWriter = new StreamWriter("outputNeg.tsv");
+			List<LipidGroupSearchResult> lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 
 			Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
 			Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
@@ -34,7 +35,7 @@ namespace LiquidBackend.Util
 			var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList();
 
 			int minLcScan = lcmsRun.MinLcScan;
-			int maxLcScan = lcmsRun.MaxLcScan;
+			double maxLcScan = lcmsRun.MaxLcScan;
 
 			for (int i = minLcScan; i <= maxLcScan; i++)
 			{
@@ -77,6 +78,8 @@ namespace LiquidBackend.Util
 				foreach (var lipidGrouping in lipidsGroupedByTarget)
 				{
 					LipidTarget lipidTarget = lipidGrouping.Key;
+					List<Lipid> lipidGroupList = lipidGrouping.ToList();
+
 					double lipidMz = lipidTarget.Composition.Mass;
 
 					// If we reached the point where the m/z is too high, we can exit
@@ -101,6 +104,9 @@ namespace LiquidBackend.Util
 						SpectrumSearchResult spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic);
 						resultDictionary.Add(lipidGrouping, spectrumSearchResult);
 
+						LipidGroupSearchResult lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, lipidGroupList, spectrumSearchResult);
+						lipidGroupSearchResultList.Add(lipidGroupSearchResult);
+
 						//textWriter.WriteLine(lipidTarget.CommonName + "\t" + spectrumSearchResult.Score);
 						//Console.WriteLine(lipidTarget.CommonName + "\t" + spectrumSearchResult.Score);
 					}
@@ -108,14 +114,22 @@ namespace LiquidBackend.Util
 
 				// Skip an extra scan since we look at 2 at a time
 				i++;
+
+				// Report progress
+				if (progress != null)
+				{
+					int currentProgress = (int)((i / maxLcScan) * 100);
+					progress.Report(currentProgress);
+				}
 			}
 
 			//textWriter.Close();
+			return lipidGroupSearchResultList;
 		}
 
 		public void RunGlobalWorkflowSingleScan()
 		{
-			
+			throw new NotImplementedException();
 		}
 	}
 }

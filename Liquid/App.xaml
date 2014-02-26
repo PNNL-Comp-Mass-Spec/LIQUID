@@ -46,5 +46,6 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Padding" Value="-2,0,0,0"/>
         </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Application.Resources>
 </Application>

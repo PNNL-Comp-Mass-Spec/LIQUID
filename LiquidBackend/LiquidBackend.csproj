@@ -75,6 +75,7 @@
     <Compile Include="Domain\FragmentationType.cs" />
     <Compile Include="Domain\Lipid.cs" />
     <Compile Include="Domain\LipidClass.cs" />
+    <Compile Include="Domain\LipidGroupSearchResult.cs" />
     <Compile Include="Domain\LipidTarget.cs" />
     <Compile Include="Domain\MsMsSearchResult.cs" />
     <Compile Include="Domain\MsMsSearchUnit.cs" />
