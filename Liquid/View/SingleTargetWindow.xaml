@@ -52,39 +52,7 @@
                 </StackPanel>
             </StackPanel>
             <controls:MsMsInfoUserControl x:Name="MsMsInfoUserControl"></controls:MsMsInfoUserControl>
-            <StackPanel Height="Auto" HorizontalAlignment="Right" Margin="10,0,5,5" Name="msFeaturePanel" VerticalAlignment="Stretch" Width="Auto" Orientation="Vertical">
-                <oxy:Plot Model="{Binding IsotopicProfilePlot}" Margin="0,0,0,0" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
-                <oxy:Plot Model="{Binding XicPlot}" Margin="0,0,0,20" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
-                <!--StackPanel Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="msFeatureInfoPanel" VerticalAlignment="Bottom" Width="Auto" Orientation="Vertical">
-                    <Label Content="MS Feature Info" Height="Auto" Padding="5,5,5,5" Name="msFeatureInfoLabel" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Width="Auto" />
-                    <Grid Height="Auto" MinHeight="150" HorizontalAlignment="Left" Margin="0,0,0,0" Name="msFeatureInfoGrid" VerticalAlignment="Bottom" Width="Auto" MinWidth="300">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="150" />
-                            <ColumnDefinition Width="*" MinWidth="100" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Mass" FontWeight="Bold" />
-                        <TextBlock Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.IsotopicProfile.MonoIsotopicMass, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="1" Text="Mass Error (ppm)" FontWeight="Bold" />
-                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.PpmError, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="2" Text="m/z" FontWeight="Bold" />
-                        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.IsotopicProfile.MonoPeakMZ, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="3" Text="Normalized Elution Time" FontWeight="Bold" />
-                        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.NormalizedElutionTime, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="4" Text="Scan LC Apex" FontWeight="Bold" />
-                        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.Peak.XValue, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="5" Text="Intensity" FontWeight="Bold" />
-                        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.Peak.Height, StringFormat=0}" />
-                    </Grid>
-                </StackPanel-->
-            </StackPanel>
+            <controls:MsOneInfoUserControl x:Name="MsOneInfoUserControl"></controls:MsOneInfoUserControl>
         </DockPanel>
     </Grid>
 </Window>

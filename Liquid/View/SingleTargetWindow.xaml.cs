@@ -42,6 +42,7 @@ namespace Liquid.View
 			this.NumberOfResultsTextBlock.Visibility = Visibility.Collapsed;
 			this.SpectrumSearchResultsDataGrid.Visibility = Visibility.Collapsed;
 			this.MsMsInfoUserControl.Visibility = Visibility.Collapsed;
+			this.MsOneInfoUserControl.Visibility = Visibility.Collapsed;
 		}
 
 		private async void RawFileButtonClick(object sender, RoutedEventArgs e)
@@ -82,8 +83,12 @@ namespace Liquid.View
 			double cidMassError = double.Parse(this.CidErrorTextBox.Text);
 
 			this.SingleTargetViewModel.SearchForTarget(commonName, adduct, fragmentationMode, hcdMassError, cidMassError);
-			this.MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
 
+			// Update user controls with new lipid target
+			this.MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
+			this.MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
+
+			// Select the best spectrum search result
 			if (this.SingleTargetViewModel.CurrentSpectrumSearchResult != null)
 			{
 				var dataGrid = this.SpectrumSearchResultsDataGrid;
@@ -115,6 +120,9 @@ namespace Liquid.View
 					
 					this.MsMsInfoUserControl.MsMsInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
 					this.MsMsInfoUserControl.Visibility = Visibility.Visible;
+
+					this.MsOneInfoUserControl.MsOneInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+					this.MsOneInfoUserControl.Visibility = Visibility.Visible;
 				}
 			}
 		}
