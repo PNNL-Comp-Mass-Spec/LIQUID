@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OxyPlot.Axes;
 
 namespace Liquid.ViewModel
 {
@@ -63,6 +64,18 @@ namespace Liquid.ViewModel
 		public void Dispose()
 		{
 			throw new NotImplementedException();
+		}
+
+		protected void OnYAxisChange(object sender, AxisChangedEventArgs e)
+		{
+			LinearAxis yAxis = sender as LinearAxis;
+
+			// No need to update anything if the minimum is already <= 0
+			if (yAxis.ActualMinimum <= 0) return;
+
+			// Set the minimum to 0 and refresh the plot
+			yAxis.Zoom(0, yAxis.ActualMaximum);
+			yAxis.PlotModel.RefreshPlot(true);
 		}
 	}
 }

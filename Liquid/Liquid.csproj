@@ -95,16 +95,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\MsMsInfoUserControl.xaml.cs">
+      <DependentUpon>MsMsInfoUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OxyPlot\InvisibleAxis.cs" />
     <Compile Include="OxyPlot\MsMsAnnotation.cs" />
     <Compile Include="Plot.xaml.cs">
       <DependentUpon>Plot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\MsMsInfoViewModel.cs" />
     <Compile Include="ViewModel\SingleTargetViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\SingleTargetWindow.xaml.cs">
       <DependentUpon>SingleTargetWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\MsMsInfoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
