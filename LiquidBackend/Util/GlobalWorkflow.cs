@@ -73,11 +73,9 @@ namespace LiquidBackend.Util
 				double lowMz = msMsPrecursorMz - mzToSearchTolerance;
 				double highMz = msMsPrecursorMz + mzToSearchTolerance;
 
-				foreach (var lipidGrouping in lipidsGroupedByTarget)
+				foreach (var grouping in lipidsGroupedByTarget)
 				{
-					LipidTarget lipidTarget = lipidGrouping.Key;
-					List<Lipid> lipidGroupList = lipidGrouping.ToList();
-
+					LipidTarget lipidTarget = grouping.Key;
 					double lipidMz = lipidTarget.Composition.Mass;
 
 					// If we reached the point where the m/z is too high, we can exit
@@ -101,7 +99,7 @@ namespace LiquidBackend.Util
 						// Create spectrum search results
 						SpectrumSearchResult spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic);
 
-						LipidGroupSearchResult lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, lipidGroupList, spectrumSearchResult);
+						LipidGroupSearchResult lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult);
 						lipidGroupSearchResultList.Add(lipidGroupSearchResult);
 
 						//textWriter.WriteLine(lipidTarget.CommonName + "\t" + spectrumSearchResult.Score);
