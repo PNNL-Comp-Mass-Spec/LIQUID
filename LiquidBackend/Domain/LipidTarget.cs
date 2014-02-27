@@ -32,6 +32,26 @@ namespace LiquidBackend.Domain
 			get { return this.Composition.ToPlainString(); }
 		}
 
+		public string StrippedDisplay
+		{
+			get
+			{
+				StringBuilder stringBuilder = new StringBuilder();
+				stringBuilder.Append(this.LipidClass);
+				stringBuilder.Append("(");
+				List<AcylChain> acylChainList = this.AcylChainList.ToList();
+				for (int i = 0; i < acylChainList.Count; i++)
+				{
+					AcylChain acylChain = acylChainList[i];
+					stringBuilder.Append(acylChain);
+					if (i < acylChainList.Count - 1) stringBuilder.Append("/");
+				}
+				stringBuilder.Append(")");
+
+				return stringBuilder.ToString();
+			}
+		}
+
 		public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList)
 		{
 			CommonName = commonName;
