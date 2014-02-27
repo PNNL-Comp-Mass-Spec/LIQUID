@@ -142,7 +142,7 @@ namespace Liquid.ViewModel
 				var groupOrdered = group.OrderByDescending(x => x.SpectrumSearchResult.Score).ToList();
 				if (groupOrdered.Any())
 				{
-					this.LipidGroupSearchResultList.Add(group.First());
+					this.LipidGroupSearchResultList.Add(groupOrdered.First());
 				}
 			}
 
