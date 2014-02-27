@@ -122,7 +122,7 @@ namespace Liquid.ViewModel
 			progress.Report(0);
 		}
 
-		public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode)
+		public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
 		{
 			IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
 
@@ -141,8 +141,7 @@ namespace Liquid.ViewModel
 			{
 				var groupOrdered = group.OrderByDescending(x => x.SpectrumSearchResult.Score).ToList();
 
-				const int numTargetsToInclude = 1;
-				for (int i = 0; i < numTargetsToInclude && i < groupOrdered.Count; i++)
+				for (int i = 0; i < numResultsPerScanToInclude && i < groupOrdered.Count; i++)
 				{
 					LipidGroupSearchResult resultToAdd = groupOrdered[i];
 					this.LipidGroupSearchResultList.Add(resultToAdd);

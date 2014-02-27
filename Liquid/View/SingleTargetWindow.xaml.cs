@@ -170,8 +170,9 @@ namespace Liquid.View
 			FragmentationMode fragmentationMode = (FragmentationMode)this.FragmentationModeComboBox.SelectedItem;
 			double hcdMassError = double.Parse(this.HcdErrorTextBox.Text);
 			double cidMassError = double.Parse(this.CidErrorTextBox.Text);
+			int resultsPerScan = int.Parse(this.ResultsPerScanTextBox.Text);
 
-			await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(hcdMassError, cidMassError, fragmentationMode));
+			await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
 
 			// Select the best spectrum search result
 			if (this.SingleTargetViewModel.LipidGroupSearchResultList.Count > 0)
