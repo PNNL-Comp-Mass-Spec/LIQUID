@@ -107,14 +107,10 @@
     <Compile Include="Plot.xaml.cs">
       <DependentUpon>Plot.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\GlobalWorkflowViewModel.cs" />
     <Compile Include="ViewModel\MsMsInfoViewModel.cs" />
     <Compile Include="ViewModel\MsOneInfoViewModel.cs" />
     <Compile Include="ViewModel\SingleTargetViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\GlobalWorkflowWindow.xaml.cs">
-      <DependentUpon>GlobalWorkflowWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\SingleTargetWindow.xaml.cs">
       <DependentUpon>SingleTargetWindow.xaml</DependentUpon>
     </Compile>
@@ -141,10 +137,6 @@
     <Page Include="Plot.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\GlobalWorkflowWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SingleTargetWindow.xaml">
       <SubType>Designer</SubType>
