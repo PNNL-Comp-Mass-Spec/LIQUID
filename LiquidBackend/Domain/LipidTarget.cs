@@ -66,7 +66,7 @@ namespace LiquidBackend.Domain
 				int hashCode = (int) LipidClass;
 				hashCode = (hashCode*397) ^ (int) FragmentationMode;
 				hashCode = (hashCode*397) ^ (Composition != null ? Composition.GetHashCode() : 0);
-				hashCode = (hashCode*397) ^ (AcylChainList != null ? AcylChainList.GetHashCode() : 0);
+				if (AcylChainList != null) hashCode = AcylChainList.OrderBy(x => x.NumCarbons).ThenBy(x => x.NumDoubleBonds).ThenBy(x => x.AcylChainType).Aggregate(hashCode, (current, acylChain) => (current * 397) ^ acylChain.GetHashCode());
 				return hashCode;
 			}
 		}

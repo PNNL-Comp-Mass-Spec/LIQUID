@@ -136,13 +136,16 @@ namespace Liquid.ViewModel
 			// Group results of same scan together
 			var resultsGroupedByScan = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum.ScanNum);
 
-			// Grab the result with the best score
+			// Grab the result(s) with the best score
 			foreach (var group in resultsGroupedByScan)
 			{
 				var groupOrdered = group.OrderByDescending(x => x.SpectrumSearchResult.Score).ToList();
-				if (groupOrdered.Any())
+
+				const int numTargetsToInclude = 1;
+				for (int i = 0; i < numTargetsToInclude && i < groupOrdered.Count; i++)
 				{
-					this.LipidGroupSearchResultList.Add(groupOrdered.First());
+					LipidGroupSearchResult resultToAdd = groupOrdered[i];
+					this.LipidGroupSearchResultList.Add(resultToAdd);
 				}
 			}
 

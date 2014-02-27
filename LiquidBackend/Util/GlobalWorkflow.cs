@@ -73,8 +73,6 @@ namespace LiquidBackend.Util
 				double lowMz = msMsPrecursorMz - mzToSearchTolerance;
 				double highMz = msMsPrecursorMz + mzToSearchTolerance;
 
-				Dictionary<IGrouping<LipidTarget, Lipid>, SpectrumSearchResult> resultDictionary = new Dictionary<IGrouping<LipidTarget, Lipid>, SpectrumSearchResult>();
-
 				foreach (var lipidGrouping in lipidsGroupedByTarget)
 				{
 					LipidTarget lipidTarget = lipidGrouping.Key;
@@ -102,7 +100,6 @@ namespace LiquidBackend.Util
 
 						// Create spectrum search results
 						SpectrumSearchResult spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic);
-						resultDictionary.Add(lipidGrouping, spectrumSearchResult);
 
 						LipidGroupSearchResult lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, lipidGroupList, spectrumSearchResult);
 						lipidGroupSearchResultList.Add(lipidGroupSearchResult);
