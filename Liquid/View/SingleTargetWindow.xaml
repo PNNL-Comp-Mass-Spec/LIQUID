@@ -51,12 +51,12 @@
                                 </DockPanel>
                                 <TextBox Name="TargetMzTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=CurrentLipidTarget.MzRounded, StringFormat='  Target m/z: {0}', Mode=OneWay}" Margin="0,5,0,0" Style="{StaticResource SelectableTextBlockLikeStyle}" />
                                 <TextBlock Name="NumberOfResultsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=SpectrumSearchResultList.Count, StringFormat='  # of Results: {0}'}" Margin="0,5,0,0" />
-                                <DataGrid Name="SpectrumSearchResultsDataGrid" ItemsSource="{Binding Path=SpectrumSearchResultList}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="350" Width="Auto" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                                <DataGrid Name="SpectrumSearchResultsDataGrid" ItemsSource="{Binding Path=SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="350" Width="Auto" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Precursor" Binding="{Binding Path=PrecursorSpectrum.ScanNum}" Width="60" />
-                                        <DataGridTextColumn Header="Apex" Binding="{Binding Path=ApexScanNum}" Width="40" />
-                                        <DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=NumMatchingMsMsPeaks, StringFormat=0}" Width="60" />
-                                        <DataGridTextColumn Header="Score" Binding="{Binding Path=Score, StringFormat=0.00E00}" Width="60" />
+                                        <DataGridTextColumn Header="Precursor" Binding="{Binding Path=PrecursorSpectrum.ScanNum, Mode=OneWay}" Width="60" />
+                                        <DataGridTextColumn Header="Apex" Binding="{Binding Path=ApexScanNum, Mode=OneWay}" Width="40" />
+                                        <DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=NumMatchingMsMsPeaks, Mode=OneWay, StringFormat=0}" Width="60" />
+                                        <DataGridTextColumn Header="Score" Binding="{Binding Path=Score, Mode=OneWay, StringFormat=0.00E00}" Width="60" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </StackPanel>
@@ -75,10 +75,10 @@
                                 <Button Content="Process Targets!" Click="ProcessAllTargetsButtonClick" Height="23" HorizontalAlignment="Left" Name="ProcessAllTargetsButton" VerticalAlignment="Top" Width="110" Margin="0,5,0,0" />
                                 <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="GlobalWorkflowProgressBar" VerticalAlignment="Top" Width="105" Value="{Binding GlobalWorkflowProgress, Mode=OneWay}" />
                             </DockPanel>
-                            <DataGrid Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding Path=LipidGroupSearchResultList}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="400" Width="232" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                            <DataGrid Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding Path=LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="400" Width="232" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Scan" Binding="{Binding Path=SpectrumSearchResult.HcdSpectrum.ScanNum}" Width="40" />
-                                    <DataGridTextColumn Header="Lipid" Binding="{Binding Path=LipidTarget.StrippedDisplay, StringFormat=0}" Width="173" />
+                                    <DataGridTextColumn Header="Scan" Binding="{Binding Path=SpectrumSearchResult.HcdSpectrum.ScanNum, Mode=OneWay}" Width="40" />
+                                    <DataGridTextColumn Header="Lipid" Binding="{Binding Path=LipidTarget.StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="173" />
                                     <!--DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=SpectrumSearchResult.NumMatchingMsMsPeaks, StringFormat=0}" Width="60" /-->
                                     <!--DataGridTextColumn Header="Score" Binding="{Binding Path=SpectrumSearchResult.Score, StringFormat=0.00E00}" Width="60" /-->
                                 </DataGrid.Columns>
