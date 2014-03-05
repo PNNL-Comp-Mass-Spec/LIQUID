@@ -56,6 +56,9 @@
     <Reference Include="MathNet.Numerics">
       <HintPath>..\lib\MathNet.Numerics.dll</HintPath>
     </Reference>
+    <Reference Include="MyEMSLReader">
+      <HintPath>..\lib\MyEMSLReader.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\lib\nunit.framework.dll</HintPath>
     </Reference>
