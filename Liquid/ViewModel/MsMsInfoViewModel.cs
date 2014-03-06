@@ -45,8 +45,11 @@ namespace Liquid.ViewModel
 			this.MsMsAnnotationList = new List<MsMsAnnotation>();
 
 			// Create the plot models
-			PlotModel hcdPlot = CreateMsMsPlot(hcdSearchResultList, this.CurrentSpectrumSearchResult.HcdSpectrum);
-			PlotModel cidPlot = CreateMsMsPlot(cidSearchResultList, this.CurrentSpectrumSearchResult.CidSpectrum);
+			PlotModel hcdPlot = new PlotModel();
+			PlotModel cidPlot = new PlotModel();
+
+			if (this.CurrentSpectrumSearchResult.HcdSpectrum != null) hcdPlot = CreateMsMsPlot(hcdSearchResultList, this.CurrentSpectrumSearchResult.HcdSpectrum);
+			if (this.CurrentSpectrumSearchResult.CidSpectrum != null) cidPlot = CreateMsMsPlot(cidSearchResultList, this.CurrentSpectrumSearchResult.CidSpectrum);
 
 			this.MsMsHcdPlot = hcdPlot;
 			this.MsMsCidPlot = cidPlot;

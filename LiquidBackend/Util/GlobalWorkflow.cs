@@ -37,6 +37,10 @@ namespace LiquidBackend.Util
 			int minLcScan = lcmsRun.MinLcScan;
 			double maxLcScan = lcmsRun.MaxLcScan;
 
+			ActivationMethodCombination activationMethodCombination = FigureOutActivationMethodCombination(lcmsRun);
+			if (activationMethodCombination == ActivationMethodCombination.Unsupported) throw new SystemException("Unsupported activation method.");
+			bool useTwoScans = (activationMethodCombination == ActivationMethodCombination.CidThenHcd || activationMethodCombination == ActivationMethodCombination.HcdThenCid);
+
 			for (int i = minLcScan; i <= maxLcScan; i++)
 			{
 				// Lookup the MS/MS Spectrum
@@ -44,8 +48,12 @@ namespace LiquidBackend.Util
 				if (firstMsMsSpectrum == null) continue;
 
 				// Lookup the MS/MS Spectrum
-				ProductSpectrum secondMsMsSpectrum = lcmsRun.GetSpectrum(i + 1) as ProductSpectrum;
-				if (secondMsMsSpectrum == null) continue;
+				ProductSpectrum secondMsMsSpectrum = null;
+				if (useTwoScans)
+				{
+					secondMsMsSpectrum = lcmsRun.GetSpectrum(i + 1) as ProductSpectrum;
+					if (secondMsMsSpectrum == null) continue;
+				}
 
 				//textWriter.WriteLine(i);
 				//Console.WriteLine(DateTime.Now + "\tProcessing Scan" + i);
@@ -93,8 +101,8 @@ namespace LiquidBackend.Util
 						IEnumerable<MsMsSearchUnit> msMsSearchUnits = lipidTarget.GetMsMsSearchUnits();
 
 						// Get all matching peaks
-						List<MsMsSearchResult> hcdSearchResultList = (from msMsSearchUnit in msMsSearchUnits let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
-						List<MsMsSearchResult> cidSearchResultList = (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
+						List<MsMsSearchResult> hcdSearchResultList = hcdSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
+						List<MsMsSearchResult> cidSearchResultList = cidSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
 
 						// Create spectrum search results
 						SpectrumSearchResult spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic);
@@ -107,8 +115,8 @@ namespace LiquidBackend.Util
 					}
 				}
 
-				// Skip an extra scan since we look at 2 at a time
-				i++;
+				// Skip an extra scan if we look at 2 at a time
+				if (useTwoScans) i++;
 
 				// Report progress
 				if (progress != null)
@@ -125,6 +133,38 @@ namespace LiquidBackend.Util
 		public void RunGlobalWorkflowSingleScan()
 		{
 			throw new NotImplementedException();
+		}
+
+		private static ActivationMethodCombination FigureOutActivationMethodCombination(LcMsRun lcmsRun)
+		{
+			int firstMsMsScanNumber = lcmsRun.GetNextScanNum(0, 2);
+
+			// Lookup the first MS/MS Spectrum
+			ProductSpectrum firstMsMsSpectrum = lcmsRun.GetSpectrum(firstMsMsScanNumber) as ProductSpectrum;
+
+			if(firstMsMsSpectrum == null) return ActivationMethodCombination.Unsupported;
+
+			// Lookup the second MS/MS Spectrum
+			int nextMsMsScanNumber = lcmsRun.GetNextScanNum(firstMsMsScanNumber, 2);
+			ProductSpectrum nextMsMsSpectrum = lcmsRun.GetSpectrum(nextMsMsScanNumber) as ProductSpectrum;
+
+			if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
+			{
+				if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.HcdOnly;
+				if (nextMsMsSpectrum == null) return ActivationMethodCombination.HcdOnly;
+				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.HcdThenCid;
+				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.HcdOnly;
+				
+			}
+			else if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.CID)
+			{
+				if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.CidOnly;
+				if (nextMsMsSpectrum == null) return ActivationMethodCombination.CidOnly;
+				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.CidThenHcd;
+				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.CidOnly;
+			}
+
+			return ActivationMethodCombination.Unsupported;
 		}
 	}
 }
