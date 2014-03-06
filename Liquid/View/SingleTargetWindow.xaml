@@ -3,10 +3,40 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:oxy="http://oxyplot.codeplex.com"
         xmlns:controls="clr-namespace:Liquid.Controls"
+        xmlns:liquid="clr-namespace:Liquid"
         Title="Liquid: Lipid Informed Quantitation and Identification" Height="775" Width="1050">
     <Grid x:Name="MainGrid">
         <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left">
             <Ribbon x:Name="RibbonWin" SelectedIndex="1" Height="45">
+                <Ribbon.ApplicationMenu>
+                    <RibbonApplicationMenu KeyTip="F">
+                        <RibbonApplicationMenu.SmallImageSource>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <GlyphRunDrawing ForegroundBrush="White">
+                                        <GlyphRunDrawing.GlyphRun>
+                                            <GlyphRun
+                            CaretStops="{x:Null}" 
+                            ClusterMap="{x:Null}" 
+                            IsSideways="False" 
+                            GlyphOffsets="{x:Null}" 
+                            GlyphIndices="41 76 79 72" 
+                            FontRenderingEmSize="12" 
+                            DeviceFontName="{x:Null}" 
+                            AdvanceWidths="5.859375 2.90625 2.90625 6.275390625">
+                                                <GlyphRun.GlyphTypeface>
+                                                    <GlyphTypeface FontUri="C:\WINDOWS\Fonts\SEGOEUI.TTF"/>
+                                                </GlyphRun.GlyphTypeface>
+                                            </GlyphRun>
+                                        </GlyphRunDrawing.GlyphRun>
+                                    </GlyphRunDrawing>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </RibbonApplicationMenu.SmallImageSource>
+                        <RibbonApplicationMenuItem Header="Open File" Click="RawFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png">
+                        </RibbonApplicationMenuItem>
+                    </RibbonApplicationMenu>
+                </Ribbon.ApplicationMenu>
                 <RibbonTab Name="InformedRibbonTab" Header="Single Target">
                 </RibbonTab>
                 <RibbonTab Name="GloblWorkflowRibbonTab" Header="Global Analysis">
@@ -14,7 +44,7 @@
             </Ribbon>
             <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left">
                 <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                    <Button Content="Open File" Click="RawFileButtonClick" Height="23" HorizontalAlignment="Left" Name="RawFileButton" VerticalAlignment="Top" Width="60" />
+                    <!--Button Content="Open File" Click="RawFileButtonClick" Height="23" HorizontalAlignment="Left" Name="RawFileButton" VerticalAlignment="Top" Width="60" /-->
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" Name="RawFileLocationTextBlock" Text="{Binding Path=RawFileName, StringFormat='File Loaded: {0}'}" VerticalAlignment="Top" Width="Auto" Visibility="Visible" />
                 </DockPanel>
                 <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
