@@ -37,9 +37,9 @@
                         </RibbonApplicationMenuItem>
                     </RibbonApplicationMenu>
                 </Ribbon.ApplicationMenu>
-                <RibbonTab Name="InformedRibbonTab" Header="Single Target">
+                <RibbonTab Name="InformedRibbonTab" Header="Single Target" KeyTip="S">
                 </RibbonTab>
-                <RibbonTab Name="GloblWorkflowRibbonTab" Header="Global Analysis">
+                <RibbonTab Name="GloblWorkflowRibbonTab" Header="Global Analysis" KeyTip="G">
                 </RibbonTab>
             </Ribbon>
             <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left">
