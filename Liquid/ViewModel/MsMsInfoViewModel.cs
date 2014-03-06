@@ -69,7 +69,7 @@ namespace Liquid.ViewModel
 			var peakList = productSpectrum.Peaks;
 			var fragmentationType = productSpectrum.ActivationMethod == ActivationMethod.CID ? FragmentationType.CID : FragmentationType.HCD;
 
-			string plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + " // Parent Scan - " + parentScan + " (" + productSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString("0.000") + " m/z)";
+			string plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + " // Parent Scan - " + parentScan + " (" + productSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString("0.0000") + " m/z)";
 
 			PlotModel plotModel = new PlotModel(plotTitle);
 			plotModel.TitleFontSize = 14;

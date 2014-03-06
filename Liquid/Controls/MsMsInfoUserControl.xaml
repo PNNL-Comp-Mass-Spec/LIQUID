@@ -23,7 +23,7 @@
                         <DataGrid ItemsSource="{Binding Path=MsMsAnnotationList, Mode=OneWay}" AutoGenerateColumns="False" Name="MsMsPeaksDataGrid" Width="500" Margin="0,0,0,0" HorizontalAlignment="Right" Height="Auto" MaxHeight="200" HeadersVisibility="Column">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Type" Binding="{Binding Path=FragmentionType, Mode=OneWay}" Width="75" />
-                                <DataGridTextColumn Header="m/z" Binding="{Binding Path=Position.X, Mode=OneWay, StringFormat=0.###}" Width="75" />
+                                <DataGridTextColumn Header="m/z" Binding="{Binding Path=Position.X, Mode=OneWay, StringFormat=0.####}" Width="75" />
                                 <DataGridTextColumn Header="Intensity" Binding="{Binding Path=Position.Y, Mode=OneWay, StringFormat=0}" Width="100" />
                                 <DataGridTextColumn Header="Annotation" Binding="{Binding Path=Text, Mode=OneWay}" Width="*" />
                             </DataGrid.Columns>
@@ -35,7 +35,7 @@
                         <Label Content="Theoretical MS/MS Peaks" FontWeight="Bold" Name="TheoreticalLabel" Width="Auto" Padding="5,5,5,5" HorizontalAlignment="Center"/>
                         <DataGrid ItemsSource="{Binding Path=CurrentLipidTarget.SortedMsMsSearchUnits, Mode=OneWay}" AutoGenerateColumns="False" Name="TheoreticalMsMsPeaksDataGrid" Width="500" Margin="0,0,0,0" HorizontalAlignment="Right" Height="Auto" MaxHeight="200" HeadersVisibility="Column">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="m/z" Binding="{Binding Path=Mz, Mode=OneWay, StringFormat=0.###}" Width="75" />
+                                <DataGridTextColumn Header="m/z" Binding="{Binding Path=Mz, Mode=OneWay, StringFormat=0.####}" Width="75" />
                                 <DataGridTextColumn Header="Description" Binding="{Binding Path=DescriptionForUi, Mode=OneWay}" Width="*" />
                             </DataGrid.Columns>
                         </DataGrid>
