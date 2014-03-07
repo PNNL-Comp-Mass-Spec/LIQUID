@@ -199,7 +199,7 @@ namespace Liquid.ViewModel
 			yAxis.Maximum = localMaxIntensity + (localMaxIntensity * .05);
 			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
 			yAxis.ShowMinorTicks = true;
-			yAxis.MajorStep = (maxIntensity + (maxIntensity * .05)) / 5.0;
+			yAxis.MajorStep = (localMaxIntensity + (localMaxIntensity * .05)) / 5.0;
 			//yAxis.IsAxisVisible = false;
 			yAxis.AxisTickToLabelDistance = 0;
 			yAxis.StringFormat = "0.0E00";
