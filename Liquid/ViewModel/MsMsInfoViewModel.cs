@@ -149,11 +149,13 @@ namespace Liquid.ViewModel
 			var yAxis = new LinearAxis(AxisPosition.Left, "Intensity");
 			yAxis.Minimum = 0;
 			yAxis.AbsoluteMinimum = 0;
-			yAxis.Maximum = maxIntensity + (maxIntensity * .05);
-			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
+			//yAxis.Maximum = maxIntensity + (maxIntensity * .05);
+			//yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
 			yAxis.Maximum = secondMaxIntensity + (secondMaxIntensity * .25);
-			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
-			yAxis.StringFormat = "0E00";
+			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .25);
+			yAxis.ShowMinorTicks = true;
+			yAxis.MajorStep = (secondMaxIntensity + (secondMaxIntensity * .25)) / 5.0;
+			yAxis.StringFormat = "0.0E00";
 			yAxis.AxisChanged += OnYAxisChange;
 
 			var xAxis = new LinearAxis(AxisPosition.Bottom, "m/z");

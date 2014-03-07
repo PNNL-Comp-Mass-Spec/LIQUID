@@ -70,11 +70,15 @@ namespace Liquid.ViewModel
 		{
 			LinearAxis yAxis = sender as LinearAxis;
 
-			// No need to update anything if the minimum is already <= 0
+			// Set to use 5 major labels no matter where you are zoomed
+			yAxis.MajorStep = yAxis.ActualMaximum / 5.0;
+
+			// No need to update anything else if the minimum is already <= 0
 			if (yAxis.ActualMinimum <= 0) return;
 
 			// Set the minimum to 0 and refresh the plot
 			yAxis.Zoom(0, yAxis.ActualMaximum);
+
 			yAxis.PlotModel.RefreshPlot(true);
 		}
 	}

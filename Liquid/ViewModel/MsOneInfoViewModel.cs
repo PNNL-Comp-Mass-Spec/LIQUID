@@ -88,10 +88,11 @@ namespace Liquid.ViewModel
 			yAxis.AbsoluteMinimum = 0;
 			yAxis.Maximum = maxLocalIntensity + (maxLocalIntensity * .05);
 			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
-			yAxis.ShowMinorTicks = false;
+			yAxis.ShowMinorTicks = true;
+			yAxis.MajorStep = (maxLocalIntensity + (maxLocalIntensity * .05)) / 5.0;
 			//yAxis.IsAxisVisible = false;
 			yAxis.AxisTickToLabelDistance = 0;
-			yAxis.StringFormat = "0E00";
+			yAxis.StringFormat = "0.0E00";
 			yAxis.FontSize = 10;
 			yAxis.AxisChanged += OnYAxisChange;
 
@@ -177,10 +178,11 @@ namespace Liquid.ViewModel
 			yAxis.AbsoluteMinimum = 0;
 			yAxis.Maximum = localMaxIntensity + (localMaxIntensity * .05);
 			yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
-			yAxis.ShowMinorTicks = false;
+			yAxis.ShowMinorTicks = true;
+			yAxis.MajorStep = (maxIntensity + (maxIntensity * .05)) / 5.0;
 			//yAxis.IsAxisVisible = false;
 			yAxis.AxisTickToLabelDistance = 0;
-			yAxis.StringFormat = "0E00";
+			yAxis.StringFormat = "0.0E00";
 			yAxis.FontSize = 10;
 			yAxis.AxisChanged += OnYAxisChange;
 
