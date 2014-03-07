@@ -82,9 +82,14 @@ namespace Liquid.ViewModel
 			mzPeakSeries.Title = "Peaks";
 
 			var annotatedPeakSeries = new StemSeries();
-			annotatedPeakSeries.Color = OxyColors.Red;
+			annotatedPeakSeries.Color = OxyColors.Green;
 			annotatedPeakSeries.StrokeThickness = 2;
 			annotatedPeakSeries.Title = "Matched Ions";
+
+			var diagnosticPeakSeries = new StemSeries();
+			diagnosticPeakSeries.Color = OxyColors.Red;
+			diagnosticPeakSeries.StrokeThickness = 2;
+			diagnosticPeakSeries.Title = "Diagnostic Ion";
 
 			plotModel.IsLegendVisible = true;
 			plotModel.LegendPosition = LegendPosition.TopRight;
@@ -116,6 +121,8 @@ namespace Liquid.ViewModel
 
 				DataPoint dataPoint = new DataPoint(mz, intensity);
 
+				bool isDiagnostic = false;
+
 				var matchedPeaks = searchResultList.Where(x => x.ObservedPeak.Equals(msPeak));
 				foreach (var matchedSearchResult in matchedPeaks)
 				{
@@ -131,9 +138,15 @@ namespace Liquid.ViewModel
 
 					plotModel.Annotations.Add(annotation);
 					this.MsMsAnnotationList.Add(annotation);
+
+					if (!isDiagnostic) isDiagnostic = matchedSearchResult.TheoreticalPeak.IsDiagnostic;
 				}
 
-				if (matchedPeaks.Any())
+				if (isDiagnostic)
+				{
+					diagnosticPeakSeries.Points.Add(dataPoint);
+				}
+				else if (matchedPeaks.Any())
 				{
 					annotatedPeakSeries.Points.Add(dataPoint);
 				}
@@ -145,6 +158,7 @@ namespace Liquid.ViewModel
 
 			plotModel.Series.Add(mzPeakSeries);
 			plotModel.Series.Add(annotatedPeakSeries);
+			plotModel.Series.Add(diagnosticPeakSeries);
 
 			var yAxis = new LinearAxis(AxisPosition.Left, "Intensity");
 			yAxis.Minimum = 0;

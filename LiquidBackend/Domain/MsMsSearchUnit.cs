@@ -11,6 +11,7 @@ namespace LiquidBackend.Domain
 		public double Mz { get; private set; }
 		public string Description { get; private set; }
 		public AcylChain AcylChain { get; private set; }
+		public bool IsDiagnostic { get; private set; }
 
 		public string DescriptionForUi
 		{
@@ -21,23 +22,25 @@ namespace LiquidBackend.Domain
 			}
 		}
 
-		public MsMsSearchUnit(double mz, string description)
+		public MsMsSearchUnit(double mz, string description, bool isDiagnostic = false)
 		{
 			this.Mz = mz;
 			this.Description = description;
 			this.AcylChain = null;
+			this.IsDiagnostic = isDiagnostic;
 		}
 
-		public MsMsSearchUnit(double mz, string description, AcylChain acylChain)
+		public MsMsSearchUnit(double mz, string description, AcylChain acylChain, bool isDiagnostic = false)
 		{
 			this.Mz = mz;
 			this.Description = description;
 			this.AcylChain = acylChain;
+			this.IsDiagnostic = isDiagnostic;
 		}
 
 		public override string ToString()
 		{
-			return string.Format("Mz: {0}, Description: {1}, AcylChain: {2}", Mz, Description, AcylChain);
+			return string.Format("Mz: {0}, Description: {1}, AcylChain: {2}, IsDiagnostic: {3}", Mz, Description, AcylChain, IsDiagnostic);
 		}
 
 		protected bool Equals(MsMsSearchUnit other)
