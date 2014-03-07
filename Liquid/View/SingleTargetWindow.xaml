@@ -94,7 +94,7 @@
                         <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=GloblWorkflowRibbonTab}">
                             <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight" Margin="0,5,0,0">
                                 <Button Content="Load Lipid Targets" Click="LoadTargetsFileButtonClick" Height="23" HorizontalAlignment="Left" Name="LoadTargetsButton" VerticalAlignment="Top" Width="110" Margin="5,0,0,0" />
-                                <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,0,0,0" Name="LipidTargetsProgressBar" VerticalAlignment="Top" Width="105" Value="{Binding LipidTargetLoadProgress, Mode=OneWay}" />
+                                <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,0,0,0" Name="LipidTargetsProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding LipidTargetLoadProgress, Mode=OneWay}" />
                             </DockPanel>
                             <TextBlock Name="NumberOfTargetsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=LipidTargetList.Count, StringFormat='  # of Targets: {0}'}" Margin="0,5,0,0" DockPanel.Dock="Left" />
                             <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
@@ -103,7 +103,7 @@
                             </DockPanel>
                             <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight" Margin="0,0,0,0">
                                 <Button Content="Process Targets!" Click="ProcessAllTargetsButtonClick" Height="23" HorizontalAlignment="Left" Name="ProcessAllTargetsButton" VerticalAlignment="Top" Width="110" Margin="5,5,0,0" />
-                                <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="GlobalWorkflowProgressBar" VerticalAlignment="Top" Width="105" Value="{Binding GlobalWorkflowProgress, Mode=OneWay}" />
+                                <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="GlobalWorkflowProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding GlobalWorkflowProgress, Mode=OneWay}" />
                             </DockPanel>
                             <DataGrid Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding Path=LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="400" Width="232" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                 <DataGrid.Columns>
