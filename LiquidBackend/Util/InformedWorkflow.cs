@@ -97,7 +97,7 @@ namespace LiquidBackend.Util
 				int precursorScanNumber = lcmsRun.GetPrecursorScanNum(firstScanNumber);
 				Spectrum precursorSpectrum = lcmsRun.GetSpectrum(precursorScanNumber);
 
-				SpectrumSearchResult spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic);
+				SpectrumSearchResult spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic, lcmsRun);
 				spectrumSearchResultList.Add(spectrumSearchResult);
 			}
 

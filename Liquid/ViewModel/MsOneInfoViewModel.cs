@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LiquidBackend.Domain;
+using LiquidBackend.Util;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -16,6 +17,9 @@ namespace Liquid.ViewModel
 		public SpectrumSearchResult CurrentSpectrumSearchResult { get; private set; }
 		public PlotModel IsotopicProfilePlot { get; set; }
 		public PlotModel XicPlot { get; set; }
+
+		public double CurrentMz { get; private set; }
+		public double CurrentPpmError { get; private set; }
 
 		public void OnLipidTargetChange(LipidTarget lipidTarget)
 		{
@@ -30,6 +34,22 @@ namespace Liquid.ViewModel
 
 			this.CreateIsotopicProfilePlot();
 			this.CreateXicPlot();
+
+			this.UpdatePpmError();
+		}
+
+		private void UpdatePpmError()
+		{
+			var targetMz = this.CurrentLipidTarget.MzRounded;
+			var massSpectrum = this.CurrentSpectrumSearchResult.PrecursorSpectrum.Peaks;
+
+			var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
+
+			this.CurrentMz = closestPeak.Mz;
+			OnPropertyChanged("CurrentMz");
+
+			this.CurrentPpmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
+			OnPropertyChanged("CurrentPpmError");
 		}
 
 		private void CreateIsotopicProfilePlot()

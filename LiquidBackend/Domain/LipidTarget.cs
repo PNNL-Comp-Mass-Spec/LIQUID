@@ -16,6 +16,7 @@ namespace LiquidBackend.Domain
 		public FragmentationMode FragmentationMode { get; private set; }
 		public Composition Composition { get; private set; }
 		public IEnumerable<AcylChain> AcylChainList { get; private set; }
+		public Adduct Adduct { get; private set; }
 
 		public double MzRounded
 		{
@@ -52,13 +53,19 @@ namespace LiquidBackend.Domain
 			}
 		}
 
-		public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList)
+		public string AdductString
+		{
+			get { return this.Adduct != null ? this.Adduct.ToString() : "Unknown"; }
+		}
+
+		public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList, Adduct adduct = Adduct.Hydrogen)
 		{
 			CommonName = commonName;
 			LipidClass = lipidClass;
 			FragmentationMode = fragmentationMode;
 			Composition = composition;
 			AcylChainList = acylChainList;
+			Adduct = adduct;
 		}
 
 		public List<MsMsSearchUnit> GetMsMsSearchUnits()

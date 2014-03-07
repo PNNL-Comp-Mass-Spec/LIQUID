@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using InformedProteomics.Backend.Data.Spectrometry;
+using InformedProteomics.Backend.MassSpecData;
 
 namespace LiquidBackend.Domain
 {
@@ -16,6 +17,7 @@ namespace LiquidBackend.Domain
 		public List<MsMsSearchResult> HcdSearchResultList { get; private set; }
 		public List<MsMsSearchResult> CidSearchResultList { get; private set; }
 		public Xic Xic { get; private set; }
+		public LcMsRun LcMsRun { get; private set; }
 
 		public int NumMatchingMsMsPeaks
 		{
@@ -25,6 +27,16 @@ namespace LiquidBackend.Domain
 		public int ApexScanNum
 		{
 			get { return this.Xic.GetNearestApexScanNum(this.PrecursorSpectrum.ScanNum, true); }
+		}
+
+		public double ApexIntensity
+		{
+			get { return this.Xic.Where(x => x.ScanNum == this.ApexScanNum).Sum(x => x.Intensity); }
+		}
+
+		public double NormalizedElutionTime
+		{
+			get { return this.ApexScanNum / (double) this.LcMsRun.MaxLcScan; }
 		}
 
 		public double Score
@@ -39,7 +51,7 @@ namespace LiquidBackend.Domain
 			}
 		}
 
-		public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, Spectrum precursorSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, Xic xic)
+		public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, Spectrum precursorSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, Xic xic, LcMsRun lcMsRun)
 		{
 			this.HcdSpectrum = hcdSpectrum;
 			this.CidSpectrum = cidSpectrum;
@@ -47,6 +59,7 @@ namespace LiquidBackend.Domain
 			this.HcdSearchResultList = hcdSearchResultList;
 			this.CidSearchResultList = cidSearchResultList;
 			this.Xic = xic;
+			this.LcMsRun = lcMsRun;
 		}
 
 		public int GetNumMatchingMsMsPeaks()

@@ -5,40 +5,60 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:oxy="http://oxyplot.codeplex.com"
              mc:Ignorable="d" 
-             d:DesignHeight="405" d:DesignWidth="255">
+             d:DesignHeight="805" d:DesignWidth="255">
     <Grid>
         <StackPanel Height="Auto" HorizontalAlignment="Right" Margin="10,0,5,5" Name="MsFeaturePanel" VerticalAlignment="Stretch" Width="Auto" Orientation="Vertical">
             <oxy:Plot Model="{Binding IsotopicProfilePlot}" Margin="0,0,0,0" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
             <oxy:Plot Model="{Binding XicPlot}" Margin="0,0,0,20" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
-            <!--StackPanel Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="msFeatureInfoPanel" VerticalAlignment="Bottom" Width="Auto" Orientation="Vertical">
-                    <Label Content="MS Feature Info" Height="Auto" Padding="5,5,5,5" Name="msFeatureInfoLabel" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Width="Auto" />
-                    <Grid Height="Auto" MinHeight="150" HorizontalAlignment="Left" Margin="0,0,0,0" Name="msFeatureInfoGrid" VerticalAlignment="Bottom" Width="Auto" MinWidth="300">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="150" />
-                            <ColumnDefinition Width="*" MinWidth="100" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Mass" FontWeight="Bold" />
-                        <TextBlock Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.IsotopicProfile.MonoIsotopicMass, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="1" Text="Mass Error (ppm)" FontWeight="Bold" />
-                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.PpmError, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="2" Text="m/z" FontWeight="Bold" />
-                        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.IsotopicProfile.MonoPeakMZ, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="3" Text="Normalized Elution Time" FontWeight="Bold" />
-                        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.NormalizedElutionTime, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="4" Text="Scan LC Apex" FontWeight="Bold" />
-                        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.Peak.XValue, StringFormat=0.###}" />
-                        <TextBlock Grid.Row="5" Text="Intensity" FontWeight="Bold" />
-                        <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Path=CurrentInformedResultUnit.Peak.Height, StringFormat=0}" />
-                    </Grid>
-                </StackPanel-->
+            <StackPanel Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="LipidInfoPanel" VerticalAlignment="Bottom" Width="Auto" Orientation="Vertical">
+                <Label Content="Target Lipid Info" Height="Auto" Padding="5,5,5,5" Name="LipidInfoLabel" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Width="Auto" />
+                <Grid Height="Auto" MinHeight="75" HorizontalAlignment="Left" Margin="0,0,0,0" Name="LipidInfoGrid" VerticalAlignment="Bottom" Width="Auto" MinWidth="250">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="150" />
+                        <ColumnDefinition Width="*" MinWidth="100" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Adduct" FontWeight="Bold" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=CurrentLipidTarget.AdductString, Mode=OneWay}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Target m/z" FontWeight="Bold" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=CurrentLipidTarget.MzRounded, Mode=OneWay, StringFormat=0.0000}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Empirical Formula" FontWeight="Bold" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=CurrentLipidTarget.EmpiricalFormula, Mode=OneWay}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="MsFeatureInfoPanel" VerticalAlignment="Bottom" Width="Auto" Orientation="Vertical">
+                <Label Content="Observed Info" Height="Auto" Padding="5,5,5,5" Name="MsFeatureInfoLabel" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Width="Auto" />
+                <Grid Height="Auto" MinHeight="150" HorizontalAlignment="Left" Margin="0,0,0,0" Name="MsFeatureInfoGrid" VerticalAlignment="Bottom" Width="Auto" MinWidth="250">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="150" />
+                        <ColumnDefinition Width="*" MinWidth="100" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Observed m/z" FontWeight="Bold" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=CurrentMz, Mode=OneWay, StringFormat=0.####}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="PPM Error" FontWeight="Bold" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=CurrentPpmError, Mode=OneWay, StringFormat=0.##}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Scan LC Apex" FontWeight="Bold" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.ApexScanNum, Mode=OneWay}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Normalized Elution Time" FontWeight="Bold" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.NormalizedElutionTime, Mode=OneWay, StringFormat=0.000}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Intensity" FontWeight="Bold" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.ApexIntensity, Mode=OneWay, StringFormat=0.00E00}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="MS/MS Score" FontWeight="Bold" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.Score, Mode=OneWay, StringFormat=0.00E00}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                </Grid>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>
