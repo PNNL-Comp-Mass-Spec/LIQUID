@@ -69,6 +69,8 @@ namespace Liquid.ViewModel
 			var peakList = productSpectrum.Peaks;
 			var fragmentationType = productSpectrum.ActivationMethod == ActivationMethod.CID ? FragmentationType.CID : FragmentationType.HCD;
 
+			if (!peakList.Any()) return new PlotModel();
+
 			string plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + " // Parent Scan - " + parentScan + " (" + productSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString("0.0000") + " m/z)";
 
 			PlotModel plotModel = new PlotModel(plotTitle);
@@ -165,7 +167,7 @@ namespace Liquid.ViewModel
 			yAxis.AbsoluteMinimum = 0;
 			//yAxis.Maximum = maxIntensity + (maxIntensity * .05);
 			//yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
-			if (maxIntensity > 0)
+			if (secondMaxIntensity > 0)
 			{
 				yAxis.Maximum = secondMaxIntensity + (secondMaxIntensity*.25);
 				yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity*.25);
@@ -173,12 +175,20 @@ namespace Liquid.ViewModel
 				yAxis.MajorStep = (secondMaxIntensity + (secondMaxIntensity*.25))/5.0;
 				yAxis.StringFormat = "0.0E00";
 			}
+			else if (maxIntensity > 0)
+			{
+				yAxis.Maximum = maxIntensity + (maxIntensity * .25);
+				yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .25);
+				yAxis.ShowMinorTicks = true;
+				yAxis.MajorStep = (maxIntensity + (maxIntensity * .25)) / 5.0;
+				yAxis.StringFormat = "0.0E00";
+			}
 			else
 			{
 				yAxis.Maximum = 1;
 				yAxis.AbsoluteMaximum = 1;
 				yAxis.ShowMinorTicks = false;
-				yAxis.MajorStep = 0.2;
+				yAxis.MajorStep = 1;
 				yAxis.StringFormat = "0.0";
 			}
 			
