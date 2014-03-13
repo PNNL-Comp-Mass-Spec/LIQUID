@@ -162,7 +162,7 @@ namespace Liquid.View
 		private async void LoadTargetsFileButtonClick(object sender, RoutedEventArgs e)
 		{
 			// Create OpenFileDialog and Set filter for file extension and default file extension
-			var dialog = new VistaOpenFileDialog { DefaultExt = ".txt", Filter = "Text Files (*.txt)|*.txt|Tab Sparated Files (.tsv)|*.tsv|All Files (*.*)|*.*" };
+			var dialog = new VistaOpenFileDialog { DefaultExt = ".txt", Filter = "Text Files (*.txt)|*.txt|Tab Separated Files (.tsv)|*.tsv|All Files (*.*)|*.*" };
 
 			// Get the selected file name and display in a TextBox 
 			DialogResult result = dialog.ShowDialog();
