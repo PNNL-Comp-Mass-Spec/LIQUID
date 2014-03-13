@@ -50,12 +50,16 @@ namespace Liquid.View
 			// Create OpenFileDialog and Set filter for file extension and default file extension
 			var dialog = new VistaOpenFileDialog { DefaultExt = ".raw", Filter = "Thermo(*.raw)|*.raw" };
 
-			this.RawFileLocationTextBlock.Visibility = Visibility.Hidden;
-
 			// Get the selected file name and display in a TextBox 
 			DialogResult result = dialog.ShowDialog();
 			if (result == System.Windows.Forms.DialogResult.OK)
 			{
+				this.RawFileLocationTextBlock.Text = "Loading file...";
+
+				// Disable buttons while files is loading
+				this.ProcessAllTargetsButton.IsEnabled = false;
+				this.SearchForTargetButton.IsEnabled = false;
+
 				// Open file 
 				string fileName = dialog.FileName;
 				FileInfo fileInfo = new FileInfo(fileName);
@@ -70,14 +74,13 @@ namespace Liquid.View
 					// Invalid file type ... should be impossible
 				}
 
+				this.RawFileLocationTextBlock.Text = "File loaded: " + fileInfo.Name;
+
 				// Enable processing all targets button if applicable
 				if (this.SingleTargetViewModel.LipidTargetList != null && this.SingleTargetViewModel.LipidTargetList.Any()) this.ProcessAllTargetsButton.IsEnabled = true;
 
 				// Enable search for target button
 				this.SearchForTargetButton.IsEnabled = true;
-
-				// Make the raw file location box visible
-				this.RawFileLocationTextBlock.Visibility = Visibility.Visible;
 			}
 		}
 
@@ -165,6 +168,9 @@ namespace Liquid.View
 			DialogResult result = dialog.ShowDialog();
 			if (result == System.Windows.Forms.DialogResult.OK)
 			{
+				// Disable processing button while file is loading
+				this.ProcessAllTargetsButton.IsEnabled = false;
+
 				// Open file 
 				string fileName = dialog.FileName;
 
