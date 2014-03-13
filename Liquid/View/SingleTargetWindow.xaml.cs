@@ -69,9 +69,16 @@ namespace Liquid.View
 				{
 					// Invalid file type ... should be impossible
 				}
-			}
 
-			this.RawFileLocationTextBlock.Visibility = Visibility.Visible;
+				// Enable processing all targets button if applicable
+				if (this.SingleTargetViewModel.LipidTargetList != null && this.SingleTargetViewModel.LipidTargetList.Any()) this.ProcessAllTargetsButton.IsEnabled = true;
+
+				// Enable search for target button
+				this.SearchForTargetButton.IsEnabled = true;
+
+				// Make the raw file location box visible
+				this.RawFileLocationTextBlock.Visibility = Visibility.Visible;
+			}
 		}
 
 		private void SearchForTargetButtonClick(object sender, RoutedEventArgs e)
@@ -162,6 +169,9 @@ namespace Liquid.View
 				string fileName = dialog.FileName;
 
 				await Task.Run(() => this.SingleTargetViewModel.LoadMoreLipidTargets(fileName));
+
+				// Enable processing all targets button if applicable
+				if (this.SingleTargetViewModel.LcMsRun != null) this.ProcessAllTargetsButton.IsEnabled = true;
 			}
 		}
 
