@@ -105,7 +105,7 @@
                                 <Button Content="Process Targets!" Click="ProcessAllTargetsButtonClick" Height="23" HorizontalAlignment="Left" Name="ProcessAllTargetsButton" VerticalAlignment="Top" Width="110" Margin="5,5,0,0" IsEnabled="False" />
                                 <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="GlobalWorkflowProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding GlobalWorkflowProgress, Mode=OneWay}" />
                             </DockPanel>
-                            <DataGrid Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding Path=LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="400" Width="232" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                            <DataGrid Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding Path=LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="400" Width="232" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left" Visibility="Hidden">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Scan" Binding="{Binding Path=SpectrumSearchResult.HcdSpectrum.ScanNum, Mode=OneWay}" Width="40" />
                                     <DataGridTextColumn Header="Lipid" Binding="{Binding Path=LipidTarget.StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="173" />

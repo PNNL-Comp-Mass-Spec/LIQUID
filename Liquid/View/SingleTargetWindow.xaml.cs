@@ -188,7 +188,9 @@ namespace Liquid.View
 			double cidMassError = double.Parse(this.CidErrorTextBox.Text);
 			int resultsPerScan = int.Parse(this.ResultsPerScanTextBox.Text);
 
+			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
 			await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
+			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Visible;
 
 			// Select the best spectrum search result
 			if (this.SingleTargetViewModel.LipidGroupSearchResultList.Count > 0)
