@@ -678,7 +678,7 @@ namespace LiquidBackend.Util
 
 						if (lipidClass == LipidClass.DG)
 						{
-							msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2*carbons) + 3 - (2*doubleBonds), 1, 2, 0, 0).Mass, "M-RCOOH-NH3 / [RCOO+58]", acylChain));
+							msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2*carbons) + 3 - (2*doubleBonds), 1, 2, 0, 0).Mass, "M-RCOOH-NH3", acylChain));
 						}
 						else
 						{
