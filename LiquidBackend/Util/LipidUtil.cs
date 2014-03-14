@@ -392,11 +392,13 @@ namespace LiquidBackend.Util
 				}
 				else if (lipidClass == LipidClass.PE)
 				{
-					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(2, 8, 1, 4, 0, 1).Mass, "Lipid-C2H8NO4P / DAG", true));
-					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "Lipid-H2O"));
-
 					int countOfChains = acylChainList.Count(x => x.NumCarbons > 0);
 					int countOfStandardAcylsChains = acylChainList.Count(x => x.AcylChainType == AcylChainType.Standard && x.NumCarbons > 0);
+
+					string displayC2H8NO4P = countOfChains > 1 ? "Lipid-C2H8NO4P / DAG" : "Lipid-C2H8NO4P";
+
+					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(2, 8, 1, 4, 0, 1).Mass, displayC2H8NO4P, true));
+					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "Lipid-H2O"));
 
 					foreach (var acylChain in acylChainList)
 					{
@@ -445,11 +447,13 @@ namespace LiquidBackend.Util
 				}
 				else if (lipidClass == LipidClass.PS)
 				{
-					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 8, 1, 6, 0, 1).Mass, "Lipid-C3H8NO6P / DAG", true));
-					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "Lipid-H2O"));
-
 					int countOfChains = acylChainList.Count(x => x.NumCarbons > 0);
 					int countOfStandardAcylsChains = acylChainList.Count(x => x.AcylChainType == AcylChainType.Standard && x.NumCarbons > 0);
+
+					string displayC3H8NO6P = countOfChains > 1 ? "Lipid-C3H8NO6P / DAG" : "Lipid-C3H8NO6P";
+
+					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 8, 1, 6, 0, 1).Mass, displayC3H8NO6P, true));
+					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "Lipid-H2O"));
 
 					foreach (var acylChain in acylChainList)
 					{
