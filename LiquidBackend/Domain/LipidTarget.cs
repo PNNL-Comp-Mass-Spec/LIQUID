@@ -17,6 +17,7 @@ namespace LiquidBackend.Domain
 		public Composition Composition { get; private set; }
 		public IEnumerable<AcylChain> AcylChainList { get; private set; }
 		public Adduct Adduct { get; private set; }
+		public LipidType LipidType { get; private set; }
 
 		public double MzRounded
 		{
@@ -71,6 +72,8 @@ namespace LiquidBackend.Domain
 			Composition = composition;
 			AcylChainList = acylChainList;
 			Adduct = adduct;
+
+			this.LipidType = FigureOutLipidType();
 		}
 
 		public List<MsMsSearchUnit> GetMsMsSearchUnits()
@@ -101,6 +104,58 @@ namespace LiquidBackend.Domain
 				if (AcylChainList != null) hashCode = AcylChainList.OrderBy(x => x.NumCarbons).ThenBy(x => x.NumDoubleBonds).ThenBy(x => x.AcylChainType).Aggregate(hashCode, (current, acylChain) => (current * 397) ^ acylChain.GetHashCode());
 				return hashCode;
 			}
+		}
+
+		private LipidType FigureOutLipidType()
+		{
+			if (this.LipidClass == LipidClass.Ubiquitones || this.LipidClass == LipidClass.Cholesterol) return LipidType.Standard;
+
+			int chainCount = 0;
+			int standardChainCount = 0;
+			int plasmogenChainCount = 0;
+			int etherChainCount = 0;
+			int dihydroxyChainCount = 0;
+			int trihydroChainCount = 0;
+
+			foreach (AcylChain acylChain in AcylChainList)
+			{
+				if (acylChain.NumCarbons < 1) continue;
+
+				AcylChainType chainType = acylChain.AcylChainType;
+				if (chainType == AcylChainType.Standard) standardChainCount++;
+				else if (chainType == AcylChainType.Plasmalogen) plasmogenChainCount++;
+				else if (chainType == AcylChainType.Ether) etherChainCount++;
+				else if (chainType == AcylChainType.Dihydro || chainType == AcylChainType.Dihydroxy) dihydroxyChainCount++;
+				else if (chainType == AcylChainType.Trihydro) trihydroChainCount++;
+
+				chainCount++;
+			}
+
+			if (chainCount == 1)
+			{
+				if (standardChainCount == 1) return LipidType.SingleChain;
+				if (plasmogenChainCount == 1) return LipidType.SingleChainPlasmogen;
+				if (etherChainCount == 1) return LipidType.SingleChainEther;
+			}
+			if (chainCount == 2)
+			{
+				if (standardChainCount == 2) return LipidType.TwoChains;
+				if (plasmogenChainCount == 1) return LipidType.TwoChainsPlasmogen;
+				if (etherChainCount == 1) return LipidType.TwoChainsEther;
+				if (trihydroChainCount == 1)
+				{
+					if (dihydroxyChainCount == 1) return LipidType.TwoChainsDihidroxyPhyto;
+					else return LipidType.TwoChainsPhyto;
+				}
+				if (dihydroxyChainCount == 1) return LipidType.TwoChainsDihidroxy;
+				if (dihydroxyChainCount == 2) return LipidType.TwoChainsTwoDihidroxy;
+			}
+			if (chainCount == 3)
+			{
+				return LipidType.ThreeChains;
+			}
+
+			throw new SystemException("Unable to determine LipidType for LipidTarget: " + this.ToString());
 		}
 	}
 }

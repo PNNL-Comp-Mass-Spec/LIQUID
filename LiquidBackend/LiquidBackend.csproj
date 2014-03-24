@@ -87,6 +87,7 @@
     <Compile Include="Domain\LipidClass.cs" />
     <Compile Include="Domain\LipidGroupSearchResult.cs" />
     <Compile Include="Domain\LipidTarget.cs" />
+    <Compile Include="Domain\LipidType.cs" />
     <Compile Include="Domain\MsMsSearchResult.cs" />
     <Compile Include="Domain\MsMsSearchUnit.cs" />
     <Compile Include="Domain\SpectrumSearchResult.cs" />
@@ -95,6 +96,11 @@
     <Compile Include="IO\LipidGroupSearchResultWriter.cs" />
     <Compile Include="IO\LipidMapsDbReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scoring\ScoreModel.cs" />
+    <Compile Include="Scoring\ScoreModelCreator.cs" />
+    <Compile Include="Scoring\ScoreModelUnit.cs" />
+    <Compile Include="Scoring\Scorer.cs" />
+    <Compile Include="Scoring\SpecificFragment.cs" />
     <Compile Include="Util\DmsDatasetFinder.cs" />
     <Compile Include="Util\GlobalWorkflow.cs" />
     <Compile Include="Util\InformedWorkflow.cs" />
