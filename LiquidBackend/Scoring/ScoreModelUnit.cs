@@ -1,22 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using LiquidBackend.Domain;
 
 namespace LiquidBackend.Scoring
 {
+	[DataContract]
 	public class ScoreModelUnit : IComparable<ScoreModelUnit>
 	{
+		[DataMember(Name = "LipidClass", Order = 0)]
 		public LipidClass LipidClass { get; private set; }
+
+		[DataMember(Name = "LipidType", Order = 1)]
 		public LipidType LipidType { get; private set; }
+
+		[DataMember(Name = "FragmentDescription", Order = 2)]
 		public string FragmentDescription { get; private set; }
+
+		[DataMember(Name = "IonizationMode", Order = 3)]
 		public FragmentationMode FragmentationMode { get; private set; }
+
+		[DataMember(Name = "FragmentationType", Order = 4)]
 		public FragmentationType FragmentationType { get; private set; }
+
+		[DataMember(Name = "IntensityMax", Order = 5)]
 		public double IntensityMax { get; private set; }
+
+		[DataMember(Name = "Probability", Order = 6)]
 		public double Probability { get; private set; }
+
+		[DataMember(Name = "ProbabilityNoise", Order = 7)]
 		public double ProbabilityNoise { get; private set; }
+
+		private ScoreModelUnit()
+		{
+			
+		}
 
 		public ScoreModelUnit(SpecificFragment specificFragment, double intensityMax, double probability, double probabilityNoise)
 		{
@@ -65,6 +88,11 @@ namespace LiquidBackend.Scoring
 				hashCode = (hashCode*397) ^ IntensityMax.GetHashCode();
 				return hashCode;
 			}
+		}
+
+		public override string ToString()
+		{
+			return string.Format("LipidClass: {0}, LipidType: {1}, FragmentDescription: {2}, FragmentationMode: {3}, FragmentationType: {4}, IntensityMax: {5}, Probability: {6}, ProbabilityNoise: {7}", LipidClass, LipidType, FragmentDescription, FragmentationMode, FragmentationType, IntensityMax, Probability, ProbabilityNoise);
 		}
 	}
 }

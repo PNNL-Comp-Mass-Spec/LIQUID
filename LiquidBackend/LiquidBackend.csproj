@@ -70,6 +70,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -100,6 +101,7 @@
     <Compile Include="Scoring\ScoreModelCreator.cs" />
     <Compile Include="Scoring\ScoreModelUnit.cs" />
     <Compile Include="Scoring\Scorer.cs" />
+    <Compile Include="Scoring\ScoreSerialization.cs" />
     <Compile Include="Scoring\SpecificFragment.cs" />
     <Compile Include="Util\DmsDatasetFinder.cs" />
     <Compile Include="Util\GlobalWorkflow.cs" />

@@ -1,15 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 using LiquidBackend.Domain;
 
 namespace LiquidBackend.Scoring
 {
+	[DataContract]
 	public class ScoreModel
 	{
+		[DataMember]
 		public List<ScoreModelUnit> ScoreModelUnitList { get; private set; }
+
+		private ScoreModel()
+		{
+			
+		}
 
 		public ScoreModel(List<ScoreModelUnit> scoreModelUnitList)
 		{
@@ -93,6 +104,11 @@ namespace LiquidBackend.Scoring
 			}
 
 			return fragmentationTypeScore;
+		}
+
+		public override string ToString()
+		{
+			return string.Format("ScoreModelUnitList: {0}", string.Join(";\n", ScoreModelUnitList));
 		}
 	}
 }
