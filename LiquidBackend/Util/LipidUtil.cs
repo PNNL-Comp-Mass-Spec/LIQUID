@@ -671,6 +671,9 @@ namespace LiquidBackend.Util
 				}
 				else if (lipidClass == LipidClass.MG || lipidClass == LipidClass.DG || lipidClass == LipidClass.TG)
 				{
+					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 3, 1, 0, 0, 0).Mass, "M-NH3"));
+					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 5, 1, 1, 0, 0).Mass, "M-NH3-H2O"));
+
 					foreach (var acylChain in acylChainList)
 					{
 						int carbons = acylChain.NumCarbons;
@@ -678,7 +681,7 @@ namespace LiquidBackend.Util
 
 						// Ignore any 0:0 chains
 						if (carbons == 0 && doubleBonds == 0) continue;
-
+						
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "FA", acylChain));
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 3 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "[RCOO+58]-H2O", acylChain));
 
@@ -703,6 +706,7 @@ namespace LiquidBackend.Util
 					else if (lipidClass == LipidClass.SQDG)
 					{
 						msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(6, 15, 1, 8, 1, 0).Mass, "M-C6H11O8SNH4 / DAG", true));
+						msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(6, 11, 0, 8, 1, 0).Mass, "M-C6H11O8S"));
 					}
 					else if (lipidClass == LipidClass.DGDG)
 					{
@@ -1271,6 +1275,31 @@ namespace LiquidBackend.Util
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbonsOfSecondTwoAcylChains + 6, (2 * (carbonsOfSecondTwoAcylChains + 6)) - 1 - (2 * doubleBondsOfSecondTwoAcylChains), 0, 13, 0, 2).Mass, "PG+PO3", secondTwoAcylChains));
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbonsOfFirstTwoAcylChains + 6, (2 * (carbonsOfFirstTwoAcylChains + 6)) - 1 - (2 * doubleBondsOfFirstTwoAcylChains), 0, 12, 0, 2).Mass, "PG+PO2", firstTwoAcylChains));
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbonsOfSecondTwoAcylChains + 6, (2 * (carbonsOfSecondTwoAcylChains + 6)) - 1 - (2 * doubleBondsOfSecondTwoAcylChains), 0, 12, 0, 2).Mass, "PG+PO2", secondTwoAcylChains));
+					}
+				}
+				else if (lipidClass == LipidClass.SQDG)
+				{
+					msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(6, 9, 0, 7, 1, 0).Mass, "C6H9O7S", true));
+
+					foreach (var acylChain in acylChainList)
+					{
+						int carbons = acylChain.NumCarbons;
+						int doubleBonds = acylChain.NumDoubleBonds;
+
+						// Ignore any 0:0 chains
+						if (carbons == 0 && doubleBonds == 0) continue;
+
+						switch (acylChain.AcylChainType)
+						{
+							case AcylChainType.Standard:
+								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "FA", acylChain));
+								msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons + 9, (2 * (carbons + 9)) - 3 - (2 * doubleBonds), 0, 11, 1, 0).Mass, "M-Ketene", acylChain));
+								msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons + 9, (2 * (carbons + 9)) - 1 - (2 * doubleBonds), 0, 10, 1, 0).Mass, "M-FA", acylChain));
+								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 0 - (2 * doubleBonds), 0, 7, 0, 1).Mass, "LPA-H", acylChain));
+								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
+								
+								break;
+						}
 					}
 				}
 			}
