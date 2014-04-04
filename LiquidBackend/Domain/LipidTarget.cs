@@ -154,6 +154,10 @@ namespace LiquidBackend.Domain
 			{
 				return LipidType.ThreeChains;
 			}
+			if (chainCount == 4)
+			{
+				return LipidType.FourChains;
+			}
 
 			throw new SystemException("Unable to determine LipidType for LipidTarget: " + this.ToString());
 		}
