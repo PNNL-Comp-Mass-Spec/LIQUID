@@ -101,7 +101,7 @@
     <Compile Include="Scoring\ScoreModelCreator.cs" />
     <Compile Include="Scoring\ScoreModelUnit.cs" />
     <Compile Include="Scoring\Scorer.cs" />
-    <Compile Include="Scoring\ScoreSerialization.cs" />
+    <Compile Include="Scoring\ScoreModelSerialization.cs" />
     <Compile Include="Scoring\SpecificFragment.cs" />
     <Compile Include="Util\DmsDatasetFinder.cs" />
     <Compile Include="Util\GlobalWorkflow.cs" />
