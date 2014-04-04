@@ -46,6 +46,10 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Padding" Value="-2,0,0,0"/>
         </Style>
+        <Style TargetType="{x:Type DataGridCell}">
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="DataGridCell_PreviewMouseLeftButtonDown" />
+            <EventSetter Event="PreviewTextInput" Handler="DataGridCell_PreviewTextInput" />
+        </Style>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Application.Resources>
 </Application>

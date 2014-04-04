@@ -154,6 +154,12 @@ namespace Liquid.ViewModel
 			progress.Report(0);
 		}
 
+		public void OnExportGlobalResults(string fileLocation)
+		{
+			var resultsToExport = LipidGroupSearchResultList.Where(x => x.ShouldExport);
+			LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation);
+		}
+
 		private void ReportLipidTargetLoadProgress(int value)
 		{
 			this.LipidTargetLoadProgress = value;

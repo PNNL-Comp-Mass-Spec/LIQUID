@@ -43,6 +43,8 @@ namespace Liquid.View
 			this.SpectrumSearchResultsDataGrid.Visibility = Visibility.Collapsed;
 			this.MsMsInfoUserControl.Visibility = Visibility.Hidden;
 			this.MsOneInfoUserControl.Visibility = Visibility.Hidden;
+			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
+			this.ExportGlobalResultsButton.Visibility = Visibility.Hidden;
 		}
 
 		private async void RawFileButtonClick(object sender, RoutedEventArgs e)
@@ -189,8 +191,10 @@ namespace Liquid.View
 			int resultsPerScan = int.Parse(this.ResultsPerScanTextBox.Text);
 
 			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
+			this.ExportGlobalResultsButton.Visibility = Visibility.Hidden;
 			await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
 			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Visible;
+			this.ExportGlobalResultsButton.Visibility = Visibility.Visible;
 
 			// Select the best spectrum search result
 			if (this.SingleTargetViewModel.LipidGroupSearchResultList.Count > 0)
@@ -224,6 +228,23 @@ namespace Liquid.View
 					this.MsOneInfoUserControl.MsOneInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
 					this.MsOneInfoUserControl.Visibility = Visibility.Visible;
 				}
+			}
+		}
+
+		private void ExportGlobalResultsButtonClick(object sender, RoutedEventArgs e)
+		{
+			var dialog = new VistaSaveFileDialog();
+
+			dialog.AddExtension = true;
+			dialog.OverwritePrompt = true;
+			dialog.DefaultExt = ".tsv";
+			dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv";
+
+			DialogResult result = dialog.ShowDialog();
+			if (result == System.Windows.Forms.DialogResult.OK)
+			{
+				string fileLocation = dialog.FileName;
+				this.SingleTargetViewModel.OnExportGlobalResults(fileLocation);
 			}
 		}
 	}

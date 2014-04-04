@@ -105,14 +105,16 @@
                                 <Button Content="Process Targets!" Click="ProcessAllTargetsButtonClick" Height="23" HorizontalAlignment="Left" Name="ProcessAllTargetsButton" VerticalAlignment="Top" Width="110" Margin="5,5,0,0" IsEnabled="False" />
                                 <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="GlobalWorkflowProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding GlobalWorkflowProgress, Mode=OneWay}" />
                             </DockPanel>
-                            <DataGrid Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding Path=LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="496" Width="232" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left" Visibility="Hidden">
+                            <DataGrid Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding Path=LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="465" Width="232" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                 <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn Binding="{Binding Path=ShouldExport, Mode=TwoWay}" />
                                     <DataGridTextColumn Header="Scan" Binding="{Binding Path=SpectrumSearchResult.HcdSpectrum.ScanNum, Mode=OneWay}" Width="40" />
-                                    <DataGridTextColumn Header="Lipid" Binding="{Binding Path=LipidTarget.StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="173" />
+                                    <DataGridTextColumn Header="Lipid" Binding="{Binding Path=LipidTarget.StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="153" />
                                     <!--DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=SpectrumSearchResult.NumMatchingMsMsPeaks, StringFormat=0}" Width="60" /-->
                                     <!--DataGridTextColumn Header="Score" Binding="{Binding Path=SpectrumSearchResult.Score, StringFormat=0.00E00}" Width="60" /-->
                                 </DataGrid.Columns>
                             </DataGrid>
+                            <Button Content="Export Selected Results" Click="ExportGlobalResultsButtonClick" Height="23" HorizontalAlignment="Center" Name="ExportGlobalResultsButton" VerticalAlignment="Top" Width="140" Margin="0,5,0,0" />
                         </StackPanel>
                     </StackPanel>
                     <controls:MsMsInfoUserControl x:Name="MsMsInfoUserControl"></controls:MsMsInfoUserControl>
