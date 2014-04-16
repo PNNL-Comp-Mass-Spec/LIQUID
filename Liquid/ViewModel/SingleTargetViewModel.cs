@@ -12,6 +12,7 @@ using InformedProteomics.Backend.MassSpecData;
 using Liquid.OxyPlot;
 using LiquidBackend.Domain;
 using LiquidBackend.IO;
+using LiquidBackend.Scoring;
 using LiquidBackend.Util;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -30,6 +31,7 @@ namespace Liquid.ViewModel
 		public List<Adduct> AdductList { get; private set; }
 		public List<Lipid> LipidTargetList { get; private set; }
 		public List<LipidGroupSearchResult> LipidGroupSearchResultList { get; private set; }
+		public ScoreModel ScoreModel { get; private set; }
 
 		public int LipidTargetLoadProgress { get; private set; }
 		public int GlobalWorkflowProgress { get; private set; }
@@ -41,6 +43,7 @@ namespace Liquid.ViewModel
 			this.AdductList = new List<Adduct> { Adduct.Hydrogen, Adduct.Ammonium, Adduct.Acetate };
 			this.SpectrumSearchResultList = new List<SpectrumSearchResult>();
 			this.LipidTargetList = new List<Lipid>();
+			this.ScoreModel = ScoreModelSerialization.Deserialize("DefaultScoringModel.xml");
 
 			// Run asynchronously inside constructor to avoid slow functionality on first target search
 			this.WarmUpInformedProteomics();
@@ -131,7 +134,7 @@ namespace Liquid.ViewModel
 
 			// Run global analysis
 			this.LipidGroupSearchResultList = new List<LipidGroupSearchResult>();
-			var lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, hcdError, cidError, progress);
+			var lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, hcdError, cidError, this.ScoreModel, progress);
 
 			// Group results of same scan together
 			var resultsGroupedByScan = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum.ScanNum);
@@ -139,7 +142,7 @@ namespace Liquid.ViewModel
 			// Grab the result(s) with the best score
 			foreach (var group in resultsGroupedByScan)
 			{
-				var groupOrdered = group.OrderByDescending(x => x.SpectrumSearchResult.Score).ToList();
+				var groupOrdered = group.OrderByDescending(x => x.Score).ToList();
 
 				for (int i = 0; i < numResultsPerScanToInclude && i < groupOrdered.Count; i++)
 				{
@@ -158,6 +161,11 @@ namespace Liquid.ViewModel
 		{
 			var resultsToExport = LipidGroupSearchResultList.Where(x => x.ShouldExport);
 			LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation);
+		}
+
+		public void OnExportAllGlobalResults(string fileLocation)
+		{
+			LipidGroupSearchResultWriter.OutputResults(LipidGroupSearchResultList, fileLocation);
 		}
 
 		private void ReportLipidTargetLoadProgress(int value)

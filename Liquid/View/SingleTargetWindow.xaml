@@ -4,7 +4,7 @@
         xmlns:oxy="http://oxyplot.codeplex.com"
         xmlns:controls="clr-namespace:Liquid.Controls"
         xmlns:liquid="clr-namespace:Liquid"
-        Title="Liquid: Lipid Informed Quantitation and Identification" Height="775" Width="1050">
+        Title="Liquid: Lipid Informed Quantitation and Identification" Height="775" Width="1075">
     <Grid x:Name="MainGrid">
         <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left">
             <Ribbon x:Name="RibbonWin" SelectedIndex="1" Height="45">
@@ -105,16 +105,17 @@
                                 <Button Content="Process Targets!" Click="ProcessAllTargetsButtonClick" Height="23" HorizontalAlignment="Left" Name="ProcessAllTargetsButton" VerticalAlignment="Top" Width="110" Margin="5,5,0,0" IsEnabled="False" />
                                 <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="GlobalWorkflowProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding GlobalWorkflowProgress, Mode=OneWay}" />
                             </DockPanel>
-                            <DataGrid Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding Path=LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="465" Width="232" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                            <DataGrid Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding Path=LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="437" Width="262" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                 <DataGrid.Columns>
                                     <DataGridCheckBoxColumn Binding="{Binding Path=ShouldExport, Mode=TwoWay}" />
                                     <DataGridTextColumn Header="Scan" Binding="{Binding Path=SpectrumSearchResult.HcdSpectrum.ScanNum, Mode=OneWay}" Width="40" />
-                                    <DataGridTextColumn Header="Lipid" Binding="{Binding Path=LipidTarget.StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="153" />
+                                    <DataGridTextColumn Header="Lipid" Binding="{Binding Path=LipidTarget.StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="133" />
                                     <!--DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=SpectrumSearchResult.NumMatchingMsMsPeaks, StringFormat=0}" Width="60" /-->
-                                    <!--DataGridTextColumn Header="Score" Binding="{Binding Path=SpectrumSearchResult.Score, StringFormat=0.00E00}" Width="60" /-->
+                                    <DataGridTextColumn Header="Score" Binding="{Binding Path=Score, StringFormat=0.00}" Width="50" />
                                 </DataGrid.Columns>
                             </DataGrid>
                             <Button Content="Export Selected Results" Click="ExportGlobalResultsButtonClick" Height="23" HorizontalAlignment="Center" Name="ExportGlobalResultsButton" VerticalAlignment="Top" Width="140" Margin="0,5,0,0" />
+                            <Button Content="Export All Results" Click="ExportAllGlobalResultsButtonClick" Height="23" HorizontalAlignment="Center" Name="ExportAllGlobalResultsButton" VerticalAlignment="Top" Width="140" Margin="0,5,0,0" />
                         </StackPanel>
                     </StackPanel>
                     <controls:MsMsInfoUserControl x:Name="MsMsInfoUserControl"></controls:MsMsInfoUserControl>

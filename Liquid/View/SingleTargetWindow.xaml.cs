@@ -247,5 +247,22 @@ namespace Liquid.View
 				this.SingleTargetViewModel.OnExportGlobalResults(fileLocation);
 			}
 		}
+
+		private void ExportAllGlobalResultsButtonClick(object sender, RoutedEventArgs e)
+		{
+			var dialog = new VistaSaveFileDialog();
+
+			dialog.AddExtension = true;
+			dialog.OverwritePrompt = true;
+			dialog.DefaultExt = ".tsv";
+			dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv";
+
+			DialogResult result = dialog.ShowDialog();
+			if (result == System.Windows.Forms.DialogResult.OK)
+			{
+				string fileLocation = dialog.FileName;
+				this.SingleTargetViewModel.OnExportAllGlobalResults(fileLocation);
+			}
+		}
 	}
 }
