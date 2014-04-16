@@ -90,6 +90,7 @@ namespace LiquidBackend.IO
 					var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
 					double observedMz = closestPeak.Mz;
 					double ppmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
+					double score = lipidGroupSearchResult.Score;
 					int msmsScan = spectrumSearchResult.HcdSpectrum != null ? spectrumSearchResult.HcdSpectrum.ScanNum : spectrumSearchResult.CidSpectrum.ScanNum;
 
 					foreach (Lipid lipid in lipidGroupSearchResult.LipidList)
@@ -107,7 +108,7 @@ namespace LiquidBackend.IO
 						line.Append(ppmError + "\t");
 						line.Append(spectrumSearchResult.NormalizedElutionTime + "\t");
 						line.Append(spectrumSearchResult.ApexIntensity + "\t");
-						line.Append(spectrumSearchResult.Score + "\t");
+						line.Append(score + "\t");
 						line.Append(msmsScan + "\t");
 						line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t");
 						line.Append(lipid.PubChemSid + "\t");

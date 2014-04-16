@@ -2,29 +2,33 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using InformedProteomics.Backend.Data.Spectrometry;
 using InformedProteomics.Backend.MassSpecData;
 using LiquidBackend.Domain;
+using LiquidBackend.Scoring;
 
 namespace LiquidBackend.Util
 {
 	public class GlobalWorkflow
 	{
 		public LcMsRun LcMsRun { get; private set; }
+		public ScoreModel ScoreModel { get; private set; }
 
-		public GlobalWorkflow(string rawFileLocation)
+		public GlobalWorkflow(string rawFileLocation, string scoreModelLocation = "DefaultScoringModel.xml")
 		{
 			this.LcMsRun = LcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
+			this.ScoreModel = ScoreModelSerialization.Deserialize(scoreModelLocation);
 		}
 
 		public List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double hcdMassError, double cidMassError, IProgress<int> progress = null)
 		{
-			return RunGlobalWorkflow(lipidList, this.LcMsRun, hcdMassError, cidMassError, progress);
+			return RunGlobalWorkflow(lipidList, this.LcMsRun, hcdMassError, cidMassError, this.ScoreModel, progress);
 		}
 
-		public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, IProgress<int> progress = null)
+		public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
 		{
 			//TextWriter textWriter = new StreamWriter("outputNeg.tsv");
 			List<LipidGroupSearchResult> lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
@@ -107,7 +111,7 @@ namespace LiquidBackend.Util
 						// Create spectrum search results
 						SpectrumSearchResult spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic, lcmsRun);
 
-						LipidGroupSearchResult lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult);
+						LipidGroupSearchResult lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult, scoreModel);
 						lipidGroupSearchResultList.Add(lipidGroupSearchResult);
 
 						//textWriter.WriteLine(lipidTarget.CommonName + "\t" + spectrumSearchResult.Score);
