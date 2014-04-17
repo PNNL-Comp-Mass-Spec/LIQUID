@@ -45,6 +45,7 @@ namespace Liquid.View
 			this.MsOneInfoUserControl.Visibility = Visibility.Hidden;
 			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
 			this.ExportGlobalResultsButton.Visibility = Visibility.Hidden;
+			this.ExportAllGlobalResultsButton.Visibility = Visibility.Hidden;
 		}
 
 		private async void RawFileButtonClick(object sender, RoutedEventArgs e)
@@ -192,9 +193,11 @@ namespace Liquid.View
 
 			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
 			this.ExportGlobalResultsButton.Visibility = Visibility.Hidden;
+			this.ExportAllGlobalResultsButton.Visibility = Visibility.Hidden;
 			await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
 			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Visible;
 			this.ExportGlobalResultsButton.Visibility = Visibility.Visible;
+			this.ExportAllGlobalResultsButton.Visibility = Visibility.Visible;
 
 			// Select the best spectrum search result
 			if (this.SingleTargetViewModel.LipidGroupSearchResultList.Count > 0)
