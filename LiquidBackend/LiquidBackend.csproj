@@ -89,6 +89,7 @@
     <Compile Include="Domain\LipidGroupSearchResult.cs" />
     <Compile Include="Domain\LipidTarget.cs" />
     <Compile Include="Domain\LipidType.cs" />
+    <Compile Include="Domain\MassCalibrationResults.cs" />
     <Compile Include="Domain\MsMsSearchResult.cs" />
     <Compile Include="Domain\MsMsSearchUnit.cs" />
     <Compile Include="Domain\SpectrumSearchResult.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Util\GlobalWorkflow.cs" />
     <Compile Include="Util\InformedWorkflow.cs" />
     <Compile Include="Util\LipidUtil.cs" />
+    <Compile Include="Util\QcUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DefaultScoringModel.xml">

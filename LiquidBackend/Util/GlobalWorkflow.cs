@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using InformedProteomics.Backend.Data.Biology;
+using InformedProteomics.Backend.Data.Composition;
 using InformedProteomics.Backend.Data.Spectrometry;
 using InformedProteomics.Backend.MassSpecData;
 using LiquidBackend.Domain;
@@ -137,6 +139,44 @@ namespace LiquidBackend.Util
 		public void RunGlobalWorkflowSingleScan()
 		{
 			throw new NotImplementedException();
+		}
+
+		public MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, double hcdMassError, IProgress<int> progress = null)
+		{
+			return RunMassCalibration(lipidList, this.LcMsRun, hcdMassError, progress);
+		}
+
+		public static MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, IProgress<int> progress = null)
+		{
+			List<double> ppmErrorList = new List<double>();
+
+			var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList();
+
+			foreach (var kvp in lipidsGroupedByTarget)
+			{
+				LipidTarget target = kvp.Key;
+
+				var spectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(target, lcmsRun, hcdMassError, 500);
+
+				if (spectrumSearchResultList.Any())
+				{
+					var targetIon = new Ion(target.Composition - Composition.Hydrogen, 1);
+					double targetMz = targetIon.GetMonoIsotopicMz();
+
+					var bestSpectrumSearchResult = spectrumSearchResultList.OrderBy(x => x.Score).First();
+
+					var massSpectrum = bestSpectrumSearchResult.PrecursorSpectrum.Peaks;
+					var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
+
+					double ppmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
+					ppmErrorList.Add(ppmError);
+				}
+			}
+
+			SortedDictionary<double, int> ppmHistogram = QcUtil.CalculateHistogram(ppmErrorList, hcdMassError, 0.25);
+
+			MassCalibrationResults massCalibrationResults = new MassCalibrationResults(ppmHistogram);
+			return massCalibrationResults;
 		}
 
 		private static ActivationMethodCombination FigureOutActivationMethodCombination(LcMsRun lcmsRun)

@@ -50,7 +50,7 @@ namespace LiquidTest
 			TextWriter textWriter = new StreamWriter("fragmentOutput.csv");
 
 			LipidGroupSearchResultWriter.AddHeaderForScoring(filteredLipidGroupSearchResults[0], textWriter);
-			LipidGroupSearchResultWriter.WriteToCsvForScoring(filteredLipidGroupSearchResults, textWriter);
+			LipidGroupSearchResultWriter.WriteToCsvForScoring(filteredLipidGroupSearchResults, textWriter, "Dey_lipids_Bottom_2_1_pos_dil_Gimli_RZ-12-07-05");
 
 			textWriter.Close();
 		}
@@ -70,9 +70,25 @@ namespace LiquidTest
 		}
 
 		[Test]
+		public void TestMassCalibration()
+		{
+			string rawFileLocation = @"../../../testFiles/synaptosome_lipid_rafts_lipidomics_synlr_1_bottom__NEG_Polaroid_17Mar14_14-02-04.raw";
+			GlobalWorkflow globalWorkflow = new GlobalWorkflow(rawFileLocation);
+
+			string fileLocation = @"../../../testFiles/Global_LipidMaps_NEG_3.txt";
+			FileInfo fileInfo = new FileInfo(fileLocation);
+			LipidMapsDbReader<Lipid> lipidReader = new LipidMapsDbReader<Lipid>();
+			List<Lipid> lipidList = lipidReader.ReadFile(fileInfo);
+
+			MassCalibrationResults massCalibrationResults = globalWorkflow.RunMassCalibration(lipidList, 50);
+			Console.WriteLine(massCalibrationResults.PpmError);
+			Console.WriteLine(massCalibrationResults.ErrorWidth);
+		}
+
+		[Test]
 		public void TestCreateScoringOutput()
 		{
-			const string positiveTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_Pos.txt";
+			const string positiveTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_v3.txt";
 			FileInfo positiveTargetsFileInfo = new FileInfo(positiveTargetsFileLocation);
 			LipidMapsDbReader<Lipid> lipidReader = new LipidMapsDbReader<Lipid>();
 			List<Lipid> lipidList = lipidReader.ReadFile(positiveTargetsFileInfo);
@@ -81,18 +97,18 @@ namespace LiquidTest
 			TextWriter textWriter = new StreamWriter("fragmentOutput.csv");
 
 			List<string> datasetNames = new List<string>();
-			datasetNames.Add("Dey_lipids_Top_1_1_pos_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Top_1_2_pos_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Top_1_3_pos_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Bottom_1_1_pos_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Bottom_1_2_pos_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Bottom_1_3_pos_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Top_2_1_pos_dil_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Top_2_2_pos_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Top_2_3_pos_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Bottom_2_1_pos_dil_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Bottom_2_2_pos_Gimli_RZ-12-07-05");
-			datasetNames.Add("Dey_lipids_Bottom_2_3_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Top_1_1_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Top_1_2_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Top_1_3_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Bottom_1_1_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Bottom_1_2_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Bottom_1_3_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Top_2_1_pos_dil_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Top_2_2_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Top_2_3_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Bottom_2_1_pos_dil_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Bottom_2_2_pos_Gimli_RZ-12-07-05");
+			//datasetNames.Add("Dey_lipids_Bottom_2_3_pos_Gimli_RZ-12-07-05");
 			datasetNames.Add("XGA121_lipid_Calu3_1");
 			datasetNames.Add("XGA121_lipid_Calu3_2");
 			datasetNames.Add("XGA121_lipid_Calu3_3");
@@ -184,8 +200,10 @@ namespace LiquidTest
 
 				// Output results
 				if (datasetIndex == 0) LipidGroupSearchResultWriter.AddHeaderForScoring(filteredLipidGroupSearchResults[0], textWriter);
-				LipidGroupSearchResultWriter.WriteToCsvForScoring(filteredLipidGroupSearchResults, textWriter);
+				LipidGroupSearchResultWriter.WriteToCsvForScoring(filteredLipidGroupSearchResults, textWriter, datasetName);
 			}
+
+			textWriter.Close();
 		}
 	}
 }
