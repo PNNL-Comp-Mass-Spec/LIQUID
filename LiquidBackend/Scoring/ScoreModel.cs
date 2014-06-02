@@ -36,8 +36,8 @@ namespace LiquidBackend.Scoring
 			List<MsMsSearchResult> cidResultList = spectrumSearchResult.CidSearchResultList;
 			List<MsMsSearchResult> hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-			double cidMaxIntensity = spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-			double hcdMaxIntensity = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+			double cidMaxIntensity = spectrumSearchResult.CidSpectrum != null && spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+			double hcdMaxIntensity = spectrumSearchResult.HcdSpectrum != null && spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
 			double lipidScore = 0;
 
@@ -51,6 +51,34 @@ namespace LiquidBackend.Scoring
 			{
 				// Score CID Results
 				lipidScore += ScoreSingleFragmentationType(hcdResultList, relatedScoreModelUnits, FragmentationType.HCD, hcdMaxIntensity);
+			}
+
+			return lipidScore;
+		}
+
+		public double ScoreLipidDissimilarity(LipidGroupSearchResult lipidGroupSearchResult)
+		{
+			List<ScoreModelUnit> relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidGroupSearchResult);
+
+			SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
+			List<MsMsSearchResult> cidResultList = spectrumSearchResult.CidSearchResultList;
+			List<MsMsSearchResult> hcdResultList = spectrumSearchResult.HcdSearchResultList;
+
+			double cidMaxIntensity = spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+			double hcdMaxIntensity = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+
+			double lipidScore = 0;
+
+			if (cidMaxIntensity > 1)
+			{
+				// Score CID Results
+				lipidScore += ScoreSingleFragmentationTypeDissimilarity(cidResultList, relatedScoreModelUnits, FragmentationType.CID, cidMaxIntensity);
+			}
+
+			if (hcdMaxIntensity > 1)
+			{
+				// Score CID Results
+				lipidScore += ScoreSingleFragmentationTypeDissimilarity(hcdResultList, relatedScoreModelUnits, FragmentationType.HCD, hcdMaxIntensity);
 			}
 
 			return lipidScore;
@@ -97,6 +125,48 @@ namespace LiquidBackend.Scoring
 					else
 					{
 						fragmentScore = Math.Log10((1.0 - scoreUnit.Probability) / (1.0 - scoreUnit.ProbabilityNoise));
+					}
+
+					fragmentationTypeScore += fragmentScore;
+				}
+			}
+
+			return fragmentationTypeScore;
+		}
+
+		private double ScoreSingleFragmentationTypeDissimilarity(IEnumerable<MsMsSearchResult> searchResultList, IEnumerable<ScoreModelUnit> relatedScoreModelUnits, FragmentationType fragmentationType, double maxIntensity)
+		{
+			double fragmentationTypeScore = 0;
+
+			foreach (var result in searchResultList)
+			{
+				string fragment = result.TheoreticalPeak.Description;
+				double intensity = 0;
+
+				if (result.ObservedPeak != null)
+				{
+					intensity = Math.Log10(result.ObservedPeak.Intensity) / Math.Log10(maxIntensity);
+				}
+
+				var scoreUnits = relatedScoreModelUnits.Where(x => x.FragmentationType == fragmentationType && x.FragmentDescription.Equals(fragment));
+				bool found = false;
+
+				foreach (var scoreUnit in scoreUnits)
+				{
+					double fragmentScore;
+
+					double inverseProbability = 1 - scoreUnit.Probability;
+
+					// Observed
+					if (!found && intensity <= scoreUnit.IntensityMax)
+					{
+						fragmentScore = Math.Log(inverseProbability / scoreUnit.Probability) - Math.Log(inverseProbability);
+						found = true;
+					}
+					// Not Observed
+					else
+					{
+						fragmentScore = -Math.Log(inverseProbability);
 					}
 
 					fragmentationTypeScore += fragmentScore;
