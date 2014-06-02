@@ -59,6 +59,9 @@ namespace LiquidBackend.Util
 				{
 					secondMsMsSpectrum = lcmsRun.GetSpectrum(i + 1) as ProductSpectrum;
 					if (secondMsMsSpectrum == null) continue;
+
+					// If m/z values of the MS/MS spectrums do not match, just move on
+					if (Math.Abs(firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz - secondMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz) > 0.01) continue;
 				}
 
 				//textWriter.WriteLine(i);
