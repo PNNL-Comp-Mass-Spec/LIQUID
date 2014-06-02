@@ -181,7 +181,13 @@ namespace LiquidBackend.Util
 
 		private static ActivationMethodCombination FigureOutActivationMethodCombination(LcMsRun lcmsRun)
 		{
-			int firstMsMsScanNumber = lcmsRun.GetNextScanNum(0, 2);
+			List<int> scanNumbers = lcmsRun.GetScanNumbers(1).ToList();
+
+			// Grab an MS1 Scan thats about 33% through the file so that we get accurate MS2 data
+			int indexToGrab = (int)Math.Floor(scanNumbers.Count / 3.0);
+			int ms1ScanNumberInMiddleOfRun = scanNumbers[indexToGrab];
+
+			int firstMsMsScanNumber = lcmsRun.GetNextScanNum(ms1ScanNumberInMiddleOfRun, 2);
 
 			// Lookup the first MS/MS Spectrum
 			ProductSpectrum firstMsMsSpectrum = lcmsRun.GetSpectrum(firstMsMsScanNumber) as ProductSpectrum;
