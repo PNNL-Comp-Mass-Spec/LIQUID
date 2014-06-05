@@ -170,7 +170,7 @@ namespace LiquidTest
 		public void TestConvertXmlToTsv()
 		{
 			const string scoringModelXmlLocation = @"..\..\..\..\LiquidBackend\DefaultScoringModel.xml";
-			ScoreModel deserializedScoreModel = ScoreModelSerialization.Deserialize("scoringTestNegative.xml");
+			ScoreModel deserializedScoreModel = ScoreModelSerialization.Deserialize(scoringModelXmlLocation);
 
 			TextWriter textWriter = new StreamWriter("scoringModel.tsv");
 
