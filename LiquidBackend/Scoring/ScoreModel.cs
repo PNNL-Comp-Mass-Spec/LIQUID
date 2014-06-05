@@ -180,5 +180,10 @@ namespace LiquidBackend.Scoring
 		{
 			return string.Format("ScoreModelUnitList: {0}", string.Join(";\n", ScoreModelUnitList));
 		}
+
+		public string GetTsvHeader()
+		{
+			return "LipidClass\tLipidType\tFragmentDescription\tFragmentationMode\tFragmentationType\tIntensityMax\tProbability\tProbabilityNoise";
+		}
 	}
 }

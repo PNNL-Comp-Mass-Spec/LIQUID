@@ -94,5 +94,10 @@ namespace LiquidBackend.Scoring
 		{
 			return string.Format("LipidClass: {0}, LipidType: {1}, FragmentDescription: {2}, FragmentationMode: {3}, FragmentationType: {4}, IntensityMax: {5}, Probability: {6}, ProbabilityNoise: {7}", LipidClass, LipidType, FragmentDescription, FragmentationMode, FragmentationType, IntensityMax, Probability, ProbabilityNoise);
 		}
+
+		public string ToTsvString()
+		{
+			return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}", LipidClass, LipidType, FragmentDescription, FragmentationMode, FragmentationType, IntensityMax, Probability, ProbabilityNoise);
+		}
 	}
 }
