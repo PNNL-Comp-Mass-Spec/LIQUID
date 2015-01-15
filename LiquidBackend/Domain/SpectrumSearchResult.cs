@@ -34,9 +34,14 @@ namespace LiquidBackend.Domain
 			get { return this.Xic.Where(x => x.ScanNum == this.ApexScanNum).Sum(x => x.Intensity); }
 		}
 
+		//Implemented by grant. Used as a way to pass the area under the curve selected by the user to the exported results.
+		public double? PeakArea { get; set; }
+
 		public double NormalizedElutionTime
 		{
-			get { return this.ApexScanNum / (double) this.LcMsRun.MaxLcScan; }
+			get { 
+				return this.ApexScanNum / (double) this.LcMsRun.MaxLcScan; 
+			}
 		}
 
 		public double Score
@@ -60,6 +65,7 @@ namespace LiquidBackend.Domain
 			this.CidSearchResultList = cidSearchResultList;
 			this.Xic = xic;
 			this.LcMsRun = lcMsRun;
+			this.PeakArea = null;
 		}
 
 		public int GetNumMatchingMsMsPeaks()

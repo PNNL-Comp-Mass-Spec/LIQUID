@@ -21,6 +21,31 @@ namespace Liquid.ViewModel
 		public double CurrentMz { get; private set; }
 		public double CurrentPpmError { get; private set; }
 
+		//Used for the calculation of area under ms1 xic curve over manually specified range
+		public double AreaUnderCurve { get; private set; }
+		private double _startScanForAreaUnderTheCurve;
+		private double _stopScanForAreaUnderTheCurve;
+		public double StartScanForAreaUnderCurve
+		{
+			get { return _startScanForAreaUnderTheCurve; }
+			set
+			{
+				_startScanForAreaUnderTheCurve = Convert.ToDouble(value);
+				GetAreaUnderMs1();
+			}
+		}
+		public double StopScanForAreaUnderCurve
+		{
+			get { return _stopScanForAreaUnderTheCurve; }
+			set
+			{
+				_stopScanForAreaUnderTheCurve = Convert.ToDouble(value);
+				GetAreaUnderMs1();
+			}
+		}
+
+		
+
 		public void OnLipidTargetChange(LipidTarget lipidTarget)
 		{
 			this.CurrentLipidTarget = lipidTarget;
@@ -36,6 +61,35 @@ namespace Liquid.ViewModel
 			this.CreateXicPlot();
 
 			this.UpdatePpmError();
+
+			this.StartScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
+			this.StopScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
+		}
+
+		/// <summary>
+		/// Added by grant to calculate area under curve over predefined range
+		/// </summary>
+		/// <returns></returns>
+		private void GetAreaUnderMs1()
+		{
+			var chromatogram = this.CurrentSpectrumSearchResult.Xic;
+			double areaUnderCurve = 0;
+
+			foreach (var xicPeak in chromatogram)
+			{
+				double scanLc = xicPeak.ScanNum;
+				double intensity = xicPeak.Intensity;
+
+				if (scanLc >= StartScanForAreaUnderCurve && scanLc <= StopScanForAreaUnderCurve)
+				{
+					areaUnderCurve += intensity;
+				}
+			}
+			AreaUnderCurve = areaUnderCurve;
+			CurrentSpectrumSearchResult.PeakArea = areaUnderCurve;
+			OnPropertyChanged("AreaUnderCurve");
+			OnPropertyChanged("StartScanForAreaUnderCurve");
+			OnPropertyChanged("StopScanForAreaUnderCurve");
 		}
 
 		private void UpdatePpmError()
