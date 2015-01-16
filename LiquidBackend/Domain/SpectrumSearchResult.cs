@@ -40,7 +40,8 @@ namespace LiquidBackend.Domain
 		public double NormalizedElutionTime
 		{
 			get { 
-				return this.ApexScanNum / (double) this.LcMsRun.MaxLcScan; 
+				//return this.ApexScanNum / (double) this.LcMsRun.MaxLcScan; 
+				return this.LcMsRun.GetElutionTime(this.ApexScanNum);
 			}
 		}
 

@@ -45,8 +45,6 @@ namespace Liquid.ViewModel
 			this.LipidTargetList = new List<Lipid>();
 			this.ScoreModel = ScoreModelSerialization.Deserialize("DefaultScoringModel.xml");
 
-			// Run asynchronously inside constructor to avoid slow functionality on first target search
-			this.WarmUpInformedProteomics();
 		}
 
 		public void UpdateRawFileLocation(string rawFileLocation)
@@ -56,7 +54,7 @@ namespace Liquid.ViewModel
 			this.RawFileName = rawFileInfo.Name;
 			OnPropertyChanged("RawFileName");
 
-			this.LcMsRun = LcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
+			this.LcMsRun = PbfLcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
 			OnPropertyChanged("LcMsRun");
 		}
 
@@ -180,9 +178,5 @@ namespace Liquid.ViewModel
 			OnPropertyChanged("GlobalWorkflowProgress");
 		}
 
-		private async void WarmUpInformedProteomics()
-		{
-			await Task.Run(() => Composition.H2O.ComputeApproximateIsotopomerEnvelop());
-		}
 	}
 }

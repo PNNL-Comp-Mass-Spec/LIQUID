@@ -58,8 +58,8 @@
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=CurrentPpmError, Mode=OneWay, StringFormat=0.##}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Scan LC Apex" FontWeight="Bold" />
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.ApexScanNum, Mode=OneWay}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Normalized Elution Time" FontWeight="Bold" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.NormalizedElutionTime, Mode=OneWay, StringFormat=0.000}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Elution Time (min)" FontWeight="Bold" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.NormalizedElutionTime, Mode=OneWay, StringFormat=0.00}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Intensity" FontWeight="Bold" />
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.ApexIntensity, Mode=OneWay, StringFormat=0.00E00}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
 					<TextBlock Grid.Row="5" Grid.Column="0" Text="Area Under Curve" FontWeight="Bold" />

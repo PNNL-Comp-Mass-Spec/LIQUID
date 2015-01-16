@@ -21,7 +21,7 @@ namespace LiquidBackend.Util
 
 		public GlobalWorkflow(string rawFileLocation, string scoreModelLocation = "DefaultScoringModel.xml")
 		{
-			this.LcMsRun = LcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
+			this.LcMsRun = PbfLcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
 			this.ScoreModel = ScoreModelSerialization.Deserialize(scoreModelLocation);
 		}
 
@@ -101,7 +101,7 @@ namespace LiquidBackend.Util
 					if (lipidMz > lowMz)
 					{
 						// Find the MS1 data
-						Xic xic = lcmsRun.GetExtractedIonChromatogram(lipidMz, hcdTolerance, i);
+						Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(lipidMz, hcdTolerance, i);
 
 						// Bogus data
 						if (xic.GetApexScanNum() < 0) continue;

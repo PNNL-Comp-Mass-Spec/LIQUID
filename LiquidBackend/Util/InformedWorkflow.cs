@@ -18,7 +18,7 @@ namespace LiquidBackend.Util
 
 		public InformedWorkflow(string rawFileLocation)
 		{
-			this.LcMsRun = LcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
+			this.LcMsRun = PbfLcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
 		}
 
 		public List<SpectrumSearchResult> RunInformedWorkflow(LipidTarget target, double hcdMassError, double cidMassError)
@@ -68,7 +68,10 @@ namespace LiquidBackend.Util
 				if (Math.Abs(ppmError) > hcdMassError) continue;
 
 				// No need to move on if no MS1 data is found
-				if (!lcmsRun.CheckMs1Signature(targetIon, firstScanNumber, hcdTolerance)) continue;
+				//if (!lcmsRun.CheckMs1Signature(targetIon, firstScanNumber, hcdTolerance)) continue;
+				var precursor = lcmsRun.GetSpectrum(lcmsRun.GetPrecursorScanNum(firstScanNumber));
+				var next = lcmsRun.GetSpectrum(lcmsRun.GetPrecursorScanNum(lcmsRun.GetNextScanNum(firstScanNumber, 1)));
+				if (!precursor.ContainsIon(targetIon, hcdTolerance, .1) && !next.ContainsIon(targetIon, hcdTolerance, .1)) continue;
 
 				// Assign each MS/MS spectrum to HCD or CID
 				ProductSpectrum hcdSpectrum;
@@ -89,7 +92,7 @@ namespace LiquidBackend.Util
 				List<MsMsSearchResult> cidSearchResultList = (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
 
 				// Find the MS1 data
-				Xic xic = lcmsRun.GetExtractedIonChromatogram(targetMz, hcdTolerance, firstScanNumber);
+				Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(targetMz, hcdTolerance, firstScanNumber);
 
 				// Bogus data
 				if (xic.GetApexScanNum() < 0) continue;
