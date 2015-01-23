@@ -101,7 +101,8 @@ namespace LiquidBackend.Util
 					if (lipidMz > lowMz)
 					{
 						// Find the MS1 data
-						Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(lipidMz, hcdTolerance, i);
+						//Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(lipidMz, hcdTolerance, i);
+						Xic xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(lipidMz, hcdTolerance);
 
 						// Bogus data
 						if (xic.GetApexScanNum() < 0) continue;

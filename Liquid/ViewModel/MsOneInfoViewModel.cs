@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InformedProteomics.Backend.Data.Spectrometry;
 using LiquidBackend.Domain;
 using LiquidBackend.Util;
 using OxyPlot;
@@ -261,10 +262,10 @@ namespace Liquid.ViewModel
 			yAxis.AxisChanged += OnYAxisChange;
 
 			var xAxis = new LinearAxis(AxisPosition.Bottom, "Scan #");
-			xAxis.Minimum = absoluteMinScanLc - 10;
-			xAxis.AbsoluteMinimum = absoluteMinScanLc - 10;
-			xAxis.Maximum = absoluteMaxScanLc + 10;
-			xAxis.AbsoluteMaximum = absoluteMaxScanLc + 10;
+			xAxis.Minimum = peakCenter - 500;
+			xAxis.AbsoluteMinimum = absoluteMinScanLc - 500;
+			xAxis.Maximum = peakCenter + 500;
+			xAxis.AbsoluteMaximum = absoluteMaxScanLc + 500;
 
 			plotModel.Axes.Add(yAxis);
 			plotModel.Axes.Add(xAxis);
