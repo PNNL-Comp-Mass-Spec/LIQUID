@@ -78,7 +78,7 @@ namespace LiquidBackend.IO
 
 			using (TextWriter textWriter = new StreamWriter(fileLocation))
 			{
-				textWriter.WriteLine("LM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tIntensity\tPeak Area\tScore\tMS/MS Scan\tParent Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
+				textWriter.WriteLine("LM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
 
 				foreach (LipidGroupSearchResult lipidGroupSearchResult in lipidGroupSearchResults)
 				{
@@ -112,6 +112,7 @@ namespace LiquidBackend.IO
 						line.Append(score + "\t");
 						line.Append(msmsScan + "\t");
 						line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t");
+						line.Append(spectrumSearchResult.ApexScanNum + "\t");
 						line.Append(lipid.PubChemSid + "\t");
 						line.Append(lipid.PubChemCid + "\t");
 						line.Append(lipid.InchiKey + "\t");
