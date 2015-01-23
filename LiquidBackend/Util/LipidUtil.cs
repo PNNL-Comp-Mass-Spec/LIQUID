@@ -419,7 +419,7 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 1 - (2 * doubleBonds), 0, 3, 0, 0).Mass, "[RCOO+58]", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 3 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "[RCOO+58]-H2O", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 0 - (2 * doubleBonds), 0, 7, 0, 1).Mass, "LPA-H", acylChain));
-								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
+								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));                                
 								if (countOfChains == 2)
 								{
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "M-Ketene", acylChain));
@@ -589,6 +589,9 @@ namespace LiquidBackend.Util
 					{
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 15, 1, 4, 0, 1).Mass, "C5H15O4NP", true));
 						msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 9, 1, 0, 0, 0).Mass, "M-(CH2)3NH3"));
+					    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 14, 1, 1, 0, 0).Mass, "C5H14ON")); //CC addtion 1-16-2015
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 6, 0, 4, 0, 1).Mass, "C2H6O4P")); //CC addition 1-16-2015
+
 					}
 					
 					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "M-H2O"));
@@ -786,6 +789,7 @@ namespace LiquidBackend.Util
 						{
 							case AcylChainType.Standard:
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "FA", acylChain));
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, (2 * carbons) - 1 - (2 * doubleBonds), 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); //CC addition 1-18-2015
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 0 - (2 * doubleBonds), 0, 7, 0, 1).Mass, "LPA-H", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								if (countOfChains == 2)
@@ -962,6 +966,7 @@ namespace LiquidBackend.Util
 					msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(6, 10, 0, 6, 0, 1).Mass, "C6H10O6P"));
 					msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(3, 6, 0, 5, 0, 1).Mass, "C3H6O5P"));
 					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 6, 0, 2, 0, 0).Mass, "M-C3H6O2"));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(6, 12, 0, 7, 0, 1).Mass, "C6H12O7P")); //CC addition 1-19-2015
 
 					int countOfChains = acylChainList.Count(x => x.NumCarbons > 0);
 					int countOfStandardAcylsChains = acylChainList.Count(x => x.AcylChainType == AcylChainType.Standard && x.NumCarbons > 0);
@@ -978,6 +983,7 @@ namespace LiquidBackend.Util
 						{
 							case AcylChainType.Standard:
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "FA", acylChain));
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, (2 * carbons) - 1 - (2 * doubleBonds), 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); //CC addition 1-18-2015
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 0 - (2 * doubleBonds), 0, 7, 0, 1).Mass, "LPA-H", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								if (countOfChains == 2)
