@@ -78,7 +78,7 @@ namespace LiquidBackend.IO
 
 			using (TextWriter textWriter = new StreamWriter(fileLocation))
 			{
-				textWriter.WriteLine("LM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
+				textWriter.WriteLine("LM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tNET\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
 
 				foreach (LipidGroupSearchResult lipidGroupSearchResult in lipidGroupSearchResults)
 				{
@@ -106,7 +106,8 @@ namespace LiquidBackend.IO
 						line.Append(lipidTarget.EmpiricalFormula + "\t");
 						line.Append(observedMz + "\t");
 						line.Append(ppmError + "\t");
-						line.Append(spectrumSearchResult.NormalizedElutionTime + "\t");
+						line.Append(spectrumSearchResult.RetentionTime + "\t");
+                        line.Append(spectrumSearchResult.NormalizedElutionTime + "\t");
 						line.Append(spectrumSearchResult.ApexIntensity + "\t");
 						line.Append(spectrumSearchResult.PeakArea + "\t");
 						line.Append(score + "\t");

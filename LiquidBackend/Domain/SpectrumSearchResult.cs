@@ -18,6 +18,7 @@ namespace LiquidBackend.Domain
 		public List<MsMsSearchResult> CidSearchResultList { get; private set; }
 		public Xic Xic { get; private set; }
 		public LcMsRun LcMsRun { get; private set; }
+        public double RunLength { get; private set; }
 
 		public int NumMatchingMsMsPeaks
 		{
@@ -37,11 +38,13 @@ namespace LiquidBackend.Domain
 		//Implemented by grant. Used as a way to pass the area under the curve selected by the user to the exported results.
 		public double? PeakArea { get; set; }
 
+	    public double RetentionTime { get; private set; }
+
 		public double NormalizedElutionTime
 		{
 			get { 
 				//return this.ApexScanNum / (double) this.LcMsRun.MaxLcScan; 
-				return this.LcMsRun.GetElutionTime(this.ApexScanNum);
+			    return RetentionTime/RunLength;
 			}
 		}
 
@@ -67,6 +70,8 @@ namespace LiquidBackend.Domain
 			this.Xic = xic;
 			this.LcMsRun = lcMsRun;
 			this.PeakArea = null;
+		    this.RunLength = lcMsRun.GetElutionTime(lcMsRun.MaxLcScan);
+            this.RetentionTime = this.LcMsRun.GetElutionTime(this.ApexScanNum);
 		}
 
 		public int GetNumMatchingMsMsPeaks()
