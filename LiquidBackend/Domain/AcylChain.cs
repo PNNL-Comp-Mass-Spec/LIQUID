@@ -45,6 +45,17 @@ namespace LiquidBackend.Domain
 				acylChainString = acylChainString.Replace("(2OH)", "");
 			}
 
+            else if (acylChainString.Contains("(CHO)"))
+            {
+                this.AcylChainType = AcylChainType.OxoCHO;
+                acylChainString = acylChainString.Replace("(CHO)", "");
+            }
+            else if (acylChainString.Contains("(COOH)"))
+            {
+                this.AcylChainType = AcylChainType.OxoCOOH;
+                acylChainString = acylChainString.Replace("(COOH)", ""); 
+            }
+
 			string[] splitString = acylChainString.Split(':');
 
 			this.NumCarbons = int.Parse(splitString[0]);
@@ -58,6 +69,8 @@ namespace LiquidBackend.Domain
 			if (AcylChainType == AcylChainType.Standard) return carbonDoubleBond;
 			if (AcylChainType == AcylChainType.Plasmalogen) return "P-" + carbonDoubleBond;
 			if (AcylChainType == AcylChainType.Ether) return "O-" + carbonDoubleBond;
+		    if (AcylChainType == AcylChainType.OxoCHO) return carbonDoubleBond + "(CHO)";
+            if (AcylChainType == AcylChainType.OxoCOOH) return carbonDoubleBond + "(COOH)";
 			if (AcylChainType == AcylChainType.Monohydro) return "m" + carbonDoubleBond;
 			if (AcylChainType == AcylChainType.Dihydro) return "d" + carbonDoubleBond;
 			if (AcylChainType == AcylChainType.Trihydro) return "t" + carbonDoubleBond;

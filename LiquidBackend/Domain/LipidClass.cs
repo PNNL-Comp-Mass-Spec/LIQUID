@@ -29,6 +29,7 @@ namespace LiquidBackend.Domain
 		MGDG,
 		SQDG,
 		DGDG,
+        DGTSA,
 		PIP,
 		PIP2,
 		PIP3,

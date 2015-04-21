@@ -11,6 +11,8 @@ namespace LiquidBackend.Domain
 		Standard,
 		Plasmalogen,
 		Ether,
+        OxoCHO,
+        OxoCOOH,
 		Monohydro,
 		Dihydro,
 		Trihydro,

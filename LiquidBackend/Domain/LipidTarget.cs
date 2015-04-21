@@ -114,6 +114,8 @@ namespace LiquidBackend.Domain
 			int standardChainCount = 0;
 			int plasmogenChainCount = 0;
 			int etherChainCount = 0;
+            int oxoCHOChainCount = 0;
+		    int oxoCOOHChainCount = 0;
 			int dihydroxyChainCount = 0;
 			int trihydroChainCount = 0;
 
@@ -125,6 +127,8 @@ namespace LiquidBackend.Domain
 				if (chainType == AcylChainType.Standard) standardChainCount++;
 				else if (chainType == AcylChainType.Plasmalogen) plasmogenChainCount++;
 				else if (chainType == AcylChainType.Ether) etherChainCount++;
+                else if (chainType == AcylChainType.OxoCHO) oxoCHOChainCount++;
+                else if (chainType == AcylChainType.OxoCOOH) oxoCOOHChainCount++;
 				else if (chainType == AcylChainType.Dihydro || chainType == AcylChainType.Dihydroxy) dihydroxyChainCount++;
 				else if (chainType == AcylChainType.Trihydro) trihydroChainCount++;
 
@@ -141,7 +145,9 @@ namespace LiquidBackend.Domain
 			{
 				if (standardChainCount == 2) return LipidType.TwoChains;
 				if (plasmogenChainCount == 1) return LipidType.TwoChainsPlasmogen;
-				if (etherChainCount == 1) return LipidType.TwoChainsEther;
+                if (etherChainCount >= 1) return LipidType.TwoChainsEther; //etherChainCount == 1
+			    if (oxoCHOChainCount == 1) return LipidType.TwoChainsOxoCHO;
+			    if (oxoCOOHChainCount == 1) return LipidType.TwoChainsOxoCOOH;
 				if (trihydroChainCount == 1)
 				{
 					if (dihydroxyChainCount == 1) return LipidType.TwoChainsDihidroxyPhyto;

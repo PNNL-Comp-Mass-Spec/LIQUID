@@ -12,6 +12,8 @@ namespace LiquidBackend.Domain
 		TwoChains,
 		TwoChainsPlasmogen,
 		TwoChainsEther,
+        TwoChainsOxoCHO,
+        TwoChainsOxoCOOH,
 		SingleChain,
 		SingleChainPlasmogen,
 		SingleChainEther,
