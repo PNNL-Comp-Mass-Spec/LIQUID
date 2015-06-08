@@ -83,10 +83,8 @@
                                 <TextBlock Name="NumberOfResultsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding Path=SpectrumSearchResultList.Count, StringFormat='  # of Results: {0}'}" Margin="0,5,0,0" />
                                 <DataGrid Name="SpectrumSearchResultsDataGrid" ItemsSource="{Binding Path=SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="350" Width="Auto" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Precursor" Binding="{Binding Path=PrecursorSpectrum.ScanNum, Mode=OneWay}" Width="60" />
-                                        <DataGridTextColumn Header="Apex" Binding="{Binding Path=ApexScanNum, Mode=OneWay}" Width="40" />
-                                        <DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=NumMatchingMsMsPeaks, Mode=OneWay, StringFormat=0}" Width="60" />
-                                        <DataGridTextColumn Header="Score" Binding="{Binding Path=Score, Mode=OneWay, StringFormat=0.00E00}" Width="60" />
+                                        <DataGridTextColumn Header="Precursor" Binding="{Binding Path=PrecursorSpectrum.ScanNum, Mode=OneWay}" Width="110" />
+                                        <DataGridTextColumn Header="Apex" Binding="{Binding Path=ApexScanNum, Mode=OneWay}" Width="110" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </StackPanel>

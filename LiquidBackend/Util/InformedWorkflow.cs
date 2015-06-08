@@ -70,7 +70,7 @@ namespace LiquidBackend.Util
 				// No need to move on if no MS1 data is found
 				//if (!lcmsRun.CheckMs1Signature(targetIon, firstScanNumber, hcdTolerance)) continue;
 				var precursor = lcmsRun.GetSpectrum(lcmsRun.GetPrecursorScanNum(firstScanNumber));
-				var next = lcmsRun.GetSpectrum(lcmsRun.GetPrecursorScanNum(lcmsRun.GetNextScanNum(firstScanNumber, 1)));
+				var next = lcmsRun.GetSpectrum(lcmsRun.GetNextScanNum(firstScanNumber, 1));
 				if (!precursor.ContainsIon(targetIon, hcdTolerance, .1) && !next.ContainsIon(targetIon, hcdTolerance, .1)) continue;
 
 				// Assign each MS/MS spectrum to HCD or CID
