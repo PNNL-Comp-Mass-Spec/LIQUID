@@ -209,14 +209,14 @@ namespace Liquid.ViewModel
 		{
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
 			var resultsToExport = LipidGroupSearchResultList.Where(x => x.ShouldExport);
-			LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation, progress);
+			LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation, RawFileName, progress);
             progress.Report(0);
 		}
 
 		public void OnExportAllGlobalResults(string fileLocation)
 		{
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
-			LipidGroupSearchResultWriter.OutputResults(LipidGroupSearchResultList, fileLocation, progress);
+			LipidGroupSearchResultWriter.OutputResults(LipidGroupSearchResultList, fileLocation, RawFileName, progress);
             progress.Report(0);
 		}
 

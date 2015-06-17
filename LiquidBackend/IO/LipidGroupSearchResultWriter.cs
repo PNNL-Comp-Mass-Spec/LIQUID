@@ -72,7 +72,7 @@ namespace LiquidBackend.IO
 			}
 		}
 
-	    public static void OutputResults(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, IProgress<int> progress = null)
+	    public static void OutputResults(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null)
         {
             if (File.Exists(fileLocation)) File.Delete(fileLocation);
 
@@ -82,30 +82,44 @@ namespace LiquidBackend.IO
 	        }
             else if (Path.GetExtension(fileLocation) == ".mzTab")
             {
-                OutputResultsToMzTab(lipidGroupSearchResults, fileLocation, progress);
+                OutputResultsToMzTab(lipidGroupSearchResults, fileLocation, rawFileName, progress);
             }
 	    }
 
 	    private static void OutputResultsToMzTab(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults,
-	        string fileLocation, IProgress<int> progress = null)
+	        string fileLocation, string rawFileName, IProgress<int> progress = null)
 	    {
 	        using (TextWriter textWriter = new StreamWriter(fileLocation))
 	        {
 	            int progressCounter = 0;
+	            var mods = new List<string>();
+	            foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
+	            {
+	                foreach (var lipid in lipidGroupSearchResult.LipidList)
+	                {
+	                    if (!mods.Contains(lipid.AdductFull))
+	                    {
+	                        mods.Add(lipid.AdductFull);
+	                    }
+	                }
+	            }
+
 	            //Write meta-data
                 textWriter.WriteLine("MTD\tmzTabVersion\t1.0 rc5");
                 textWriter.WriteLine("MTD\tmzTab-mode\tComplete");
                 textWriter.WriteLine("MTD\tmzTab-type\tQuantification");
                 textWriter.WriteLine("MTD\tsoftware[1]\t[, , LIQUID, ]");
 	            textWriter.WriteLine("MTD\tsmallmolecule_search_engine_score[1]\t[, , LIQUID_Score_Analyzer, ]");
-                //foreach(var fixedMod in mods)
-                textWriter.WriteLine("MTD\tfixed_mod[1]\t[MS, MS:1002038, unlabeled sample, ]"); //TODO:
-                //foreach(var variableMod in mods)
-	            textWriter.WriteLine("MTD\tvariable_mod[1]\tMOD INFO"); //TODO:
-                textWriter.WriteLine("MTD\tquantification_method\t[, , LIQUID_Analysis, ]");
+                textWriter.WriteLine("MTD\tfixed_mod[1]\t[MS, MS:1002038, unlabeled sample, ]");
+	            foreach (var variableMod in mods)
+	            {
+	                textWriter.WriteLine(string.Format("MTD\tvariable_mod[1]\t[, , {0}]", variableMod)); 
+	            }
+	            textWriter.WriteLine("MTD\tquantification_method\t[, , LIQUID_Analysis, ]");
                 textWriter.WriteLine("MTD\tsmall_molecule-quantification_unit\t[PRIDE, PRIDE:0000330, Arbitrary quantification unit, ]");
                 //Get the raw/mzml location
-                textWriter.WriteLine("MTD\tms_run[1]-location\tRAW FILE LOCATION"); //TODO:
+                
+                textWriter.WriteLine(string.Format("MTD\tms_run[1]-location\t{0}", rawFileName)); //TODO:
 	            textWriter.WriteLine("MTD\tassay[1]-quantification_reagent\t[MS, MS:1002038, unlabeled sample, ]");
 	            textWriter.WriteLine("MTD\tassay[1]-ms_run_ref\tms_run[1]");
                 textWriter.WriteLine("MTD\tstudy_variable[1]-assay_refs\tassay[1]");
@@ -119,9 +133,9 @@ namespace LiquidBackend.IO
                 //Write small molecule section datas
 	            foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
 	            {
+                    
 	                var lipidTarget = lipidGroupSearchResult.LipidTarget;
 	                var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
-
 	                var targetMz = lipidTarget.MzRounded;
 	                var massSpectrum = spectrumSearchResult.PrecursorSpectrum.Peaks;
 	                var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
@@ -138,14 +152,26 @@ namespace LiquidBackend.IO
                     {
                         StringBuilder line = new StringBuilder();
                         line.Append("SML\t");
-                        line.Append(lipid.LipidMapsId + "\t");              // identifier
+
+                        //var indexToStartRemove = lipid.LipidTarget.StrippedDisplay.IndexOf("/");
+                        //var id = lipid.LipidTarget.StrippedDisplay.Substring(0, indexToStartRemove);
+                        //id = id.Replace("(", "");
+                        var id = lipid.LipidTarget.StrippedDisplay;
+                        line.Append(id + "\t");
+                        //if (!string.IsNullOrWhiteSpace(lipid.LipidMapsId))
+                        //    line.Append(lipid.LipidMapsId + "\t"); // identifier
+                        //else
+                        //    line.Append("null" + "\t");
                         line.Append(lipidTarget.EmpiricalFormula + "\t");   // chemical_formula
                         line.Append("null" + "\t");                         // smiles
-                        line.Append(lipid.InchiKey + "\t");                 // inchi_key
-                        line.Append(lipid.SubClass + "\t");                 // description
+                        if (!string.IsNullOrWhiteSpace(lipid.InchiKey))
+                            line.Append(lipid.InchiKey + "\t"); // inchi_key
+                        else
+                            line.Append("null" + "\t");
+                        line.Append(lipid.SubClass + " : " + lipidTarget.FragmentationMode.ToString() + " charge" + "\t");                 // description
                         line.Append(observedMz + "\t");                     // exp_mass_to_charge
                         line.Append(lipidTarget.MzRounded + "\t");          // calc_mass_to_charge
-                        //TODO: line.Append(charge + "\t");                 // charge
+                        line.Append("1" + "\t");                 // charge
                         line.Append(spectrumSearchResult.RetentionTime + "\t"); // retention_time
                         line.Append("null" + "\t");                         // taxid
                         line.Append("null" + "\t");                         // species
@@ -155,8 +181,8 @@ namespace LiquidBackend.IO
                         line.Append("[, , Liquid, ]" + "\t");                         // search_engine
                         line.Append(score + "\t");                          // best_search_engine_score[1]
                         line.Append(score + "\t");                          // search_engine_score[1]_ms_run[1]
-                        //todo: line.append(modification + "\t"); // FROM ADDUCTFULL
-                        line.Append(spectrumSearchResult.PeakArea + "\t");  // small_molecule_abundance_assay[1]
+                        line.Append(lipid.AdductFull + "\t"); // FROM ADDUCTFULL
+                        line.Append(spectrumSearchResult.ApexIntensity + "\t");  // small_molecule_abundance_assay[1]
                         line.Append("null" + "\t");                         // ^^Study_variable[1]
                         line.Append("null" + "\t");                         // stdev_study_variable[1]
                         line.Append("null" + "\t");                         // std_err_study_variable[1]
@@ -186,7 +212,7 @@ namespace LiquidBackend.IO
 				{
 					LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;
 					SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
-
+                    
 					double targetMz = lipidTarget.MzRounded;
 					var massSpectrum = spectrumSearchResult.PrecursorSpectrum.Peaks;
 					var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();

@@ -263,7 +263,7 @@ namespace Liquid.View
 			dialog.AddExtension = true;
 			dialog.OverwritePrompt = true;
 			dialog.DefaultExt = ".tsv";
-			dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv";
+			dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab";
 
 			DialogResult result = dialog.ShowDialog();
 			if (result == System.Windows.Forms.DialogResult.OK)
@@ -279,8 +279,8 @@ namespace Liquid.View
 
 			dialog.AddExtension = true;
 			dialog.OverwritePrompt = true;
-			dialog.DefaultExt = ".tsv";
-			dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv";
+            dialog.DefaultExt = ".tsv";
+            dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab";
 
 			DialogResult result = dialog.ShowDialog();
 			if (result == System.Windows.Forms.DialogResult.OK)
