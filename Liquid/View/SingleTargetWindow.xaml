@@ -35,6 +35,8 @@
                         </RibbonApplicationMenu.SmallImageSource>
                         <RibbonApplicationMenuItem Header="Open File" Click="RawFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png">
                         </RibbonApplicationMenuItem>
+                        <RibbonApplicationMenuItem Header="Load Previous IDs" Click="LoadIdentificationsFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png">
+                        </RibbonApplicationMenuItem>
                     </RibbonApplicationMenu>
                 </Ribbon.ApplicationMenu>
                 <RibbonTab Name="InformedRibbonTab" Header="Single Target" KeyTip="S">

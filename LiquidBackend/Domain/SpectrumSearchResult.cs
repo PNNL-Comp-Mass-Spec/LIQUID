@@ -25,15 +25,9 @@ namespace LiquidBackend.Domain
 			get { return GetNumMatchingMsMsPeaks(); }
 		}
 
-		public int ApexScanNum
-		{
-			get { return this.Xic.GetNearestApexScanNum(this.PrecursorSpectrum.ScanNum, true); }
-		}
+		public int ApexScanNum { get; private set; }
 
-		public double ApexIntensity
-		{
-			get { return this.Xic.Where(x => x.ScanNum == this.ApexScanNum).Sum(x => x.Intensity); }
-		}
+		public double ApexIntensity { get; private set; }
 
 		//Implemented by grant. Used as a way to pass the area under the curve selected by the user to the exported results.
 		public double? PeakArea { get; set; }
@@ -42,10 +36,10 @@ namespace LiquidBackend.Domain
 
 		public double NormalizedElutionTime
 		{
-			get { 
-				//return this.ApexScanNum / (double) this.LcMsRun.MaxLcScan; 
+			get
+            { 
 			    return RetentionTime/RunLength;
-			}
+		    }
 		}
 
 		public double Score
@@ -71,7 +65,10 @@ namespace LiquidBackend.Domain
 			this.LcMsRun = lcMsRun;
 			this.PeakArea = null;
 		    this.RunLength = lcMsRun.GetElutionTime(lcMsRun.MaxLcScan);
+            this.ApexScanNum = this.Xic.GetNearestApexScanNum(this.PrecursorSpectrum.ScanNum, true);
+            this.ApexIntensity = this.Xic.Where(x => x.ScanNum == this.ApexScanNum).Sum(x => x.Intensity);
             this.RetentionTime = this.LcMsRun.GetElutionTime(this.ApexScanNum);
+            
 		}
 
 		public int GetNumMatchingMsMsPeaks()

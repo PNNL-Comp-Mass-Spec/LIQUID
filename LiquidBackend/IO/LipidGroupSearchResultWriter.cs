@@ -72,13 +72,14 @@ namespace LiquidBackend.IO
 			}
 		}
 
-		public static void OutputResults(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation)
+		public static void OutputResults(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, IProgress<int> progress = null)
 		{
 			if(File.Exists(fileLocation)) File.Delete(fileLocation);
 
 			using (TextWriter textWriter = new StreamWriter(fileLocation))
 			{
 				textWriter.WriteLine("LM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tNET\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
+			    int progressCounter = 0;
 
 				foreach (LipidGroupSearchResult lipidGroupSearchResult in lipidGroupSearchResults)
 				{
@@ -125,6 +126,12 @@ namespace LiquidBackend.IO
 
 						textWriter.WriteLine(line.ToString());
 					}
+				    if (progress != null)
+				    {
+				        progressCounter++;
+				        int currentProgress = (int)((progressCounter/(double)lipidGroupSearchResults.Count())*100);
+                        progress.Report(currentProgress);
+				    }
 				}
 			}
 		}

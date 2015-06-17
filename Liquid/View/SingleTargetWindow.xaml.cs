@@ -184,6 +184,28 @@ namespace Liquid.View
 			}
 		}
 
+        private async void LoadIdentificationsFileButtonClick(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog and Set filter for file extension and default file extension
+            var dialog = new VistaOpenFileDialog { DefaultExt = ".tsv", Filter = "Tab Separated Files (.tsv)|*.tsv|Text Files (*.txt)|*.txt|All Files (*.*)|*.*" };
+
+            // Get the selected file name and display in a TextBox 
+            DialogResult result = dialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                // Disable processing button while file is loading
+                this.ProcessAllTargetsButton.IsEnabled = false;
+
+                // Open file 
+                string fileName = dialog.FileName;
+
+                await Task.Run(() => this.SingleTargetViewModel.LoadLipidIdentifications(fileName));
+
+                // Enable processing all targets button if applicable
+                if (this.SingleTargetViewModel.LcMsRun != null) this.ProcessAllTargetsButton.IsEnabled = true;
+            }
+        }
+
 		private async void ProcessAllTargetsButtonClick(object sender, RoutedEventArgs e)
 		{
 			FragmentationMode fragmentationMode = (FragmentationMode)this.FragmentationModeComboBox.SelectedItem;
@@ -234,7 +256,7 @@ namespace Liquid.View
 			}
 		}
 
-		private void ExportGlobalResultsButtonClick(object sender, RoutedEventArgs e)
+		private async void ExportGlobalResultsButtonClick(object sender, RoutedEventArgs e)
 		{
 			var dialog = new VistaSaveFileDialog();
 
@@ -247,7 +269,7 @@ namespace Liquid.View
 			if (result == System.Windows.Forms.DialogResult.OK)
 			{
 				string fileLocation = dialog.FileName;
-				this.SingleTargetViewModel.OnExportGlobalResults(fileLocation);
+				await Task.Run(() => this.SingleTargetViewModel.OnExportGlobalResults(fileLocation));
 			}
 		}
 

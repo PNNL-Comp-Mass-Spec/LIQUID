@@ -30,11 +30,13 @@ namespace Liquid.ViewModel
 		public SpectrumSearchResult CurrentSpectrumSearchResult { get; private set; }
 		public List<Adduct> AdductList { get; private set; }
 		public List<Lipid> LipidTargetList { get; private set; }
+        public List<Tuple<string, int>> LipidIdentifications { get; private set; } 
 		public List<LipidGroupSearchResult> LipidGroupSearchResultList { get; private set; }
 		public ScoreModel ScoreModel { get; private set; }
 
 		public int LipidTargetLoadProgress { get; private set; }
 		public int GlobalWorkflowProgress { get; private set; }
+        public int ExportProgress { get; private set; }
 
 		public SingleTargetViewModel()
 		{
@@ -43,6 +45,7 @@ namespace Liquid.ViewModel
 			this.AdductList = new List<Adduct> { Adduct.Hydrogen, Adduct.Ammonium, Adduct.Acetate };
 			this.SpectrumSearchResultList = new List<SpectrumSearchResult>();
 			this.LipidTargetList = new List<Lipid>();
+            this.LipidIdentifications = new List<Tuple<string, int>>();
 			this.ScoreModel = ScoreModelSerialization.Deserialize("DefaultScoringModel.xml");
 
 		}
@@ -123,6 +126,30 @@ namespace Liquid.ViewModel
 			progress.Report(0);
 		}
 
+	    public void LoadLipidIdentifications(string fileLocation)
+	    {
+            FileInfo fileInfo = new FileInfo(fileLocation);
+
+            OutputFileReader<Tuple<string,int>> identificationReader = new OutputFileReader<Tuple<string, int>>();
+	        List<Tuple<string, int>> idList = identificationReader.ReadFile(fileInfo);
+
+	        foreach (var id in idList)
+	        {
+	            if (!this.LipidIdentifications.Contains(id))
+	            {
+	                this.LipidIdentifications.Add(id);
+	            }
+	        }
+	        if (this.LipidGroupSearchResultList != null)
+	        {
+                SelectLipidIdentifications(this.LipidGroupSearchResultList);
+	        }
+            
+            OnPropertyChanged("LipidIdentifications");
+	    }
+
+
+
 		public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
 		{
 			IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
@@ -133,6 +160,12 @@ namespace Liquid.ViewModel
 			// Run global analysis
 			this.LipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 			var lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, hcdError, cidError, this.ScoreModel, progress);
+
+            // If identifications have been loaded, select them in the view
+		    if (this.LipidIdentifications.Count != 0)
+		    {
+		        SelectLipidIdentifications(lipidGroupSearchResultList);
+		    }
 
 			// Group results of same scan together
 			var resultsGroupedByScan = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? x.SpectrumSearchResult.HcdSpectrum.ScanNum : x.SpectrumSearchResult.CidSpectrum.ScanNum);
@@ -155,15 +188,36 @@ namespace Liquid.ViewModel
 			progress.Report(0);
 		}
 
-		public void OnExportGlobalResults(string fileLocation)
+	    public void SelectLipidIdentifications(List<LipidGroupSearchResult> lipidGroupSearchResultList)
+	    {
+	        foreach (var id in this.LipidIdentifications)
+	        {
+	            foreach (var lipid in lipidGroupSearchResultList)
+	            {
+	                string name = id.Item1;
+	                int scan = id.Item2;
+	                if (lipid.LipidTarget.StrippedDisplay == name && lipid.SpectrumSearchResult.HcdSpectrum.ScanNum == scan)
+	                {
+	                    lipid.ShouldExport = true;
+	                    break;
+	                }
+	            }
+	        }
+	    }
+
+	    public void OnExportGlobalResults(string fileLocation)
 		{
+            IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
 			var resultsToExport = LipidGroupSearchResultList.Where(x => x.ShouldExport);
-			LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation);
+			LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation, progress);
+            progress.Report(0);
 		}
 
 		public void OnExportAllGlobalResults(string fileLocation)
 		{
-			LipidGroupSearchResultWriter.OutputResults(LipidGroupSearchResultList, fileLocation);
+            IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
+			LipidGroupSearchResultWriter.OutputResults(LipidGroupSearchResultList, fileLocation, progress);
+            progress.Report(0);
 		}
 
 		private void ReportLipidTargetLoadProgress(int value)
@@ -177,6 +231,12 @@ namespace Liquid.ViewModel
 			this.GlobalWorkflowProgress = value;
 			OnPropertyChanged("GlobalWorkflowProgress");
 		}
+
+	    private void ReportExportProgress(int value)
+	    {
+	        this.ExportProgress = value;
+            OnPropertyChanged("ExportProgress");
+	    }
 
 	}
 }
