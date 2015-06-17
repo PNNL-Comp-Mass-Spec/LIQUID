@@ -57,7 +57,7 @@ namespace Liquid.ViewModel
 			this.RawFileName = rawFileInfo.Name;
 			OnPropertyChanged("RawFileName");
 
-			this.LcMsRun = PbfLcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
+			this.LcMsRun = LcMsDataFactory.GetLcMsData(rawFileLocation);
 			OnPropertyChanged("LcMsRun");
 		}
 

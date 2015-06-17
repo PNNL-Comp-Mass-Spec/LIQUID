@@ -21,7 +21,7 @@ namespace LiquidBackend.Util
 
 		public GlobalWorkflow(string rawFileLocation, string scoreModelLocation = "DefaultScoringModel.xml")
 		{
-			this.LcMsRun = PbfLcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
+			this.LcMsRun = LcMsDataFactory.GetLcMsData(rawFileLocation);
 			this.ScoreModel = ScoreModelSerialization.Deserialize(scoreModelLocation);
 		}
 

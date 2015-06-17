@@ -18,7 +18,7 @@ namespace LiquidBackend.Util
 
 		public InformedWorkflow(string rawFileLocation)
 		{
-			this.LcMsRun = PbfLcMsRun.GetLcMsRun(rawFileLocation, MassSpecDataType.XCaliburRun);
+			this.LcMsRun = LcMsDataFactory.GetLcMsData(rawFileLocation);
 		}
 
 		public List<SpectrumSearchResult> RunInformedWorkflow(LipidTarget target, double hcdMassError, double cidMassError)

@@ -51,7 +51,7 @@ namespace Liquid.View
 		private async void RawFileButtonClick(object sender, RoutedEventArgs e)
 		{
 			// Create OpenFileDialog and Set filter for file extension and default file extension
-			var dialog = new VistaOpenFileDialog { DefaultExt = ".raw", Filter = "Thermo(*.raw)|*.raw" };
+			var dialog = new VistaOpenFileDialog { DefaultExt = ".raw", Filter = "Thermo(*.raw)|*.raw|mzML(*.mzML, *.mzML.gz)|*.mzml;*.mzML;*.mzML.gz;*.mzml.gz" };
 
 			// Get the selected file name and display in a TextBox 
 			DialogResult result = dialog.ShowDialog();
@@ -67,15 +67,15 @@ namespace Liquid.View
 				string fileName = dialog.FileName;
 				FileInfo fileInfo = new FileInfo(fileName);
 
-				string extension = fileInfo.Extension.ToLower();
-				if (extension.Contains("raw"))
-				{
+//				string extension = fileInfo.Extension.ToLower();
+//				if (extension.Contains("raw"))
+//				{
 					await Task.Run(() => this.SingleTargetViewModel.UpdateRawFileLocation(fileInfo.FullName));
-				}
-				else
-				{
-					// Invalid file type ... should be impossible
-				}
+//				}
+//				else
+//				{
+//					// Invalid file type ... should be impossible
+//				}
 
 				this.RawFileLocationTextBlock.Text = "File loaded: " + fileInfo.Name;
 

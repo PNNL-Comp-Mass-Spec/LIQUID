@@ -108,6 +108,7 @@
     <Compile Include="Util\GlobalWorkflow.cs" />
     <Compile Include="Util\InformedWorkflow.cs" />
     <Compile Include="Util\LipidUtil.cs" />
+    <Compile Include="Util\LcMsDataFactory.cs" />
     <Compile Include="Util\QcUtil.cs" />
   </ItemGroup>
   <ItemGroup>
