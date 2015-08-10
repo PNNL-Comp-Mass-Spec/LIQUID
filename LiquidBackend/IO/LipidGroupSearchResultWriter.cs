@@ -177,7 +177,8 @@ namespace LiquidBackend.IO
                         line.Append("null" + "\t");                         // species
                         line.Append("null" + "\t");                         // database
                         line.Append("null" + "\t");                         // database_version
-                        line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t"); // spectra_ref
+						//line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t"); // spectra_ref
+						line.Append(msmsScan + "\t"); // spectra_ref
                         line.Append("[, , Liquid, ]" + "\t");                         // search_engine
                         line.Append(score + "\t");                          // best_search_engine_score[1]
                         line.Append(score + "\t");                          // search_engine_score[1]_ms_run[1]
