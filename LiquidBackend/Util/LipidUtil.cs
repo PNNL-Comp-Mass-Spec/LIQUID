@@ -56,7 +56,7 @@ namespace LiquidBackend.Util
 			IEnumerable<AcylChain> acylChainList = ParseLipidCommonNameIntoAcylChains(commonName);
 			LipidClass lipidClass = ParseLipidCommonNameIntoClass(commonName);
 
-			return new LipidTarget(commonName, lipidClass, fragmentationMode, composition, acylChainList);
+			return new LipidTarget(commonName, lipidClass, fragmentationMode, composition, acylChainList, adduct);
 		}
 
 		public static Composition GetCompositionOfAdduct(Adduct adduct)
@@ -405,8 +405,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 3 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "M-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 1 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "M-FA", acylChain));
+									msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								}
 								break;
 							case AcylChainType.Plasmalogen:
@@ -418,6 +418,8 @@ namespace LiquidBackend.Util
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 3, 0, 1).Mass, "plasmalogen (rearranged)-H2O", acylChain));
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 2 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "LPC(P-)", acylChain));
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) - 0 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPC(P-)-H2O", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ether **tentative**", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 1, 0, 0).Mass - new Composition(3, 9, 1, 0, 0).Mass, "M-Ether-C3H9N **tentative**", acylChain));
 								}
 								break;
 							case AcylChainType.Ether:
@@ -480,8 +482,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));                                
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "M-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) - 1 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "M-FA", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								}
 								break;
 							case AcylChainType.Plasmalogen:
@@ -535,8 +537,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) + 1 - (2 * doubleBonds), 1, 9, 0, 1).Mass, "M-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) - 1 - (2 * doubleBonds), 1, 8, 0, 1).Mass, "M-FA", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								}
 								break;
 							case AcylChainType.Plasmalogen:
@@ -589,8 +591,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPG-H2O-H", acylChain));
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) + 2 - (2 * doubleBonds), 0, 9, 0, 1).Mass, "M-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) - 0 - (2 * doubleBonds), 0, 8, 0, 1).Mass, "M-FA", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								}
 								break;
 							case AcylChainType.Plasmalogen:
@@ -809,10 +811,12 @@ namespace LiquidBackend.Util
 
                         msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 1, 0 ,0).Mass, "FA", acylChain));
                         msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 1 - (2 * doubleBonds), 0, 3, 0, 0).Mass, "[RCOO+58]", acylChain));
-                        msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 10, (2 * carbons) + 18 - (2 * doubleBonds), 1, 5, 0, 0).Mass, "M-FA", acylChain));
-                        msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 10, (2 * carbons) + 20 - (2 * doubleBonds), 1, 6, 0, 0).Mass, "M-Ketene", acylChain));
-                        msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 9, (2 * carbons) + 18 - (2 * doubleBonds), 1, 3, 0, 0).Mass, "M-FA-CO2", acylChain));
-                        msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * carbons) + 5 - (2 * doubleBonds), 0, 5, 0, 0).Mass, "M-FA-C5H13N", acylChain));
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass - new Composition(1, 0, 0, 2, 0).Mass, "M-FA-CO2", acylChain));
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass - new Composition(5, 13, 1, 0, 0).Mass, "M-FA-C5H13N", acylChain));
+                        //msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 9, (2 * carbons) + 18 - (2 * doubleBonds), 1, 3, 0, 0).Mass, "M-FA-CO2", acylChain));
+                        //msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * carbons) + 5 - (2 * doubleBonds), 0, 5, 0, 0).Mass, "M-FA-C5H13N", acylChain));
                     }
                     if (countOfStandardAcylsChains == 2) { 
                         int carbons = acylChainList.Where(x => x.AcylChainType == AcylChainType.Standard).Sum(x => x.NumCarbons);
@@ -848,8 +852,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 1 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "M-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) - 1 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "M-FA", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								}
 								break;
 						}
@@ -883,8 +887,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "M-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) - 1 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "M-FA", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								}
 								break;
 							case AcylChainType.Plasmalogen:
@@ -945,8 +949,8 @@ namespace LiquidBackend.Util
 								
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 9, (2 * (carbons + 9)) - 2 - (2 * doubleBonds), 0, 12, 0, 1).Mass, "M-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 9, (2 * (carbons + 9)) - 4 - (2 * doubleBonds), 0, 11, 0, 1).Mass, "M-FA", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								}
 								break;
 							case AcylChainType.Plasmalogen:
@@ -1022,8 +1026,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 9, (2 * (carbons + 9)) - 3 - (2 * doubleBonds), 0, 14, 0, 2).Mass, "LPIP-H2O-H", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 9, (2 * (carbons + 9)) - 5 - (2 * doubleBonds), 0, 13, 0, 2).Mass, "LPIP-2H2O-H", acylChain));
-								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 9, (2 * (carbons + 9)) - 2 - (2 * doubleBonds), 0, 12, 0, 1).Mass, "M-Ketene", acylChain));
-								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 9, (2 * (carbons + 9)) - 4 - (2 * doubleBonds), 0, 11, 0, 1).Mass, "M-FA", acylChain));
+								msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 
 								if (lipidClass == LipidClass.PIP)
 								{
@@ -1077,8 +1081,8 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) - 0 - (2 * doubleBonds), 0, 9, 0, 1).Mass, "M-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) - 2 - (2 * doubleBonds), 0, 8, 0, 1).Mass, "M-FA", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								}
 								break;
 							case AcylChainType.Ether:
@@ -1170,8 +1174,8 @@ namespace LiquidBackend.Util
 								}
 								else if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 0 - (2 * doubleBonds), 0, 7, 0, 1).Mass, "M-Ketene", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "M-FA", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 5, 1, 2, 0, 0).Mass - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain)); //really M-C3H5O2N-Ketene
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 5, 1, 2, 0, 0).Mass - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain)); //really M-C3H5O2N-FA 
 								}
 								break;
 							case AcylChainType.Plasmalogen:
@@ -1390,8 +1394,8 @@ namespace LiquidBackend.Util
 						{
 							case AcylChainType.Standard:
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "FA", acylChain));
-								msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons + 9, (2 * (carbons + 9)) - 3 - (2 * doubleBonds), 0, 11, 1, 0).Mass, "M-Ketene", acylChain));
-								msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons + 9, (2 * (carbons + 9)) - 1 - (2 * doubleBonds), 0, 10, 1, 0).Mass, "M-FA", acylChain));
+									msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ketene", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 0 - (2 * doubleBonds), 0, 7, 0, 1).Mass, "LPA-H", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
 								
