@@ -72,9 +72,9 @@ namespace LiquidBackend.IO
 			}
 		}
 
-	    public static void OutputResults(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null)
+	    public static void OutputResults(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null, bool append = false)
         {
-            if (File.Exists(fileLocation)) File.Delete(fileLocation);
+            if (File.Exists(fileLocation) && !append) File.Delete(fileLocation);
 
 	        if (Path.GetExtension(fileLocation) == ".tsv")
 	        {
@@ -204,7 +204,7 @@ namespace LiquidBackend.IO
 		private static void OutputResultsToTsv(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, IProgress<int> progress = null)
 		{
 
-			using (TextWriter textWriter = new StreamWriter(fileLocation))
+			using (TextWriter textWriter = new StreamWriter(fileLocation, true))
 			{
 				textWriter.WriteLine("LM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tNET\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
 			    int progressCounter = 0;

@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcylChainTests.cs" />
+    <Compile Include="FdrUnitTests.cs" />
     <Compile Include="GlobalWorkflowTests.cs" />
     <Compile Include="InformedWorkflowTests.cs" />
     <Compile Include="LipidIOTests.cs" />
