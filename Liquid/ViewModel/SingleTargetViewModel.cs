@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using InformedProteomics.Backend.Data.Composition;
 using InformedProteomics.Backend.Data.Sequence;
 using InformedProteomics.Backend.Data.Spectrometry;
@@ -14,15 +15,19 @@ using LiquidBackend.Domain;
 using LiquidBackend.IO;
 using LiquidBackend.Scoring;
 using LiquidBackend.Util;
+using Ookii.Dialogs;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using UIMFLibrary;
 
 namespace Liquid.ViewModel
 {
 	public class SingleTargetViewModel : ViewModelBase
 	{
 		public LcMsRun LcMsRun { get; private set; }
+        public DataReader ImsRun { get; private set; }
+        public string FeatureFilePath { get; private set; } //Probably replace with a feature table
 		public string RawFileName { get; private set; }
 		public LipidTarget CurrentLipidTarget { get; private set; }
 		public List<FragmentationMode> FragmentationModeList { get; private set; }
@@ -33,10 +38,12 @@ namespace Liquid.ViewModel
         public List<Tuple<string, int>> LipidIdentifications { get; private set; } 
 		public List<LipidGroupSearchResult> LipidGroupSearchResultList { get; private set; }
 		public ScoreModel ScoreModel { get; private set; }
+        public List<ImsFeature> ImsFeatureTargets { get; private set; } 
 
 		public int LipidTargetLoadProgress { get; private set; }
 		public int GlobalWorkflowProgress { get; private set; }
         public int ExportProgress { get; private set; }
+        public bool IsIms { get; private set; }
 
 		public SingleTargetViewModel()
 		{
@@ -50,15 +57,47 @@ namespace Liquid.ViewModel
 
 		}
 
-		public void UpdateRawFileLocation(string rawFileLocation)
+		public void UpdateRawFileLocation(string rawFileLocation, ref bool findFileFlag)
 		{
 			FileInfo rawFileInfo = new FileInfo(rawFileLocation);
+		    this.IsIms = Path.GetExtension(rawFileLocation).ToLower() == ".uimf";
 
 			this.RawFileName = rawFileInfo.Name;
 			OnPropertyChanged("RawFileName");
 
-			this.LcMsRun = LcMsDataFactory.GetLcMsData(rawFileLocation);
-			OnPropertyChanged("LcMsRun");
+		    if (IsIms)
+		    {
+                this.ImsRun = new DataReader(rawFileLocation);
+
+		        var featureFilePath = Directory.GetFiles(Path.GetDirectoryName(rawFileLocation),
+		            String.Format("{0}{1}", Path.GetFileNameWithoutExtension(rawFileLocation), "_LCMSFeatures.txt"), SearchOption.AllDirectories).FirstOrDefault();
+		        if (featureFilePath == null)
+		        {
+		            DialogResult FindFeatureFile =
+		                MessageBox.Show("Unable to find LCMSFeatures file. Please specify the file location.", "Locate File",
+		                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+		            if (FindFeatureFile == DialogResult.OK)
+		            {
+		                findFileFlag = true;
+		            }
+		            else if (FindFeatureFile == DialogResult.Cancel)
+		            {
+		                this.ImsRun = null;
+		            }
+		        }
+		        else
+		        {
+		            BuildImsFeatureList(featureFilePath);
+		        }
+                OnPropertyChanged("ImsRun");
+                OnPropertyChanged("ImsFeatureTargets");
+		    }
+		    else
+		    {
+		        this.LcMsRun = LcMsDataFactory.GetLcMsData(rawFileLocation);
+                OnPropertyChanged("LcMsRun");
+		    }
+		    
 		}
 
 		public void SearchForTarget(string commonName, Adduct adduct, FragmentationMode fragmentationMode, double hcdMassError, double cidMassError)
@@ -148,6 +187,13 @@ namespace Liquid.ViewModel
             OnPropertyChanged("LipidIdentifications");
 	    }
 
+	    public void BuildImsFeatureList(string featureFileName)
+	    {
+            FileInfo featureFile = new FileInfo(featureFileName);
+            ImsFeatureReader<ImsFeature> featureReader = new ImsFeatureReader<ImsFeature>();
+	        this.ImsFeatureTargets = featureReader.ReadFile(featureFile);
+	    }
+
 
 
 		public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
@@ -159,9 +205,19 @@ namespace Liquid.ViewModel
 
 			// Run global analysis
 			this.LipidGroupSearchResultList = new List<LipidGroupSearchResult>();
-			var lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, hcdError, cidError, this.ScoreModel, progress);
-
-            // If identifications have been loaded, select them in the view
+            
+            var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
+		    if (IsIms)
+		    {
+		        lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.ImsRun, this.ImsFeatureTargets,
+		            hcdError, cidError, this.ScoreModel, progress);
+		    }
+		    else
+		    {
+		        lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, hcdError,
+		            cidError, this.ScoreModel, progress);
+		    }
+		    // If identifications have been loaded, select them in the view
 		    if (this.LipidIdentifications.Count != 0)
 		    {
 		        SelectLipidIdentifications(lipidGroupSearchResultList);

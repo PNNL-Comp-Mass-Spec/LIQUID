@@ -21,8 +21,10 @@ namespace LiquidBackend.Domain
 
 		public double MzRounded
 		{
-			get { return Math.Round(this.Composition.Mass, 4); }
+			get { return Math.Round(this.Composition.Mass/Charge, 4); }
 		}
+
+        public int Charge { get; private set; }
 
 		public List<MsMsSearchUnit> SortedMsMsSearchUnits
 		{
@@ -39,8 +41,9 @@ namespace LiquidBackend.Domain
 			get
 			{
 				StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.Append(this.LipidClass);
-
+			    if (LipidClass == LipidClass.Ganglioside){ stringBuilder.Append(CommonName.Split('(')[0]); }
+                else { stringBuilder.Append(this.LipidClass); }
+                
 				List<AcylChain> acylChainList = this.AcylChainList.ToList();
 				if (acylChainList.Count > 0)
 				{
@@ -64,7 +67,7 @@ namespace LiquidBackend.Domain
 			get { return this.Adduct != null ? this.Adduct.ToString() : "Unknown"; }
 		}
 
-		public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList, Adduct adduct = Adduct.Hydrogen)
+		public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList, Adduct adduct = Adduct.Hydrogen, int charge = 1)
 		{
 			CommonName = commonName;
 			LipidClass = lipidClass;
@@ -72,13 +75,14 @@ namespace LiquidBackend.Domain
 			Composition = composition;
 			AcylChainList = acylChainList;
 			Adduct = adduct;
+		    Charge = charge;
 
 			this.LipidType = FigureOutLipidType();
 		}
 
 		public List<MsMsSearchUnit> GetMsMsSearchUnits()
 		{
-			return LipidUtil.CreateMsMsSearchUnits(this.Composition.Mass, this.LipidClass, this.FragmentationMode, this.AcylChainList);
+			return LipidUtil.CreateMsMsSearchUnits(this.CommonName, this.Composition.Mass, this.LipidClass, this.FragmentationMode, this.AcylChainList);
 		}
 
 		protected bool Equals(LipidTarget other)
@@ -140,6 +144,7 @@ namespace LiquidBackend.Domain
 				if (standardChainCount == 1) return LipidType.SingleChain;
 				if (plasmogenChainCount == 1) return LipidType.SingleChainPlasmogen;
 				if (etherChainCount == 1) return LipidType.SingleChainEther;
+			    if (dihydroxyChainCount == 1) return LipidType.SingleChainDihydroxy;
 			}
 			if (chainCount == 2)
 			{

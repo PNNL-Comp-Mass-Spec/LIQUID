@@ -28,7 +28,7 @@ namespace LiquidBackend.Util
 				case ".raw":
 					run = PbfLcMsRun.GetLcMsRun(rawFilePath, MassSpecDataType.XCaliburRun);
 					break;
-				case ".mzml":
+                case ".mzml":
 					run = PbfLcMsRun.GetLcMsRun(rawFilePath, MassSpecDataType.MzMLFile);
 					break;
 				case ".gz":

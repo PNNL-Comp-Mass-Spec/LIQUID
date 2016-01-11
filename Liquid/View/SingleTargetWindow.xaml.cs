@@ -51,7 +51,7 @@ namespace Liquid.View
 		private async void RawFileButtonClick(object sender, RoutedEventArgs e)
 		{
 			// Create OpenFileDialog and Set filter for file extension and default file extension
-			var dialog = new VistaOpenFileDialog { DefaultExt = ".raw", Filter = "Thermo(*.raw)|*.raw|mzML(*.mzML, *.mzML.gz)|*.mzml;*.mzML;*.mzML.gz;*.mzml.gz" };
+			var dialog = new VistaOpenFileDialog { DefaultExt = ".raw", Filter = "Thermo(*.raw)|*.raw|IMS(*.UIMF)|*.UIMF|mzML(*.mzML, *.mzML.gz)|*.mzml;*.mzML;*.mzML.gz;*.mzml.gz" };
 
 			// Get the selected file name and display in a TextBox 
 			DialogResult result = dialog.ShowDialog();
@@ -67,23 +67,31 @@ namespace Liquid.View
 				string fileName = dialog.FileName;
 				FileInfo fileInfo = new FileInfo(fileName);
 
-//				string extension = fileInfo.Extension.ToLower();
-//				if (extension.Contains("raw"))
-//				{
-					await Task.Run(() => this.SingleTargetViewModel.UpdateRawFileLocation(fileInfo.FullName));
-//				}
-//				else
-//				{
-//					// Invalid file type ... should be impossible
-//				}
+			    bool findFileFlag = false;
+				await Task.Run(() => this.SingleTargetViewModel.UpdateRawFileLocation(fileInfo.FullName, ref findFileFlag));
+			    if (findFileFlag == true)
+			    {
+                    var featureFile = new VistaOpenFileDialog { DefaultExt = ".txt", Filter = "Text(*.txt)|*.txt|All(*.*)|*.*"};
+                    DialogResult findFileResults = featureFile.ShowDialog();
+			        if (findFileResults == System.Windows.Forms.DialogResult.OK)
+			        {
+			            string featureFileName = featureFile.FileName;
+			            await Task.Run(() => this.SingleTargetViewModel.BuildImsFeatureList(featureFileName));
+			        }
+			    }
+                //Make sure we loaded a file
+                if (this.SingleTargetViewModel.LcMsRun != null || (this.SingleTargetViewModel.ImsRun != null && this.SingleTargetViewModel.ImsFeatureTargets != null))  
+			    {
+			        this.RawFileLocationTextBlock.Text = "File Loaded: " + fileInfo.Name;
 
-				this.RawFileLocationTextBlock.Text = "File loaded: " + fileInfo.Name;
+			        // Enable processing all targets button if applicable
+			        if (this.SingleTargetViewModel.LipidTargetList != null && this.SingleTargetViewModel.LipidTargetList.Any())
+			            this.ProcessAllTargetsButton.IsEnabled = true;
 
-				// Enable processing all targets button if applicable
-				if (this.SingleTargetViewModel.LipidTargetList != null && this.SingleTargetViewModel.LipidTargetList.Any()) this.ProcessAllTargetsButton.IsEnabled = true;
-
-				// Enable search for target button
-				this.SearchForTargetButton.IsEnabled = true;
+			        // Enable search for target button
+			        this.SearchForTargetButton.IsEnabled = true;
+			    }
+			    else { this.RawFileLocationTextBlock.Text = "File Loaded: None Loaded"; }
 			}
 		}
 
@@ -180,7 +188,7 @@ namespace Liquid.View
 				await Task.Run(() => this.SingleTargetViewModel.LoadMoreLipidTargets(fileName));
 
 				// Enable processing all targets button if applicable
-				if (this.SingleTargetViewModel.LcMsRun != null) this.ProcessAllTargetsButton.IsEnabled = true;
+				if (this.SingleTargetViewModel.LcMsRun != null || this.SingleTargetViewModel.ImsRun != null) this.ProcessAllTargetsButton.IsEnabled = true;
 			}
 		}
 

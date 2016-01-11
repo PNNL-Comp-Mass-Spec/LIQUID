@@ -69,6 +69,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.93.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.93.0\lib\net451\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -76,12 +80,16 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIMFLibrary">
+      <HintPath>..\..\..\UIMF-Library\UIMFLibrary\bin\Debug\UIMFLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\ActivationMethodCombination.cs" />
     <Compile Include="Domain\AcylChain.cs" />
     <Compile Include="Domain\AcylChainType.cs" />
     <Compile Include="Domain\Adduct.cs" />
+    <Compile Include="Domain\ImsFeature.cs" />
     <Compile Include="Domain\FragmentationMode.cs" />
     <Compile Include="Domain\FragmentationType.cs" />
     <Compile Include="Domain\Lipid.cs" />
@@ -95,6 +103,7 @@
     <Compile Include="Domain\SpectrumSearchResult.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\IFileReader.cs" />
+    <Compile Include="IO\ImsFeatureReader.cs" />
     <Compile Include="IO\LipidGroupSearchResultWriter.cs" />
     <Compile Include="IO\LipidMapsDbReader.cs" />
     <Compile Include="IO\OutputFileReader.cs" />
@@ -116,6 +125,16 @@
     <Content Include="DefaultScoringModel.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

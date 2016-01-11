@@ -121,7 +121,7 @@ namespace Liquid.ViewModel
 			//isotopicPeakSeries.Color = OxyColors.Red;
 			//isotopicPeakSeries.StrokeThickness = 2;
 
-			double currentMz = this.CurrentLipidTarget.Composition.Mass;
+			double currentMz = this.CurrentLipidTarget.MzRounded;
 
 			double minMz = double.MaxValue;
 			double maxMz = double.MinValue;

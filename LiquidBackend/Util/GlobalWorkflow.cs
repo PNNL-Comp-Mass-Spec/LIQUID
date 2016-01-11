@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using InformedProteomics.Backend.Data.Biology;
 using InformedProteomics.Backend.Data.Composition;
@@ -11,6 +12,7 @@ using InformedProteomics.Backend.Data.Spectrometry;
 using InformedProteomics.Backend.MassSpecData;
 using LiquidBackend.Domain;
 using LiquidBackend.Scoring;
+using UIMFLibrary;
 
 namespace LiquidBackend.Util
 {
@@ -30,6 +32,82 @@ namespace LiquidBackend.Util
 			return RunGlobalWorkflow(lipidList, this.LcMsRun, hcdMassError, cidMassError, this.ScoreModel, progress);
 		}
 
+	    public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, DataReader ImsRun, IEnumerable<ImsFeature> FeatureTargets, double hcdMassError,double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
+	    {
+            Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
+            Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
+
+            var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList();
+	        int MS1Frames = ImsRun.GetNumberOfFrames(DataReader.FrameType.MS1); 
+            int MS2Frames = ImsRun.GetNumberOfFrames(DataReader.FrameType.MS2);
+
+	        var gp = ImsRun.GetGlobalParams();
+	        var framelist = ImsRun.GetMasterFrameList();
+
+            ActivationMethodCombination activationMethodCombination = MS2Frames > 0 ? ActivationMethodCombination.CidOnly : ActivationMethodCombination.Unsupported;
+            if (activationMethodCombination == ActivationMethodCombination.Unsupported) throw new SystemException("Unsupported activation method.");
+
+            List<Spectrum> Spectra = new List<Spectrum>();
+	        foreach (var feature in FeatureTargets)
+	        {
+                double mzToSearchTolerance = hcdMassError * feature.Mz / 1000000;
+	            double lowMz = feature.Mz - mzToSearchTolerance;
+	            double highMz = feature.Mz + mzToSearchTolerance;
+
+                double[] mzArray;
+                int[] intensityArray;
+	            ImsRun.GetSpectrum(feature.LcStart, feature.LcEnd, DataReader.FrameType.MS1, feature.ImsStart,
+	                feature.ImsEnd, out mzArray, out intensityArray);
+
+                foreach (var mz in mzArray)
+                {
+                    if (mz > highMz) break;
+                    if (mz > lowMz)
+                    {
+                        //Target IMS feature found in this scan
+                        double[] MS2Mz;
+                        int[] MS2Ints;
+                        ImsRun.GetSpectrum(feature.LcStart, feature.LcEnd, DataReader.FrameType.MS2, feature.ImsStart,
+                            feature.ImsEnd, out MS2Mz, out MS2Ints);
+                        var MS2Intensity = (from intensity in MS2Ints select (double) (intensity)).ToArray();
+                        Spectrum spec = new ProductSpectrum(MS2Mz, MS2Intensity, feature.ImsScan);
+                        spec.MsLevel = 2;
+                        Spectra.Add(spec);
+                    }
+                }
+
+
+	            /*
+	            for (int lcScan = feature.LcStart; lcScan <= feature.LcEnd; lcScan++)
+	            {
+	                if (framelist[lcScan] == DataReader.FrameType.MS1)
+	                {
+                        for (int imsScan = feature.ImsStart; imsScan <= feature.ImsEnd; imsScan++)
+	                    {
+	                        double[] mzArray;
+	                        int[] intensityArray;
+	                        ImsRun.GetSpectrum(lcScan, lcScan, DataReader.FrameType.MS1, imsScan, imsScan, out mzArray, out intensityArray);
+                            
+	                        foreach (var mz in mzArray)
+	                        {
+	                            if (mz > highMz) break;
+	                            if (mz > lowMz)
+	                            {
+                                    //Target IMS feature found in this scan
+                                    feature.AddCoord(lcScan, imsScan);  
+	                            }
+	                        }
+	                    }
+	                }
+	            }*/
+	        }
+
+
+
+
+	        return new List<LipidGroupSearchResult>();
+	    }
+
 		public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
 		{
 			//TextWriter textWriter = new StreamWriter("outputNeg.tsv");
@@ -38,7 +116,8 @@ namespace LiquidBackend.Util
 			Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
 			Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
 
-			var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList();
+			//var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList(); //order by mz
+            var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.MzRounded).GroupBy(x => x.LipidTarget).ToList();
 
 			int minLcScan = lcmsRun.MinLcScan;
 			double maxLcScan = lcmsRun.MaxLcScan;
@@ -93,7 +172,8 @@ namespace LiquidBackend.Util
 				foreach (var grouping in lipidsGroupedByTarget)
 				{
 					LipidTarget lipidTarget = grouping.Key;
-					double lipidMz = lipidTarget.Composition.Mass;
+					//double lipidMz = lipidTarget.Composition.Mass; //change to real mz
+				    double lipidMz = lipidTarget.MzRounded;
 
 					// If we reached the point where the m/z is too high, we can exit
 					if (lipidMz > highMz) break;
