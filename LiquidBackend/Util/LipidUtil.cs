@@ -464,6 +464,8 @@ namespace LiquidBackend.Util
 				if (lipidClass == LipidClass.PC)
 				{
 					msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 15, 1, 4, 0, 1).Mass, "C5H15O4NP", true));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 13, 1, 3, 0, 1).Mass, "C5H15O4NP-H2O")); //syd
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(5, 15, 1, 4, 0, 1).Mass, "M-C5H15O4NP")); //syd
 					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 9, 1, 0, 0, 0).Mass, "M-(CH2)3NH3"));
 					msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 14, 1, 1, 0, 0).Mass, "C5H14ON"));
 					msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 6, 0, 4, 0, 1).Mass, "C2H6O4P"));
@@ -513,10 +515,20 @@ namespace LiquidBackend.Util
 							case AcylChainType.Ether:
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 2 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "LPA(O-)", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 0 - (2 * doubleBonds), 0, 5, 0, 1).Mass, "LPA(O-)-H2O", acylChain));
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 1 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "[RCO+58]", acylChain)); 
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 1 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "[RCO+58]-H2O", acylChain));                    
 								if (countOfChains == 2)
 								{
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 4 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "LPC(O-)", acylChain));
-									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 2 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPC(O-)-H2O", acylChain));
+									//msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 4 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "LPC(O-)", acylChain));
+									//msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 2 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPC(O-)-H2O", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 5 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "LPC(O-)", acylChain)); 
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 3 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPC(O-)-H2O", acylChain)); 
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) + 1 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "[RCO+58]-O", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * (carbons)) + 1 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "[RCO]-2H", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * (carbons)) + 1 - (2 * doubleBonds), 0, 0, 0, 0).Mass, "[RCO-H2O]", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 8)) - 4 - (2 * doubleBonds), 0, 6, 0, 1).Mass, "loss of ketene-59", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 8)) - 6 - (2 * doubleBonds), 0, 5, 0, 1).Mass, "loss of ether chain-59", acylChain));
+
 								}
 								break;
                             case AcylChainType.OxoCHO:
