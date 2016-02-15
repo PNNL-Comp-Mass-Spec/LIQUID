@@ -305,7 +305,14 @@ namespace LiquidBackend.Util
 					}
 					else
 					{
-						return new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 3, 0, 0);	
+					    if (numChains > 1)
+					    {
+					        return new Composition(numCarbons, (2*(numCarbons + 0)) + 1 - (2*numDoubleBonds), 1, 3, 0, 0);
+					    }
+					    else
+					    {
+                            return new Composition(numCarbons, (2*(numCarbons + 0)) + 3 - (2*numDoubleBonds), 1, 2, 0, 0); 
+					    }
 					}
 					break;
 				case LipidClass.CerH2O:
@@ -827,13 +834,27 @@ namespace LiquidBackend.Util
                         int doubleBonds = acylChainList.First().NumDoubleBonds;
                         if (lipidClass == LipidClass.PE_Cer || lipidClass == LipidClass.PI_Cer)
                         {
-                            msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(18, 39, 1, 5, 0, 1).Mass,"S-1-P (C18H39NO5P)"));
-                            msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(18, 37, 1, 4, 0, 1).Mass, "S-1-P (-H2O)"));
-                            msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons - 2 * doubleBonds - 3), 0, 0, 0, 0).Mass, "LCB-NH3"));
+                            msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(18, 39, 1, 5, 0, 1).Mass,
+                                "S-1-P (C18H39NO5P)"));
+                            msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(18, 37, 1, 4, 0, 1).Mass,
+                                "S-1-P (-H2O)"));
+                            msMsSearchUnitList.Add(
+                                new MsMsSearchUnit(
+                                    new Composition(carbons, (2*carbons - 2*doubleBonds - 3), 0, 0, 0, 0).Mass,
+                                    "LCB-NH3"));
                             if (lipidClass == LipidClass.PE_Cer)
                             {
-                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 9, 1, 4, 0, 1).Mass, "C2H9NO4P"));
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 9, 1, 4, 0, 1).Mass,
+                                    "C2H9NO4P"));
                             }
+                        }
+                        else
+                        {
+                            msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz, "M+H"));
+                            msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(2, 6, 0, 2, 0, 0).Mass, "M-H2O-H2CO-CH2"));
+                            msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(1, 4, 0, 1, 0, 0).Mass, "M-H2O-CH2"));
+                            msMsSearchUnitList = msMsSearchUnitList.Where(
+                                x => (!x.Description.Equals("M-2(H2O)") && !x.Description.Equals("M-H2O"))).ToList();
                         }
                     }
 				}
