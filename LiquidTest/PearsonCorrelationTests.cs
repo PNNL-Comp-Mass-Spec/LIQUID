@@ -13,6 +13,8 @@ using NUnit.Framework;
 
 namespace LiquidTest
 {
+    using LiquidBackend.Util;
+
     [TestFixture]
     class PearsonCorrelationTests
     {
@@ -24,8 +26,7 @@ namespace LiquidTest
         /// <returns>Pearson correlation between observed and theoretical isotopic profiles.</returns>
         public double GetPearsonCorrelation(Spectrum precursorSpectrum, Composition composition, Tolerance tolerance)
         {
-            Ion ion = new Ion(composition, 1);
-            double pearsonCorrelation = precursorSpectrum.GetCorrScore(ion, tolerance);
+            double pearsonCorrelation = LipidUtil.GetPearsonCorrelation(precursorSpectrum, composition, tolerance);
             return pearsonCorrelation;
         }
 
@@ -44,8 +45,8 @@ namespace LiquidTest
             Console.WriteLine("The Pearson correlation is: " + correlation);
         }
 
-        [TestCase(@"C:\Users\ryad361\Desktop\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw",
-            @"C:\Users\ryad361\Desktop\LiquidExportedResults.tsv")]
+        [TestCase(@"\\protoapps\userdata\Wilkins\FromLillian\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw",
+            @"\\protoapps\userdata\Wilkins\FromLillian\LiquidExportedResults.tsv")]
         public void TestPearsonCorrelationWholeFile(string pathToRaw, string pathToResults)
         {
             Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);

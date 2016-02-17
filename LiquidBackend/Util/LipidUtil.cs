@@ -12,7 +12,11 @@ using LiquidBackend.Domain;
 
 namespace LiquidBackend.Util
 {
-	public class LipidUtil
+    using InformedProteomics.Backend.Data.Biology;
+    using InformedProteomics.Backend.Data.Spectrometry;
+    using InformedProteomics.Backend.Utils;
+
+    public class LipidUtil
 	{
 		public static LipidTarget CreateLipidTarget(string commonName, string empiricalFormula, LipidClass lipidClass, FragmentationMode fragmentationMode, IEnumerable<AcylChain> acylChainList)
 		{
@@ -1407,6 +1411,41 @@ namespace LiquidBackend.Util
 
 			return msMsSearchUnitList;
 		}
+
+        /// <summary>
+        /// Calculates pearson correlation between an observed spectrum and theoretical.
+        /// </summary>
+        /// <param name="spectrum">Observed spectrum.</param>
+        /// <param name="composition">Composition to calculate theoretical isotopic profile for.</param>
+        /// <param name="tolerance">Peak ppm tolerance.</param>
+        /// <param name="relativeIntensityThreshold"></param>
+        /// <returns>The pearson correlation.</returns>
+        public static double GetPearsonCorrelation(
+            Spectrum spectrum,
+            Composition composition,
+            Tolerance tolerance,
+            double relativeIntensityThreshold = 0.1)
+        {
+            var ion = new Ion(composition, 1);
+            var observedPeaks = spectrum.GetAllIsotopePeaks(ion, tolerance, relativeIntensityThreshold);
+            if (observedPeaks == null) return 0;
+
+            var isotopomerEnvelope = IsoProfilePredictor.GetIsotopomerEnvelop(
+                composition.C,
+                composition.H,
+                composition.N,
+                composition.O,
+                composition.S);
+
+            var observedIntensities = new double[observedPeaks.Length];
+
+            for (var i = 0; i < observedPeaks.Length; i++)
+            {
+                var observedPeak = observedPeaks[i];
+                observedIntensities[i] = observedPeak != null ? (float)observedPeak.Intensity : 0.0;
+            }
+            return FitScoreCalculator.GetPearsonCorrelation(isotopomerEnvelope.Envolope, observedIntensities);
+        }
 
 		/// <summary>
 		/// Calculates the PPM error between two values.
