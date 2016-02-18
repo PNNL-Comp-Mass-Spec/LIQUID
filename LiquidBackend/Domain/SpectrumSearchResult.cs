@@ -12,6 +12,7 @@ namespace LiquidBackend.Domain
 	public class SpectrumSearchResult
 	{
 		public Spectrum PrecursorSpectrum { get; private set; }
+        public Tolerance PrecursorTolerance { get; set; }
 		public ProductSpectrum HcdSpectrum { get; private set; }
 		public ProductSpectrum CidSpectrum { get; private set; }
 		public List<MsMsSearchResult> HcdSearchResultList { get; private set; }

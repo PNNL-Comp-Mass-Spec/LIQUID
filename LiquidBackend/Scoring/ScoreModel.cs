@@ -11,7 +11,13 @@ using LiquidBackend.Domain;
 
 namespace LiquidBackend.Scoring
 {
-	[DataContract]
+    using InformedProteomics.Backend.Data.Biology;
+    using InformedProteomics.Backend.Data.Composition;
+    using InformedProteomics.Backend.Data.Spectrometry;
+
+    using LiquidBackend.Util;
+
+    [DataContract]
 	public class ScoreModel
 	{
 		[DataMember]

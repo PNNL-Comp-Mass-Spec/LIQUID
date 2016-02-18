@@ -1447,13 +1447,41 @@ namespace LiquidBackend.Util
             return FitScoreCalculator.GetPearsonCorrelation(isotopomerEnvelope.Envolope, observedIntensities);
         }
 
-		/// <summary>
-		/// Calculates the PPM error between two values.
-		/// </summary>
-		/// <param name="num1">Expected value.</param>
-		/// <param name="num2">Observed value.</param>
-		/// <returns>PPM error between expected and observed value.</returns>
-		public static double PpmError(double num1, double num2)
+        /// <summary>
+        /// Gets the fit score for the given spectrum and chemical formula.
+        /// </summary>
+        /// <param name="spectrumResult"></param>
+        /// <param name="composition"></param>
+        /// <returns></returns>
+        public static double GetFitScore(SpectrumSearchResult spectrumResult, Composition composition)
+        {
+            return GetPearsonCorrelation(
+                            spectrumResult.PrecursorSpectrum,
+                            composition,
+                            spectrumResult.PrecursorTolerance);
+        }
+
+        /// <summary>
+        /// Get the fit score of Mass -1.
+        /// </summary>
+        /// <param name="lipidGroupSearchResult"></param>
+        /// <returns></returns>
+        public static double GetFitMinus1Score(SpectrumSearchResult spectrumResult, Composition composition)
+        {
+            var compositionMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S);
+            return GetPearsonCorrelation(
+                                spectrumResult.PrecursorSpectrum,
+                                compositionMinus1,
+                                spectrumResult.PrecursorTolerance);
+        }
+
+        /// <summary>
+        /// Calculates the PPM error between two values.
+        /// </summary>
+        /// <param name="num1">Expected value.</param>
+        /// <param name="num2">Observed value.</param>
+        /// <returns>PPM error between expected and observed value.</returns>
+        public static double PpmError(double num1, double num2)
 		{
 			// (X - Y) / X * 1,000,000
 			return (num2 - num1) / num2 * 1000000;

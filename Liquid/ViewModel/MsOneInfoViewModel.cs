@@ -12,12 +12,18 @@ using OxyPlot.Series;
 
 namespace Liquid.ViewModel
 {
-	public class MsOneInfoViewModel : ViewModelBase
+    using InformedProteomics.Backend.Data.Biology;
+    using InformedProteomics.Backend.Data.Composition;
+
+    public class MsOneInfoViewModel : ViewModelBase
 	{
 		public LipidTarget CurrentLipidTarget { get; private set; }
 		public SpectrumSearchResult CurrentSpectrumSearchResult { get; private set; }
 		public PlotModel IsotopicProfilePlot { get; set; }
 		public PlotModel XicPlot { get; set; }
+
+        public double FitScore { get; private set; }
+        public double FitMinus1Score { get; private set; }
 
 		public double CurrentMz { get; private set; }
 		public double CurrentPpmError { get; private set; }
@@ -62,6 +68,8 @@ namespace Liquid.ViewModel
 			this.CreateXicPlot();
 
 			this.UpdatePpmError();
+
+            this.UpdatePearsonCorrelation();
 
 			this.StartScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
 			this.StopScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
@@ -183,6 +191,19 @@ namespace Liquid.ViewModel
 			this.IsotopicProfilePlot = plotModel;
 			OnPropertyChanged("IsotopicProfilePlot");
 		}
+
+	    private void UpdatePearsonCorrelation()
+	    {
+            FitScore = LipidUtil.GetFitScore(
+	            this.CurrentSpectrumSearchResult,
+	            this.CurrentLipidTarget.Composition);
+            OnPropertyChanged("FitScore");
+
+            FitMinus1Score = LipidUtil.GetFitMinus1Score(
+	            this.CurrentSpectrumSearchResult,
+                this.CurrentLipidTarget.Composition);
+            OnPropertyChanged("FitMinus1Score");
+        }
 
 		private void CreateXicPlot()
 		{

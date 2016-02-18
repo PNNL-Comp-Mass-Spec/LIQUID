@@ -206,7 +206,7 @@ namespace LiquidBackend.IO
 
 			using (TextWriter textWriter = new StreamWriter(fileLocation, true))
 			{
-				textWriter.WriteLine("LM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tNET\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
+				textWriter.WriteLine("LM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tNET\tIntensity\tPeak Area\tScore\tFit Score\tFit M-1 Score\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
 			    int progressCounter = 0;
 
 				foreach (LipidGroupSearchResult lipidGroupSearchResult in lipidGroupSearchResults)
@@ -240,6 +240,8 @@ namespace LiquidBackend.IO
 						line.Append(spectrumSearchResult.ApexIntensity + "\t");
 						line.Append(spectrumSearchResult.PeakArea + "\t");
 						line.Append(score + "\t");
+					    line.Append(lipidGroupSearchResult.FitScore + "\t");
+					    line.Append(lipidGroupSearchResult.FitMinus1Score + "\t");
 						line.Append(msmsScan + "\t");
 						line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t");
 						line.Append(spectrumSearchResult.ApexScanNum + "\t");
