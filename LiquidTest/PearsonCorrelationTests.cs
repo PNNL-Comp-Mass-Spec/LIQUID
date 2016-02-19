@@ -81,10 +81,14 @@ namespace LiquidTest
             }
         }
 
-        [TestCase(14, "[M+H]+", "PS(18:0/18:1)", "25")]
-        [TestCase(131, "[M+H]+", "PS(18:0/18:1)", "136")]
-        [TestCase(222, "[M+H]+", "PS(18:0/18:1)", "225")]
-        [TestCase(261, "[M+H]+", "PC(19:3/0:0)", "268")]
+        //[TestCase(14, "[M+H]+", "PS(18:0/18:1)", "25")]
+        //[TestCase(131, "[M+H]+", "PS(18:0/18:1)", "136")]
+        //[TestCase(222, "[M+H]+", "PS(18:0/18:1)", "225")]
+        //[TestCase(261, "[M+H]+", "PC(19:3/0:0)", "268")]
+        [TestCase(2562, "[M+H]+", "PC(6:2/14:2)", "2565")]
+        [TestCase(7281, "[M+H]+", "PG(O-16:0/16:0)", "7288")]
+        [TestCase(12867, "[M+H]+", "SM(d18:1/24:0)", "12868")]
+        [TestCase(14752, "[M+H]+", "PC(18:0/22:0)", "14761")]
         public void TestIndividualLipidTargets(int precursor, string adduct, string commonName, string id)
         {
             Lipid lipid = new Lipid() {AdductFull = adduct, CommonName = commonName};
@@ -128,6 +132,66 @@ namespace LiquidTest
                 Console.WriteLine(value + ", ");
             }
             
+            Console.WriteLine("The observed peak intensity x values are: ");
+            foreach (var value in observedIntensities)
+            {
+                Console.WriteLine(value + ", ");
+            }
+        }
+
+        //[TestCase(14, "[M+H]+", "PS(18:0/18:1)", "25")]
+        //[TestCase(131, "[M+H]+", "PS(18:0/18:1)", "136")]
+        //[TestCase(222, "[M+H]+", "PS(18:0/18:1)", "225")]
+        //[TestCase(261, "[M+H]+", "PC(19:3/0:0)", "268")]
+        //[TestCase(300, "[M+H]+", "PS(18:0/20:3)", "305")]
+        [TestCase(2562, "[M+H]+", "PC(6:2/14:2)", "2565")]
+        [TestCase(7281, "[M+H]+", "PG(O-16:0/16:0)", "7288")]
+        [TestCase(12867, "[M+H]+", "SM(d18:1/24:0)", "12868")]
+        [TestCase(14752, "[M+H]+", "PC(18:0/22:0)", "14761")]
+        public void TestFitMinusOneScore(int precursor, string adduct, string commonName, string id)
+        {
+            Lipid lipid = new Lipid() { AdductFull = adduct, CommonName = commonName };
+            LipidTarget lipidTarget = lipid.CreateLipidTarget();
+
+            Composition composition = lipidTarget.Composition;
+            Composition compMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P); //Subtract one hydrogen to make this a minus1 fit score
+
+            var rawFilePath = @"C:\Users\ryad361\Desktop\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw";
+
+            var lcmsRun = PbfLcMsRun.GetLcMsRun(rawFilePath);
+
+            var spectrum = lcmsRun.GetSpectrum(precursor);
+
+            double relativeIntensityThreshold = 0.1;
+
+            Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
+
+            //Get the values to use to calculate pearson correlation
+            var observedPeaks = LipidUtil.GetAllIsotopePeaks(spectrum, compMinus1, tolerance,
+                relativeIntensityThreshold);
+            if (observedPeaks == null) Console.WriteLine("Observed peaks is null for scan " + id);
+
+            var isotopomerEnvelope = IsoProfilePredictor.GetIsotopomerEnvelop(
+                compMinus1.C,
+                compMinus1.H, 
+                compMinus1.N,
+                compMinus1.O,
+                compMinus1.S);
+
+            var observedIntensities = new double[observedPeaks.Length];
+
+            for (var i = 0; i < observedPeaks.Length; i++)
+            {
+                var observedPeak = observedPeaks[i];
+                observedIntensities[i] = observedPeak != null ? (float)observedPeak.Intensity : 0.0;
+            }
+
+            Console.WriteLine("The theoretical y values are: ");
+            foreach (var value in isotopomerEnvelope.Envolope)
+            {
+                Console.WriteLine(value + ", ");
+            }
+
             Console.WriteLine("The observed peak intensity x values are: ");
             foreach (var value in observedIntensities)
             {
