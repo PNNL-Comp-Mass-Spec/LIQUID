@@ -1413,6 +1413,91 @@ namespace LiquidBackend.Util
 		}
 
         /// <summary>
+        /// Finds all isotope peaks corresponding to theoretical profiles with relative intensity higher than the threshold
+        /// </summary>
+        /// <param name="ion">ion</param>
+        /// <param name="tolerance">tolerance</param>
+        /// <param name="relativeIntensityThreshold">relative intensity threshold of the theoretical isotope profile</param>
+        /// <returns>array of observed isotope peaks in the spectrum. null if no peak found.</returns>
+        public static Peak[] GetAllIsotopePeaks(Spectrum spectrum, Composition composition, Tolerance tolerance, double relativeIntensityThreshold)
+        {
+            var Peaks = spectrum.Peaks;
+            var mostAbundantIsotopeIndex = 0;
+            var isotopomerEnvelope = IsoProfilePredictor.GetIsotopomerEnvelop(
+                                                            composition.C,
+                                                            composition.H,
+                                                            composition.N,
+                                                            composition.O,
+                                                            composition.S).Envolope;
+            var mostAbundantIsotopeMz = composition.Mass;
+            var mostAbundantIsotopeMatchedPeakIndex = spectrum.FindPeakIndex(mostAbundantIsotopeMz, tolerance);
+            if (mostAbundantIsotopeMatchedPeakIndex < 0) return null;
+
+            var observedPeaks = new Peak[isotopomerEnvelope.Length];
+            observedPeaks[mostAbundantIsotopeIndex] = Peaks[mostAbundantIsotopeMatchedPeakIndex];
+
+            // go down
+            var peakIndex = mostAbundantIsotopeMatchedPeakIndex - 1;
+            for (var isotopeIndex = mostAbundantIsotopeIndex - 1; isotopeIndex >= 0; isotopeIndex--)
+            {
+                if (isotopomerEnvelope[isotopeIndex] < relativeIntensityThreshold) break;
+                var isotopeMz = mostAbundantIsotopeMz - isotopeIndex * Constants.C13MinusC12;
+                var tolTh = tolerance.GetToleranceAsTh(isotopeMz);
+                var minMz = isotopeMz - tolTh;
+                var maxMz = isotopeMz + tolTh;
+                for (var i = peakIndex; i >= 0; i--)
+                {
+                    var peakMz = Peaks[i].Mz;
+                    if (peakMz < minMz)
+                    {
+                        peakIndex = i;
+                        break;
+                    }
+                    if (peakMz <= maxMz)    // find match, move to prev isotope
+                    {
+                        var peak = Peaks[i];
+                        if (observedPeaks[isotopeIndex] == null ||
+                            peak.Intensity > observedPeaks[isotopeIndex].Intensity)
+                        {
+                            observedPeaks[isotopeIndex] = peak;
+                        }
+                    }
+                }
+            }
+
+            // go up
+            peakIndex = mostAbundantIsotopeMatchedPeakIndex + 1;
+            for (var isotopeIndex = mostAbundantIsotopeIndex + 1; isotopeIndex < isotopomerEnvelope.Length; isotopeIndex++)
+            {
+                if (isotopomerEnvelope[isotopeIndex] < relativeIntensityThreshold) break;
+                var isotopeMz = mostAbundantIsotopeMz + isotopeIndex * Constants.C13MinusC12;
+                var tolTh = tolerance.GetToleranceAsTh(isotopeMz);
+                var minMz = isotopeMz - tolTh;
+                var maxMz = isotopeMz + tolTh;
+                for (var i = peakIndex; i < Peaks.Length; i++)
+                {
+                    var peakMz = Peaks[i].Mz;
+                    if (peakMz > maxMz)
+                    {
+                        peakIndex = i;
+                        break;
+                    }
+                    if (peakMz >= minMz)    // find match, move to prev isotope
+                    {
+                        var peak = Peaks[i];
+                        if (observedPeaks[isotopeIndex] == null ||
+                            peak.Intensity > observedPeaks[isotopeIndex].Intensity)
+                        {
+                            observedPeaks[isotopeIndex] = peak;
+                        }
+                    }
+                }
+            }
+
+            return observedPeaks;
+        }
+
+        /// <summary>
         /// Calculates pearson correlation between an observed spectrum and theoretical.
         /// </summary>
         /// <param name="spectrum">Observed spectrum.</param>
@@ -1427,7 +1512,7 @@ namespace LiquidBackend.Util
             double relativeIntensityThreshold = 0.1)
         {
             var ion = new Ion(composition, 1);
-            var observedPeaks = spectrum.GetAllIsotopePeaks(ion, tolerance, relativeIntensityThreshold);
+            var observedPeaks = LipidUtil.GetAllIsotopePeaks(spectrum, composition, tolerance, relativeIntensityThreshold);
             if (observedPeaks == null) return 0;
 
             var isotopomerEnvelope = IsoProfilePredictor.GetIsotopomerEnvelop(
@@ -1444,7 +1529,8 @@ namespace LiquidBackend.Util
                 var observedPeak = observedPeaks[i];
                 observedIntensities[i] = observedPeak != null ? (float)observedPeak.Intensity : 0.0;
             }
-            return FitScoreCalculator.GetPearsonCorrelation(isotopomerEnvelope.Envolope, observedIntensities);
+            var correlation = FitScoreCalculator.GetPearsonCorrelation(isotopomerEnvelope.Envolope, observedIntensities);
+            return correlation;
         }
 
         /// <summary>
@@ -1468,7 +1554,7 @@ namespace LiquidBackend.Util
         /// <returns></returns>
         public static double GetFitMinus1Score(SpectrumSearchResult spectrumResult, Composition composition)
         {
-            var compositionMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S);
+            var compositionMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P);
             return GetPearsonCorrelation(
                                 spectrumResult.PrecursorSpectrum,
                                 compositionMinus1,
