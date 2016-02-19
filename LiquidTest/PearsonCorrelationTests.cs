@@ -103,8 +103,8 @@ namespace LiquidTest
             Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
 
             //Get the values to use to calculate pearson correlation
-            var ion = new Ion(composition, 1);
-            var observedPeaks = spectrum.GetAllIsotopePeaks(ion, tolerance, relativeIntensityThreshold);
+            var observedPeaks = LipidUtil.GetAllIsotopePeaks(spectrum, composition, tolerance,
+                relativeIntensityThreshold);
             if (observedPeaks == null) Console.WriteLine("Observed peaks is null for scan " + id);
 
             var isotopomerEnvelope = IsoProfilePredictor.GetIsotopomerEnvelop(
@@ -122,13 +122,13 @@ namespace LiquidTest
                 observedIntensities[i] = observedPeak != null ? (float)observedPeak.Intensity : 0.0;
             }
 
-            Console.WriteLine("The theoretical x values are: ");
+            Console.WriteLine("The theoretical y values are: ");
             foreach (var value in isotopomerEnvelope.Envolope)
             {
                 Console.WriteLine(value + ", ");
             }
             
-            Console.WriteLine("The observed peak intensity y values are: ");
+            Console.WriteLine("The observed peak intensity x values are: ");
             foreach (var value in observedIntensities)
             {
                 Console.WriteLine(value + ", ");
