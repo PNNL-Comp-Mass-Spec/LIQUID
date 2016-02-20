@@ -45,38 +45,104 @@ namespace LiquidTest
             Console.WriteLine("The Pearson correlation is: " + correlation);
         }
 
-        [TestCase(@"\\protoapps\userdata\Wilkins\FromLillian\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw",
-            @"\\protoapps\userdata\Wilkins\FromLillian\LiquidExportedResults.tsv")]
-        public void TestPearsonCorrelationWholeFile(string pathToRaw, string pathToResults)
+        public string GetRawFilePath(string directory, string datasetName)
         {
-            Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
+            string rawFileName = datasetName + ".raw";
+            var rawFilePath = Path.Combine(directory, rawFileName);
 
-            using (var reader = new StreamReader(pathToResults))
+            Console.WriteLine(DateTime.Now + ": Processing " + datasetName);
+
+            if (File.Exists(rawFilePath))
             {
-                int lineCount = 0;
-                var headerToIndex = new Dictionary<string, int>();
-                while (reader.Peek() > -1)
+                Console.WriteLine(DateTime.Now + ": Dataset already exists");
+            }
+            else
+            {
+                try
                 {
-                    var line = reader.ReadLine();
-                    var pieces = line.Split('\t').ToArray();
+                    Console.WriteLine(DateTime.Now + ": Dataset does not exist locally, so we will go get it");
 
-                    if (lineCount++ == 0)
-                    {   // First line
-                        for (int i = 0; i < pieces.Count(); i++)
-                        {
-                            headerToIndex.Add(pieces[i], i);
+                    // Lookup in DMS via Mage
+                    string dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetName);
+                    DirectoryInfo dmsDirectoryInfo = new DirectoryInfo(dmsFolder);
+                    string fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, rawFileName);
+
+                    // Copy Locally
+                    // TODO: Handle files that are on MyEMSL
+                    Console.WriteLine(DateTime.Now + ": Copying dataset from " + dmsDirectoryInfo.FullName);
+                    File.Copy(fullPathToDmsFile, rawFilePath);
+                    Console.WriteLine(DateTime.Now + ": Copy complete");
+                }
+                catch (Exception)
+                {
+                    rawFilePath = string.Empty;
+                    Console.WriteLine("Cannot get {0} from DMS", datasetName);
+                }
+            }
+
+            return rawFilePath;
+        }
+
+        [TestCase(@"\\protoapps\userdata\Wilkins\LiquidTrainingFiles\")]
+        public void TestPearsonCorrelationWholeFile(string directoryPath)
+        {
+            var dirFiles = Directory.GetFiles(directoryPath);
+
+            foreach (var pathToResults in dirFiles.Where(path => path.EndsWith(".tsv")))
+            {
+                var datasetName = Path.GetFileNameWithoutExtension(pathToResults);
+                var pathToRaw = GetRawFilePath(directoryPath, datasetName);
+                if (string.IsNullOrEmpty(pathToRaw))
+                {
+                    continue;
+                }
+
+                Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
+                var rawFileName = Path.GetFileName(pathToRaw);
+                var datasetDirPath = Path.GetDirectoryName(pathToResults);
+                var outputFileName = string.Format("{0}_training.tsv", datasetName);
+                var outputPath = Path.Combine(datasetDirPath, outputFileName);
+                using (var writer = new StreamWriter(outputPath))
+                using (var reader = new StreamReader(pathToResults))
+                {
+                    int lineCount = 0;
+                    var headerToIndex = new Dictionary<string, int>();
+                    while (reader.Peek() > -1)
+                    {
+                        var line = reader.ReadLine();
+                        var pieces = line.Split('\t').ToArray();
+
+                        if (lineCount++ == 0)
+                        {   // First line
+
+                            writer.Write("Raw File\t");
+                            for (int i = 0; i < pieces.Length; i++)
+                            {
+                                headerToIndex.Add(pieces[i], i);
+                                writer.Write("{0}\t", pieces[i]);
+                            }
+
+                            writer.WriteLine("Fit Score\tFit M-1 Score");
+
+                            continue;
                         }
 
-                        continue;
-                    }
+                        var precursor = Convert.ToInt32(pieces[headerToIndex["Precursor Scan"]]);
+                        var commonName = pieces[headerToIndex["Common Name"]];
+                        var adduct = pieces[headerToIndex["Adduct"]];
+                        var lcmsRun = PbfLcMsRun.GetLcMsRun(pathToRaw);
+                        var spectrum = lcmsRun.GetSpectrum(precursor);
+                        var lipid = new Lipid { AdductFull = adduct, CommonName = commonName };
+                        var lipidTarget = lipid.CreateLipidTarget();
+                        var spectrumSearchResult = new SpectrumSearchResult(null, null, spectrum, null, null, new Xic(), lcmsRun) { PrecursorTolerance = tolerance };
+                        var fitScore = LipidUtil.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
+                        var fitMinus1Score = LipidUtil.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
 
-                    var precursor = Convert.ToInt32(pieces[headerToIndex["Precursor Scan"]]);
-                    var composition = pieces[headerToIndex["Formula"]];
-                    var parsedCompostion = Composition.ParseFromPlainString(composition);
-                    var lcmsRun = PbfLcMsRun.GetLcMsRun(pathToRaw);
-                    var spectrum = lcmsRun.GetSpectrum(precursor);
-                    var correlation = GetPearsonCorrelation(spectrum, parsedCompostion, tolerance);
-                    Console.WriteLine("Common Name: " + pieces[headerToIndex["Common Name"]] + " Correlation: " + correlation);
+                        writer.Write(rawFileName + "\t");
+                        writer.Write(line);
+
+                        writer.WriteLine("{0}\t{1}", fitScore, fitMinus1Score);
+                    }
                 }
             }
         }
