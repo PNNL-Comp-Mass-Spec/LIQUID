@@ -97,6 +97,7 @@ namespace LiquidTest
                     continue;
                 }
 
+                var lcmsRun = PbfLcMsRun.GetLcMsRun(pathToRaw);
                 Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
                 var rawFileName = Path.GetFileName(pathToRaw);
                 var datasetDirPath = Path.GetDirectoryName(pathToResults);
@@ -130,7 +131,6 @@ namespace LiquidTest
                         var precursor = Convert.ToInt32(pieces[headerToIndex["Precursor Scan"]]);
                         var commonName = pieces[headerToIndex["Common Name"]];
                         var adduct = pieces[headerToIndex["Adduct"]];
-                        var lcmsRun = PbfLcMsRun.GetLcMsRun(pathToRaw);
                         var spectrum = lcmsRun.GetSpectrum(precursor);
                         var lipid = new Lipid { AdductFull = adduct, CommonName = commonName };
                         var lipidTarget = lipid.CreateLipidTarget();
