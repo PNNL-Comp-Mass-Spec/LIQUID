@@ -151,10 +151,15 @@ namespace LiquidTest
         //[TestCase(131, "[M+H]+", "PS(18:0/18:1)", "136")]
         //[TestCase(222, "[M+H]+", "PS(18:0/18:1)", "225")]
         //[TestCase(261, "[M+H]+", "PC(19:3/0:0)", "268")]
-        [TestCase(2562, "[M+H]+", "PC(6:2/14:2)", "2565")]
-        [TestCase(7281, "[M+H]+", "PG(O-16:0/16:0)", "7288")]
-        [TestCase(12867, "[M+H]+", "SM(d18:1/24:0)", "12868")]
-        [TestCase(14752, "[M+H]+", "PC(18:0/22:0)", "14761")]
+
+        //[TestCase(2562, "[M+H]+", "PC(6:2/14:2)", "2565")]
+        //[TestCase(7281, "[M+H]+", "PG(O-16:0/16:0)", "7288")]
+        //[TestCase(12867, "[M+H]+", "SM(d18:1/24:0)", "12868")]
+        //[TestCase(14752, "[M+H]+", "PC(18:0/22:0)", "14761")]
+
+          [TestCase(40, "[M-H]-", "CL(20:2/16:0/18:2/20:2)", "45")]
+          [TestCase(139, "[M-H]-", "CL(20:2/16:0/18:2/20:2)", "142")]
+          [TestCase(4909, "[M-H]-", "PG(21:0/22:4)", "4914")]
         public void TestIndividualLipidTargets(int precursor, string adduct, string commonName, string id)
         {
             Lipid lipid = new Lipid() {AdductFull = adduct, CommonName = commonName};
