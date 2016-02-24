@@ -8,6 +8,7 @@ using LiquidBackend.Domain;
 using LiquidBackend.IO;
 using LiquidBackend.Util;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace LiquidTest
 {
@@ -328,6 +329,7 @@ namespace LiquidTest
 			FileInfo targetsFileInfo = new FileInfo(targetsFilePath);
 			LipidMapsDbReader<Lipid> lipidReader = new LipidMapsDbReader<Lipid>();
 			List<Lipid> lipidList = lipidReader.ReadFile(targetsFileInfo);
+			bool headerWritten = false;
 
 			foreach (string datasetName in datasetNamesList)
 			{
@@ -361,7 +363,15 @@ namespace LiquidTest
 				// Run workflow
 				List<LipidGroupSearchResult> lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
 
-				LipidGroupSearchResultWriter.OutputResults(lipidGroupSearchResults, outputFileName, "", null, true);
+				if (!headerWritten)
+				{
+					LipidGroupSearchResultWriter.OutputResults(lipidGroupSearchResults, outputFileName, rawFileName, null, true, true);
+					headerWritten = true;
+				}
+				else
+				{
+					LipidGroupSearchResultWriter.OutputResults(lipidGroupSearchResults, outputFileName, rawFileName, null, true, false);
+				}
 			}
 		}
 
@@ -472,6 +482,269 @@ namespace LiquidTest
 				}
 			}
 		}
+
+		[Test]
+		public void FillCompAndMassForTargetsFile()
+		{
+			const string targetsFile = @"E:\Source\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b_Decoys.txt";
+			const string outputfile = @"E:\Source\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b_Decoys_test.txt";
+			
+			const int massCol = 6;
+			const int compCol = 7;
+
+			List<string> output = new List<string>();	
+
+			using (StreamReader targets = new StreamReader(targetsFile))
+			{
+				string header = targets.ReadLine();
+				output.Add(header);
+				while (targets.Peek() > -1)
+				{
+					string target = targets.ReadLine();
+					if (target != null)
+					{
+						string[] splitTarget = target.Split('\t');
+
+						try
+						{
+							if (string.IsNullOrEmpty(splitTarget[massCol]) || string.IsNullOrEmpty(splitTarget[compCol]))
+							{
+								Lipid lipid = new Lipid { CommonName = splitTarget[1], AdductFull = splitTarget[2] };
+								LipidTarget newTarget = lipid.CreateLipidTarget();
+								splitTarget[massCol] = newTarget.Composition.Mass.ToString();
+								splitTarget[compCol] = newTarget.Composition.ToPlainString();
+							}
+
+							StringBuilder rebuilt = new StringBuilder();
+							rebuilt.Append(splitTarget[0]);
+
+							for (int i = 1; i < splitTarget.Count(); i++)
+							{
+								rebuilt.Append("\t" + splitTarget[i]);
+							}
+
+							output.Add(rebuilt.ToString());
+						}
+						catch (Exception)
+						{
+							
+						}
+						
+					}
+				}
+			}
+
+			using (StreamWriter outstream = new StreamWriter(outputfile))
+			{
+				foreach (string x in output)
+				{
+					outstream.WriteLine(x);
+				}
+			}
+
+		}
+
+		[Test]
+		public void RunPositiveDecoysForSvm()
+		{
+			List<string> datasetNamesPositive = new List<string>();
+
+			datasetNamesPositive.Add("OHSUblotter_case_lipid_pooled__POS_150mm_12Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OHSUblotter_control_lipid_pooled__POS_150mm_12Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OHSUserum_case_lipid_pooled_POS_150mm_23Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OHSUserum_control_lipid_pooled_POS_150mm_23Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL102_691_pooled_0_3_7_Lipid_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_691_pooled_12_18_24_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_AH1_pooled_0_3_7_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_AH1_pooled_12_18_24_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_FM_pooled_0_3_7_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_FM_pooled_12_18_24_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_mock_pooled_0_3_7_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_mock_pooled_12_18_24_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL103_Mock_early_pooled_rand_POS_150mm_5July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_Mock_Late_pooled_rand_POS_150mm_14July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_NS1_early_pooled_rand_POS_150mm_14July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_NS1_late_pooled_rand_POS_150mm_5July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_VN1203_early_pooled_rand_POS_150mm_5July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_VN1203_late_pooled_rand_POS_150mm_14July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_691_2d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_691_4d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_691_7d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_AH1_1d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_AH1_2d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_AH1_4d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_AH1_7d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_FM_1d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_FM_2d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_FM_4d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_FM_7d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_mock_1d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_mock_2d_Lipid_pooled_POS_150mm_17Apr15_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_mock_4d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_mock_7d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("LungMap_embedded_left_lobe_lung2_POS_150mm_02Sept15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("LungMap_embedded_left_lobe_lung2b_POS_150mm_02Sept15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("SOM_LIPIDS_3C_POS_150mm_8Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("MinT_Kans_Gly_A_NEG_rep1_10__lip_POS_150mm_2Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("MinT_Kans_Gly_A_Plus_rep1_01__lip_POS_150mm_2Jun15_Polaroid_HSST3");
+			datasetNamesPositive.Add("FSFA_Isolate_HL53_0100_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("FSFA_Isolate_HL53_0400_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02");
+
+
+			const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_7b_Decoys.txt";
+			RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "PositiveDecoyTargets.tsv", datasetNamesPositive);
+		}
+
+		[Test]
+		public void RunNegativeDecoysForSvm()
+		{
+			List<string> datasetNamesNegative = new List<string>();
+
+			datasetNamesNegative.Add("OHSUblotter_case_lipid_pooled__NEG_150mm_17Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OHSUblotter_control_lipid_pooled__NEG_150mm_17Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OHSUserum_case_lipid_pooled_NEG_150mm_28Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OHSUserum_control_lipid_pooled_NEG_150mm_28Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_ICL102_691_pooled_0_3_7_Lipid_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_691_pooled_12_18_24_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_AH1_pooled_0_3_7_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_AH1_pooled_12_18_24_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_FM_pooled_0_3_7_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_FM_pooled_12_18_24_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_mock_pooled_0_3_7_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_mock_pooled_12_18_24_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL103_Mock_early_pooled_rand_NEG_150mm_23July15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_ICL103_NS1_Late_pooled_rand_NEG_150mm_15Aug15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_ICL103_VN1203_early_pooled_rand_NEG_150mm_15Aug15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_691_1d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_691_2d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_691_4d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_691_7d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_AH1_1d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_AH1_2d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_AH1_4d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_AH1_7d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_FM_1d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_FM_2d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_FM_4d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_FM_7d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_mock_1d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_mock_2d_Lipid_pooled_neg_150mm_17Apr15_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_mock_4d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_mock_7d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("LungMap_embedded_left_lobe_lung2_NEG_150mm_4Sept15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("LungMap_embedded_left_lobe_lung2b_NEG_150mm_4Sept15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("SOM_LIPIDS_3C_NEG_150mm_10Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("MinT_Kans_Gly_A_Plus_rep1_01__lip_NEG_150mm_27May15_Polaroid_HSST3");
+			datasetNamesNegative.Add("FSFA_Isolate_HL53_0100_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("FSFA_Isolate_HL53_0400_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02");
+
+
+			const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4_Decoys.txt";
+			RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "NegativeDecoyTargets.tsv", datasetNamesNegative);
+		}
+
+
+		[Test]
+		public void RunPositiveTargetsForSvm()
+		{
+			List<string> datasetNamesPositive = new List<string>();
+
+			datasetNamesPositive.Add("OHSUblotter_case_lipid_pooled__POS_150mm_12Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OHSUblotter_control_lipid_pooled__POS_150mm_12Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OHSUserum_case_lipid_pooled_POS_150mm_23Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OHSUserum_control_lipid_pooled_POS_150mm_23Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL102_691_pooled_0_3_7_Lipid_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_691_pooled_12_18_24_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_AH1_pooled_0_3_7_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_AH1_pooled_12_18_24_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_FM_pooled_0_3_7_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_FM_pooled_12_18_24_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_mock_pooled_0_3_7_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL102_mock_pooled_12_18_24_POS_9Jan15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_ICL103_Mock_early_pooled_rand_POS_150mm_5July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_Mock_Late_pooled_rand_POS_150mm_14July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_NS1_early_pooled_rand_POS_150mm_14July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_NS1_late_pooled_rand_POS_150mm_5July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_VN1203_early_pooled_rand_POS_150mm_5July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_ICL103_VN1203_late_pooled_rand_POS_150mm_14July15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_691_2d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_691_4d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_691_7d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_AH1_1d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_AH1_2d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_AH1_4d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_AH1_7d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_FM_1d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_FM_2d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_FM_4d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_FM_7d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_mock_1d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_mock_2d_Lipid_pooled_POS_150mm_17Apr15_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_mock_4d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("OMICS_IM102_mock_7d_Lipid_pooled_POS_150mm_06May15_Polaroid_14-12-16");
+			datasetNamesPositive.Add("LungMap_embedded_left_lobe_lung2_POS_150mm_02Sept15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("LungMap_embedded_left_lobe_lung2b_POS_150mm_02Sept15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("SOM_LIPIDS_3C_POS_150mm_8Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("MinT_Kans_Gly_A_NEG_rep1_10__lip_POS_150mm_2Jun15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("MinT_Kans_Gly_A_Plus_rep1_01__lip_POS_150mm_2Jun15_Polaroid_HSST3");
+			datasetNamesPositive.Add("FSFA_Isolate_HL53_0100_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02");
+			datasetNamesPositive.Add("FSFA_Isolate_HL53_0400_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02");
+
+
+			const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_7b.txt";
+			RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "PositiveTargetsOutput.tsv", datasetNamesPositive);
+		}
+
+		[Test]
+		public void RunNegativeTargetsForSvm()
+		{
+			List<string> datasetNamesNegative = new List<string>();
+
+			datasetNamesNegative.Add("OHSUblotter_case_lipid_pooled__NEG_150mm_17Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OHSUblotter_control_lipid_pooled__NEG_150mm_17Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OHSUserum_case_lipid_pooled_NEG_150mm_28Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OHSUserum_control_lipid_pooled_NEG_150mm_28Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_ICL102_691_pooled_0_3_7_Lipid_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_691_pooled_12_18_24_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_AH1_pooled_0_3_7_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_AH1_pooled_12_18_24_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_FM_pooled_0_3_7_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_FM_pooled_12_18_24_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_mock_pooled_0_3_7_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL102_mock_pooled_12_18_24_NEG_12Jan15_Polaroid_14-12-16");
+			datasetNamesNegative.Add("OMICS_ICL103_Mock_early_pooled_rand_NEG_150mm_23July15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_ICL103_NS1_Late_pooled_rand_NEG_150mm_15Aug15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_ICL103_VN1203_early_pooled_rand_NEG_150mm_15Aug15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_691_1d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_691_2d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_691_4d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_691_7d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_AH1_1d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_AH1_2d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_AH1_4d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_AH1_7d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_FM_1d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_FM_2d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_FM_4d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_FM_7d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_mock_1d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_mock_2d_Lipid_pooled_neg_150mm_17Apr15_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_mock_4d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("OMICS_IM102_mock_7d_Lipid_pooled_neg_150mm_22May15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("LungMap_embedded_left_lobe_lung2_NEG_150mm_4Sept15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("LungMap_embedded_left_lobe_lung2b_NEG_150mm_4Sept15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("SOM_LIPIDS_3C_NEG_150mm_10Jun15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("MinT_Kans_Gly_A_Plus_rep1_01__lip_NEG_150mm_27May15_Polaroid_HSST3");
+			datasetNamesNegative.Add("FSFA_Isolate_HL53_0100_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02");
+			datasetNamesNegative.Add("FSFA_Isolate_HL53_0400_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02");
+
+
+			const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4.txt";
+			RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "NegativeTargetsOutput.tsv", datasetNamesNegative);
+		}
+
 	}
 
 }

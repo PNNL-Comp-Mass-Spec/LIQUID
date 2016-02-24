@@ -72,13 +72,13 @@ namespace LiquidBackend.IO
 			}
 		}
 
-	    public static void OutputResults(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null, bool append = false)
+	    public static void OutputResults(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null, bool append = false, bool writeHeader = true)
         {
             if (File.Exists(fileLocation) && !append) File.Delete(fileLocation);
 
 	        if (Path.GetExtension(fileLocation) == ".tsv")
 	        {
-	            OutputResultsToTsv(lipidGroupSearchResults, fileLocation, rawFileName, progress);
+	            OutputResultsToTsv(lipidGroupSearchResults, fileLocation, rawFileName, progress, writeHeader);
 	        }
             else if (Path.GetExtension(fileLocation) == ".mzTab")
             {
@@ -201,13 +201,16 @@ namespace LiquidBackend.IO
 	        }
 	    }
 
-		private static void OutputResultsToTsv(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null)
+		private static void OutputResultsToTsv(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null, bool writeHeader = true)
 		{
 
 			using (TextWriter textWriter = new StreamWriter(fileLocation, true))
 			{
-				textWriter.WriteLine("Raw Data File\tLM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tNET\tIntensity\tPeak Area\tScore\tPearson Corr Score\tPearson Corr M-1 Score\tCosine Score\tCosine M-1 Score\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
-			    int progressCounter = 0;
+				if (writeHeader) 
+				{ 
+					textWriter.WriteLine("Raw Data File\tLM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tNET\tIntensity\tPeak Area\tScore\tPearson Corr Score\tPearson Corr M-1 Score\tCosine Score\tCosine M-1 Score\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
+			    }
+				int progressCounter = 0;
 
 				foreach (LipidGroupSearchResult lipidGroupSearchResult in lipidGroupSearchResults)
 				{
