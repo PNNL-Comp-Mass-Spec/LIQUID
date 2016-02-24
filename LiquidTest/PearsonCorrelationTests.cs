@@ -33,7 +33,7 @@ namespace LiquidTest
         [TestCase(14, "PS(18:0/18:1)", "C42H81N1O10P1", 30)]
         public void TestPearsonCorrelation(int precursor, string commonName, string composition, Tolerance tolerance)
         {
-            var rawFilePath = @"C:\Users\ryad361\Desktop\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw";
+            var rawFilePath = @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw";
 
             var lcmsRun = PbfLcMsRun.GetLcMsRun(rawFilePath);
 
@@ -147,27 +147,25 @@ namespace LiquidTest
             }
         }
 
-        //[TestCase(14, "[M+H]+", "PS(18:0/18:1)", "25")]
-        //[TestCase(131, "[M+H]+", "PS(18:0/18:1)", "136")]
-        //[TestCase(222, "[M+H]+", "PS(18:0/18:1)", "225")]
-        //[TestCase(261, "[M+H]+", "PC(19:3/0:0)", "268")]
+        //[TestCase(14, "[M+H]+", "PS(18:0/18:1)", "25", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw")]
+        //[TestCase(131, "[M+H]+", "PS(18:0/18:1)", "136", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw")]
+        //[TestCase(222, "[M+H]+", "PS(18:0/18:1)", "225", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw")]
+        //[TestCase(261, "[M+H]+", "PC(19:3/0:0)", "268", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw")]
 
-        //[TestCase(2562, "[M+H]+", "PC(6:2/14:2)", "2565")]
-        //[TestCase(7281, "[M+H]+", "PG(O-16:0/16:0)", "7288")]
-        //[TestCase(12867, "[M+H]+", "SM(d18:1/24:0)", "12868")]
-        //[TestCase(14752, "[M+H]+", "PC(18:0/22:0)", "14761")]
+        //[TestCase(2562, "[M+H]+", "PC(6:2/14:2)", "2565", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw")]
+        //[TestCase(7281, "[M+H]+", "PG(O-16:0/16:0)", "7288", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw")]
+        //[TestCase(12867, "[M+H]+", "SM(d18:1/24:0)", "12868", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw")]
+        //[TestCase(14752, "[M+H]+", "PC(18:0/22:0)", "14761", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw")]
 
-          [TestCase(40, "[M-H]-", "CL(20:2/16:0/18:2/20:2)", "45")]
-          [TestCase(139, "[M-H]-", "CL(20:2/16:0/18:2/20:2)", "142")]
-          [TestCase(4909, "[M-H]-", "PG(21:0/22:4)", "4914")]
-        public void TestIndividualLipidTargets(int precursor, string adduct, string commonName, string id)
+        [TestCase(40, "[M-H]-", "CL(20:2/16:0/18:2/20:2)", "45", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_SL_8_Lipid_pooled_2_NEG_150mm_09Nov15_Polaroid_HSST3-02.raw")]
+          [TestCase(139, "[M-H]-", "CL(20:2/16:0/18:2/20:2)", "142", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_SL_8_Lipid_pooled_2_NEG_150mm_09Nov15_Polaroid_HSST3-02.raw")]
+          [TestCase(4909, "[M-H]-", "PG(21:0/22:4)", "4914", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_SL_8_Lipid_pooled_2_NEG_150mm_09Nov15_Polaroid_HSST3-02.raw")]
+        public void TestIndividualLipidTargets(int precursor, string adduct, string commonName, string id, string rawFilePath)
         {
             Lipid lipid = new Lipid() {AdductFull = adduct, CommonName = commonName};
             LipidTarget lipidTarget = lipid.CreateLipidTarget();
 
             Composition composition = lipidTarget.Composition;
-
-            var rawFilePath = @"C:\Users\ryad361\Desktop\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw";
 
             var lcmsRun = PbfLcMsRun.GetLcMsRun(rawFilePath);
 
@@ -227,7 +225,7 @@ namespace LiquidTest
             Composition composition = lipidTarget.Composition;
             Composition compMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P); //Subtract one hydrogen to make this a minus1 fit score
 
-            var rawFilePath = @"C:\Users\ryad361\Desktop\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw";
+            var rawFilePath = @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw";
 
             var lcmsRun = PbfLcMsRun.GetLcMsRun(rawFilePath);
 
