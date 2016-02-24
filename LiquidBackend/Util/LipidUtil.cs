@@ -108,6 +108,8 @@ namespace LiquidBackend.Util
 			    if (classAbbrev.Contains("DGTS/A")) return LipidClass.DGTSA;
 			    if (classAbbrev.Contains("PE-Cer")) return LipidClass.PE_Cer;
 			    if (classAbbrev.Contains("PI-Cer")) return LipidClass.PI_Cer;
+                if (classAbbrev.Contains("PE-NMe2")) return LipidClass.PE_NMe2;
+                if (classAbbrev.Contains("PE-NMe")) return LipidClass.PE_NMe; 
 			    if (classAbbrev.Contains("GM") || classAbbrev.Contains("GD") || classAbbrev.Contains("GT") ||classAbbrev.Contains("GQ")) return LipidClass.Ganglioside;
 
 				throw new SystemException("Unrecognized lipid class for " + commonName);
@@ -231,6 +233,18 @@ namespace LiquidBackend.Util
                         return new Composition(numCarbons + 2, (2 * (numCarbons + 4)) + 1 - (2 * numDoubleBonds), 2, 5, 0, 1);
 			        }
 			        break;
+                case LipidClass.PE_NMe:
+			        if (numChains > 1)
+			        {
+                        return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 0 - (2 * numDoubleBonds), 1, 8, 0, 1);
+			        }
+			        break;
+                case LipidClass.PE_NMe2:
+                    if (numChains > 1)
+                    {
+                        return new Composition(numCarbons + 7, (2 * (numCarbons + 7)) + 0 - (2 * numDoubleBonds), 1, 8, 0, 1);
+                    }
+			        break;
 				case LipidClass.PS:
 					if (numChains > 1)
 					{
@@ -341,6 +355,11 @@ namespace LiquidBackend.Util
 					return new Composition(numCarbons + 27, (2 * (numCarbons + 27)) - 10 - (2 * numDoubleBonds), 0, 2, 0, 0);
 					break;
 				case LipidClass.Ubiquitones:
+                    if(commonName.EndsWith("Q10")) return new Composition(59, 90, 0, 4, 0, 0);
+                    else if (commonName.EndsWith("Q4")) return new Composition(29, 42, 0, 4, 0, 0);
+                    else if (commonName.EndsWith("Q6")) return new Composition(39, 58, 0, 4, 0, 0);
+                    else if (commonName.EndsWith("Q8")) return new Composition(49, 74, 0, 4, 0, 0);
+                    else if (commonName.EndsWith("Q9")) return new Composition(54, 82, 0, 4, 0, 0);
 					break;
 				case LipidClass.MG:
 					return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) + 0 - (2 * numDoubleBonds), 0, 4, 0, 0);
@@ -515,8 +534,8 @@ namespace LiquidBackend.Util
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 3, 0, 1).Mass, "plasmalogen (rearranged)-H2O", acylChain));
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) + 2 - (2 * doubleBonds), 1, 6, 0, 1).Mass, "LPC(P-)", acylChain));
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) - 0 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPC(P-)-H2O", acylChain));
-                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ether **tentative**", acylChain));
-                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 1, 0, 0).Mass - new Composition(3, 9, 1, 0, 0).Mass, "M-Ether-C3H9N **tentative**", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 1, 0, 0).Mass, "M-Ether", acylChain));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 1, 0, 0).Mass - new Composition(3, 9, 1, 0, 0).Mass, "M-Ether-C3H9N", acylChain));
 								}
 								break;
 							case AcylChainType.Ether:
@@ -561,17 +580,31 @@ namespace LiquidBackend.Util
 						msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, (2 * (carbons + 3)) - 3 - (2 * doubleBonds), 0, 4, 0, 0).Mass, "DAG", combinedChain));
 					}
 				}
-				else if (lipidClass == LipidClass.PE)
+				else if (lipidClass == LipidClass.PE || lipidClass == LipidClass.PE_NMe || lipidClass == LipidClass.PE_NMe2)
 				{
 					int countOfChains = acylChainList.Count(x => x.NumCarbons > 0);
 					int countOfStandardAcylsChains = acylChainList.Count(x => x.AcylChainType == AcylChainType.Standard && x.NumCarbons > 0);
 
-					string displayC2H8NO4P = countOfChains > 1 ? "M-C2H8NO4P / DAG" : "M-C2H8NO4P";
+				    if (lipidClass == LipidClass.PE)
+				    {
+				        string displayC2H8NO4P = countOfChains > 1 ? "M-C2H8NO4P / DAG" : "M-C2H8NO4P";
 
-					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(2, 8, 1, 4, 0, 1).Mass, displayC2H8NO4P, true));
-					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "M-H2O"));
+				        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(2, 8, 1, 4, 0, 1).Mass,
+				            displayC2H8NO4P, true));
+				        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "M-H2O"));
+				    }
+                    else if (lipidClass == LipidClass.PE_NMe)
+                    {
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 10, 1, 4, 0, 1).Mass, "C3H10O4NP", true));
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 11, 1, 4, 0, 1).Mass, "C3H10O4NP")); 
+                    }
+                    else if (lipidClass == LipidClass.PE_NMe2)
+                    {
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(4, 12, 1, 4, 0, 1).Mass, "C3H10O4NP", true));
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(4, 13, 1, 4, 0, 1).Mass, "C3H10O4NP"));    
+                    }
 
-					foreach (var acylChain in acylChainList)
+				    foreach (var acylChain in acylChainList)
 					{
 						int carbons = acylChain.NumCarbons;
 						int doubleBonds = acylChain.NumDoubleBonds;
@@ -1463,7 +1496,7 @@ namespace LiquidBackend.Util
                     var sialic = commonName.Split('(')[0][1];
                     var sugar = commonName.Split('(')[0][0];
 
-                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2*carbons) - (2*doubleBonds), 1, 3, 0).Mass, "Cer", acylChains, true));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - (2 * doubleBonds), 1, 3, 0).Mass, "Cer", acylChains, true));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 1, 2, 0).Mass, "Cer-H2O", acylChains));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) - 2 - (2 * doubleBonds), 1, 8, 0).Mass, "HexCer", acylChains));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 12, (2 * (carbons + 12)) - 4 - (2 * doubleBonds), 1, 13, 0).Mass, "2(Hex)Cer", acylChains));

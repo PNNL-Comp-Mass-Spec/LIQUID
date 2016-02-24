@@ -48,12 +48,22 @@ namespace LiquidBackend.Domain
 				if (acylChainList.Count > 0)
 				{
 					stringBuilder.Append("(");
-
+				    int carbons = 0;
+				    int db = 0;
 					for (int i = 0; i < acylChainList.Count; i++)
 					{
 						AcylChain acylChain = acylChainList[i];
-						stringBuilder.Append(acylChain);
-						if (i < acylChainList.Count - 1) stringBuilder.Append("/");
+					    if (LipidClass == LipidClass.Ganglioside)
+					    {
+					        carbons += acylChain.NumCarbons;
+					        db += acylChain.NumDoubleBonds;
+					        if (i == acylChainList.Count - 1) stringBuilder.Append(carbons + ":" + db);
+					    }
+					    else
+					    {
+					        stringBuilder.Append(acylChain);
+					        if (i < acylChainList.Count - 1) stringBuilder.Append("/");
+					    }
 					}
 					stringBuilder.Append(")");
 				}

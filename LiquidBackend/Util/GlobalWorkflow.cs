@@ -185,7 +185,7 @@ namespace LiquidBackend.Util
 						Xic xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(lipidMz, hcdTolerance);
 
 						// Bogus data
-						if (xic.GetApexScanNum() < 0) continue;
+						if (xic.GetApexScanNum() < 0 || xic.GetSumIntensities() <= 0) continue;
 
 						// Grab the MS/MS peak to search for
 						IEnumerable<MsMsSearchUnit> msMsSearchUnits = lipidTarget.GetMsMsSearchUnits();
