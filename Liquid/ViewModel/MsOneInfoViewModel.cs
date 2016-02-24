@@ -22,8 +22,11 @@ namespace Liquid.ViewModel
 		public PlotModel IsotopicProfilePlot { get; set; }
 		public PlotModel XicPlot { get; set; }
 
-        public double FitScore { get; private set; }
-        public double FitMinus1Score { get; private set; }
+        public double PearsonCorrScore { get; private set; }
+        public double PearsonCorrMinus1Score { get; private set; }
+
+        public double CosineScore { get; private set; }
+        public double CosineMinus1Score { get; private set; }
 
 		public double CurrentMz { get; private set; }
 		public double CurrentPpmError { get; private set; }
@@ -69,7 +72,7 @@ namespace Liquid.ViewModel
 
 			this.UpdatePpmError();
 
-            this.UpdatePearsonCorrelation();
+            this.UpdateFitScores();
 
 			this.StartScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
 			this.StopScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
@@ -192,17 +195,29 @@ namespace Liquid.ViewModel
 			OnPropertyChanged("IsotopicProfilePlot");
 		}
 
-	    private void UpdatePearsonCorrelation()
+	    private void UpdateFitScores()
 	    {
-            FitScore = LipidUtil.GetFitScore(
+            var pearsonCorrelationCalculator = new PearsonCorrelationFitUtil();
+            PearsonCorrScore = pearsonCorrelationCalculator.GetFitScore(
 	            this.CurrentSpectrumSearchResult,
 	            this.CurrentLipidTarget.Composition);
-            OnPropertyChanged("FitScore");
+            OnPropertyChanged("PearsonCorrScore");
 
-            FitMinus1Score = LipidUtil.GetFitMinus1Score(
+            PearsonCorrMinus1Score = pearsonCorrelationCalculator.GetFitMinus1Score(
 	            this.CurrentSpectrumSearchResult,
                 this.CurrentLipidTarget.Composition);
-            OnPropertyChanged("FitMinus1Score");
+            OnPropertyChanged("PearsonCorrMinus1Score");
+
+            var cosineCalculator = new CosineFitUtil();
+	        this.CosineScore = cosineCalculator.GetFitScore(
+	            this.CurrentSpectrumSearchResult,
+	            this.CurrentLipidTarget.Composition);
+            OnPropertyChanged("CosineScore");
+
+            this.CosineMinus1Score = cosineCalculator.GetFitMinus1Score(
+                this.CurrentSpectrumSearchResult,
+                this.CurrentLipidTarget.Composition);
+            OnPropertyChanged("CosineMinus1Score");
         }
 
 		private void CreateXicPlot()

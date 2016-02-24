@@ -18,18 +18,6 @@ namespace LiquidTest
     [TestFixture]
     class PearsonCorrelationTests
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="precursorSpectrum"></param>
-        /// <param name="target"></param>
-        /// <returns>Pearson correlation between observed and theoretical isotopic profiles.</returns>
-        public double GetPearsonCorrelation(Spectrum precursorSpectrum, Composition composition, Tolerance tolerance)
-        {
-            double pearsonCorrelation = LipidUtil.GetPearsonCorrelation(precursorSpectrum, composition, tolerance);
-            return pearsonCorrelation;
-        }
-
         [TestCase(14, "PS(18:0/18:1)", "C42H81N1O10P1", 30)]
         public void TestPearsonCorrelation(int precursor, string commonName, string composition, Tolerance tolerance)
         {
@@ -40,8 +28,10 @@ namespace LiquidTest
             var spectrum = lcmsRun.GetSpectrum(precursor);
 
             var parsedComposition = Composition.ParseFromPlainString(composition);
+            var correlationCalculator = new PearsonCorrelationFitUtil();
             //var target = new LipidTarget(commonName, LipidClass.DG, FragmentationMode.Positive, parsedComposition, new List<AcylChain>(), Adduct.Hydrogen);
-            var correlation = GetPearsonCorrelation(spectrum, parsedComposition, tolerance);
+            var spectrumSearchResult = new SpectrumSearchResult(null, null, spectrum, null, null, new Xic(), lcmsRun) { PrecursorTolerance = tolerance };
+            var correlation = correlationCalculator.GetFitScore(spectrumSearchResult, parsedComposition);
             Console.WriteLine("The Pearson correlation is: " + correlation);
         }
 
@@ -83,12 +73,123 @@ namespace LiquidTest
             return rawFilePath;
         }
 
+        [TestCase(@"\\protoapps\UserData\Wilkins\LiquidTestFiles\")]
+        public void PearsonCorrelationFileCombiner(string directoryPath)
+        {
+            var dirFiles = Directory.GetFiles(directoryPath);
+
+            var correlationCalculator = new PearsonCorrelationFitUtil();
+
+            // Each dictionary corresponds to a dataset, each dictionary key corresponds to the TSV header.
+            var results = new List<Dictionary<string, List<string>>>();
+            var headers = new HashSet<string>();
+            foreach (var pathToResults in dirFiles.Where(path => path.EndsWith(".txt")))
+            {
+                var datasetName = Path.GetFileNameWithoutExtension(pathToResults);
+                var pathToRaw = GetRawFilePath(directoryPath, datasetName);
+                var rawName = Path.GetFileName(pathToRaw);
+                if (string.IsNullOrEmpty(pathToRaw))
+                {
+                    continue;
+                }
+
+                var lcmsRun = PbfLcMsRun.GetLcMsRun(pathToRaw);
+                Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
+                var datasetDirPath = Path.GetDirectoryName(pathToResults);
+                using (var reader = new StreamReader(pathToResults))
+                {
+                    results.Add(new Dictionary<string, List<string>>()); // Add dictionary for new dataset.
+                    var datasetResults = results.Last(); // Results for the current dataset.
+                    int lineCount = 0;
+                    var headerToIndex = new Dictionary<string, int>();
+                    while (reader.Peek() > -1)
+                    {
+                        var line = reader.ReadLine();
+                        var pieces = line.Split('\t').ToArray();
+
+                        if (lineCount++ == 0)
+                        {   // First line
+
+                            for (int i = 0; i < pieces.Length; i++)
+                            {
+                                var header = pieces[i];
+                                headerToIndex.Add(header, i);
+                                datasetResults.Add(header, new List<string>());
+                            }
+
+                            datasetResults.Add("Raw File", new List<string>());
+                            datasetResults.Add("Fit Score", new List<string>());
+                            datasetResults.Add("Fit M-1 Score", new List<string>());
+                            headers.UnionWith(headerToIndex.Keys);
+                            continue;
+                        }
+
+                        var precursor = Convert.ToInt32(pieces[headerToIndex["Precursor Scan"]]);
+                        var commonName = pieces[headerToIndex["Common Name"]];
+                        var adduct = pieces[headerToIndex["Adduct"]];
+                        var spectrum = lcmsRun.GetSpectrum(precursor);
+                        if (spectrum == null)
+                        {
+                            Console.WriteLine("Invalid scan number: {0}", precursor);
+                            continue;
+                        }
+
+                        var lipid = new Lipid { AdductFull = adduct, CommonName = commonName };
+                        var lipidTarget = lipid.CreateLipidTarget();
+                        var spectrumSearchResult = new SpectrumSearchResult(null, null, spectrum, null, null, new Xic(), lcmsRun) { PrecursorTolerance = tolerance };
+                        var fitScore = correlationCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
+                        var fitMinus1Score = correlationCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
+
+                        // Add results to results dictionary.
+                        datasetResults["Raw File"].Add(rawName);
+                        foreach (var header in headerToIndex.Keys)
+                        {
+                            datasetResults[header].Add(pieces[headerToIndex[header]]);
+                        }
+
+                        datasetResults["Fit Score"].Add(fitScore.ToString());
+                        datasetResults["Fit M-1 Score"].Add(fitMinus1Score.ToString());
+                    }
+                }
+
+                // Write results
+                var outputFilePath = Path.Combine(datasetDirPath, "training.tsv");
+                using (var writer = new StreamWriter(outputFilePath))
+                {
+                    // Write headers
+                    foreach (var header in headers)
+                    {
+                        writer.Write("{0}\t", header);
+                    }
+
+                    writer.WriteLine();
+
+                    // Write data
+                    foreach (var datasetResults in results)
+                    {
+                        var fileLength = datasetResults["Fit Score"].Count();
+                        for (int i = 0; i < fileLength; i++)
+                        {
+                            foreach (var header in headers)
+                            {
+                                var value = datasetResults.ContainsKey(header) ? datasetResults[header][i] : string.Empty;
+                                writer.Write("{0}\t", value);
+                            }
+
+                            writer.WriteLine();
+                        }
+                    }
+                }
+            }
+        }
+
         [TestCase(@"\\protoapps\userdata\Wilkins\LiquidTrainingFiles\")]
         public void TestPearsonCorrelationWholeFile(string directoryPath)
         {
             var dirFiles = Directory.GetFiles(directoryPath);
 
-            foreach (var pathToResults in dirFiles.Where(path => path.EndsWith(".tsv")))
+            var correlationCalculator = new PearsonCorrelationFitUtil();
+            foreach (var pathToResults in dirFiles.Where(path => path.EndsWith(".txt")))
             {
                 var datasetName = Path.GetFileNameWithoutExtension(pathToResults);
                 var pathToRaw = GetRawFilePath(directoryPath, datasetName);
@@ -132,11 +233,17 @@ namespace LiquidTest
                         var commonName = pieces[headerToIndex["Common Name"]];
                         var adduct = pieces[headerToIndex["Adduct"]];
                         var spectrum = lcmsRun.GetSpectrum(precursor);
+                        if (spectrum == null)
+                        {
+                            Console.WriteLine("Invalid scan number: {0}", precursor);
+                            continue;
+                        }
+
                         var lipid = new Lipid { AdductFull = adduct, CommonName = commonName };
                         var lipidTarget = lipid.CreateLipidTarget();
                         var spectrumSearchResult = new SpectrumSearchResult(null, null, spectrum, null, null, new Xic(), lcmsRun) { PrecursorTolerance = tolerance };
-                        var fitScore = LipidUtil.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
-                        var fitMinus1Score = LipidUtil.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
+                        var fitScore = correlationCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
+                        var fitMinus1Score = correlationCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
 
                         writer.Write(rawFileName + "\t");
                         writer.Write(line);

@@ -78,7 +78,7 @@ namespace LiquidBackend.IO
 
 	        if (Path.GetExtension(fileLocation) == ".tsv")
 	        {
-	            OutputResultsToTsv(lipidGroupSearchResults, fileLocation, progress);
+	            OutputResultsToTsv(lipidGroupSearchResults, fileLocation, rawFileName, progress);
 	        }
             else if (Path.GetExtension(fileLocation) == ".mzTab")
             {
@@ -201,12 +201,12 @@ namespace LiquidBackend.IO
 	        }
 	    }
 
-		private static void OutputResultsToTsv(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, IProgress<int> progress = null)
+		private static void OutputResultsToTsv(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null)
 		{
 
 			using (TextWriter textWriter = new StreamWriter(fileLocation, true))
 			{
-				textWriter.WriteLine("LM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tNET\tIntensity\tPeak Area\tScore\tFit Score\tFit M-1 Score\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
+				textWriter.WriteLine("Raw Data File\tLM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tRT\tNET\tIntensity\tPeak Area\tScore\tPearson Corr Score\tPearson Corr M-1 Score\tCosine Score\tCosine M-1 Score\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
 			    int progressCounter = 0;
 
 				foreach (LipidGroupSearchResult lipidGroupSearchResult in lipidGroupSearchResults)
@@ -225,6 +225,7 @@ namespace LiquidBackend.IO
 					foreach (Lipid lipid in lipidGroupSearchResult.LipidList)
 					{
 						StringBuilder line = new StringBuilder();
+					    line.Append(rawFileName + "\t");
 						line.Append(lipid.LipidMapsId + "\t");
 						line.Append(lipidTarget.StrippedDisplay + "\t");
 						line.Append(lipid.AdductFull + "\t");
@@ -240,8 +241,10 @@ namespace LiquidBackend.IO
 						line.Append(spectrumSearchResult.ApexIntensity + "\t");
 						line.Append(spectrumSearchResult.PeakArea + "\t");
 						line.Append(score + "\t");
-					    line.Append(lipidGroupSearchResult.FitScore + "\t");
-					    line.Append(lipidGroupSearchResult.FitMinus1Score + "\t");
+					    line.Append(lipidGroupSearchResult.PearsonCorrScore + "\t");
+					    line.Append(lipidGroupSearchResult.PearsonCorrScoreMinus1 + "\t");
+					    line.Append(lipidGroupSearchResult.CosineScore + "\t");
+					    line.Append(lipidGroupSearchResult.CosineScoreMinus1 + "\t");
 						line.Append(msmsScan + "\t");
 						line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t");
 						line.Append(spectrumSearchResult.ApexScanNum + "\t");

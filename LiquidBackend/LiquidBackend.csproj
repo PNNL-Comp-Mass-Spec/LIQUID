@@ -106,6 +106,7 @@
     <Compile Include="Scoring\ScoreModelSerialization.cs" />
     <Compile Include="Scoring\SpecificFragment.cs" />
     <Compile Include="Util\DmsDatasetFinder.cs" />
+    <Compile Include="Util\FitScoreUtil.cs" />
     <Compile Include="Util\GlobalWorkflow.cs" />
     <Compile Include="Util\InformedWorkflow.cs" />
     <Compile Include="Util\LipidUtil.cs" />

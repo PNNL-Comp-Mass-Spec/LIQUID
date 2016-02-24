@@ -53,6 +53,8 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="Observed m/z" FontWeight="Bold" />
                     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=CurrentMz, Mode=OneWay, StringFormat=0.####}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
@@ -68,10 +70,14 @@
 					<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=AreaUnderCurve, Mode=OneWay, StringFormat='#,#.'}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
 					<TextBlock Grid.Row="6" Grid.Column="0" Text="MS/MS Score" FontWeight="Bold" />
                     <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.Score, Mode=OneWay, StringFormat=0.00E00}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Fit Score" FontWeight="Bold" />
-                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding FitScore, Mode=OneWay, StringFormat='0.###'}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
-                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Fit M-1 Score" FontWeight="Bold" />
-                    <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding FitMinus1Score, Mode=OneWay, StringFormat='0.###'}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Pearson Corr Score" FontWeight="Bold" />
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding PearsonCorrScore, Mode=OneWay, StringFormat='0.###'}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Pearson Corr M-1 Score" FontWeight="Bold" />
+                    <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding PearsonCorrMinus1Score, Mode=OneWay, StringFormat='0.###'}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="9" Grid.Column="0" Text="Cosine Score" FontWeight="Bold" />
+                    <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding CosineScore, Mode=OneWay, StringFormat='0.###'}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="10" Grid.Column="0" Text="Cosine M-1 Score" FontWeight="Bold" />
+                    <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding CosineMinus1Score, Mode=OneWay, StringFormat='0.###'}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
                 </Grid>
             </StackPanel>
         </StackPanel>

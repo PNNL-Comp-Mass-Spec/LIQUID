@@ -16,8 +16,10 @@ namespace LiquidBackend.Domain
 		public SpectrumSearchResult SpectrumSearchResult { get; private set; }
 		public bool ShouldExport { get; set; }
 		public double Score { get; private set; }
-        public double FitScore { get; private set; }
-        public double FitMinus1Score { get; private set; }
+        public double PearsonCorrScore { get; private set; }
+        public double PearsonCorrScoreMinus1 { get; private set; }
+        public double CosineScore { get; private set; }
+        public double CosineScoreMinus1 { get; private set; }
 
 		public LipidGroupSearchResult(LipidTarget lipidTarget, List<Lipid> lipidList, SpectrumSearchResult spectrumSearchResult)
 		{
@@ -35,8 +37,13 @@ namespace LiquidBackend.Domain
 			SpectrumSearchResult = spectrumSearchResult;
 			ShouldExport = false;
 			Score = scoreModel.ScoreLipid(this);
-		    FitScore = LipidUtil.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
-		    FitMinus1Score = LipidUtil.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
+            var pearsonCorrelationCalculator = new PearsonCorrelationFitUtil();
+            PearsonCorrScore = pearsonCorrelationCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
+            PearsonCorrScoreMinus1 = pearsonCorrelationCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
+
+            var cosineCalculator = new CosineFitUtil();
+		    CosineScore = cosineCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
+		    CosineScoreMinus1 = cosineCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
 		}
 	}
 }
