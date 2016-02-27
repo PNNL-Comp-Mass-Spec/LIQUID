@@ -73,12 +73,14 @@ namespace LiquidTest
             return rawFilePath;
         }
 
-        [TestCase(@"\\protoapps\UserData\Wilkins\LiquidTestFiles\")]
+        [TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\LiquidVerifiedOutputFiles\Positive\")]
+        [TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\LiquidVerifiedOutputFiles\Negative\")]
         public void PearsonCorrelationFileCombiner(string directoryPath)
         {
             var dirFiles = Directory.GetFiles(directoryPath);
 
             var correlationCalculator = new PearsonCorrelationFitUtil();
+            var cosineCalculator = new CosineFitUtil();
 
             // Each dictionary corresponds to a dataset, each dictionary key corresponds to the TSV header.
             var results = new List<Dictionary<string, List<string>>>();
@@ -118,15 +120,17 @@ namespace LiquidTest
                             }
 
                             datasetResults.Add("Raw File", new List<string>());
-                            datasetResults.Add("Fit Score", new List<string>());
-                            datasetResults.Add("Fit M-1 Score", new List<string>());
-                            headers.UnionWith(headerToIndex.Keys);
+                            datasetResults.Add("Pearson Corr Score", new List<string>());
+                            datasetResults.Add("Pearson Corr M-1 Score", new List<string>());
+                            datasetResults.Add("Cosine Score", new List<string>());
+                            datasetResults.Add("Cosine M-1 Score", new List<string>());
+                            headers.UnionWith(datasetResults.Keys);
                             continue;
                         }
 
                         var precursor = Convert.ToInt32(pieces[headerToIndex["Precursor Scan"]]);
                         var commonName = pieces[headerToIndex["Common Name"]];
-                        var adduct = pieces[headerToIndex["Adduct"]];
+                        var adduct = pieces[headerToIndex["Adduct"]]; 
                         var spectrum = lcmsRun.GetSpectrum(precursor);
                         if (spectrum == null)
                         {
@@ -137,8 +141,12 @@ namespace LiquidTest
                         var lipid = new Lipid { AdductFull = adduct, CommonName = commonName };
                         var lipidTarget = lipid.CreateLipidTarget();
                         var spectrumSearchResult = new SpectrumSearchResult(null, null, spectrum, null, null, new Xic(), lcmsRun) { PrecursorTolerance = tolerance };
-                        var fitScore = correlationCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
-                        var fitMinus1Score = correlationCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
+                        var pearsonCorrScore = correlationCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
+                        var pearsonCorrMinus1Score = correlationCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
+                        var cosineScore = cosineCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
+                        var cosineMinus1Score = cosineCalculator.GetFitScore(
+                            spectrumSearchResult,
+                            lipidTarget.Composition);
 
                         // Add results to results dictionary.
                         datasetResults["Raw File"].Add(rawName);
@@ -147,37 +155,39 @@ namespace LiquidTest
                             datasetResults[header].Add(pieces[headerToIndex[header]]);
                         }
 
-                        datasetResults["Fit Score"].Add(fitScore.ToString());
-                        datasetResults["Fit M-1 Score"].Add(fitMinus1Score.ToString());
+                        datasetResults["Pearson Corr Score"].Add(pearsonCorrScore.ToString());
+                        datasetResults["Pearson Corr M-1 Score"].Add(pearsonCorrMinus1Score.ToString());
+                        datasetResults["Cosine Score"].Add(cosineScore.ToString());
+                        datasetResults["Cosine M-1 Score"].Add(cosineMinus1Score.ToString());
                     }
                 }
+            }
 
-                // Write results
-                var outputFilePath = Path.Combine(datasetDirPath, "training.tsv");
-                using (var writer = new StreamWriter(outputFilePath))
+            // Write results
+            var outputFilePath = Path.Combine(directoryPath, "training.tsv");
+            using (var writer = new StreamWriter(outputFilePath))
+            {
+                // Write headers
+                foreach (var header in headers)
                 {
-                    // Write headers
-                    foreach (var header in headers)
-                    {
-                        writer.Write("{0}\t", header);
-                    }
+                    writer.Write("{0}\t", header);
+                }
 
-                    writer.WriteLine();
+                writer.WriteLine();
 
-                    // Write data
-                    foreach (var datasetResults in results)
+                // Write data
+                foreach (var datasetResults in results)
+                {
+                    var fileLength = datasetResults["Pearson Corr Score"].Count();
+                    for (int i = 0; i < fileLength; i++)
                     {
-                        var fileLength = datasetResults["Fit Score"].Count();
-                        for (int i = 0; i < fileLength; i++)
+                        foreach (var header in headers)
                         {
-                            foreach (var header in headers)
-                            {
-                                var value = datasetResults.ContainsKey(header) ? datasetResults[header][i] : string.Empty;
-                                writer.Write("{0}\t", value);
-                            }
-
-                            writer.WriteLine();
+                            var value = datasetResults.ContainsKey(header) ? datasetResults[header][i] : string.Empty;
+                            writer.Write("{0}\t", value);
                         }
+
+                        writer.WriteLine();
                     }
                 }
             }
