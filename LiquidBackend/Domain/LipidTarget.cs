@@ -122,7 +122,7 @@ namespace LiquidBackend.Domain
 
 		private LipidType FigureOutLipidType()
 		{
-			if (this.LipidClass == LipidClass.Ubiquitones || this.LipidClass == LipidClass.Cholesterol) return LipidType.Standard;
+			if (this.LipidClass == LipidClass.Ubiquinone || this.LipidClass == LipidClass.Cholesterol) return LipidType.Standard;
 
 			int chainCount = 0;
 			int standardChainCount = 0;

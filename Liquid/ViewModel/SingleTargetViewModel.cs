@@ -167,9 +167,9 @@ namespace Liquid.ViewModel
 
 	    public void LoadLipidIdentifications(string fileLocation)
 	    {
-            FileInfo fileInfo = new FileInfo(fileLocation);
+	        FileInfo fileInfo = new FileInfo(fileLocation);
 
-            OutputFileReader<Tuple<string,int>> identificationReader = new OutputFileReader<Tuple<string, int>>();
+	        OutputFileReader<Tuple<string, int>> identificationReader = new OutputFileReader<Tuple<string, int>>();
 	        List<Tuple<string, int>> idList = identificationReader.ReadFile(fileInfo);
 
 	        foreach (var id in idList)
@@ -178,13 +178,9 @@ namespace Liquid.ViewModel
 	            {
 	                this.LipidIdentifications.Add(id);
 	            }
-	        }
-	        if (this.LipidGroupSearchResultList != null)
-	        {
-                SelectLipidIdentifications(this.LipidGroupSearchResultList);
-	        }
-            
-            OnPropertyChanged("LipidIdentifications");
+	        }            
+	        SelectLipidIdentifications(this.LipidGroupSearchResultList);
+	        OnPropertyChanged("LipidIdentifications");
 	    }
 
 	    public void BuildImsFeatureList(string featureFileName)
@@ -217,12 +213,6 @@ namespace Liquid.ViewModel
 		        lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, hcdError,
 		            cidError, this.ScoreModel, progress);
 		    }
-		    // If identifications have been loaded, select them in the view
-		    if (this.LipidIdentifications.Count != 0)
-		    {
-		        SelectLipidIdentifications(lipidGroupSearchResultList);
-		    }
-
 			// Group results of same scan together
 			var resultsGroupedByScan = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? x.SpectrumSearchResult.HcdSpectrum.ScanNum : x.SpectrumSearchResult.CidSpectrum.ScanNum);
 

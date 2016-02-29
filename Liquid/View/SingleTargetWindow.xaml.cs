@@ -17,6 +17,7 @@ using Liquid.ViewModel;
 using LiquidBackend.Domain;
 using Ookii.Dialogs;
 using DataGrid = System.Windows.Controls.DataGrid;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Liquid.View
 {
@@ -194,23 +195,34 @@ namespace Liquid.View
 
         private async void LoadIdentificationsFileButtonClick(object sender, RoutedEventArgs e)
         {
-            // Create OpenFileDialog and Set filter for file extension and default file extension
-            var dialog = new VistaOpenFileDialog { DefaultExt = ".tsv", Filter = "Tab Separated Files (.tsv)|*.tsv|Text Files (*.txt)|*.txt|All Files (*.*)|*.*" };
-
-            // Get the selected file name and display in a TextBox 
-            DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            if (this.SingleTargetViewModel.LipidGroupSearchResultList == null)
             {
-                // Disable processing button while file is loading
-                this.ProcessAllTargetsButton.IsEnabled = false;
+                MessageBox.Show("Please process a file prior to loading lipid identifications.");
+            }
+            else
+            {
+                // Create OpenFileDialog and Set filter for file extension and default file extension
+                var dialog = new VistaOpenFileDialog
+                {
+                    DefaultExt = ".tsv",
+                    Filter = "Tab Separated Files (.tsv)|*.tsv|Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+                };
 
-                // Open file 
-                string fileName = dialog.FileName;
+                // Get the selected file name and display in a TextBox 
+                DialogResult result = dialog.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    // Disable processing button while file is loading
+                    this.ProcessAllTargetsButton.IsEnabled = false;
 
-                await Task.Run(() => this.SingleTargetViewModel.LoadLipidIdentifications(fileName));
+                    // Open file 
+                    string fileName = dialog.FileName;
 
-                // Enable processing all targets button if applicable
-                if (this.SingleTargetViewModel.LcMsRun != null) this.ProcessAllTargetsButton.IsEnabled = true;
+                    await Task.Run(() => this.SingleTargetViewModel.LoadLipidIdentifications(fileName));
+
+                    // Enable processing all targets button if applicable
+                    if (this.SingleTargetViewModel.LcMsRun != null) this.ProcessAllTargetsButton.IsEnabled = true;
+                }
             }
         }
 

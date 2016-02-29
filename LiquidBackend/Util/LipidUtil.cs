@@ -120,7 +120,11 @@ namespace LiquidBackend.Util
 
 		public static IEnumerable<AcylChain> ParseLipidCommonNameIntoAcylChains(string commonName)
 		{
-			MatchCollection matchCollection = Regex.Matches(commonName, "([mdtOP]-?)?\\d+:\\d+(\\((2OH|CHO|COOH)\\))?");
+		    var name = commonName;
+            Regex stereoChem = new Regex(@"\(\d+(E|Z)(\,[^\)]+\)|\))");
+            Match steroMatch = Regex.Match(name, @"\(\d+(E|Z)(\,[^\)]+\)|\))");
+		    if (steroMatch.Success) name = stereoChem.Replace(name, "");
+			MatchCollection matchCollection = Regex.Matches(name, "([mdtOP]-?)?\\d+:\\d+(\\((2OH|CHO|COOH)\\))?");
 
 			IEnumerable<AcylChain> acylChains = (from object match in matchCollection select new AcylChain(match.ToString()));
 			return acylChains;
@@ -138,9 +142,10 @@ namespace LiquidBackend.Util
 			bool containsEther = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) == 1;
 		    bool containsDiether = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) > 1;
 			bool containsPlasmogen = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Plasmalogen) > 0;
+		    bool contains2OH = (fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Dihydroxy) > 0);
 		    bool isOxoCHO = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.OxoCHO) > 0;
 		    bool isOxoCOOH = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.OxoCOOH) > 0;
-
+            
 			switch (lipidClass)
 			{
 				case LipidClass.PC:
@@ -226,6 +231,7 @@ namespace LiquidBackend.Util
                 case LipidClass.PE_Cer:
 			        if (numChains > 1)
 			        {
+                        if (contains2OH) return new Composition(numCarbons + 2, (2 * (numCarbons + 3)) + 1 - (2 * numDoubleBonds), 2, 7, 0, 1);
                         return new Composition(numCarbons + 2, (2 * (numCarbons + 3)) + 1 - (2 * numDoubleBonds), 2, 6, 0, 1);
 			        }
 			        else
@@ -309,11 +315,12 @@ namespace LiquidBackend.Util
 			        }
 			        else
 			        {
+                        if (contains2OH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 2 - (2 * numDoubleBonds), 1, 11, 0, 1);
 			            return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 2 - (2 * numDoubleBonds), 1, 10, 0, 1);
 			        }
 			        break;
 				case LipidClass.Cer:
-					if (fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Dihydroxy) > 0)
+					if (contains2OH)
 					{
 						return new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 4, 0, 0);	
 					}
@@ -339,10 +346,14 @@ namespace LiquidBackend.Util
 					return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 3 - (2 * numDoubleBonds), 2, 6, 0, 1);
 					break;
 				case LipidClass.GalCer:
+                    if (contains2OH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 9, 0, 0);
+					return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 8, 0, 0);
 				case LipidClass.GlcCer:
+                    if (contains2OH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 9, 0, 0);
 					return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 8, 0, 0);
 					break;
 				case LipidClass.LacCer:
+                    if (contains2OH) return new Composition(numCarbons + 12, (2 * (numCarbons + 12)) - 1 - (2 * numDoubleBonds), 1, 14, 0, 0);
 					return new Composition(numCarbons + 12, (2 * (numCarbons + 12)) - 1 - (2 * numDoubleBonds), 1, 13, 0, 0);
 					break;
 				case LipidClass.CerP:
@@ -354,7 +365,7 @@ namespace LiquidBackend.Util
 				case LipidClass.CE:
 					return new Composition(numCarbons + 27, (2 * (numCarbons + 27)) - 10 - (2 * numDoubleBonds), 0, 2, 0, 0);
 					break;
-				case LipidClass.Ubiquitones:
+				case LipidClass.Ubiquinone:
                     if(commonName.EndsWith("Q10")) return new Composition(59, 90, 0, 4, 0, 0);
                     else if (commonName.EndsWith("Q4")) return new Composition(29, 42, 0, 4, 0, 0);
                     else if (commonName.EndsWith("Q6")) return new Composition(39, 58, 0, 4, 0, 0);
@@ -1496,14 +1507,14 @@ namespace LiquidBackend.Util
                     var sialic = commonName.Split('(')[0][1];
                     var sugar = commonName.Split('(')[0][0];
 
-                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - (2 * doubleBonds), 1, 3, 0).Mass, "Cer", acylChains, true));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - (2 * doubleBonds), 1, 3, 0).Mass, "Cer", acylChains));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 1, 2, 0).Mass, "Cer-H2O", acylChains));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) - 2 - (2 * doubleBonds), 1, 8, 0).Mass, "HexCer", acylChains));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 12, (2 * (carbons + 12)) - 4 - (2 * doubleBonds), 1, 13, 0).Mass, "2(Hex)Cer", acylChains));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) - 4 - (2 * doubleBonds), 1, 7, 0).Mass, "HexCer-H2O", acylChains));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(2, 4, 0, 2, 0).Mass, "M-C2H4O2 (cross ring cleavage)"));
 
-                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(11, 16, 1, 8, 0).Mass, "NAc-H", true));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(11, 16, 1, 8, 0).Mass, "NAc-H"));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(11, 17, 1, 8, 0).Mass, "M-NAc-H")); //Adduct is M-H
                     msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(11, 16, 1, 8, 0).Mass, "M-NAc-H")); //Adduct is M-2H
                     if (sialic == 'D' || sialic == 'T' || sialic == 'Q')
