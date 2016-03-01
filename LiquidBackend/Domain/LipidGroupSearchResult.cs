@@ -43,7 +43,7 @@ namespace LiquidBackend.Domain
 
             var cosineCalculator = new CosineFitUtil();
 		    CosineScore = cosineCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
-		    CosineScoreMinus1 = cosineCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
+		    CosineScoreMinus1 = cosineCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
 		}
 	}
 }
