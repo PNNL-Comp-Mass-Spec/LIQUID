@@ -745,6 +745,61 @@ namespace LiquidTest
 			RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "NegativeTargetsOutput.tsv", datasetNamesNegative);
 		}
 
+        [TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\NegativeDecoyTargets.tsv")]
+        //[TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\NegativeVerified.tsv")]
+        //[TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\PositiveDecoyTargets.tsv")]
+        //[TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\PositiveVerified.tsv")]
+        public void TruncateFileColumns(string filePath)
+	    {
+            // The headers we care about
+	        var columnHeaders = new []
+	                            {
+	                                "Sub Class", "RT", "ppm Error", "Pearson Corr Score", "Pearson Corr M-1 Score",
+	                                "Cosine Score", "Cosine M-1 Score"
+	                            };
+
+            // construct output path
+	        var fileName = Path.GetFileNameWithoutExtension(filePath);
+	        var directory = Path.GetDirectoryName(filePath);
+            var extension = Path.GetExtension(filePath);
+	        var outputPath = Path.Combine(directory, string.Format("{0}_truncated{1}", fileName, extension));
+
+            using (var writer = new StreamWriter(outputPath))
+            {
+                // write headers
+                foreach (var header in columnHeaders)
+                {
+                    writer.Write(header+"\t");    
+                }
+
+                writer.WriteLine();
+
+                var headerDict = new Dictionary<string, int>();
+                int lineCount = 0;
+                foreach (var line in File.ReadLines(filePath))
+                {
+                    var parts = line.Split('\t');
+
+                    if (lineCount++ == 0)
+                    {   // store indices of headers in file
+                        for (int i = 0; i < parts.Length; i++)
+                        {
+                            headerDict.Add(parts[i], i);
+                        }
+                        continue;
+                    }
+
+                    foreach (var header in columnHeaders)
+                    {
+                        var value = parts[headerDict[header]];
+                        writer.Write(value+"\t");
+                    }
+
+                    writer.WriteLine();
+                }
+            }
+	    }
+
 	}
 
 }
