@@ -479,6 +479,9 @@ namespace LiquidBackend.Util
                 case '3':
 	                Hex = 2;
 	                break;
+                case '4':
+	                Hex = 1;
+	                break;
                 default:
                     throw new SystemException(ganglioName[2] + " not a valid indicator of glycan chain for ganglioside target " + commonName);
 	        }

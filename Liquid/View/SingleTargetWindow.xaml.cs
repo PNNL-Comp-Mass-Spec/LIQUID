@@ -283,7 +283,7 @@ namespace Liquid.View
 			dialog.AddExtension = true;
 			dialog.OverwritePrompt = true;
 			dialog.DefaultExt = ".tsv";
-			dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab";
+            dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp";
 
 			DialogResult result = dialog.ShowDialog();
 			if (result == System.Windows.Forms.DialogResult.OK)
@@ -300,7 +300,7 @@ namespace Liquid.View
 			dialog.AddExtension = true;
 			dialog.OverwritePrompt = true;
             dialog.DefaultExt = ".tsv";
-            dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab";
+            dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp";
 
 			DialogResult result = dialog.ShowDialog();
 			if (result == System.Windows.Forms.DialogResult.OK)
@@ -309,5 +309,22 @@ namespace Liquid.View
 				this.SingleTargetViewModel.OnExportAllGlobalResults(fileLocation);
 			}
 		}
+
+	    private void ExportTargetInfoButtonClick(object sender, RoutedEventArgs e)
+	    {
+            var dialog = new VistaSaveFileDialog();
+
+            dialog.AddExtension = true;
+            dialog.OverwritePrompt = true;
+            dialog.DefaultExt = ".tsv";
+            dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp";
+
+            DialogResult result = dialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileLocation = dialog.FileName;
+                this.SingleTargetViewModel.OnWriteTargetInfo(fileLocation);
+            }
+	    }
 	}
 }

@@ -37,6 +37,8 @@
                         </RibbonApplicationMenuItem>
                         <RibbonApplicationMenuItem Header="Load Previous IDs" Click="LoadIdentificationsFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png">
                         </RibbonApplicationMenuItem>
+                        <RibbonApplicationMenuItem Header="Export Target Info" Click="ExportTargetInfoButtonClick" ImageSource="..\Images\open-file-icon_32x32.png">
+                        </RibbonApplicationMenuItem>
                     </RibbonApplicationMenu>
                 </Ribbon.ApplicationMenu>
                 <RibbonTab Name="InformedRibbonTab" Header="Single Target" KeyTip="S">

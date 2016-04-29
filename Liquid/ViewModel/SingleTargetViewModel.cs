@@ -266,6 +266,13 @@ namespace Liquid.ViewModel
             progress.Report(0);
 		}
 
+	    public void OnWriteTargetInfo(string fileLocation)
+	    {
+            IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
+	        LipidGroupSearchResultWriter.OutputTargetInfo(LipidTargetList, fileLocation, RawFileName, progress);
+            progress.Report(0);
+	    }
+
 		private void ReportLipidTargetLoadProgress(int value)
 		{
 			this.LipidTargetLoadProgress = value;
