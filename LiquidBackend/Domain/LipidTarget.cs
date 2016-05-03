@@ -42,6 +42,7 @@ namespace LiquidBackend.Domain
 			{
 				StringBuilder stringBuilder = new StringBuilder();
 			    if (LipidClass == LipidClass.Ganglioside){ stringBuilder.Append(CommonName.Split('(')[0]); }
+                else if (LipidClass == LipidClass.Ubiquinone) {stringBuilder.Append("Co" + CommonName.Split(' ')[1]);}
                 else { stringBuilder.Append(this.LipidClass); }
                 
 				List<AcylChain> acylChainList = this.AcylChainList.ToList();

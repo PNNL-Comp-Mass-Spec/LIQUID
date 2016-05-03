@@ -109,7 +109,8 @@ namespace LiquidBackend.Util
 			    if (classAbbrev.Contains("PE-Cer")) return LipidClass.PE_Cer;
 			    if (classAbbrev.Contains("PI-Cer")) return LipidClass.PI_Cer;
                 if (classAbbrev.Contains("PE-NMe2")) return LipidClass.PE_NMe2;
-                if (classAbbrev.Contains("PE-NMe")) return LipidClass.PE_NMe; 
+                if (classAbbrev.Contains("PE-NMe")) return LipidClass.PE_NMe;
+			    if (classAbbrev.Contains("Coenzyme Q")) return LipidClass.Ubiquinone;
 			    if (classAbbrev.Contains("GM") || classAbbrev.Contains("GD") || classAbbrev.Contains("GT") ||classAbbrev.Contains("GQ")) return LipidClass.Ganglioside;
 
 				throw new SystemException("Unrecognized lipid class for " + commonName);
@@ -935,6 +936,10 @@ namespace LiquidBackend.Util
                     var FA = acylChainList.Last(); //Second chain in WE name is the FA
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(FA.NumCarbons, (2 * FA.NumCarbons + 1 - 2 * FA.NumDoubleBonds), 0, 2, 0).Mass, "FA+H2O / Fatty alcohol"));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(FA.NumCarbons, (2 * FA.NumCarbons - 1 - 2 * FA.NumDoubleBonds), 0, 1, 0).Mass, "FA", FA));
+                }
+                else if (lipidClass == LipidClass.Ubiquinone)
+                {
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(10, 13, 0, 4, 0).Mass, "C10H13O4"));
                 }
 				else if (lipidClass == LipidClass.MG || lipidClass == LipidClass.DG || lipidClass == LipidClass.TG)
 				{
