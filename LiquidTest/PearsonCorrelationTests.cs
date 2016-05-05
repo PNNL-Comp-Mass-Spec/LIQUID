@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace LiquidTest
 {
+    using LiquidBackend.IO;
     using LiquidBackend.Util;
 
     [TestFixture]

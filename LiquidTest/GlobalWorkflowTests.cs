@@ -12,7 +12,11 @@ using NUnit.Framework;
 
 namespace LiquidTest
 {
-	public class GlobalWorkflowTests
+    using InformedProteomics.Backend.MassSpecData;
+
+    using LiquidBackend.Scoring;
+
+    public class GlobalWorkflowTests
 	{
 		[Test]
 		public void TestGlobalWorkflowPositive()
@@ -205,5 +209,174 @@ namespace LiquidTest
 
 			textWriter.Close();
 		}
-	}
+
+        public string GetRawFilePath(string directory, string datasetName)
+        {
+            string rawFileName = datasetName + ".raw";
+            var rawFilePath = Path.Combine(directory, rawFileName);
+
+            Console.WriteLine(DateTime.Now + ": Processing " + datasetName);
+
+            if (File.Exists(rawFilePath))
+            {
+                Console.WriteLine(DateTime.Now + ": Dataset already exists");
+            }
+            else
+            {
+                try
+                {
+                    Console.WriteLine(DateTime.Now + ": Dataset does not exist locally, so we will go get it");
+
+                    // Lookup in DMS via Mage
+                    string dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetName);
+                    DirectoryInfo dmsDirectoryInfo = new DirectoryInfo(dmsFolder);
+                    string fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, rawFileName);
+
+                    // Copy Locally
+                    // TODO: Handle files that are on MyEMSL
+                    Console.WriteLine(DateTime.Now + ": Copying dataset from " + dmsDirectoryInfo.FullName);
+                    File.Copy(fullPathToDmsFile, rawFilePath);
+                    Console.WriteLine(DateTime.Now + ": Copy complete");
+                }
+                catch (Exception)
+                {
+                    rawFilePath = string.Empty;
+                    Console.WriteLine("Cannot get {0} from DMS", datasetName);
+                }
+            }
+
+            return rawFilePath;
+        }
+
+        //[TestCase(@"D:\Data\Liquid\liquidFilesToRun.txt",                                                                           // Data list
+        //          @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b.txt",             // Pos target file
+        //          @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b_Decoys.txt",      // Pos decoy file
+        //          @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_NEG_4.txt",              // Neg target file
+        //          @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_NEG_4_Decoys.txt",       // Neg decoy file
+        //          30, 500)]      
+        [TestCase(@"D:\Data\Liquid\Original\liquidFilesToRun.txt",                                                                           // Data list
+          @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b.txt",             // Pos target file
+          @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b_Decoys.txt",      // Pos decoy file
+          @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_NEG_4.txt",              // Neg target file
+          @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_NEG_4_Decoys.txt",       // Neg decoy file
+          30, 500)]
+        public void RunTrainingOnFileList(
+            string fileListPath,
+            string posTargetFilePath,
+            string posDecoyFilePath,
+            string negTargetFilePath,
+            string negDecoyFilePath,
+            double hcdError = 30,
+            double cidError = 500)
+        {
+            // Read positive target file
+            LipidMapsDbReader<Lipid> posTargetReader = new LipidMapsDbReader<Lipid>();
+            var posTargets = posTargetReader.ReadFile(new FileInfo(posTargetFilePath));
+
+            // Read positive decoy file
+            LipidMapsDbReader<Lipid> posDecoyReader = new LipidMapsDbReader<Lipid>();
+            var posDecoys = posDecoyReader.ReadFile(new FileInfo(posDecoyFilePath));
+
+            // Read positive target file
+            LipidMapsDbReader<Lipid> negTargetReader = new LipidMapsDbReader<Lipid>();
+            var negTargets = negTargetReader.ReadFile(new FileInfo(negTargetFilePath));
+
+            // Read positive decoy file
+            LipidMapsDbReader<Lipid> negDecoyReader = new LipidMapsDbReader<Lipid>();
+            var negDecoys = negDecoyReader.ReadFile(new FileInfo(negDecoyFilePath));
+
+            var outputDirectory = Path.GetDirectoryName(fileListPath);
+            var errorFile = Path.Combine(outputDirectory, "failedDatasets.txt");
+
+            foreach (var datasetName in File.ReadLines(fileListPath))
+            {
+                if (datasetName.StartsWith("//"))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    // create output paths
+                    var rawFilePath = this.GetRawFilePath(outputDirectory, datasetName);
+                    var rawFileName = Path.GetFileName(rawFilePath);
+                    var targetResultsPath = Path.Combine(outputDirectory, string.Format("{0}_target.tsv", datasetName));
+                    var decoyResultsPath = Path.Combine(outputDirectory, string.Format("{0}_decoy.tsv", datasetName));
+
+                    IEnumerable<Lipid> targets;
+                    IEnumerable<Lipid> decoys;
+
+                    // Select targets and decoys
+                    var lowerCaseName = datasetName.ToLower();
+                    if (lowerCaseName.Contains("pos"))
+                    {
+                        targets = posTargets;
+                        decoys = posDecoys;
+                    }
+                    else
+                    {
+                        targets = negTargets;
+                        decoys = negDecoys;
+                    }
+
+                    // Run liquid global workflow
+                    var globalWorkflow = new GlobalWorkflow(rawFilePath);
+                    var targetResults = this.GetBestResultPerSpectrum(globalWorkflow.RunGlobalWorkflow(targets, hcdError, cidError));
+                    var decoyResults = this.GetBestResultPerSpectrum(globalWorkflow.RunGlobalWorkflow(decoys, hcdError, cidError));
+
+                    // Output results
+                    LipidGroupSearchResultWriter.OutputResults(targetResults, targetResultsPath, rawFileName);
+                    LipidGroupSearchResultWriter.OutputResults(decoyResults, decoyResultsPath, rawFileName);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("ERROR: Could not process dataset {0}.", datasetName);
+                    using (var streamWriter = new StreamWriter(errorFile, true))
+                    {
+                        streamWriter.WriteLine(datasetName);
+                    }
+                }
+            }
+        }
+
+        private List<LipidGroupSearchResult> GetBestResultPerSpectrum(List<LipidGroupSearchResult> results)
+        {
+            return results.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? x.SpectrumSearchResult.HcdSpectrum.ScanNum : x.SpectrumSearchResult.CidSpectrum.ScanNum)
+                          .SelectMany(idGroup => idGroup.OrderByDescending(id => id.Score).Take(1))
+                          .ToList();
+        }
+
+        //[TestCase(@"\\pnl\projects\MSSHARE\Jennifer_Kyle\BetaMarker\2015_Nov_raw\NEG\", @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_NEG_4.txt", @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_NEG_4_Decoys.txt", 30, 500)]
+        [TestCase(@"\\pnl\projects\MSSHARE\Jennifer_Kyle\BetaMarker\2015_Nov_raw\POS\", @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b.txt", @"C:\Users\wilk011\Documents\Projects\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b_Decoys.txt", 30, 500)]
+        public void RunTraining(string rawDirectoryPath, string targetFilePath, string decoyFilePath, double hcdError = 30, double cidError = 500)
+        {
+            // Read target file
+            LipidMapsDbReader<Lipid> targetReader = new LipidMapsDbReader<Lipid>();
+            var targets = targetReader.ReadFile(new FileInfo(targetFilePath));
+
+            // Read decoy file
+            LipidMapsDbReader<Lipid> decoyReader = new LipidMapsDbReader<Lipid>();
+            var decoys = decoyReader.ReadFile(new FileInfo(decoyFilePath));
+
+            var files = Directory.GetFiles(rawDirectoryPath);
+            foreach (var rawFilePath in files.Where(file => file.EndsWith(".raw")))
+            {
+                // create output paths
+                var rawFileName = Path.GetFileName(rawFilePath);
+                var datasetPath = Path.GetDirectoryName(rawFilePath);
+                var datasetName = Path.GetFileNameWithoutExtension(rawFilePath);
+                var targetResultsPath = Path.Combine(datasetPath, string.Format("{0}_target.tsv", datasetName));
+                var decoyResultsPath = Path.Combine(datasetPath, string.Format("{0}_decoy.tsv", datasetName));
+
+                // Run liquid global workflow
+                var globalWorkflow = new GlobalWorkflow(rawFilePath);
+                var targetResults = globalWorkflow.RunGlobalWorkflow(targets, hcdError, cidError);
+                var decoyResults = globalWorkflow.RunGlobalWorkflow(decoys, hcdError, cidError);
+
+                // Output results
+                LipidGroupSearchResultWriter.OutputResults(targetResults, targetResultsPath, rawFileName);
+                LipidGroupSearchResultWriter.OutputResults(decoyResults, decoyResultsPath, rawFileName);
+            }
+        }
+    }
 }

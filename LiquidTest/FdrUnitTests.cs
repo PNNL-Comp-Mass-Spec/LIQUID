@@ -335,9 +335,12 @@ namespace LiquidTest
 			{
 				string rawFileName = datasetName + ".raw";
 
-				Console.WriteLine(DateTime.Now + ": Processing " + datasetName);
+			    string rawFilePath = Path.Combine(@"D:\Data\Liquid\Original", rawFileName);
 
-				if (File.Exists(rawFileName))
+
+                Console.WriteLine(DateTime.Now + ": Processing " + datasetName);
+
+				if (File.Exists(rawFilePath))
 				{
 					Console.WriteLine(DateTime.Now + ": Dataset already exists");
 				}
@@ -353,12 +356,12 @@ namespace LiquidTest
 					// Copy Locally
 					// TODO: Handle files that are on MyEMSL
 					Console.WriteLine(DateTime.Now + ": Copying dataset from " + dmsDirectoryInfo.FullName);
-					File.Copy(fullPathToDmsFile, rawFileName);
+					File.Copy(fullPathToDmsFile, rawFilePath);
 					Console.WriteLine(DateTime.Now + ": Copy complete");
 				}
 
 				// Setup workflow
-				GlobalWorkflow globalWorkflow = new GlobalWorkflow(rawFileName);
+				GlobalWorkflow globalWorkflow = new GlobalWorkflow(rawFilePath);
 
 				// Run workflow
 				List<LipidGroupSearchResult> lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
@@ -599,7 +602,7 @@ namespace LiquidTest
 		[Test]
 		public void RunNegativeDecoysForSvm()
 		{
-			List<string> datasetNamesNegative = new List<string>();
+            List<string> datasetNamesNegative = new List<string>();
 
 			datasetNamesNegative.Add("OHSUblotter_case_lipid_pooled__NEG_150mm_17Jun15_Polaroid_HSST3-02");
 			datasetNamesNegative.Add("OHSUblotter_control_lipid_pooled__NEG_150mm_17Jun15_Polaroid_HSST3-02");
@@ -700,7 +703,7 @@ namespace LiquidTest
 		[Test]
 		public void RunNegativeTargetsForSvm()
 		{
-			List<string> datasetNamesNegative = new List<string>();
+            List<string> datasetNamesNegative = new List<string>();
 
 			datasetNamesNegative.Add("OHSUblotter_case_lipid_pooled__NEG_150mm_17Jun15_Polaroid_HSST3-02");
 			datasetNamesNegative.Add("OHSUblotter_control_lipid_pooled__NEG_150mm_17Jun15_Polaroid_HSST3-02");
@@ -746,15 +749,15 @@ namespace LiquidTest
 		}
 
         [TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\NegativeDecoyTargets.tsv")]
-        //[TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\NegativeVerified.tsv")]
-        //[TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\PositiveDecoyTargets.tsv")]
-        //[TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\PositiveVerified.tsv")]
+        [TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\NegativeVerified.tsv")]
+        [TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\PositiveDecoyTargets.tsv")]
+        [TestCase(@"\\protoapps\userdata\Wilkins\LiquidTestFiles\TrainingData\PositiveVerified.tsv")]
         public void TruncateFileColumns(string filePath)
 	    {
             // The headers we care about
 	        var columnHeaders = new []
 	                            {
-	                                "Sub Class", "RT", "ppm Error", "Pearson Corr Score", "Pearson Corr M-1 Score",
+	                                "Sub Class", "RT", "ppm Error", "Score", "Pearson Corr Score", "Pearson Corr M-1 Score",
 	                                "Cosine Score", "Cosine M-1 Score"
 	                            };
 
