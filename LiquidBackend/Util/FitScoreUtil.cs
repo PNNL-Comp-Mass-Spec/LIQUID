@@ -45,6 +45,37 @@
         }
 
         /// <summary>
+        /// Gets the fit score for the given spectrum and chemical formula.
+        /// </summary>
+        /// <param name="precursorSpectrum">The spectrum to locate the ion from.</param>
+        /// <param name="precursorTolerance">The tolerance to use for finding peaks.</param>
+        /// <param name="composition">Composition of liquid to find in the spectrum.</param>
+        /// <returns>The correlation score between the theoretical spectrum and actual.</returns>
+        public double GetFitScore(Spectrum precursorSpectrum, Tolerance precursorTolerance, Composition composition)
+        {
+            return this.GetFitScore(
+                            precursorSpectrum,
+                            composition,
+                            precursorTolerance);
+        }
+
+        /// <summary>
+        /// Get the fit score of Mass -1.
+        /// </summary>
+        /// <param name="precursorSpectrum">The spectrum to locate the ion from.</param>
+        /// <param name="precursorTolerance">The tolerance to use for finding peaks.</param>
+        /// <param name="composition">Composition of liquid to find in the spectrum.</param>
+        /// <returns>The correlation score between the theoretical spectrum and actual.</returns>
+        public double GetFitMinus1Score(Spectrum precursorSpectrum, Tolerance precursorTolerance, Composition composition)
+        {
+            var compositionMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P);
+            return this.GetFitScore(
+                                precursorSpectrum,
+                                compositionMinus1,
+                                precursorTolerance);
+        }
+
+        /// <summary>
         /// Get the fit between a theoretical and actual isotopic profile.
         /// </summary>
         /// <param name="theoretical">The theoretical isotopic profile.</param>
