@@ -84,7 +84,125 @@ namespace LiquidBackend.IO
             {
                 OutputResultsToMzTab(lipidGroupSearchResults, fileLocation, rawFileName, progress);
             }
+            else if (Path.GetExtension(fileLocation) == ".msp")
+            {
+                OutputResultsToMspLibrary(lipidGroupSearchResults, fileLocation, rawFileName, progress);
+            }
 	    }
+
+	    public static void OutputTargetInfo(List<Lipid> lipidGroupSearchResults,
+	        string fileLocation, string rawFileName, IProgress<int> progress = null)
+	    {
+	        using (TextWriter textWriter = new StreamWriter(fileLocation))
+	        {
+	            int progressCounter = 0;
+                textWriter.WriteLine("Common Name\tFormula\tm/z\tIonization\tAdduct\tCharge\tC\tH\tN\tO\tS");
+	            foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
+	            {
+                    StringBuilder line = new StringBuilder();
+	                var target = lipidGroupSearchResult.LipidTarget;
+	                line.Append(target.StrippedDisplay + "\t");
+                    line.Append(target.EmpiricalFormula + "\t");
+                    line.Append(target.MzRounded + "\t");
+                    line.Append(target.FragmentationMode + "\t");
+                    line.Append(target.AdductString + "\t");
+                    line.Append(target.Charge + "\t");
+                    line.Append(target.Composition.C + "\t");
+                    line.Append(target.Composition.H + "\t");
+                    line.Append(target.Composition.N + "\t");
+                    line.Append(target.Composition.O + "\t");
+                    line.Append(target.Composition.S + "\t"); 
+                    
+                    textWriter.WriteLine(line.ToString());
+
+                    if (progress != null)
+                    {
+                        progressCounter++;
+                        int currentProgress = (int)((progressCounter / (double)lipidGroupSearchResults.Count()) * 100);
+                        progress.Report(currentProgress);
+                    }
+	            }
+
+	        }
+	    }
+
+	    private static void OutputResultsToMspLibrary(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults,
+	        string fileLocation, string rawFileName, IProgress<int> progress = null)
+	    {
+	        using (TextWriter textWriter = new StreamWriter(fileLocation))
+	        {
+	            int progressCounter = 0;
+	            foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
+	            {
+                    LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;
+                    SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
+                    var massSpectrum = spectrumSearchResult.PrecursorSpectrum.Peaks;
+                    var targetMz = lipidTarget.MzRounded;
+                    var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
+                    var hcd = spectrumSearchResult.HcdSearchResultList;
+	                var cid = spectrumSearchResult.CidSearchResultList;
+	                var hcdCount = hcd.Count(x => x.ObservedPeak != null);
+                    var cidCount = cid.Count(x => x.ObservedPeak != null);
+                    
+	                var name = lipidTarget.StrippedDisplay;
+	                var adduct = lipidTarget.AdductString;
+                    var observedMz = closestPeak.Mz;
+	                var formula = lipidTarget.EmpiricalFormula;
+	                var RT = spectrumSearchResult.RetentionTime;
+	                double MW = 0;
+
+	                if (lipidTarget.FragmentationMode == FragmentationMode.Positive)
+	                {
+                        MW = lipidTarget.Composition.Mass - LipidUtil.GetCompositionOfAdduct(lipidTarget.Adduct).Mass;
+	                }
+                    else if (lipidTarget.FragmentationMode == FragmentationMode.Negative)
+                    {
+                        MW = lipidTarget.Composition.Mass + LipidUtil.GetCompositionOfAdduct(lipidTarget.Adduct).Mass; 
+                    }
+	                
+
+                    if (cidCount > 0)
+                    {
+                        textWriter.WriteLine("Name: {0}; {1}", name, adduct);
+                        textWriter.WriteLine("MW: {0}", MW);
+                        textWriter.WriteLine("PRECURSORMZ: {0}", observedMz);
+                        textWriter.WriteLine("RETENTIONTIME: {0}", RT);
+                        textWriter.WriteLine("FORMULA: {0}", formula);
+                        textWriter.WriteLine("Comment: CID");
+                        textWriter.WriteLine("Num Peaks: {0}", cidCount);
+                        foreach (var peak in cid)
+                        {
+                            if (peak.ObservedPeak == null) continue;
+                            var mz = peak.ObservedPeak.Mz;
+                            var intensity = peak.ObservedPeak.Intensity;
+                            var annotation = peak.TheoreticalPeak.DescriptionForUi;
+                            textWriter.WriteLine("{0} {1} \"{2}\"", mz, intensity, annotation);
+                        }
+                        textWriter.WriteLine();
+                    }
+	                if (hcdCount > 0)
+	                {
+	                    textWriter.WriteLine("Name: {0}; {1}", name, adduct);
+	                    textWriter.WriteLine("MW: {0}", MW);
+	                    textWriter.WriteLine("PRECURSORMZ: {0}", observedMz);
+	                    textWriter.WriteLine("RETENTIONTIME: {0}", RT);
+	                    textWriter.WriteLine("FORMULA: {0}", formula);
+	                    textWriter.WriteLine("Comment: HCD");
+	                    textWriter.WriteLine("Num Peaks: {0}", hcdCount);
+	                    foreach (var peak in hcd)
+	                    {
+                            if (peak.ObservedPeak == null) continue;
+	                        var mz = peak.ObservedPeak.Mz;
+	                        var intensity = peak.ObservedPeak.Intensity;
+	                        var annotation = peak.TheoreticalPeak.DescriptionForUi;
+	                        textWriter.WriteLine("{0} {1} \"{2}\"", mz, intensity, annotation);
+	                    }
+                        textWriter.WriteLine();
+	                }
+	            }
+	        }
+	    }
+
 
 	    private static void OutputResultsToMzTab(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults,
 	        string fileLocation, string rawFileName, IProgress<int> progress = null)

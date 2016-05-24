@@ -30,5 +30,27 @@ namespace Liquid.Controls
 			this.MsMsInfoViewModel = new MsMsInfoViewModel();
 			this.DataContext = this.MsMsInfoViewModel;
 		}
+
+	    private void CopyCIDSpectra(object sender, RoutedEventArgs e)
+	    {
+	        var peaks = this.MsMsInfoViewModel.CurrentSpectrumSearchResult.CidSpectrum.Peaks;
+	        string spectrumString = "Mz\tIntensity\n";
+	        foreach (var peak in peaks)
+	        {
+	            spectrumString += String.Format("{0}\t{1}\n", peak.Mz, peak.Intensity);
+	        }
+            Clipboard.SetText(spectrumString);
+	    }
+
+        private void CopyHCDSpectra(object sender, RoutedEventArgs e)
+        {
+            var peaks = this.MsMsInfoViewModel.CurrentSpectrumSearchResult.HcdSpectrum.Peaks;
+            string spectrumString = "Mz\tIntensity\n";
+            foreach (var peak in peaks)
+            {
+                spectrumString += String.Format("{0}\t{1}\n", peak.Mz, peak.Intensity);
+            }
+            Clipboard.SetText(spectrumString);
+        }
 	}
 }

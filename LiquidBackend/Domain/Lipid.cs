@@ -56,6 +56,11 @@ namespace LiquidBackend.Domain
 				adduct = Adduct.Hydrogen;
 				fragmentationMode = FragmentationMode.Negative;
 			}
+            else if (this.AdductFull == "[M-2H]--")
+            {
+                adduct = Adduct.Dihydrogen;
+                fragmentationMode = FragmentationMode.Negative;
+            }
 			else
 			{
 				throw new SystemException("Unknown adduct: " + this.AdductFull);

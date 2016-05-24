@@ -36,6 +36,12 @@ namespace LiquidBackend.Domain
 		CL,
 		Cholesterol,
 		Sulfatide,
-		Ubiquitones
+		Ubiquinone,
+        WE,
+        PE_Cer,
+        PI_Cer,
+        PE_NMe,
+        PE_NMe2,
+        Ganglioside
 	}
 }
