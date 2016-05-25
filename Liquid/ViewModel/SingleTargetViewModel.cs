@@ -38,7 +38,7 @@ namespace Liquid.ViewModel
         public List<Tuple<string, int>> LipidIdentifications { get; private set; } 
 		public List<LipidGroupSearchResult> LipidGroupSearchResultList { get; private set; }
 		public ScoreModel ScoreModel { get; private set; }
-        public List<ImsFeature> ImsFeatureTargets { get; private set; } 
+         
 
 		public int LipidTargetLoadProgress { get; private set; }
 		public int GlobalWorkflowProgress { get; private set; }
@@ -57,7 +57,7 @@ namespace Liquid.ViewModel
 
 		}
 
-		public void UpdateRawFileLocation(string rawFileLocation, ref bool findFileFlag)
+		public void UpdateRawFileLocation(string rawFileLocation)
 		{
 			FileInfo rawFileInfo = new FileInfo(rawFileLocation);
 		    this.IsIms = Path.GetExtension(rawFileLocation).ToLower() == ".uimf";
@@ -68,29 +68,7 @@ namespace Liquid.ViewModel
 		    if (IsIms)
 		    {
                 this.ImsRun = new DataReader(rawFileLocation);
-
-		        var featureFilePath = Directory.GetFiles(Path.GetDirectoryName(rawFileLocation),
-		            String.Format("{0}{1}", Path.GetFileNameWithoutExtension(rawFileLocation), "_LCMSFeatures.txt"), SearchOption.AllDirectories).FirstOrDefault();
-		        if (featureFilePath == null)
-		        {
-		            DialogResult FindFeatureFile =
-		                MessageBox.Show("Unable to find LCMSFeatures file. Please specify the file location.", "Locate File",
-		                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-		            if (FindFeatureFile == DialogResult.OK)
-		            {
-		                findFileFlag = true;
-		            }
-		            else if (FindFeatureFile == DialogResult.Cancel)
-		            {
-		                this.ImsRun = null;
-		            }
-		        }
-		        else
-		        {
-		            BuildImsFeatureList(featureFilePath);
-		        }
-                OnPropertyChanged("ImsRun");
-                OnPropertyChanged("ImsFeatureTargets");
+		        //TODO: IMS Workflow
 		    }
 		    else
 		    {
@@ -183,13 +161,6 @@ namespace Liquid.ViewModel
 	        OnPropertyChanged("LipidIdentifications");
 	    }
 
-	    public void BuildImsFeatureList(string featureFileName)
-	    {
-            FileInfo featureFile = new FileInfo(featureFileName);
-            ImsFeatureReader<ImsFeature> featureReader = new ImsFeatureReader<ImsFeature>();
-	        this.ImsFeatureTargets = featureReader.ReadFile(featureFile);
-	    }
-
 
 
 		public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
@@ -205,8 +176,7 @@ namespace Liquid.ViewModel
             var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 		    if (IsIms)
 		    {
-		        lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.ImsRun, this.ImsFeatureTargets,
-		            hcdError, cidError, this.ScoreModel, progress);
+                //TODO: IMS WORKFLOW
 		    }
 		    else
 		    {

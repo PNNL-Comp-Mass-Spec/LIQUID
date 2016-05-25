@@ -32,6 +32,7 @@ namespace LiquidBackend.Util
 			return RunGlobalWorkflow(lipidList, this.LcMsRun, hcdMassError, cidMassError, this.ScoreModel, progress);
 		}
 
+        /*
 	    public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, DataReader ImsRun, IEnumerable<ImsFeature> FeatureTargets, double hcdMassError,double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
 	    {
             Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
@@ -99,14 +100,12 @@ namespace LiquidBackend.Util
 	                        }
 	                    }
 	                }
-	            }*/
+	            }
 	        }
-
-
-
 
 	        return new List<LipidGroupSearchResult>();
 	    }
+        */
 
 		public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
 		{

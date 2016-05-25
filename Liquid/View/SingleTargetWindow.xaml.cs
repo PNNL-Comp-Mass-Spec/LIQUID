@@ -68,20 +68,10 @@ namespace Liquid.View
 				string fileName = dialog.FileName;
 				FileInfo fileInfo = new FileInfo(fileName);
 
-			    bool findFileFlag = false;
-				await Task.Run(() => this.SingleTargetViewModel.UpdateRawFileLocation(fileInfo.FullName, ref findFileFlag));
-			    if (findFileFlag == true)
-			    {
-                    var featureFile = new VistaOpenFileDialog { DefaultExt = ".txt", Filter = "Text(*.txt)|*.txt|All(*.*)|*.*"};
-                    DialogResult findFileResults = featureFile.ShowDialog();
-			        if (findFileResults == System.Windows.Forms.DialogResult.OK)
-			        {
-			            string featureFileName = featureFile.FileName;
-			            await Task.Run(() => this.SingleTargetViewModel.BuildImsFeatureList(featureFileName));
-			        }
-			    }
+			    
+				await Task.Run(() => this.SingleTargetViewModel.UpdateRawFileLocation(fileInfo.FullName));
                 //Make sure we loaded a file
-                if (this.SingleTargetViewModel.LcMsRun != null || (this.SingleTargetViewModel.ImsRun != null && this.SingleTargetViewModel.ImsFeatureTargets != null))  
+                if (this.SingleTargetViewModel.LcMsRun != null || this.SingleTargetViewModel.ImsRun != null)  
 			    {
 			        this.RawFileLocationTextBlock.Text = "File Loaded: " + fileInfo.Name;
 

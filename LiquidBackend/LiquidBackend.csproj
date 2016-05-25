@@ -89,7 +89,6 @@
     <Compile Include="Domain\AcylChain.cs" />
     <Compile Include="Domain\AcylChainType.cs" />
     <Compile Include="Domain\Adduct.cs" />
-    <Compile Include="Domain\ImsFeature.cs" />
     <Compile Include="Domain\FragmentationMode.cs" />
     <Compile Include="Domain\FragmentationType.cs" />
     <Compile Include="Domain\Lipid.cs" />
@@ -103,7 +102,6 @@
     <Compile Include="Domain\SpectrumSearchResult.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\IFileReader.cs" />
-    <Compile Include="IO\ImsFeatureReader.cs" />
     <Compile Include="IO\LipidGroupSearchResultWriter.cs" />
     <Compile Include="IO\LipidMapsDbReader.cs" />
     <Compile Include="IO\OutputFileReader.cs" />
