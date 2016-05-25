@@ -80,9 +80,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UIMFLibrary">
-      <HintPath>..\..\..\UIMF-Library\UIMFLibrary\bin\Debug\UIMFLibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\ActivationMethodCombination.cs" />

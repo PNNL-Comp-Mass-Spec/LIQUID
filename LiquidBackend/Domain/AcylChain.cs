@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace LiquidBackend.Domain
 {
@@ -6,11 +8,15 @@ namespace LiquidBackend.Domain
 	{
 		public int NumCarbons { get; private set; }
 		public int NumDoubleBonds { get; private set; }
+        public int HydroxyPosition { get; private set; }
 		public AcylChainType AcylChainType { get; private set; }
 
 		public AcylChain(string acylChainString)
 		{
 			this.AcylChainType = AcylChainType.Standard;
+		    this.HydroxyPosition = -1;
+            Regex hydroxy = new Regex(@"\(\d+OH\)");
+            Match hydroxyMatch = Regex.Match(acylChainString, @"\(\d+OH\)");
 
 			if (acylChainString.Contains("m"))
 			{
@@ -39,10 +45,14 @@ namespace LiquidBackend.Domain
 				acylChainString = acylChainString.Substring(2);
 			}
 
-			if (acylChainString.Contains("(2OH)"))
+			if (hydroxyMatch.Success)
 			{
-				this.AcylChainType = AcylChainType.Dihydroxy;
-				acylChainString = acylChainString.Replace("(2OH)", "");
+				this.AcylChainType = AcylChainType.Hydroxy;
+			    int hydroxyPos;
+			    var x = Regex.Match(hydroxyMatch.Value, @"\d+");
+			    bool successfulParse = Int32.TryParse(x.Value, out hydroxyPos);
+			    if (successfulParse) this.HydroxyPosition = hydroxyPos;  
+				acylChainString = hydroxy.Replace(acylChainString, "");
 			}
 
             else if (acylChainString.Contains("(CHO)"))
@@ -74,7 +84,7 @@ namespace LiquidBackend.Domain
 			if (AcylChainType == AcylChainType.Monohydro) return "m" + carbonDoubleBond;
 			if (AcylChainType == AcylChainType.Dihydro) return "d" + carbonDoubleBond;
 			if (AcylChainType == AcylChainType.Trihydro) return "t" + carbonDoubleBond;
-			if (AcylChainType == AcylChainType.Dihydroxy) return carbonDoubleBond + "(2OH)";
+			if (AcylChainType == AcylChainType.Hydroxy) return carbonDoubleBond + String.Format("({0}OH)",this.HydroxyPosition);
 
 			throw new SystemException("Unknown AcylChainType for given AcylChain");
 		}
@@ -107,6 +117,7 @@ namespace LiquidBackend.Domain
 		{
 			if (this.NumCarbons != other.NumCarbons) return this.NumCarbons.CompareTo(other.NumCarbons);
 			if (this.NumDoubleBonds != other.NumDoubleBonds) return this.NumDoubleBonds.CompareTo(other.NumDoubleBonds);
+            if (this.HydroxyPosition != other.HydroxyPosition) return this.HydroxyPosition.CompareTo(other.HydroxyPosition);
 			return this.AcylChainType.CompareTo(this.AcylChainType);
 		}
 	}

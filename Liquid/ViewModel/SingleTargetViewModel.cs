@@ -19,14 +19,12 @@ using Ookii.Dialogs;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using UIMFLibrary;
 
 namespace Liquid.ViewModel
 {
 	public class SingleTargetViewModel : ViewModelBase
 	{
 		public LcMsRun LcMsRun { get; private set; }
-        public DataReader ImsRun { get; private set; }
         public string FeatureFilePath { get; private set; } //Probably replace with a feature table
 		public string RawFileName { get; private set; }
 		public LipidTarget CurrentLipidTarget { get; private set; }
@@ -67,7 +65,6 @@ namespace Liquid.ViewModel
 
 		    if (IsIms)
 		    {
-                this.ImsRun = new DataReader(rawFileLocation);
 		        //TODO: IMS Workflow
 		    }
 		    else

@@ -129,7 +129,8 @@ namespace LiquidBackend.Util
             Regex stereoChem = new Regex(@"\(\d+(E|Z)(\,[^\)]+\)|\))");
             Match steroMatch = Regex.Match(name, @"\(\d+(E|Z)(\,[^\)]+\)|\))");
 		    if (steroMatch.Success) name = stereoChem.Replace(name, "");
-			MatchCollection matchCollection = Regex.Matches(name, "([mdtOP]-?)?\\d+:\\d+(\\((2OH|CHO|COOH)\\))?");
+		    name = Regex.Replace(name, @"\[\w\]", "");
+			MatchCollection matchCollection = Regex.Matches(name, "([mdtOP]-?)?\\d+:\\d+(\\((\\d+OH|CHO|COOH)\\))?");
 
 			IEnumerable<AcylChain> acylChains = (from object match in matchCollection select new AcylChain(match.ToString()));
 			return acylChains;
@@ -147,7 +148,7 @@ namespace LiquidBackend.Util
 			bool containsEther = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) == 1;
 		    bool containsDiether = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) > 1;
 			bool containsPlasmogen = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Plasmalogen) > 0;
-		    bool contains2OH = (fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Dihydroxy) > 0);
+		    bool containsOH = (fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Hydroxy) > 0);
 		    bool isOxoCHO = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.OxoCHO) > 0;
 		    bool isOxoCOOH = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.OxoCOOH) > 0;
             
@@ -179,6 +180,10 @@ namespace LiquidBackend.Util
                         else if (isOxoCOOH)
                         {
                             return new Composition(numCarbons + 8, (2 * (numCarbons + 8)) - 2 - (2 * numDoubleBonds), 1, 10, 0, 1); 
+                        }
+                        else if (containsOH)
+                        {
+                            return new Composition(numCarbons + 8, (2 * (numCarbons + 8)) + 0 - (2 * numDoubleBonds), 1, 9, 0, 1);
                         }
 						else
 						{
@@ -212,6 +217,10 @@ namespace LiquidBackend.Util
 						{
 							return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 0 - (2*numDoubleBonds), 1, 7, 0, 1);
 						}
+                        else if (containsOH)
+                        {
+                            return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 0 - (2*numDoubleBonds), 1, 9, 0, 1);
+                        }
 						else
 						{
 							return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 0 - (2 * numDoubleBonds), 1, 8, 0, 1);
@@ -236,7 +245,7 @@ namespace LiquidBackend.Util
                 case LipidClass.PE_Cer:
 			        if (numChains > 1)
 			        {
-                        if (contains2OH) return new Composition(numCarbons + 2, (2 * (numCarbons + 3)) + 1 - (2 * numDoubleBonds), 2, 7, 0, 1);
+                        if (containsOH) return new Composition(numCarbons + 2, (2 * (numCarbons + 3)) + 1 - (2 * numDoubleBonds), 2, 7, 0, 1);
                         return new Composition(numCarbons + 2, (2 * (numCarbons + 3)) + 1 - (2 * numDoubleBonds), 2, 6, 0, 1);
 			        }
 			        else
@@ -320,12 +329,12 @@ namespace LiquidBackend.Util
 			        }
 			        else
 			        {
-                        if (contains2OH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 2 - (2 * numDoubleBonds), 1, 11, 0, 1);
+                        if (containsOH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 2 - (2 * numDoubleBonds), 1, 11, 0, 1);
 			            return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 2 - (2 * numDoubleBonds), 1, 10, 0, 1);
 			        }
 			        break;
 				case LipidClass.Cer:
-					if (contains2OH)
+					if (containsOH)
 					{
 						return new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 4, 0, 0);	
 					}
@@ -351,14 +360,14 @@ namespace LiquidBackend.Util
 					return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 3 - (2 * numDoubleBonds), 2, 6, 0, 1);
 					break;
 				case LipidClass.GalCer:
-                    if (contains2OH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 9, 0, 0);
+                    if (containsOH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 9, 0, 0);
 					return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 8, 0, 0);
 				case LipidClass.GlcCer:
-                    if (contains2OH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 9, 0, 0);
+                    if (containsOH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 9, 0, 0);
 					return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 8, 0, 0);
 					break;
 				case LipidClass.LacCer:
-                    if (contains2OH) return new Composition(numCarbons + 12, (2 * (numCarbons + 12)) - 1 - (2 * numDoubleBonds), 1, 14, 0, 0);
+                    if (containsOH) return new Composition(numCarbons + 12, (2 * (numCarbons + 12)) - 1 - (2 * numDoubleBonds), 1, 14, 0, 0);
 					return new Composition(numCarbons + 12, (2 * (numCarbons + 12)) - 1 - (2 * numDoubleBonds), 1, 13, 0, 0);
 					break;
 				case LipidClass.CerP:
@@ -853,7 +862,7 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) + 2 - (2 * doubleBonds), 1, 1, 0, 0).Mass, "LCB+H2O", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, (2 * (carbons - 1)) + 2 - (2 * doubleBonds), 1, 0, 0, 0).Mass, "LCB-CH2, acylChain"));
 								break;
-							case AcylChainType.Dihydroxy:
+							case AcylChainType.Hydroxy:
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "FA+OH", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 2 - (2 * doubleBonds), 1, 1, 0, 0).Mass, "FA+NH2", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 2, (2 * (carbons + 2)) - 2 - (2 * doubleBonds), 1, 2, 0, 0).Mass, "FA long", acylChain));
@@ -1069,6 +1078,18 @@ namespace LiquidBackend.Util
                                     msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(carbons, (2 * carbons) - 0 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "M-FA", acylChain));
 								}
 								break;
+                            case AcylChainType.Hydroxy:
+                                if (acylChain.NumCarbons == 20 && acylChain.NumDoubleBonds == 4) { 
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(20, 31, 0, 3, 0, 0).Mass, "HETE"));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 7, (2 * (carbons + 7)) + 1 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "loss of HETE"));
+                                    if (acylChain.HydroxyPosition == 5) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 7, 0, 3, 0, 0).Mass, "5-HETE"));
+                                    if (acylChain.HydroxyPosition == 8) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(8, 11, 0, 3, 0, 0).Mass, "8-HETE"));
+                                    if (acylChain.HydroxyPosition == 9) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(9, 11, 0, 3, 0, 0).Mass, "9-HETE"));
+                                    if (acylChain.HydroxyPosition == 11) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(10, 15, 0, 3, 0, 0).Mass, "11-HETE"));
+                                    if (acylChain.HydroxyPosition == 12) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(11, 15, 0, 3, 0, 0).Mass, "12-HETE"));
+                                    if (acylChain.HydroxyPosition == 15) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(14, 19, 0, 3, 0, 0).Mass, "15-HETE"));
+                                }
+                                break;
 						}
 					}
 				}
@@ -1122,6 +1143,18 @@ namespace LiquidBackend.Util
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 5, 0, 1).Mass, "LPE(O-)-H2O", acylChain));
 								}
 								break;
+                            case AcylChainType.Hydroxy:
+                                if (acylChain.NumCarbons == 20 && acylChain.NumDoubleBonds == 4) {
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(20, 31, 0, 3, 0, 0).Mass, "HETE"));
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "loss of HETE"));
+                                if (acylChain.HydroxyPosition == 5) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 7, 0, 3, 0, 0).Mass, "5-HETE"));
+                                if (acylChain.HydroxyPosition == 8) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(8, 11, 0, 3, 0, 0).Mass, "8-HETE"));
+                                if (acylChain.HydroxyPosition == 9) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(9, 11, 0, 3, 0, 0).Mass, "9-HETE"));
+                                if (acylChain.HydroxyPosition == 11) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(10, 15, 0, 3, 0, 0).Mass, "11-HETE"));
+                                if (acylChain.HydroxyPosition == 12) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(11, 15, 0, 3, 0, 0).Mass, "12-HETE"));
+                                if (acylChain.HydroxyPosition == 15) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(14, 19, 0, 3, 0, 0).Mass, "15-HETE"));
+                                }
+						        break;
 						}
 					}
 				}
@@ -1414,9 +1447,9 @@ namespace LiquidBackend.Util
 					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(1, 4, 0, 1, 0, 0).Mass, "M-CH3OH"));
 					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "M-H2O"));
 
-					bool containsDiHydroxy = acylChainList.Count(x => x.AcylChainType == AcylChainType.Dihydroxy) > 0;
+					bool containsHydroxy = acylChainList.Count(x => x.AcylChainType == AcylChainType.Hydroxy) > 0;
 
-					if (containsDiHydroxy)
+					if (containsHydroxy)
 					{
 						foreach (var acylChain in acylChainList)
 						{
@@ -1438,7 +1471,7 @@ namespace LiquidBackend.Util
 								case AcylChainType.Standard:
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 2, 0, 0).Mass, "FA", acylChain));
 									break;
-								case AcylChainType.Dihydroxy:
+								case AcylChainType.Hydroxy:
 									msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 3, 0, 0).Mass, "FA with OH", acylChain));
 									break;
 								case AcylChainType.Trihydro:
@@ -1505,7 +1538,7 @@ namespace LiquidBackend.Util
 							case AcylChainType.Standard:
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2*carbons) - 1 - (2*doubleBonds), 0, 2, 0, 0).Mass, "FA", acylChain));
 								break;
-							case AcylChainType.Dihydroxy:
+							case AcylChainType.Hydroxy:
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, (2 * carbons) - 1 - (2 * doubleBonds), 0, 3, 0, 0).Mass, "FA with OH", acylChain));
 								break;
 						}
@@ -1563,7 +1596,7 @@ namespace LiquidBackend.Util
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) + 0 - (2 * doubleBonds), 1, 10, 1, 0).Mass, "lysoSulfogalactosyl with LBC", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, (2 * (carbons + 6)) - 2 - (2 * doubleBonds), 1, 9, 1, 0).Mass, "lysoSulfogalactosyl with LBC - H20", acylChain));
 								break;
-							case AcylChainType.Dihydroxy:
+							case AcylChainType.Hydroxy:
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 2, (2 * (carbons + 2)) - 2 - (2 * doubleBonds), 1, 2, 0, 0).Mass, "FA with OH", acylChain));
 								msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 8, (2 * (carbons + 8)) - 2 - (2 * doubleBonds), 1, 11, 1, 0).Mass, "lysoSulfogalactosyl with OH", acylChain));
 								break;

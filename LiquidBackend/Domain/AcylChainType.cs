@@ -16,6 +16,6 @@ namespace LiquidBackend.Domain
 		Monohydro,
 		Dihydro,
 		Trihydro,
-		Dihydroxy
+		Hydroxy
 	}
 }

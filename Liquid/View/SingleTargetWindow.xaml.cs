@@ -52,7 +52,7 @@ namespace Liquid.View
 		private async void RawFileButtonClick(object sender, RoutedEventArgs e)
 		{
 			// Create OpenFileDialog and Set filter for file extension and default file extension
-			var dialog = new VistaOpenFileDialog { DefaultExt = ".raw", Filter = "Thermo(*.raw)|*.raw|IMS(*.UIMF)|*.UIMF|mzML(*.mzML, *.mzML.gz)|*.mzml;*.mzML;*.mzML.gz;*.mzml.gz" };
+			var dialog = new VistaOpenFileDialog { DefaultExt = ".raw", Filter = "Thermo(*.raw)|*.raw|mzML(*.mzML, *.mzML.gz)|*.mzml;*.mzML;*.mzML.gz;*.mzml.gz" };
 
 			// Get the selected file name and display in a TextBox 
 			DialogResult result = dialog.ShowDialog();
@@ -71,7 +71,7 @@ namespace Liquid.View
 			    
 				await Task.Run(() => this.SingleTargetViewModel.UpdateRawFileLocation(fileInfo.FullName));
                 //Make sure we loaded a file
-                if (this.SingleTargetViewModel.LcMsRun != null || this.SingleTargetViewModel.ImsRun != null)  
+                if (this.SingleTargetViewModel.LcMsRun != null)  
 			    {
 			        this.RawFileLocationTextBlock.Text = "File Loaded: " + fileInfo.Name;
 
@@ -179,7 +179,7 @@ namespace Liquid.View
 				await Task.Run(() => this.SingleTargetViewModel.LoadMoreLipidTargets(fileName));
 
 				// Enable processing all targets button if applicable
-				if (this.SingleTargetViewModel.LcMsRun != null || this.SingleTargetViewModel.ImsRun != null) this.ProcessAllTargetsButton.IsEnabled = true;
+				if (this.SingleTargetViewModel.LcMsRun != null) this.ProcessAllTargetsButton.IsEnabled = true;
 			}
 		}
 

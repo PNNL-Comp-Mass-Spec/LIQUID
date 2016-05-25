@@ -144,7 +144,7 @@ namespace LiquidBackend.Domain
 				else if (chainType == AcylChainType.Ether) etherChainCount++;
                 else if (chainType == AcylChainType.OxoCHO) oxoCHOChainCount++;
                 else if (chainType == AcylChainType.OxoCOOH) oxoCOOHChainCount++;
-				else if (chainType == AcylChainType.Dihydro || chainType == AcylChainType.Dihydroxy) dihydroxyChainCount++;
+				else if (chainType == AcylChainType.Dihydro || chainType == AcylChainType.Hydroxy) dihydroxyChainCount++;
 				else if (chainType == AcylChainType.Trihydro) trihydroChainCount++;
 
 				chainCount++;
