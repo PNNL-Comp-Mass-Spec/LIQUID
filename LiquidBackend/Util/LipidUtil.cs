@@ -1080,7 +1080,7 @@ namespace LiquidBackend.Util
 								break;
                             case AcylChainType.Hydroxy:
                                 if (acylChain.NumCarbons == 20 && acylChain.NumDoubleBonds == 4) { 
-                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(20, 31, 0, 3, 0, 0).Mass, "HETE"));
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(20, 31, 0, 3, 0, 0).Mass, "HETE", true));
                                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 7, (2 * (carbons + 7)) + 1 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "loss of HETE"));
                                     if (acylChain.HydroxyPosition == 5) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 7, 0, 3, 0, 0).Mass, "5-HETE"));
                                     if (acylChain.HydroxyPosition == 8) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(8, 11, 0, 3, 0, 0).Mass, "8-HETE"));
@@ -1145,7 +1145,7 @@ namespace LiquidBackend.Util
 								break;
                             case AcylChainType.Hydroxy:
                                 if (acylChain.NumCarbons == 20 && acylChain.NumDoubleBonds == 4) {
-                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(20, 31, 0, 3, 0, 0).Mass, "HETE"));
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(20, 31, 0, 3, 0, 0).Mass, "HETE", true));
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, (2 * (carbons + 5)) + 1 - (2 * doubleBonds), 1, 7, 0, 1).Mass, "loss of HETE"));
                                 if (acylChain.HydroxyPosition == 5) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 7, 0, 3, 0, 0).Mass, "5-HETE"));
                                 if (acylChain.HydroxyPosition == 8) msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(8, 11, 0, 3, 0, 0).Mass, "8-HETE"));
