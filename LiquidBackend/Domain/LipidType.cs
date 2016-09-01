@@ -17,10 +17,12 @@ namespace LiquidBackend.Domain
 		SingleChain,
 		SingleChainPlasmogen,
 		SingleChainEther,
+        SingleChainMonoHydroxy,
         SingleChainDihydroxy,
 		ThreeChains,
 		FourChains,
 		TwoChainsDihidroxy,
+        TwoChainsMonohydroxy,
 		TwoChainsTwoDihidroxy,
 		TwoChainsPhyto,
 		TwoChainsDihidroxyPhyto

@@ -9,14 +9,15 @@ namespace LiquidBackend.Domain
 		public int NumCarbons { get; private set; }
 		public int NumDoubleBonds { get; private set; }
         public int HydroxyPosition { get; private set; }
+        public int HydroxyCount { get; private set; }
 		public AcylChainType AcylChainType { get; private set; }
 
 		public AcylChain(string acylChainString)
 		{
 			this.AcylChainType = AcylChainType.Standard;
 		    this.HydroxyPosition = -1;
-            Regex hydroxy = new Regex(@"\(\d+OH\)");
-            Match hydroxyMatch = Regex.Match(acylChainString, @"\(\d+OH\)");
+		    this.HydroxyCount = 0;
+            Match hydroxyMatch = Regex.Match(acylChainString, @"\((\d+)?(OH|\(OH\))\)");
 
 			if (acylChainString.Contains("m"))
 			{
@@ -32,7 +33,7 @@ namespace LiquidBackend.Domain
 			{
 				this.AcylChainType = AcylChainType.Trihydro;
 				acylChainString = acylChainString.Substring(1);
-				throw new SystemException("Unable to process Trihydro acyl chain. Please use the 2OH format e.g. Cer(d18:0/20:0(2OH))");
+				//throw new SystemException("Unable to process Trihydro acyl chain. Please use the 2OH format e.g. Cer(d18:0/20:0(2OH))");
 			}
 			else if (acylChainString.Contains("O-"))
 			{
@@ -49,10 +50,28 @@ namespace LiquidBackend.Domain
 			{
 				this.AcylChainType = AcylChainType.Hydroxy;
 			    int hydroxyPos;
-			    var x = Regex.Match(hydroxyMatch.Value, @"\d+");
-			    bool successfulParse = Int32.TryParse(x.Value, out hydroxyPos);
-			    if (successfulParse) this.HydroxyPosition = hydroxyPos;  
-				acylChainString = hydroxy.Replace(acylChainString, "");
+			    int hydroxyCount;
+			    if (Regex.IsMatch(hydroxyMatch.Value, @"\d+\(OH\)"))
+			    {
+                    Regex hydroxy = new Regex(@"\(\d+\(OH\)\)");
+			        var x = Regex.Match(hydroxyMatch.Value, @"\d+");
+			        bool successfulParse = Int32.TryParse(x.Value, out hydroxyCount);
+                    if (successfulParse) this.HydroxyCount = hydroxyCount;
+                    acylChainString = hydroxy.Replace(acylChainString, "");
+			    }
+			    else
+			    {
+                    Regex hydroxy = new Regex(@"\(\d+OH\)");
+                    var x = Regex.Match(hydroxyMatch.Value, @"\d+");
+			        bool successfulParse = Int32.TryParse(x.Value, out hydroxyPos);
+			        if (successfulParse)
+			        {
+			            this.HydroxyPosition = hydroxyPos;
+			            this.HydroxyCount = 1;
+			        }
+                    acylChainString = hydroxy.Replace(acylChainString, "");
+			    }
+			    
 			}
 
             else if (acylChainString.Contains("(CHO)"))

@@ -47,7 +47,8 @@ namespace Liquid.ViewModel
 		{
 			this.RawFileName = "None Loaded";
 			this.FragmentationModeList = new List<FragmentationMode> { FragmentationMode.Positive, FragmentationMode.Negative };
-			this.AdductList = new List<Adduct> { Adduct.Hydrogen, Adduct.Ammonium, Adduct.Acetate };
+			//this.AdductList = new List<Adduct> { Adduct.Hydrogen, Adduct.Dihydrogen, Adduct.Ammonium, Adduct.Acetate };
+		    this.AdductList = Enum.GetValues(typeof (Adduct)).Cast<Adduct>().ToList();
 			this.SpectrumSearchResultList = new List<SpectrumSearchResult>();
 			this.LipidTargetList = new List<Lipid>();
             this.LipidIdentifications = new List<Tuple<string, int>>();

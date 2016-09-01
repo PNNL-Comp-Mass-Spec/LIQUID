@@ -42,6 +42,11 @@ namespace LiquidBackend.Domain
         PI_Cer,
         PE_NMe,
         PE_NMe2,
-        Ganglioside
+        Ganglioside,
+        MIPC,
+        MIP2C,
+        anandamide,
+        carnitine,
+        FAHFA
 	}
 }

@@ -32,12 +32,13 @@ namespace LiquidBackend.Util
 
 			// I have to subtract an H for the target Ion since InformedProteomics will assume protenated
 			var targetIon = new Ion(target.Composition - Composition.Hydrogen, 1);
-			double targetMz = targetIon.GetMonoIsotopicMz();
+		    double targetMz = target.MzRounded;
 			Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
 			Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
 
 			// Find out which MS/MS scans have a precursor m/z that matches the target
-			List<int> matchingMsMsScanNumbers = lcmsRun.GetFragmentationSpectraScanNums(targetIon).ToList();
+			//List<int> matchingMsMsScanNumbers = lcmsRun.GetFragmentationSpectraScanNums(targetIon).ToList();
+            List<int> matchingMsMsScanNumbers = lcmsRun.GetFragmentationSpectraScanNums(targetMz).ToList();
 
 			List<SpectrumSearchResult> spectrumSearchResultList = new List<SpectrumSearchResult>();
 

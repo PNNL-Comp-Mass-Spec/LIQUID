@@ -93,7 +93,7 @@ namespace LiquidBackend.Domain
 
 		public List<MsMsSearchUnit> GetMsMsSearchUnits()
 		{
-			return LipidUtil.CreateMsMsSearchUnits(this.CommonName, this.Composition.Mass, this.LipidClass, this.FragmentationMode, this.AcylChainList);
+			return LipidUtil.CreateMsMsSearchUnits(this.CommonName, this.Composition.Mass/this.Charge, this.LipidClass, this.FragmentationMode, this.AcylChainList);
 		}
 
 		protected bool Equals(LipidTarget other)
@@ -132,6 +132,7 @@ namespace LiquidBackend.Domain
             int oxoCHOChainCount = 0;
 		    int oxoCOOHChainCount = 0;
 			int dihydroxyChainCount = 0;
+		    int monohydroxyChainCount = 0;
 			int trihydroChainCount = 0;
 
 			foreach (AcylChain acylChain in AcylChainList)
@@ -144,6 +145,7 @@ namespace LiquidBackend.Domain
 				else if (chainType == AcylChainType.Ether) etherChainCount++;
                 else if (chainType == AcylChainType.OxoCHO) oxoCHOChainCount++;
                 else if (chainType == AcylChainType.OxoCOOH) oxoCOOHChainCount++;
+                else if (chainType == AcylChainType.Monohydro) monohydroxyChainCount++;
 				else if (chainType == AcylChainType.Dihydro || chainType == AcylChainType.Hydroxy) dihydroxyChainCount++;
 				else if (chainType == AcylChainType.Trihydro) trihydroChainCount++;
 
@@ -155,6 +157,7 @@ namespace LiquidBackend.Domain
 				if (standardChainCount == 1) return LipidType.SingleChain;
 				if (plasmogenChainCount == 1) return LipidType.SingleChainPlasmogen;
 				if (etherChainCount == 1) return LipidType.SingleChainEther;
+			    if (monohydroxyChainCount == 1) return LipidType.SingleChainMonoHydroxy;
 			    if (dihydroxyChainCount == 1) return LipidType.SingleChainDihydroxy;
 			}
 			if (chainCount == 2)
@@ -171,6 +174,7 @@ namespace LiquidBackend.Domain
 				}
 				if (dihydroxyChainCount == 1) return LipidType.TwoChainsDihidroxy;
 				if (dihydroxyChainCount == 2) return LipidType.TwoChainsTwoDihidroxy;
+                if (monohydroxyChainCount == 1) return LipidType.TwoChainsMonohydroxy;
 			}
 			if (chainCount == 3)
 			{
