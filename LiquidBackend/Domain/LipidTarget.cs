@@ -58,7 +58,11 @@ namespace LiquidBackend.Domain
 					    {
 					        carbons += acylChain.NumCarbons;
 					        db += acylChain.NumDoubleBonds;
-					        if (i == acylChainList.Count - 1) stringBuilder.Append(carbons + ":" + db);
+					        if (i == acylChainList.Count - 1)
+					        {
+                                if (LipidType == LipidType.TwoChainsDihidroxy) stringBuilder.Append(carbons + ":" + db + "(2OH)");
+					            else stringBuilder.Append(carbons + ":" + db);
+					        }
 					    }
 					    else
 					    {
