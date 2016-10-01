@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,7 @@ using LiquidBackend.Domain;
 using Ookii.Dialogs;
 using DataGrid = System.Windows.Controls.DataGrid;
 using MessageBox = System.Windows.MessageBox;
+using MessageBoxOptions = System.Windows.MessageBoxOptions;
 
 namespace Liquid.View
 {
@@ -37,6 +39,7 @@ namespace Liquid.View
 
 			this.FragmentationModeComboBox.SelectedValue = FragmentationMode.Positive;
 			this.AdductComboBox.SelectedValue = Adduct.Hydrogen;
+		    this.IonTypeComboBox.SelectedIndex = 0; //"Primary Ion"
 			this.TargetMzTextBlock.Visibility = Visibility.Collapsed;
 			this.EmpiricalFormulaTextBlock.Visibility = Visibility.Collapsed;
 			this.EmpiricalFormulaRichTextBlock.Visibility = Visibility.Collapsed;
@@ -138,6 +141,7 @@ namespace Liquid.View
 				}
 			}
 		}
+
 
 		private void UpdateEmpiricalFormula(string empiricalFormula)
 		{
@@ -315,6 +319,49 @@ namespace Liquid.View
                 string fileLocation = dialog.FileName;
                 this.SingleTargetViewModel.OnWriteTargetInfo(fileLocation);
             }
+	    }
+
+	    private void AddFragmentButton_OnClick(object sender, RoutedEventArgs e)
+	    {
+	        double fragmentMz;
+	        var validFragment = Double.TryParse(this.FragmentMassTextBox.Text, out fragmentMz);
+	        string ionType = (string)this.IonTypeComboBox.SelectedItem;
+	        if (validFragment)
+	        {
+	            this.SingleTargetViewModel.AddFragment(fragmentMz, ionType);
+	            this.FragmentSearchListDataGrid.ItemsSource = this.SingleTargetViewModel.FragmentSearchList;
+	            this.SearchForFragmentsButton.IsEnabled = true;
+	        }
+	        else
+	        {
+               MessageBox.Show("Invalid m/z. Please only use numbers.","Warning",MessageBoxButton.OK,MessageBoxImage.Warning);
+	        }
+
+	    }
+
+	    private void SearchForFragmentsButtonClick(object sender, RoutedEventArgs e)
+	    {
+	        //TODO: Search for current fragments
+	        throw new NotImplementedException();
+	    }
+
+	    private void RemoveFragmentButton_OnClick(object sender, RoutedEventArgs e)
+	    {
+
+	        List<MsMsSearchUnit> items = this.FragmentSearchListDataGrid.SelectedItems.OfType<MsMsSearchUnit>().ToList();
+
+
+            if(this.FragmentSearchListDataGrid.SelectedItem != null) this.SingleTargetViewModel.RemoveFragment(items);
+	        if (this.SingleTargetViewModel.FragmentSearchList.Count == 0)
+	        {
+	            this.SearchForFragmentsButton.IsEnabled = false;
+                this.RemoveFragmentButton.IsEnabled = false;
+	        }
+	    }
+
+	    private void FragmentSelectionChange(object sender, SelectionChangedEventArgs e)
+	    {
+	        this.RemoveFragmentButton.IsEnabled = this.FragmentSearchListDataGrid.SelectedItem != null;
 	    }
 	}
 }

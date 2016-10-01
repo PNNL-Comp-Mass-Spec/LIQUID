@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -30,8 +31,10 @@ namespace Liquid.ViewModel
 		public LipidTarget CurrentLipidTarget { get; private set; }
 		public List<FragmentationMode> FragmentationModeList { get; private set; }
 		public List<SpectrumSearchResult> SpectrumSearchResultList { get; private set; }
+        public ObservableCollection<MsMsSearchUnit> FragmentSearchList { get; private set; }  
 		public SpectrumSearchResult CurrentSpectrumSearchResult { get; private set; }
 		public List<Adduct> AdductList { get; private set; }
+        public List<string> IonTypeList { get; private set; } 
 		public List<Lipid> LipidTargetList { get; private set; }
         public List<Tuple<string, int>> LipidIdentifications { get; private set; } 
 		public List<LipidGroupSearchResult> LipidGroupSearchResultList { get; private set; }
@@ -40,6 +43,7 @@ namespace Liquid.ViewModel
 
 		public int LipidTargetLoadProgress { get; private set; }
 		public int GlobalWorkflowProgress { get; private set; }
+        public int FragmentSearchProgress { get; private set; }
         public int ExportProgress { get; private set; }
         public bool IsIms { get; private set; }
 
@@ -49,8 +53,10 @@ namespace Liquid.ViewModel
 			this.FragmentationModeList = new List<FragmentationMode> { FragmentationMode.Positive, FragmentationMode.Negative };
 			//this.AdductList = new List<Adduct> { Adduct.Hydrogen, Adduct.Dihydrogen, Adduct.Ammonium, Adduct.Acetate };
 		    this.AdductList = Enum.GetValues(typeof (Adduct)).Cast<Adduct>().ToList();
+            this.IonTypeList = new List<string>{"Primary Ion", "Neutral Loss"};
 			this.SpectrumSearchResultList = new List<SpectrumSearchResult>();
 			this.LipidTargetList = new List<Lipid>();
+		    this.FragmentSearchList = new ObservableCollection<MsMsSearchUnit>();
             this.LipidIdentifications = new List<Tuple<string, int>>();
 			this.ScoreModel = ScoreModelSerialization.Deserialize("DefaultScoringModel.xml");
 
@@ -202,6 +208,22 @@ namespace Liquid.ViewModel
 			progress.Report(0);
 		}
 
+	    public void AddFragment(double mz, string ionType)
+	    {
+            MsMsSearchUnit newFragment = new MsMsSearchUnit(mz, ionType);
+            FragmentSearchList.Add(newFragment);
+            OnPropertyChanged("FragmentSearchList");
+            
+            //IProgress<int> progress = new Progress<int>(ReportFragmentSearchProgress);
+            //progress.Report(0);
+	    }
+
+	    public void RemoveFragment(IList<MsMsSearchUnit> items)
+	    {
+	        foreach(var i in items)FragmentSearchList.Remove(i);
+	    }
+
+
 	    public void SelectLipidIdentifications(List<LipidGroupSearchResult> lipidGroupSearchResultList)
 	    {
 	        foreach (var id in this.LipidIdentifications)
@@ -252,6 +274,12 @@ namespace Liquid.ViewModel
 			this.GlobalWorkflowProgress = value;
 			OnPropertyChanged("GlobalWorkflowProgress");
 		}
+
+        private void ReportFragmentSearchProgress(int value)
+        {
+            this.FragmentSearchProgress = value;
+            OnPropertyChanged("FragmentSearchProgress");
+        }
 
 	    private void ReportExportProgress(int value)
 	    {
