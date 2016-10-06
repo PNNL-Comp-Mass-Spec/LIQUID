@@ -8,7 +8,7 @@ namespace LiquidBackend.Domain
 {
 	public class MsMsSearchUnit
 	{
-		public double Mz { get; private set; }
+		public double Mz { get; set; }
 		public string Description { get; private set; }
 		public AcylChain AcylChain { get; private set; }
 		public bool IsDiagnostic { get; private set; }

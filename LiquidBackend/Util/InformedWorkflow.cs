@@ -111,5 +111,65 @@ namespace LiquidBackend.Util
 
 			return spectrumSearchResultList;
 		}
+
+        public static List<SpectrumSearchResult> RunFragmentWorkflow(ICollection<MsMsSearchUnit> fragments, LcMsRun lcmsRun, double hcdMassError, double cidMassError, int minMatches)
+        {
+            IEnumerable<MsMsSearchUnit> PISearchUnits = fragments.Where(x => x.Description.Equals("Primary Ion"));
+            Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
+            Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
+
+            // Find all MS/MS scans            
+            var msmsScanNumers = lcmsRun.GetScanNumbers(2);
+            List<SpectrumSearchResult> spectrumSearchResultList = new List<SpectrumSearchResult>();
+
+            foreach(int scan in msmsScanNumers)
+            {
+                // Lookup the MS/MS Spectrum
+                ProductSpectrum MsMsSpectrum = lcmsRun.GetSpectrum(scan) as ProductSpectrum;
+                if (MsMsSpectrum == null) continue;
+
+                double msmsPrecursorMz = MsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
+                ActivationMethod activationType = MsMsSpectrum.ActivationMethod;
+                int msmsPrecursorScan = lcmsRun.GetPrecursorScanNum(scan);
+
+                Xic xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(msmsPrecursorMz, hcdTolerance);
+
+                // Bogus data
+                if (xic.GetApexScanNum() < 0) continue;
+
+                Spectrum precursorSpectrum = lcmsRun.GetSpectrum(msmsPrecursorScan);
+
+                // Get all matching peaks
+                List<MsMsSearchResult> SearchResultList = new List<MsMsSearchResult>();
+                IEnumerable<MsMsSearchUnit> NLSearchUnits = fragments.Where(x=> x.Description.Equals("Neutral Loss")).Select(x => {x.Mz = (msmsPrecursorMz - x.Mz); return x;});
+                IEnumerable<MsMsSearchUnit> MsMsSearchUnits = PISearchUnits.Concat(NLSearchUnits);
+                SpectrumSearchResult spectrumSearchResult = null;
+
+                if (activationType == ActivationMethod.HCD)
+                {
+                    SearchResultList = (from msMsSearchUnit in MsMsSearchUnits
+                        let peak = MsMsSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance)
+                        select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
+                    spectrumSearchResult = new SpectrumSearchResult(MsMsSpectrum, null, precursorSpectrum, SearchResultList, new List<MsMsSearchResult>(), xic, lcmsRun)
+                    {
+                        PrecursorTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm)
+                    };
+                }
+                else if (activationType == ActivationMethod.CID)
+                {
+                    SearchResultList = (from msMsSearchUnit in MsMsSearchUnits
+                                          let peak = MsMsSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance)
+                                          select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
+                    spectrumSearchResult = new SpectrumSearchResult(null, MsMsSpectrum, precursorSpectrum, new List<MsMsSearchResult>(), SearchResultList, xic, lcmsRun)
+                    {
+                        PrecursorTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm)
+                    };
+                }
+                if (SearchResultList.Count(x => x.ObservedPeak != null) < minMatches) continue;
+                spectrumSearchResultList.Add(spectrumSearchResult);
+            }
+
+            return spectrumSearchResultList;
+        }
 	}
 }

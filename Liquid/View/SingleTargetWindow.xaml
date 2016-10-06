@@ -107,7 +107,7 @@
                             <DataGrid x:Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="437" Width="262" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                 <DataGrid.Columns>
                                     <DataGridCheckBoxColumn Binding="{Binding ShouldExport, Mode=TwoWay}" />
-                                    <DataGridTextColumn Header="Scan" Binding="{Binding SpectrumSearchResult.HcdSpectrum.ScanNum, Mode=OneWay}" Width="40" />
+                                    <DataGridTextColumn Header="Scan" Binding="{Binding DisplayScanNum, Mode=OneWay}" Width="40" />
                                     <DataGridTextColumn Header="Lipid" Binding="{Binding LipidTarget.StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="133" />
                                     <!--DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=SpectrumSearchResult.NumMatchingMsMsPeaks, StringFormat=0}" Width="60" /-->
                                     <DataGridTextColumn Header="Score" Binding="{Binding Score, StringFormat=0.00}" Width="50" />
@@ -118,12 +118,16 @@
                         </StackPanel>
                         <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=FragmentSearchRibbonTab}">
                             <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
+                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="IonTypeTextBlock" Text="Ion Type:" VerticalAlignment="Top" Width="100" />
+                                <ComboBox ItemsSource="{Binding IonTypeList}" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="IonTypeComboBox" VerticalAlignment="Top" Width="110" />
+                            </DockPanel>
+                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
                                 <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="FragmentMassTextBlock" Text="Fragment Mass:" VerticalAlignment="Top" Width="100" />
                                 <TextBox Text="" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="FragmentMassTextBox" VerticalAlignment="Top" Width="110" />
                             </DockPanel>
                             <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="IonTypeTextBlock" Text="Ion Type:" VerticalAlignment="Top" Width="100" />
-                                <ComboBox ItemsSource="{Binding IonTypeList}" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="IonTypeComboBox" VerticalAlignment="Top" Width="110" />
+                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="MinimumMatchesTextBlock" Text="Min. # Matches:" VerticalAlignment="Top" Width="100" />
+                                <TextBox Text="1" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="MinimumMatchesTextBox" VerticalAlignment="Top" Width="110" />
                             </DockPanel>
                             <DockPanel>
                                 <Button Content="Add Fragment" Click="AddFragmentButton_OnClick" Height="23" HorizontalAlignment="Left" x:Name="AddFragmentButton" VerticalAlignment="Top" Width="100" Margin="5,5,0,0" IsEnabled="True" />
@@ -140,6 +144,15 @@
                             </DockPanel>
                             <DockPanel>
                                 <Button Content="Search For Target!" Click="SearchForFragmentsButtonClick" Height="23" HorizontalAlignment="Center" x:Name="SearchForFragmentsButton" VerticalAlignment="Top" Width="120" Margin="0,5,0,0" DockPanel.Dock="Right" IsEnabled="False" />
+                            </DockPanel>
+                            <DockPanel>
+                                <DataGrid x:Name="FragmentSearchResultsDataGrid" ItemsSource="{Binding SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="437" Width="262" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                                    <DataGrid.Columns>
+                                        <DataGridCheckBoxColumn Binding="{Binding ShouldExport, Mode=TwoWay}" />
+                                        <DataGridTextColumn Header="Scan" Binding="{Binding DisplayScanNum, Mode=OneWay}" Width="50" />
+                                        <DataGridTextColumn Header="M/Z" Binding="{Binding StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="*" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>

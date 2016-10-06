@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -63,6 +64,15 @@ namespace LiquidBackend.Util
 
 			return new LipidTarget(commonName, lipidClass, fragmentationMode, composition, acylChainList, adduct, charge);
 		}
+
+        public static LipidTarget CreateLipidTarget(double mz, FragmentationMode fragmentationMode, Adduct adduct)
+        {
+            Composition compositionOfAdduct = GetCompositionOfAdduct(adduct);
+            int charge = IonCharge(adduct);
+
+            return new LipidTarget(mz.ToString(), LipidClass.Unknown, fragmentationMode, null, null, adduct, charge);
+        }
+
 
 		public static Composition GetCompositionOfAdduct(Adduct adduct)
 		{

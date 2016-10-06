@@ -47,6 +47,7 @@ namespace LiquidBackend.Domain
         MIP2C,
         anandamide,
         carnitine,
-        FAHFA
+        FAHFA,
+        Unknown
 	}
 }

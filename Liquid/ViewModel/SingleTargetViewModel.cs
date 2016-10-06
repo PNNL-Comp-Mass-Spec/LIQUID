@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -39,6 +40,8 @@ namespace Liquid.ViewModel
         public List<Tuple<string, int>> LipidIdentifications { get; private set; } 
 		public List<LipidGroupSearchResult> LipidGroupSearchResultList { get; private set; }
 		public ScoreModel ScoreModel { get; private set; }
+        public Adduct TargetAdduct { get; set; }
+        public FragmentationMode TargetFragmentationMode { get; set; }
          
 
 		public int LipidTargetLoadProgress { get; private set; }
@@ -101,10 +104,20 @@ namespace Liquid.ViewModel
 			}
 		}
 
+	    public void OnUpdateTargetAdductFragmentation(Adduct adduct, FragmentationMode fragmode)
+	    {
+	        this.TargetAdduct = adduct;
+	        this.TargetFragmentationMode = fragmode;
+            OnPropertyChanged("TargetAdduct");
+            OnPropertyChanged("TargetFragmentationMode");
+	    }
+
 		public void OnSpectrumSearchResultChange(SpectrumSearchResult spectrumSearchResult)
 		{
 			this.CurrentSpectrumSearchResult = spectrumSearchResult;
+            this.CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum ?? spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, this.TargetFragmentationMode, this.TargetAdduct);
 			OnPropertyChanged("CurrentSpectrumSearchResult");
+            OnPropertyChanged("CurrentLipidTarget");
 		}
 
 		public void LoadMoreLipidTargets(string fileLocation)
@@ -221,6 +234,25 @@ namespace Liquid.ViewModel
 	    public void RemoveFragment(IList<MsMsSearchUnit> items)
 	    {
 	        foreach(var i in items)FragmentSearchList.Remove(i);
+	    }
+
+        public void SearchForFragments(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude, int minMatches, Adduct adduct)
+        {
+            this.SpectrumSearchResultList = InformedWorkflow.RunFragmentWorkflow(FragmentSearchList, this.LcMsRun, hcdError, cidError, minMatches);
+            OnPropertyChanged("SpectrumSearchResultList");
+
+	        if (this.SpectrumSearchResultList.Any())
+	        {
+	            SpectrumSearchResult spectrumSearchResult =
+	                this.SpectrumSearchResultList.OrderByDescending(x => x.ApexScanNum).First();
+                this.CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum??spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, fragmentationMode, adduct);
+	            OnSpectrumSearchResultChange(spectrumSearchResult);
+                
+	        }
+	        else
+	        {
+	            this.CurrentSpectrumSearchResult = null;
+	        }
 	    }
 
 

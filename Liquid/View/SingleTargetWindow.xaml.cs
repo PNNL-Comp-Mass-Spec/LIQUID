@@ -131,12 +131,15 @@ namespace Liquid.View
 				if (selectedItem != null && ReferenceEquals(selectedItem.GetType(), typeof(SpectrumSearchResult)))
 				{
 					SpectrumSearchResult spectrumSearchResult = (SpectrumSearchResult)selectedItem;
-					this.SingleTargetViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
-					
+                    this.SingleTargetViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+				    this.MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
+
+                    this.MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
 					this.MsMsInfoUserControl.MsMsInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
 					this.MsMsInfoUserControl.Visibility = Visibility.Visible;
 
 					this.MsOneInfoUserControl.MsOneInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+                    
 					this.MsOneInfoUserControl.Visibility = Visibility.Visible;
 				}
 			}
@@ -270,6 +273,28 @@ namespace Liquid.View
 			}
 		}
 
+        private void MsMsSearchResultSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            var dataGrid = sender as DataGrid;
+            if (dataGrid != null)
+            {
+                var selectedItem = dataGrid.SelectedItem;
+
+                if (selectedItem != null && ReferenceEquals(selectedItem.GetType(), typeof(SpectrumSearchResult)))
+                {
+                    SpectrumSearchResult spectrumSearchResult = (SpectrumSearchResult)selectedItem;
+
+                    this.SingleTargetViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+
+                    this.MsMsInfoUserControl.MsMsInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+                    this.MsMsInfoUserControl.Visibility = Visibility.Visible;
+
+                    this.MsOneInfoUserControl.MsOneInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+                    this.MsOneInfoUserControl.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
 		private async void ExportGlobalResultsButtonClick(object sender, RoutedEventArgs e)
 		{
 			var dialog = new VistaSaveFileDialog();
@@ -341,8 +366,32 @@ namespace Liquid.View
 
 	    private void SearchForFragmentsButtonClick(object sender, RoutedEventArgs e)
 	    {
-	        //TODO: Search for current fragments
-	        throw new NotImplementedException();
+            FragmentationMode fragmentationMode = (FragmentationMode) this.FragmentationModeComboBox.SelectedItem;
+            double hcdMassError = double.Parse(this.HcdErrorTextBox.Text);
+            double cidMassError = double.Parse(this.CidErrorTextBox.Text);
+            int resultsPerScan = int.Parse(this.ResultsPerScanTextBox.Text);
+	        int minMatches = int.Parse(this.MinimumMatchesTextBox.Text);
+	        Adduct adduct = (Adduct) this.AdductComboBox.SelectedItem;
+
+            this.SingleTargetViewModel.OnUpdateTargetAdductFragmentation(adduct, fragmentationMode);
+            this.SingleTargetViewModel.SearchForFragments(hcdMassError, cidMassError,fragmentationMode,resultsPerScan, minMatches, adduct);
+
+            this.MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
+            this.MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
+
+            this.TargetMzTextBlock.Visibility = Visibility.Visible;
+            this.EmpiricalFormulaTextBlock.Visibility = Visibility.Visible;
+            this.EmpiricalFormulaRichTextBlock.Visibility = Visibility.Visible;
+            this.NumberOfResultsTextBlock.Visibility = Visibility.Visible;
+	        this.FragmentSearchResultsDataGrid.Visibility = Visibility.Visible;
+
+            if (this.SingleTargetViewModel.CurrentSpectrumSearchResult != null)
+            {
+                var dataGrid = this.FragmentSearchResultsDataGrid;
+
+                dataGrid.SelectedItem = this.SingleTargetViewModel.CurrentSpectrumSearchResult;
+                dataGrid.ScrollIntoView(this.SingleTargetViewModel.CurrentSpectrumSearchResult);
+            }
 	    }
 
 	    private void RemoveFragmentButton_OnClick(object sender, RoutedEventArgs e)

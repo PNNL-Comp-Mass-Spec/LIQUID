@@ -72,7 +72,7 @@ namespace Liquid.ViewModel
 
 			this.UpdatePpmError();
 
-            this.UpdateFitScores();
+            if(this.CurrentLipidTarget.LipidClass != LipidClass.Unknown) this.UpdateFitScores();
 
 			this.StartScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
 			this.StopScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;

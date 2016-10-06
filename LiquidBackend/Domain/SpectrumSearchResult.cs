@@ -28,7 +28,20 @@ namespace LiquidBackend.Domain
 
 		public int ApexScanNum { get; private set; }
 
-		public double ApexIntensity { get; private set; }
+	    public string StrippedDisplay
+	    {
+	        get { return HcdSpectrum != null? HcdSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString(): CidSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString(); }
+	    }
+
+	    public int DisplayScanNum
+	    {
+	        get 
+            {
+	            return HcdSpectrum != null ? HcdSpectrum.ScanNum : CidSpectrum.ScanNum;
+	        }
+	    }
+
+	    public double ApexIntensity { get; private set; }
 
 		//Implemented by grant. Used as a way to pass the area under the curve selected by the user to the exported results.
 		public double? PeakArea { get; set; }
