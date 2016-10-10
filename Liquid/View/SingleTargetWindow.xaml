@@ -122,6 +122,10 @@
                                 <ComboBox ItemsSource="{Binding IonTypeList}" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="IonTypeComboBox" VerticalAlignment="Top" Width="110" />
                             </DockPanel>
                             <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
+                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="AdductTextBlock2" Text="Adduct:" VerticalAlignment="Top" Width="100" />
+                                <ComboBox ItemsSource="{Binding AdductList}" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="AdductComboBox2" VerticalAlignment="Top" Width="110" />
+                            </DockPanel>
+                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
                                 <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="FragmentMassTextBlock" Text="Fragment Mass:" VerticalAlignment="Top" Width="100" />
                                 <TextBox Text="" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="FragmentMassTextBox" VerticalAlignment="Top" Width="110" />
                             </DockPanel>
@@ -135,7 +139,7 @@
                                 <!--<ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="FragmentSearchProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding FragmentSearchProgress, Mode=OneWay}" /> -->
                             </DockPanel>
                             <DockPanel>
-                                <DataGrid Name="FragmentSearchListDataGrid" ItemsSource="{Binding Path=FragmentSearchList, Mode=OneWay}" Height="Auto" MaxHeight="150" Width="Auto" SelectionChanged="FragmentSelectionChange" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Extended" Margin="5,5,0,0" HorizontalAlignment="Left">
+                                <DataGrid Name="FragmentSearchListDataGrid" ItemsSource="{Binding Path=FragmentSearchList, Mode=OneWay}" Height="Auto" MaxHeight="120" Width="Auto" SelectionChanged="FragmentSelectionChange" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Extended" Margin="5,5,0,0" HorizontalAlignment="Left">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="M/Z" Binding="{Binding Path=Mz, Mode=OneWay}" Width="100" />
                                         <DataGridTextColumn Header="Ion Type" Binding="{Binding Path=Description, Mode=OneWay}" Width="112" />
@@ -143,16 +147,21 @@
                                 </DataGrid>
                             </DockPanel>
                             <DockPanel>
-                                <Button Content="Search For Target!" Click="SearchForFragmentsButtonClick" Height="23" HorizontalAlignment="Center" x:Name="SearchForFragmentsButton" VerticalAlignment="Top" Width="120" Margin="0,5,0,0" DockPanel.Dock="Right" IsEnabled="False" />
+                                <Button Content="Search For Target!" Click="SearchForFragmentsButtonClick" Height="23" HorizontalAlignment="Center" x:Name="SearchForFragmentsButton" VerticalAlignment="Top" Width="110" Margin="5,5,0,0" IsEnabled="False" />
+                                <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="FragmentWorkflowProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding FragmentSearchProgress, Mode=OneWay}"/>
                             </DockPanel>
                             <DockPanel>
-                                <DataGrid x:Name="FragmentSearchResultsDataGrid" ItemsSource="{Binding SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="437" Width="262" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                                <DataGrid x:Name="FragmentSearchResultsDataGrid" ItemsSource="{Binding SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="350" Width="262" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                     <DataGrid.Columns>
                                         <DataGridCheckBoxColumn Binding="{Binding ShouldExport, Mode=TwoWay}" />
                                         <DataGridTextColumn Header="Scan" Binding="{Binding DisplayScanNum, Mode=OneWay}" Width="50" />
-                                        <DataGridTextColumn Header="M/Z" Binding="{Binding StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="*" />
+                                        <DataGridTextColumn Header="M/Z" Binding="{Binding StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="80" />
+                                        <DataGridTextColumn Header="# Matched" Binding="{Binding NumObservedPeaks, Mode=OneWay}" Width="*"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
+                            </DockPanel>
+                            <DockPanel>
+                                <Button Content="Export Selected Results" Click="ExportFragmentResultsButtonClick" Height="23" HorizontalAlignment="Center" x:Name="ExportFragmentResultsButton" VerticalAlignment="Top" Width="140" Margin="0,5,0,0" />
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>

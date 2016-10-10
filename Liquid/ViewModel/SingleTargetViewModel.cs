@@ -115,10 +115,17 @@ namespace Liquid.ViewModel
 		public void OnSpectrumSearchResultChange(SpectrumSearchResult spectrumSearchResult)
 		{
 			this.CurrentSpectrumSearchResult = spectrumSearchResult;
-            this.CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum ?? spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, this.TargetFragmentationMode, this.TargetAdduct);
 			OnPropertyChanged("CurrentSpectrumSearchResult");
             OnPropertyChanged("CurrentLipidTarget");
 		}
+
+        public void OnMsMsSearchResultChange(SpectrumSearchResult spectrumSearchResult)
+        {
+            this.CurrentSpectrumSearchResult = spectrumSearchResult;
+            this.CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum ?? spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, this.TargetFragmentationMode, this.TargetAdduct);
+            OnPropertyChanged("CurrentSpectrumSearchResult");
+            OnPropertyChanged("CurrentLipidTarget");
+        }
 
 		public void LoadMoreLipidTargets(string fileLocation)
 		{
@@ -238,15 +245,16 @@ namespace Liquid.ViewModel
 
         public void SearchForFragments(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude, int minMatches, Adduct adduct)
         {
-            this.SpectrumSearchResultList = InformedWorkflow.RunFragmentWorkflow(FragmentSearchList, this.LcMsRun, hcdError, cidError, minMatches);
+            IProgress<int> progress = new Progress<int>(ReportFragmentSearchProgress);
+            this.SpectrumSearchResultList = InformedWorkflow.RunFragmentWorkflow(FragmentSearchList, this.LcMsRun, hcdError, cidError, minMatches, progress);
             OnPropertyChanged("SpectrumSearchResultList");
-
+            progress.Report(0);
 	        if (this.SpectrumSearchResultList.Any())
 	        {
 	            SpectrumSearchResult spectrumSearchResult =
 	                this.SpectrumSearchResultList.OrderByDescending(x => x.ApexScanNum).First();
                 this.CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum??spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, fragmentationMode, adduct);
-	            OnSpectrumSearchResultChange(spectrumSearchResult);
+	            OnMsMsSearchResultChange(spectrumSearchResult);
                 
 	        }
 	        else
@@ -292,6 +300,14 @@ namespace Liquid.ViewModel
 	    {
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
 	        LipidGroupSearchResultWriter.OutputTargetInfo(LipidTargetList, fileLocation, RawFileName, progress);
+            progress.Report(0);
+	    }
+
+	    public void OnWriteFragmentInfo(string fileLocation)
+	    {
+            IProgress<int> progress = new Progress<int>(ReportFragmentSearchProgress);
+	        var resultsToExport = SpectrumSearchResultList.Where(x => x.ShouldExport).ToList();
+            LipidGroupSearchResultWriter.OutputFragmentInfo(resultsToExport, TargetAdduct, FragmentSearchList, LcMsRun, fileLocation, RawFileName, progress);
             progress.Report(0);
 	    }
 

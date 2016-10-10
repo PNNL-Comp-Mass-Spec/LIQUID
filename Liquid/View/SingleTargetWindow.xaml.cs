@@ -39,6 +39,7 @@ namespace Liquid.View
 
 			this.FragmentationModeComboBox.SelectedValue = FragmentationMode.Positive;
 			this.AdductComboBox.SelectedValue = Adduct.Hydrogen;
+            this.AdductComboBox2.SelectedValue = Adduct.Hydrogen;
 		    this.IonTypeComboBox.SelectedIndex = 0; //"Primary Ion"
 			this.TargetMzTextBlock.Visibility = Visibility.Collapsed;
 			this.EmpiricalFormulaTextBlock.Visibility = Visibility.Collapsed;
@@ -50,6 +51,8 @@ namespace Liquid.View
 			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
 			this.ExportGlobalResultsButton.Visibility = Visibility.Hidden;
 			this.ExportAllGlobalResultsButton.Visibility = Visibility.Hidden;
+		    this.ExportFragmentResultsButton.Visibility = Visibility.Hidden;
+		    this.FragmentSearchResultsDataGrid.Visibility = Visibility.Hidden;
 		}
 
 		private async void RawFileButtonClick(object sender, RoutedEventArgs e)
@@ -104,13 +107,14 @@ namespace Liquid.View
 			this.MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
 
 			// Select the best spectrum search result
+            /*
 			if (this.SingleTargetViewModel.CurrentSpectrumSearchResult != null)
 			{
 				var dataGrid = this.SpectrumSearchResultsDataGrid;
 
 				dataGrid.SelectedItem = this.SingleTargetViewModel.CurrentSpectrumSearchResult;
 				dataGrid.ScrollIntoView(this.SingleTargetViewModel.CurrentSpectrumSearchResult);
-			}
+			}*/
 
 			UpdateEmpiricalFormula(this.SingleTargetViewModel.CurrentLipidTarget.EmpiricalFormula);
 
@@ -131,7 +135,7 @@ namespace Liquid.View
 				if (selectedItem != null && ReferenceEquals(selectedItem.GetType(), typeof(SpectrumSearchResult)))
 				{
 					SpectrumSearchResult spectrumSearchResult = (SpectrumSearchResult)selectedItem;
-                    this.SingleTargetViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+                    this.SingleTargetViewModel.OnMsMsSearchResultChange(spectrumSearchResult);
 				    this.MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
 
                     this.MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
@@ -364,17 +368,17 @@ namespace Liquid.View
 
 	    }
 
-	    private void SearchForFragmentsButtonClick(object sender, RoutedEventArgs e)
+	    private async void SearchForFragmentsButtonClick(object sender, RoutedEventArgs e)
 	    {
             FragmentationMode fragmentationMode = (FragmentationMode) this.FragmentationModeComboBox.SelectedItem;
             double hcdMassError = double.Parse(this.HcdErrorTextBox.Text);
             double cidMassError = double.Parse(this.CidErrorTextBox.Text);
             int resultsPerScan = int.Parse(this.ResultsPerScanTextBox.Text);
 	        int minMatches = int.Parse(this.MinimumMatchesTextBox.Text);
-	        Adduct adduct = (Adduct) this.AdductComboBox.SelectedItem;
+	        Adduct adduct = (Adduct) this.AdductComboBox2.SelectedItem;
 
             this.SingleTargetViewModel.OnUpdateTargetAdductFragmentation(adduct, fragmentationMode);
-            this.SingleTargetViewModel.SearchForFragments(hcdMassError, cidMassError,fragmentationMode,resultsPerScan, minMatches, adduct);
+            await Task.Run(() =>this.SingleTargetViewModel.SearchForFragments(hcdMassError, cidMassError,fragmentationMode,resultsPerScan, minMatches, adduct));
 
             this.MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
             this.MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
@@ -384,7 +388,8 @@ namespace Liquid.View
             this.EmpiricalFormulaRichTextBlock.Visibility = Visibility.Visible;
             this.NumberOfResultsTextBlock.Visibility = Visibility.Visible;
 	        this.FragmentSearchResultsDataGrid.Visibility = Visibility.Visible;
-
+            this.ExportFragmentResultsButton.Visibility = Visibility.Visible;
+            
             if (this.SingleTargetViewModel.CurrentSpectrumSearchResult != null)
             {
                 var dataGrid = this.FragmentSearchResultsDataGrid;
@@ -411,6 +416,23 @@ namespace Liquid.View
 	    private void FragmentSelectionChange(object sender, SelectionChangedEventArgs e)
 	    {
 	        this.RemoveFragmentButton.IsEnabled = this.FragmentSearchListDataGrid.SelectedItem != null;
+	    }
+
+	    private void ExportFragmentResultsButtonClick(object sender, RoutedEventArgs e)
+	    {
+            var dialog = new VistaSaveFileDialog();
+
+            dialog.AddExtension = true;
+            dialog.OverwritePrompt = true;
+            dialog.DefaultExt = ".tsv";
+            dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp";
+
+            DialogResult result = dialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileLocation = dialog.FileName;
+                this.SingleTargetViewModel.OnWriteFragmentInfo(fileLocation);
+            }
 	    }
 	}
 }

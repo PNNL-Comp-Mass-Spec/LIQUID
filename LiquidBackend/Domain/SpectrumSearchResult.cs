@@ -20,6 +20,7 @@ namespace LiquidBackend.Domain
 		public Xic Xic { get; private set; }
 		public LcMsRun LcMsRun { get; private set; }
         public double RunLength { get; private set; }
+        public bool ShouldExport { get; set; }
 
 		public int NumMatchingMsMsPeaks
 		{
@@ -55,6 +56,14 @@ namespace LiquidBackend.Domain
 			    return RetentionTime/RunLength;
 		    }
 		}
+
+	    public int NumObservedPeaks
+	    {
+	        get
+	        {
+	            return this.HcdSearchResultList.Count(x => x.ObservedPeak != null) + this.CidSearchResultList.Count(x => x.ObservedPeak != null);
+	        }
+	    } 
 
 		public double Score
 		{

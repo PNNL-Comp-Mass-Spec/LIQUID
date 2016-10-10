@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InformedProteomics.Backend.MassSpecData;
 using LiquidBackend.Domain;
 using LiquidBackend.Util;
+using MathNet.Numerics.Interpolation;
 
 namespace LiquidBackend.IO
 {
@@ -390,5 +393,59 @@ namespace LiquidBackend.IO
 				}
 			}
 		}
+
+        public static void OutputFragmentInfo(List<SpectrumSearchResult> SearchResultsList, Adduct targetAdduct, ObservableCollection<MsMsSearchUnit> FragmentSearchList, LcMsRun lcmsRun, string fileLocation, string rawFileName, IProgress<int> progress, bool writeHeader = true)
+	    {
+
+	        using (TextWriter textWriter = new StreamWriter(fileLocation, true))
+	        {
+	            if (writeHeader)
+	            {
+	                textWriter.WriteLine("Raw Data File\tAdduct\tObserved m/z\tApex RT\tPrecursor RT\tApex NET\tIntensity\tMS/MS Scan\tPrecursor Scan\tApex Scan\tQuery Ions\tCID Matched Ions\tHCD Matched Ions");
+	            }
+
+	            foreach (var result in SearchResultsList)
+	            {
+	                var hcd = result.HcdSpectrum;
+	                var cid = result.CidSpectrum;
+                    var apex = result.ApexScanNum;
+	                var msmsScan = hcd != null ? hcd.ScanNum : cid.ScanNum;
+	                var precursorScan = lcmsRun.GetPrecursorScanNum(msmsScan);
+	                var apexRt = result.RetentionTime;
+	                var precRT = lcmsRun.GetElutionTime(precursorScan);
+	                var net = result.NormalizedElutionTime;
+	                var mz = hcd == null
+	                    ? cid.IsolationWindow.IsolationWindowTargetMz
+	                    : hcd.IsolationWindow.IsolationWindowTargetMz;
+
+	                var intensity = result.ApexIntensity;
+	                //var query = FragmentSearchList.Select(x => x.Mz.ToString()).Aggregate((i, j) => i + ";" + j);
+	                //var hcdIons = result.HcdSearchResultList.Where(x => x.ObservedPeak != null).Select(x => x.ObservedPeak).Select(y => y.Mz.ToString()).Aggregate((i, j) => i + ";" + j);
+                    //var cidIons = result.CidSearchResultList.Where(x => x.ObservedPeak != null).Select(x => x.ObservedPeak).Select(y => y.Mz.ToString()).Aggregate((i, j) => i + ";" + j);
+                    var query = FragmentSearchList.Aggregate("",(i, j) => i + (j.Mz + "("+ j.Description + ")" + ";"));
+                    var hcdIons = result.HcdSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
+                    var cidIons = result.CidSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
+
+	                
+
+                    StringBuilder line = new StringBuilder();
+	                line.Append(rawFileName + "\t");
+                    line.Append(targetAdduct + "\t");
+                    line.Append(mz + "\t");
+                    line.Append(apexRt + "\t");
+                    line.Append(precRT + "\t");
+                    line.Append(net + "\t");
+                    line.Append(intensity + "\t");
+                    line.Append(msmsScan + "\t");
+                    line.Append(precursorScan + "\t");
+                    line.Append(apex + "\t");
+                    line.Append(query + "\t");
+                    line.Append(hcdIons + "\t");
+                    line.Append(cidIons + "\t");
+	                textWriter.WriteLine(line.ToString());
+	            }
+	        }
+
+	    }
 	}
 }
