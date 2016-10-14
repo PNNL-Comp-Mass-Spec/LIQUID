@@ -92,6 +92,14 @@ namespace LiquidBackend.Util
 			{
 				return new Composition(2, 3, 0, 2, 0);
 			}
+		    if (adduct == Adduct.Sodium)
+		    {
+		        return new Composition(0,0,0,0,0,0,new Tuple<Atom, short>(Atom.Get("Na"),1));
+		    }
+            if (adduct == Adduct.Potassium)
+            {
+                return new Composition(0, 0, 0, 0, 0, 0, new Tuple<Atom, short>(Atom.Get("K"), 1));
+            }
 
 			throw new SystemException("Unrecognized Adduct: " + adduct);
 		}
@@ -1946,7 +1954,7 @@ namespace LiquidBackend.Util
 
 	    public static int IonCharge(Adduct adduct)
 	    {
-	        if (adduct == Adduct.Acetate || adduct == Adduct.Ammonium || adduct == Adduct.Hydrogen)
+	        if (adduct == Adduct.Acetate || adduct == Adduct.Ammonium || adduct == Adduct.Hydrogen || adduct == Adduct.Sodium || adduct == Adduct.Potassium)
 	        {
 	            return 1;
 	        }

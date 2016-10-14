@@ -49,6 +49,7 @@ namespace Liquid.ViewModel
         public int FragmentSearchProgress { get; private set; }
         public int ExportProgress { get; private set; }
         public bool IsIms { get; private set; }
+        public bool AverageSpec { get; set; }
 
 		public SingleTargetViewModel()
 		{
@@ -62,6 +63,7 @@ namespace Liquid.ViewModel
 		    this.FragmentSearchList = new ObservableCollection<MsMsSearchUnit>();
             this.LipidIdentifications = new List<Tuple<string, int>>();
 			this.ScoreModel = ScoreModelSerialization.Deserialize("DefaultScoringModel.xml");
+		    this.AverageSpec = false;
 
 		}
 
@@ -196,22 +198,24 @@ namespace Liquid.ViewModel
 
 			// Run global analysis
 			this.LipidGroupSearchResultList = new List<LipidGroupSearchResult>();
-            
+
+		    IEnumerable<IGrouping<Double, LipidGroupSearchResult>> resultsGrouped = null;
             var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
-		    if (IsIms)
+		    if (AverageSpec)
 		    {
-                //TODO: IMS WORKFLOW
+		        lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, this.LcMsRun, hcdError, cidError, this.ScoreModel, progress);
+                resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? x.SpectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz : x.SpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz);
 		    }
-		    else
-		    {
-		        lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, hcdError,
-		            cidError, this.ScoreModel, progress);
-		    }
-			// Group results of same scan together
-			var resultsGroupedByScan = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? x.SpectrumSearchResult.HcdSpectrum.ScanNum : x.SpectrumSearchResult.CidSpectrum.ScanNum);
+		    else 
+            {
+                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, hcdError, cidError, this.ScoreModel, progress);
+                resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? (Double)x.SpectrumSearchResult.HcdSpectrum.ScanNum : (Double)x.SpectrumSearchResult.CidSpectrum.ScanNum);
+            }
+
+            // Group results of same scan together
 
 			// Grab the result(s) with the best score
-			foreach (var group in resultsGroupedByScan)
+			foreach (var group in resultsGrouped)
 			{
 				var groupOrdered = group.OrderByDescending(x => x.Score).ToList();
 
@@ -221,11 +225,9 @@ namespace Liquid.ViewModel
 					this.LipidGroupSearchResultList.Add(resultToAdd);
 				}
 			}
-
 			OnPropertyChanged("LipidGroupSearchResultList");
-
-			// Reset the progress bar back to 0
 			progress.Report(0);
+            
 		}
 
 	    public void AddFragment(double mz, string ionType)

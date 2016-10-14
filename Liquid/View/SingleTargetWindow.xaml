@@ -95,7 +95,11 @@
                                 <Button Content="Load Lipid Targets" Click="LoadTargetsFileButtonClick" Height="23" HorizontalAlignment="Left" x:Name="LoadTargetsButton" VerticalAlignment="Top" Width="110" Margin="5,0,0,0" />
                                 <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="LipidTargetsProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding LipidTargetLoadProgress, Mode=OneWay}" />
                             </DockPanel>
-                            <TextBlock x:Name="NumberOfTargetsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding LipidTargetList.Count, StringFormat='  # of Targets: \{0\}'}" Margin="0,5,0,0" DockPanel.Dock="Left" />
+                            <DockPanel>
+                                <CheckBox Margin="5,5,5,0" IsChecked="{Binding Path=AverageSpec, Mode=TwoWay}"></CheckBox>
+                                <TextBlock x:Name="AverageSpectraBlock" Width="Auto" Text="Average Spectra" Margin="0,3,10,0"/>
+                                <TextBlock x:Name="NumberOfTargetsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding LipidTargetList.Count, StringFormat='  # of Targets: \{0\}'}" Margin="0,5,0,0" DockPanel.Dock="Left" />
+                            </DockPanel>
                             <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
                                 <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="ResultsPerScanTextBlock" Text="Results Per Scan:" VerticalAlignment="Top" Width="105" />
                                 <TextBox Text="1" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="ResultsPerScanTextBox" VerticalAlignment="Top" Width="30" />

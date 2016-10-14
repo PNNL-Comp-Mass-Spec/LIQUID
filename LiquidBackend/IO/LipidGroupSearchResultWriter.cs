@@ -419,15 +419,11 @@ namespace LiquidBackend.IO
 	                    : hcd.IsolationWindow.IsolationWindowTargetMz;
 
 	                var intensity = result.ApexIntensity;
-	                //var query = FragmentSearchList.Select(x => x.Mz.ToString()).Aggregate((i, j) => i + ";" + j);
-	                //var hcdIons = result.HcdSearchResultList.Where(x => x.ObservedPeak != null).Select(x => x.ObservedPeak).Select(y => y.Mz.ToString()).Aggregate((i, j) => i + ";" + j);
-                    //var cidIons = result.CidSearchResultList.Where(x => x.ObservedPeak != null).Select(x => x.ObservedPeak).Select(y => y.Mz.ToString()).Aggregate((i, j) => i + ";" + j);
                     var query = FragmentSearchList.Aggregate("",(i, j) => i + (j.Mz + "("+ j.Description + ")" + ";"));
                     var hcdIons = result.HcdSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
                     var cidIons = result.CidSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
 
-	                
-
+	               
                     StringBuilder line = new StringBuilder();
 	                line.Append(rawFileName + "\t");
                     line.Append(targetAdduct + "\t");

@@ -66,16 +66,21 @@ namespace Liquid.ViewModel
 		{
 			this.CurrentSpectrumSearchResult = spectrumSearchResult;
 			OnPropertyChanged("CurrentSpectrumSearchResult");
+		    if (this.CurrentSpectrumSearchResult.PrecursorSpectrum != null)
+		    {
+		        this.CreateIsotopicProfilePlot();
+		        this.CreateXicPlot();
+		    }
 
-			this.CreateIsotopicProfilePlot();
-			this.CreateXicPlot();
+		    this.UpdatePpmError();
 
-			this.UpdatePpmError();
+		    if (this.CurrentSpectrumSearchResult.PrecursorSpectrum != null)
+		    {
+		        this.UpdateFitScores();
 
-            if(this.CurrentLipidTarget.LipidClass != LipidClass.Unknown) this.UpdateFitScores();
-
-			this.StartScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
-			this.StopScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
+		        this.StartScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
+		        this.StopScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
+		    }
 		}
 
 		/// <summary>
@@ -107,14 +112,23 @@ namespace Liquid.ViewModel
 		private void UpdatePpmError()
 		{
 			var targetMz = this.CurrentLipidTarget.MzRounded;
-			var massSpectrum = this.CurrentSpectrumSearchResult.PrecursorSpectrum.Peaks;
+		    if (this.CurrentSpectrumSearchResult.PrecursorSpectrum != null)
+		    {
+		        var massSpectrum = this.CurrentSpectrumSearchResult.PrecursorSpectrum.Peaks;
+		        var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
+		        this.CurrentMz = closestPeak.Mz;
+		        OnPropertyChanged("CurrentMz");
+		    }
+		    else
+		    {
+		        var isolationMz = this.CurrentSpectrumSearchResult.HcdSpectrum != null
+		            ? this.CurrentSpectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz
+		            : this.CurrentSpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz;
+		        this.CurrentMz = isolationMz;
+                OnPropertyChanged("CurrentMz");
+		    }
 
-			var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
-
-			this.CurrentMz = closestPeak.Mz;
-			OnPropertyChanged("CurrentMz");
-
-			this.CurrentPpmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
+		    this.CurrentPpmError = LipidUtil.PpmError(targetMz, this.CurrentMz);
 			OnPropertyChanged("CurrentPpmError");
 		}
 

@@ -23,7 +23,8 @@ namespace LiquidBackend.Util
 		{
 			LcMsRun run = null;
 			string ext = Path.GetExtension(rawFilePath);
-			switch (ext.ToLower())
+            run = PbfLcMsRun.GetLcMsRun(rawFilePath);
+            /*switch (ext.ToLower())
 			{
 				case ".raw":
 					run = PbfLcMsRun.GetLcMsRun(rawFilePath, MassSpecDataType.XCaliburRun);
@@ -37,7 +38,7 @@ namespace LiquidBackend.Util
 						run = PbfLcMsRun.GetLcMsRun(rawFilePath, MassSpecDataType.MzMLFile);
 					}
 					break;
-			}
+			}*/
 
 			return run;
 		}

@@ -94,6 +94,23 @@ namespace LiquidBackend.Domain
             
 		}
 
+        public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, LcMsRun lcMsRun)
+        {
+            this.HcdSpectrum = hcdSpectrum;
+            this.CidSpectrum = cidSpectrum;
+            this.PrecursorSpectrum = null;
+            this.HcdSearchResultList = hcdSearchResultList;
+            this.CidSearchResultList = cidSearchResultList;
+            this.Xic = null;
+            this.LcMsRun = lcMsRun;
+            this.PeakArea = null;
+            this.RunLength = lcMsRun.GetElutionTime(lcMsRun.MaxLcScan);
+            this.ApexScanNum = 0;
+            this.ApexIntensity = 0;
+            this.RetentionTime = this.LcMsRun.GetElutionTime(hcdSpectrum != null? hcdSpectrum.ScanNum: cidSpectrum.ScanNum);
+
+        }
+
 		public int GetNumMatchingMsMsPeaks()
 		{
 			return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Union(this.CidSearchResultList.Where(x => x.ObservedPeak != null))).Count();

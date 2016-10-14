@@ -65,7 +65,7 @@ namespace Liquid.ViewModel
 			SpectrumSearchResult spectrumSearchResult = this.CurrentSpectrumSearchResult;
 			LipidTarget lipidTarget = this.CurrentLipidTarget;
 			string commonName = lipidTarget.StrippedDisplay;
-			int parentScan = spectrumSearchResult.PrecursorSpectrum.ScanNum;
+			int parentScan = spectrumSearchResult.PrecursorSpectrum != null? spectrumSearchResult.PrecursorSpectrum.ScanNum : 0;
 			var peakList = productSpectrum.Peaks;
 			var fragmentationType = productSpectrum.ActivationMethod == ActivationMethod.CID ? FragmentationType.CID : FragmentationType.HCD;
 

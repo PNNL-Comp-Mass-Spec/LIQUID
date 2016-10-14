@@ -11,6 +11,8 @@ namespace LiquidBackend.Domain
 		Hydrogen,
         Dihydrogen,
 		Ammonium,
-		Acetate
+		Acetate,
+        Sodium,
+        Potassium
 	}
 }

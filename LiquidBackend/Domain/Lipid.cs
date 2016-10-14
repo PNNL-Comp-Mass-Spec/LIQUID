@@ -46,6 +46,16 @@ namespace LiquidBackend.Domain
 				adduct = Adduct.Ammonium;
 				fragmentationMode = FragmentationMode.Positive;
 			}
+            else if (this.AdductFull == "[M+Na]+")
+            {
+                adduct = Adduct.Sodium;
+                fragmentationMode = FragmentationMode.Positive;
+            }
+            else if (this.AdductFull == "[M+K]+")
+            {
+                adduct = Adduct.Potassium;
+                fragmentationMode = FragmentationMode.Positive;
+            }
 			else if (this.AdductFull == "[M+Oac]-")
 			{
 				adduct = Adduct.Acetate;

@@ -157,7 +157,7 @@ namespace LiquidBackend.Util
                 Xic xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(msmsPrecursorMz, hcdTolerance);
 
                 // Bogus data
-                if (xic.GetApexScanNum() < 0) continue;
+                //if (xic.GetApexScanNum() < 0) continue;
 
                 Spectrum precursorSpectrum = lcmsRun.GetSpectrum(msmsPrecursorScan);
 
@@ -180,10 +180,21 @@ namespace LiquidBackend.Util
                                             let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance)
                                             select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
                 SearchResultList = HcdSearchResultList.Concat(CidSearchResultList).ToList();
-                spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, HcdSearchResultList, CidSearchResultList, xic, lcmsRun)
+                if (precursorSpectrum != null)
                 {
-                PrecursorTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm)
-                };
+                    spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum,
+                        HcdSearchResultList, CidSearchResultList, xic, lcmsRun)
+                    {
+                        PrecursorTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm)
+                    };
+                }
+                else
+                {
+                    spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, HcdSearchResultList, CidSearchResultList, lcmsRun)
+                    {
+                        PrecursorTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm)
+                    };
+                }
 
                 if(hcdSpectrum != null) scanTracker.Add(hcdSpectrum.ScanNum);
                 if(cidSpectrum != null) scanTracker.Add(cidSpectrum.ScanNum);
