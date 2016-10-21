@@ -135,7 +135,7 @@ namespace Liquid.View
 				if (selectedItem != null && ReferenceEquals(selectedItem.GetType(), typeof(SpectrumSearchResult)))
 				{
 					SpectrumSearchResult spectrumSearchResult = (SpectrumSearchResult)selectedItem;
-                    this.SingleTargetViewModel.OnMsMsSearchResultChange(spectrumSearchResult);
+                    //this.SingleTargetViewModel.OnMsMsSearchResultChange(spectrumSearchResult);
 				    this.MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
 
                     this.MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
@@ -287,13 +287,15 @@ namespace Liquid.View
                 if (selectedItem != null && ReferenceEquals(selectedItem.GetType(), typeof(SpectrumSearchResult)))
                 {
                     SpectrumSearchResult spectrumSearchResult = (SpectrumSearchResult)selectedItem;
+                    this.SingleTargetViewModel.OnMsMsSearchResultChange(spectrumSearchResult);
+                    this.MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
 
-                    this.SingleTargetViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
-
+                    this.MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(this.SingleTargetViewModel.CurrentLipidTarget);
                     this.MsMsInfoUserControl.MsMsInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
                     this.MsMsInfoUserControl.Visibility = Visibility.Visible;
 
                     this.MsOneInfoUserControl.MsOneInfoViewModel.OnSpectrumSearchResultChange(spectrumSearchResult);
+
                     this.MsOneInfoUserControl.Visibility = Visibility.Visible;
                 }
             }

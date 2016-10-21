@@ -155,7 +155,7 @@
                                 <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="FragmentWorkflowProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding FragmentSearchProgress, Mode=OneWay}"/>
                             </DockPanel>
                             <DockPanel>
-                                <DataGrid x:Name="FragmentSearchResultsDataGrid" ItemsSource="{Binding SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="350" Width="262" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                                <DataGrid x:Name="FragmentSearchResultsDataGrid" ItemsSource="{Binding SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="MsMsSearchResultSelectionChange" Height="Auto" MaxHeight="350" Width="262" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                     <DataGrid.Columns>
                                         <DataGridCheckBoxColumn Binding="{Binding ShouldExport, Mode=TwoWay}" />
                                         <DataGridTextColumn Header="Scan" Binding="{Binding DisplayScanNum, Mode=OneWay}" Width="50" />

@@ -125,6 +125,7 @@ namespace Liquid.ViewModel
         {
             this.CurrentSpectrumSearchResult = spectrumSearchResult;
             this.CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum ?? spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, this.TargetFragmentationMode, this.TargetAdduct);
+
             OnPropertyChanged("CurrentSpectrumSearchResult");
             OnPropertyChanged("CurrentLipidTarget");
         }
@@ -256,7 +257,8 @@ namespace Liquid.ViewModel
 	            SpectrumSearchResult spectrumSearchResult =
 	                this.SpectrumSearchResultList.OrderByDescending(x => x.ApexScanNum).First();
                 this.CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum??spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, fragmentationMode, adduct);
-	            OnMsMsSearchResultChange(spectrumSearchResult);
+	            //OnMsMsSearchResultChange(spectrumSearchResult);
+                OnSpectrumSearchResultChange(spectrumSearchResult);
                 
 	        }
 	        else

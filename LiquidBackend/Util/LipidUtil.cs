@@ -573,6 +573,9 @@ namespace LiquidBackend.Util
 					msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "M-H2O"));
 					msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(8, 19, 1, 5, 0, 1).Mass, "C8H19O5NP"));
 					msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(8, 21, 1, 6, 0, 1).Mass, "C8H21O6NP"));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 12, 1, 0, 0, 0).Mass, "C5H12N"));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 5, 0, 4, 0, 1, new Tuple<Atom, short>(Atom.Get("Na"),1)).Mass, "C2H5O4P+Na"));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 5, 0, 4, 0, 1, new Tuple<Atom, short>(Atom.Get("K"), 1)).Mass, "C2H5O4P+K"));
 
 					int countOfChains = acylChainList.Count(x => x.NumCarbons > 0);
 					int countOfStandardAcylsChains = acylChainList.Count(x => x.AcylChainType == AcylChainType.Standard && x.NumCarbons > 0);

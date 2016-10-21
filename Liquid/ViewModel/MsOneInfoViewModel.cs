@@ -76,7 +76,7 @@ namespace Liquid.ViewModel
 
 		    if (this.CurrentSpectrumSearchResult.PrecursorSpectrum != null)
 		    {
-		        this.UpdateFitScores();
+		        if(this.CurrentLipidTarget.Composition != null) this.UpdateFitScores();
 
 		        this.StartScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
 		        this.StopScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
