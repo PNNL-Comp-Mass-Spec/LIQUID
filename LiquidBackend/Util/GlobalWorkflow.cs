@@ -108,7 +108,7 @@ namespace LiquidBackend.Util
         */
 
         public static List<LipidGroupSearchResult> RunGlobalWorkflowAvgSpec(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
-        { 
+        {                                                                   
             List<LipidGroupSearchResult> lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 
             Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
@@ -196,7 +196,7 @@ namespace LiquidBackend.Util
                             {
                                 PrecursorTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm)
                             };
-                            lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult);
+                            lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult, scoreModel);
                         }
 
                         
@@ -288,7 +288,6 @@ namespace LiquidBackend.Util
 				foreach (var grouping in lipidsGroupedByTarget)
 				{
 					LipidTarget lipidTarget = grouping.Key;
-					//double lipidMz = lipidTarget.Composition.Mass; //change to real mz
 				    double lipidMz = lipidTarget.MzRounded;
 
 					// If we reached the point where the m/z is too high, we can exit
@@ -313,7 +312,8 @@ namespace LiquidBackend.Util
 						// Create spectrum search results
 					    SpectrumSearchResult spectrumSearchResult = null;
 					    LipidGroupSearchResult lipidGroupSearchResult = null;
-					    if (precursorSpectrum != null)
+					   
+                        if (precursorSpectrum != null)
 					    {
 					        spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic, lcmsRun)
 					        {
@@ -327,14 +327,12 @@ namespace LiquidBackend.Util
                             {
                                 PrecursorTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm)
                             };
-                            lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult);
+                            lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult, scoreModel);
 					    }
-
+                        
 					   
 						lipidGroupSearchResultList.Add(lipidGroupSearchResult);
 
-						//textWriter.WriteLine(lipidTarget.CommonName + "\t" + spectrumSearchResult.Score);
-						//Console.WriteLine(lipidTarget.CommonName + "\t" + spectrumSearchResult.Score);
 					}
 				}
 
@@ -373,7 +371,7 @@ namespace LiquidBackend.Util
 			{
 				LipidTarget target = kvp.Key;
 
-				var spectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(target, lcmsRun, hcdMassError, 500);
+				var spectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(target, lcmsRun, hcdMassError, 500, null);
 
 				if (spectrumSearchResultList.Any())
 				{
@@ -396,7 +394,7 @@ namespace LiquidBackend.Util
 			return massCalibrationResults;
 		}
 
-		private static ActivationMethodCombination FigureOutActivationMethodCombination(LcMsRun lcmsRun)
+		public static ActivationMethodCombination FigureOutActivationMethodCombination(LcMsRun lcmsRun)
 		{
 			List<int> Ms1ScanNumbers = lcmsRun.GetScanNumbers(1).ToList();
             List<int> Ms2ScanNumbers = lcmsRun.GetScanNumbers(2).ToList();

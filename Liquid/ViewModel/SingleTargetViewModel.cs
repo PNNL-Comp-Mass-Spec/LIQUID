@@ -92,7 +92,7 @@ namespace Liquid.ViewModel
 			this.CurrentLipidTarget = LipidUtil.CreateLipidTarget(commonName, fragmentationMode, adduct);
 			OnPropertyChanged("CurrentLipidTarget");
 
-			this.SpectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(this.CurrentLipidTarget, this.LcMsRun, hcdMassError, cidMassError);
+			this.SpectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(this.CurrentLipidTarget, this.LcMsRun, hcdMassError, cidMassError, this.ScoreModel);
 			OnPropertyChanged("SpectrumSearchResultList");
 
 			if (this.SpectrumSearchResultList.Any())
@@ -188,7 +188,35 @@ namespace Liquid.ViewModel
 	        OnPropertyChanged("LipidIdentifications");
 	    }
 
+        public void OnBuildLibrary(IList<string> filesList, double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
+	    {
 
+	        foreach (var file in filesList)
+	        {
+                StreamReader reader = new StreamReader(file);
+	            var header = reader.ReadLine().Split(new char[]{'\t'}).ToList();
+	            var index = header.IndexOf("Raw Data File");
+	            if (index != -1)
+	            {
+	                var rawFileName = reader.ReadLine().Split(new char[]{'\t'})[index];
+                    LibraryBuilder.AddDmsDataset(rawFileName);
+	                UpdateRawFileLocation(rawFileName);
+                    OnProcessAllTarget(hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
+	                LoadLipidIdentifications(file);
+	                OnExportGlobalResults(file.Replace(".tsv", ".msp"));
+                    
+                    //Delete the raw files we copied from DMS to save space
+	                this.LcMsRun = null;
+                    OnPropertyChanged("LcMsRun");
+                    GC.Collect();
+
+
+                    File.Delete(rawFileName);
+                    File.Delete(rawFileName.Replace(Path.GetExtension(rawFileName),"pbf"));
+	            }
+	        }
+
+	    }
 
 		public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
 		{

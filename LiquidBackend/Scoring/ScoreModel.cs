@@ -34,6 +34,33 @@ namespace LiquidBackend.Scoring
 			this.ScoreModelUnitList.Sort();
 		}
 
+        public double ScoreLipid(LipidTarget lipidTarget, SpectrumSearchResult spectrumSearchResult)
+        {
+            List<ScoreModelUnit> relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidTarget);
+
+            List<MsMsSearchResult> cidResultList = spectrumSearchResult.CidSearchResultList;
+            List<MsMsSearchResult> hcdResultList = spectrumSearchResult.HcdSearchResultList;
+
+            double cidMaxIntensity = spectrumSearchResult.CidSpectrum != null && spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            double hcdMaxIntensity = spectrumSearchResult.HcdSpectrum != null && spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+
+            double lipidScore = 0;
+
+            if (cidMaxIntensity > 1)
+            {
+                // Score CID Results
+                lipidScore += ScoreSingleFragmentationType(cidResultList, relatedScoreModelUnits, FragmentationType.CID, cidMaxIntensity);
+            }
+
+            if (hcdMaxIntensity > 1)
+            {
+                // Score CID Results
+                lipidScore += ScoreSingleFragmentationType(hcdResultList, relatedScoreModelUnits, FragmentationType.HCD, hcdMaxIntensity);
+            }
+
+            return lipidScore;
+        }
+
 		public double ScoreLipid(LipidGroupSearchResult lipidGroupSearchResult)
 		{
 			List<ScoreModelUnit> relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidGroupSearchResult);
@@ -90,9 +117,14 @@ namespace LiquidBackend.Scoring
 			return lipidScore;
 		}
 
-		private List<ScoreModelUnit> GetRelatedScoreModelUnits(LipidGroupSearchResult lipidGroupSearchResult)
+        private List<ScoreModelUnit> GetRelatedScoreModelUnits(LipidGroupSearchResult lipidGroupSearchResult)
+        {
+            LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;
+            return GetRelatedScoreModelUnits(lipidTarget);
+        }
+
+		private List<ScoreModelUnit> GetRelatedScoreModelUnits(LipidTarget lipidTarget)
 		{
-			LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;
 			LipidClass lipidClass = lipidTarget.LipidClass;
 			LipidType lipidType = lipidTarget.LipidType;
 			FragmentationMode fragmentationMode = lipidTarget.FragmentationMode;

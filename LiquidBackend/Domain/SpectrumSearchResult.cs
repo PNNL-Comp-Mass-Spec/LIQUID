@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using InformedProteomics.Backend.Data.Spectrometry;
 using InformedProteomics.Backend.MassSpecData;
+using LiquidBackend.Scoring;
 
 namespace LiquidBackend.Domain
 {
@@ -21,6 +22,7 @@ namespace LiquidBackend.Domain
 		public LcMsRun LcMsRun { get; private set; }
         public double RunLength { get; private set; }
         public bool ShouldExport { get; set; }
+        public double ModelScore { get; set; }
 
 		public int NumMatchingMsMsPeaks
 		{
@@ -77,7 +79,7 @@ namespace LiquidBackend.Domain
 			}
 		}
 
-		public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, Spectrum precursorSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, Xic xic, LcMsRun lcMsRun)
+		public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, Spectrum precursorSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, Xic xic, LcMsRun lcMsRun, ScoreModel scoreModel = null, LipidTarget lipidTarget = null)
 		{
 			this.HcdSpectrum = hcdSpectrum;
 			this.CidSpectrum = cidSpectrum;
@@ -91,10 +93,11 @@ namespace LiquidBackend.Domain
             this.ApexScanNum = this.Xic.GetNearestApexScanNum(this.PrecursorSpectrum.ScanNum, true);
             this.ApexIntensity = this.Xic.Where(x => x.ScanNum == this.ApexScanNum).Sum(x => x.Intensity);
             this.RetentionTime = this.LcMsRun.GetElutionTime(this.ApexScanNum);
-            
+		    if(scoreModel != null && lipidTarget != null) this.ModelScore = scoreModel.ScoreLipid(lipidTarget, this);
+
 		}
 
-        public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, LcMsRun lcMsRun)
+        public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, LcMsRun lcMsRun, ScoreModel scoreModel = null, LipidTarget lipidTarget = null)
         {
             this.HcdSpectrum = hcdSpectrum;
             this.CidSpectrum = cidSpectrum;
@@ -108,7 +111,7 @@ namespace LiquidBackend.Domain
             this.ApexScanNum = 0;
             this.ApexIntensity = 0;
             this.RetentionTime = this.LcMsRun.GetElutionTime(hcdSpectrum != null? hcdSpectrum.ScanNum: cidSpectrum.ScanNum);
-
+            if (scoreModel != null && lipidTarget != null) this.ModelScore = scoreModel.ScoreLipid(lipidTarget, this);
         }
 
 		public int GetNumMatchingMsMsPeaks()

@@ -37,6 +37,7 @@
                         <RibbonApplicationMenuItem Header="Open File" Click="RawFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
                         <RibbonApplicationMenuItem Header="Load Previous IDs" Click="LoadIdentificationsFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
                         <RibbonApplicationMenuItem Header="Export Target Info" Click="ExportTargetInfoButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
+                        <RibbonApplicationMenuItem Header="Build Library" Click="BuildLibraryButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> <!--Comment Out When Done-->                      
                     </RibbonApplicationMenu>
                 </Ribbon.ApplicationMenu>
                 <RibbonTab x:Name="InformedRibbonTab" Header="Single Target" KeyTip="S"/>
@@ -84,8 +85,9 @@
                                 <TextBlock x:Name="NumberOfResultsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding SpectrumSearchResultList.Count, StringFormat='  # of Results: \{0\}'}" Margin="0,5,0,0" />
                                 <DataGrid x:Name="SpectrumSearchResultsDataGrid" ItemsSource="{Binding SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="350" Width="Auto" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Precursor" Binding="{Binding PrecursorSpectrum.ScanNum, Mode=OneWay}" Width="110" />
-                                        <DataGridTextColumn Header="Apex" Binding="{Binding ApexScanNum, Mode=OneWay}" Width="110" />
+                                        <DataGridTextColumn Header="Precursor" Binding="{Binding PrecursorSpectrum.ScanNum, Mode=OneWay}" Width="75" />
+                                        <DataGridTextColumn Header="Apex" Binding="{Binding ApexScanNum, Mode=OneWay}" Width="75" />
+                                        <DataGridTextColumn Header="Score" Binding="{Binding ModelScore, Mode=OneWay, StringFormat=0.00}" Width="75" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </StackPanel>
@@ -115,6 +117,7 @@
                                     <DataGridTextColumn Header="Lipid" Binding="{Binding LipidTarget.StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="133" />
                                     <!--DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=SpectrumSearchResult.NumMatchingMsMsPeaks, StringFormat=0}" Width="60" /-->
                                     <DataGridTextColumn Header="Score" Binding="{Binding Score, StringFormat=0.00}" Width="50" />
+                                    <DataGridTextColumn Header="M/Z" Binding="{Binding DisplayMz, StringFormat=0.00}" Width="50" />
                                 </DataGrid.Columns>
                             </DataGrid>
                             <Button Content="Export Selected Results" Click="ExportGlobalResultsButtonClick" Height="23" HorizontalAlignment="Center" x:Name="ExportGlobalResultsButton" VerticalAlignment="Top" Width="140" Margin="0,5,0,0" />

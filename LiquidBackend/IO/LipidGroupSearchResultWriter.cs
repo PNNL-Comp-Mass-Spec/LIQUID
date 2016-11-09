@@ -142,13 +142,15 @@ namespace LiquidBackend.IO
                     var massSpectrum = spectrumSearchResult.PrecursorSpectrum.Peaks;
                     var targetMz = lipidTarget.MzRounded;
                     var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
-                    var hcd = spectrumSearchResult.HcdSearchResultList;
-	                var cid = spectrumSearchResult.CidSearchResultList;
-	                var hcdCount = hcd.Count(x => x.ObservedPeak != null);
-                    var cidCount = cid.Count(x => x.ObservedPeak != null);
+                    var hcdResults = spectrumSearchResult.HcdSearchResultList;
+	                var cidResults = spectrumSearchResult.CidSearchResultList;
+	                var hcdSpectrum = spectrumSearchResult.HcdSpectrum;
+                    var cidSpectrum = spectrumSearchResult.CidSpectrum;
+	                var hcdCount = hcdSpectrum.Peaks.Count();
+                    var cidCount = cidSpectrum.Peaks.Count();
                     
 	                var name = lipidTarget.StrippedDisplay;
-	                var adduct = lipidTarget.AdductString;
+	                var adduct = lipidGroupSearchResult.LipidList.FirstOrDefault().AdductFull;
                     var observedMz = closestPeak.Mz;
 	                var formula = lipidTarget.EmpiricalFormula;
 	                var RT = spectrumSearchResult.RetentionTime;
@@ -163,45 +165,54 @@ namespace LiquidBackend.IO
                         MW = lipidTarget.Composition.Mass + LipidUtil.GetCompositionOfAdduct(lipidTarget.Adduct).Mass; 
                     }
 	                
-
-                    if (cidCount > 0)
+                    textWriter.WriteLine("Name: {0}; {1}", name, adduct);
+                    textWriter.WriteLine("MW: {0}", MW);
+                    textWriter.WriteLine("PRECURSORMZ: {0}", observedMz);
+                    textWriter.WriteLine("RETENTIONTIME: {0}", RT);
+                    textWriter.WriteLine("FORMULA: {0}", formula);
+                    textWriter.WriteLine("Comment: CID");
+                    textWriter.WriteLine("Num Peaks: {0}", cidCount);	                
+                    foreach (var peak in cidSpectrum.Peaks)
                     {
-                        textWriter.WriteLine("Name: {0}; {1}", name, adduct);
-                        textWriter.WriteLine("MW: {0}", MW);
-                        textWriter.WriteLine("PRECURSORMZ: {0}", observedMz);
-                        textWriter.WriteLine("RETENTIONTIME: {0}", RT);
-                        textWriter.WriteLine("FORMULA: {0}", formula);
-                        textWriter.WriteLine("Comment: CID");
-                        textWriter.WriteLine("Num Peaks: {0}", cidCount);
-                        foreach (var peak in cid)
+                        var mz = peak.Mz;
+                        var intensity = peak.Intensity;
+                        var match = cidResults.Where(x => x.ObservedPeak != null).FirstOrDefault(x => x.ObservedPeak.Mz.Equals(peak.Mz));
+                        if (match != null)
                         {
-                            if (peak.ObservedPeak == null) continue;
-                            var mz = peak.ObservedPeak.Mz;
-                            var intensity = peak.ObservedPeak.Intensity;
-                            var annotation = peak.TheoreticalPeak.DescriptionForUi;
+                            var annotation = match.TheoreticalPeak.DescriptionForUi;
                             textWriter.WriteLine("{0} {1} \"{2}\"", mz, intensity, annotation);
                         }
-                        textWriter.WriteLine();
+                        else
+                        {
+                            textWriter.WriteLine("{0} {1}", mz, intensity); 
+                        }
                     }
-	                if (hcdCount > 0)
+                    textWriter.WriteLine();
+                    
+
+	                textWriter.WriteLine("Name: {0}; {1}", name, adduct);
+	                textWriter.WriteLine("MW: {0}", MW);
+	                textWriter.WriteLine("PRECURSORMZ: {0}", observedMz);
+	                textWriter.WriteLine("RETENTIONTIME: {0}", RT);
+	                textWriter.WriteLine("FORMULA: {0}", formula);
+	                textWriter.WriteLine("Comment: HCD");
+	                textWriter.WriteLine("Num Peaks: {0}", hcdCount);
+	                foreach (var peak in hcdSpectrum.Peaks)
 	                {
-	                    textWriter.WriteLine("Name: {0}; {1}", name, adduct);
-	                    textWriter.WriteLine("MW: {0}", MW);
-	                    textWriter.WriteLine("PRECURSORMZ: {0}", observedMz);
-	                    textWriter.WriteLine("RETENTIONTIME: {0}", RT);
-	                    textWriter.WriteLine("FORMULA: {0}", formula);
-	                    textWriter.WriteLine("Comment: HCD");
-	                    textWriter.WriteLine("Num Peaks: {0}", hcdCount);
-	                    foreach (var peak in hcd)
-	                    {
-                            if (peak.ObservedPeak == null) continue;
-	                        var mz = peak.ObservedPeak.Mz;
-	                        var intensity = peak.ObservedPeak.Intensity;
-	                        var annotation = peak.TheoreticalPeak.DescriptionForUi;
-	                        textWriter.WriteLine("{0} {1} \"{2}\"", mz, intensity, annotation);
-	                    }
-                        textWriter.WriteLine();
+                        var mz = peak.Mz;
+                        var intensity = peak.Intensity;
+                        var match = hcdResults.Where(x => x.ObservedPeak != null).FirstOrDefault(x => x.ObservedPeak.Mz.Equals(peak.Mz));
+                        if (match != null)
+                        {
+                            var annotation = match.TheoreticalPeak.DescriptionForUi;
+                            textWriter.WriteLine("{0} {1} \"{2}\"", mz, intensity, annotation);
+                        }
+                        else
+                        {
+                            textWriter.WriteLine("{0} {1}", mz, intensity);
+                        }
 	                }
+                    textWriter.WriteLine();	               
 	            }
 	        }
 	    }
@@ -335,16 +346,23 @@ namespace LiquidBackend.IO
 
 				foreach (LipidGroupSearchResult lipidGroupSearchResult in lipidGroupSearchResults)
 				{
+				    
 					LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;
 					SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
-                    
+                    bool Precursor = spectrumSearchResult.PrecursorSpectrum != null;
+
 					double targetMz = lipidTarget.MzRounded;
-					var massSpectrum = spectrumSearchResult.PrecursorSpectrum.Peaks;
-					var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
-					double observedMz = closestPeak.Mz;
-					double ppmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
+				    double observedMz = spectrumSearchResult.HcdSpectrum != null ? spectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz : spectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz;;
+				    if (Precursor)
+				    {
+                        var massSpectrum = spectrumSearchResult.PrecursorSpectrum.Peaks;
+                        var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
+                        observedMz = closestPeak.Mz;
+				    }
+					
 					double score = lipidGroupSearchResult.Score;
 					int msmsScan = spectrumSearchResult.HcdSpectrum != null ? spectrumSearchResult.HcdSpectrum.ScanNum : spectrumSearchResult.CidSpectrum.ScanNum;
+				    double ppmError = LipidUtil.PpmError(targetMz, observedMz);
 
 					foreach (Lipid lipid in lipidGroupSearchResult.LipidList)
 					{
@@ -361,7 +379,7 @@ namespace LiquidBackend.IO
 						line.Append(observedMz + "\t");
 						line.Append(ppmError + "\t");
 						line.Append(spectrumSearchResult.RetentionTime + "\t");
-                        line.Append(spectrumSearchResult.PrecursorSpectrum.ElutionTime + "\t");
+                        if (Precursor) line.Append(spectrumSearchResult.PrecursorSpectrum.ElutionTime + "\t"); else line.Append("\t");
                         line.Append(spectrumSearchResult.NormalizedElutionTime + "\t");			    
 						line.Append(spectrumSearchResult.ApexIntensity + "\t");
 						line.Append(spectrumSearchResult.PeakArea + "\t");
@@ -371,7 +389,7 @@ namespace LiquidBackend.IO
 					    line.Append(lipidGroupSearchResult.CosineScore + "\t");
 					    line.Append(lipidGroupSearchResult.CosineScoreMinus1 + "\t");
 						line.Append(msmsScan + "\t");
-						line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t");
+                        if (Precursor) line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t"); else line.Append("\t");
 						line.Append(spectrumSearchResult.ApexScanNum + "\t");
 						line.Append(lipid.PubChemSid + "\t");
 						line.Append(lipid.PubChemCid + "\t");

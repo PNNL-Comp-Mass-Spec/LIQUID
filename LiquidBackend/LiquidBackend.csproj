@@ -52,11 +52,13 @@
     <Reference Include="InformedProteomics.Backend">
       <HintPath>..\lib\x64\InformedProteomics.Backend.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\lib\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Mage">
-      <HintPath>..\lib\x64\Mage.dll</HintPath>
+    <Reference Include="Mage, Version=1.4.5067.26038, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Mage.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics">
       <HintPath>..\lib\MathNet.Numerics.dll</HintPath>
@@ -64,8 +66,9 @@
     <Reference Include="MultiDimensionalPeakFinding">
       <HintPath>..\lib\x64\MultiDimensionalPeakFinding.dll</HintPath>
     </Reference>
-    <Reference Include="MyEMSLReader">
-      <HintPath>..\lib\MyEMSLReader.dll</HintPath>
+    <Reference Include="MyEMSLReader, Version=1.0.5060.18770, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MyEMSLReader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -109,6 +112,7 @@
     <Compile Include="Util\FitScoreUtil.cs" />
     <Compile Include="Util\GlobalWorkflow.cs" />
     <Compile Include="Util\InformedWorkflow.cs" />
+    <Compile Include="Domain\LibraryBuilder.cs" />
     <Compile Include="Util\LipidUtil.cs" />
     <Compile Include="Util\LcMsDataFactory.cs" />
     <Compile Include="Util\QcUtil.cs" />

@@ -16,6 +16,7 @@ namespace LiquidBackend.Domain
 		public SpectrumSearchResult SpectrumSearchResult { get; private set; }
 		public bool ShouldExport { get; set; }
         public int DisplayScanNum { get; set; }
+        public double DisplayMz { get; set; }
 		public double Score { get; private set; }
         public double PearsonCorrScore { get; private set; }
         public double PearsonCorrScoreMinus1 { get; private set; }
@@ -28,6 +29,7 @@ namespace LiquidBackend.Domain
 			LipidList = lipidList;
 			SpectrumSearchResult = spectrumSearchResult;
 		    DisplayScanNum = spectrumSearchResult.HcdSpectrum.ScanNum;
+            DisplayMz = spectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz;
 			ShouldExport = false;
 			Score = 0;
 		}
@@ -40,6 +42,7 @@ namespace LiquidBackend.Domain
             LipidList = null;
             SpectrumSearchResult = spectrumSearchResult;
             DisplayScanNum = msmsSpec.ScanNum;
+            DisplayMz = msmsSpec.IsolationWindow.IsolationWindowTargetMz;
             ShouldExport = false;
             Score = 0;
         }
@@ -52,11 +55,15 @@ namespace LiquidBackend.Domain
 			ShouldExport = false;
 			Score = scoreModel.ScoreLipid(this);
             DisplayScanNum = spectrumSearchResult.HcdSpectrum.ScanNum;
+            DisplayMz = spectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz;
+		    
+            if (spectrumSearchResult.PrecursorSpectrum == null) return;
+		    
             var pearsonCorrelationCalculator = new PearsonCorrelationFitUtil();
-            PearsonCorrScore = pearsonCorrelationCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
-            PearsonCorrScoreMinus1 = pearsonCorrelationCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
+		    PearsonCorrScore = pearsonCorrelationCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
+		    PearsonCorrScoreMinus1 = pearsonCorrelationCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
 
-            var cosineCalculator = new CosineFitUtil();
+		    var cosineCalculator = new CosineFitUtil();
 		    CosineScore = cosineCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
 		    CosineScoreMinus1 = cosineCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
 		}

@@ -227,6 +227,33 @@ namespace Liquid.View
             }
         }
 
+	    private async void BuildLibraryButtonClick(object sender, RoutedEventArgs e)
+	    {
+            FragmentationMode fragmentationMode = (FragmentationMode)this.FragmentationModeComboBox.SelectedItem;
+            double hcdMassError = double.Parse(this.HcdErrorTextBox.Text);
+            double cidMassError = double.Parse(this.CidErrorTextBox.Text);
+            int resultsPerScan = int.Parse(this.ResultsPerScanTextBox.Text);
+
+            var dialog = new VistaOpenFileDialog
+            {
+                DefaultExt = ".tsv",
+                Filter = "Tab Separated Files (.tsv)|*.tsv|Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
+                Multiselect = true
+            };
+
+            // Get the selected file name and display in a TextBox 
+            DialogResult result = dialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                // Disable processing button while file is loading
+                this.ProcessAllTargetsButton.IsEnabled = false;
+
+                // Open file 
+                var fileNames = dialog.FileNames;
+                await Task.Run(() => this.SingleTargetViewModel.OnBuildLibrary(fileNames, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
+            }
+	    }
+
 		private async void ProcessAllTargetsButtonClick(object sender, RoutedEventArgs e)
 		{
 			FragmentationMode fragmentationMode = (FragmentationMode)this.FragmentationModeComboBox.SelectedItem;
