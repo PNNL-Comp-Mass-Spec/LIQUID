@@ -134,7 +134,6 @@ namespace LiquidBackend.IO
         {
             using (TextWriter textWriter = new StreamWriter(fileLocation))
             {
-                int progressCounter = 0;
                 foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
                 {
                     LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;

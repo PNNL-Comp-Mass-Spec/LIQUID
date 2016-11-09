@@ -92,7 +92,7 @@ namespace LiquidBackend.Domain
 
         public string AdductString
         {
-            get { return this.Adduct != null ? this.Adduct.ToString() : "Unknown"; }
+            get { return this.Adduct.ToString(); }
         }
 
         public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList, Adduct adduct = Adduct.Hydrogen, int charge = 1)

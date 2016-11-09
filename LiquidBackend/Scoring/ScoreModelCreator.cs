@@ -122,8 +122,8 @@ namespace LiquidBackend.Scoring
 
 			List<ScoreModelUnit> liquidScoreModelUnitList = PartitionIntoModelUnits(observationDictionary);
 			ScoreModel liquidScoreModel = new ScoreModel(liquidScoreModelUnitList);
-
-			return liquidScoreModel;
+            
+            return liquidScoreModel;
 		}
 
 		public void AddDatasets(IEnumerable<string> datasetLocations)
