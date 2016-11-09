@@ -57,9 +57,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="InformedProteomics.Backend, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="InformedProteomics.Backend, Version=1.0.6127.17973, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\x64\InformedProteomics.Backend.dll</HintPath>
+      <HintPath>..\lib\InformedProteomics.Backend.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics">
       <HintPath>..\lib\MathNet.Numerics.dll</HintPath>

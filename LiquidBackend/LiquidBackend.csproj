@@ -49,8 +49,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="InformedProteomics.Backend">
-      <HintPath>..\lib\x64\InformedProteomics.Backend.dll</HintPath>
+    <Reference Include="InformedProteomics.Backend, Version=1.0.6127.17973, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\InformedProteomics.Backend.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\lib\log4net.dll</HintPath>
