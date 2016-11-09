@@ -233,7 +233,6 @@ namespace LiquidBackend.Util
                             return new Composition(numCarbons + 8, (2 * (numCarbons + 8)) + 2 - (2 * numDoubleBonds), 1, 7, 0, 1);
                         }
                     }
-                    break;
                 case LipidClass.PE:
                     if (numChains > 1)
                     {
@@ -269,7 +268,6 @@ namespace LiquidBackend.Util
                             return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 2 - (2 * numDoubleBonds), 1, 7, 0, 1);
                         }
                     }
-                    break;
                 case LipidClass.PE_Cer:
                     if (numChains > 1)
                     {
@@ -280,7 +278,6 @@ namespace LiquidBackend.Util
                     {
                         return new Composition(numCarbons + 2, (2 * (numCarbons + 4)) + 1 - (2 * numDoubleBonds), 2, 5 + tri - mono, 0, 1);
                     }
-                    break;
                 case LipidClass.PE_NMe:
                     if (numChains > 1)
                     {
@@ -317,7 +314,6 @@ namespace LiquidBackend.Util
                     {
                         return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 0 - (2 * numDoubleBonds), 1, 9, 0, 1);
                     }
-                    break;
                 case LipidClass.PG:
                     if (numChains > 1)
                     {
@@ -353,7 +349,6 @@ namespace LiquidBackend.Util
                             return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) + 1 - (2 * numDoubleBonds), 0, 9, 0, 1);
                         }
                     }
-                    break;
                 case LipidClass.PI_Cer:
                     
                     if (containsOH)
@@ -364,7 +359,6 @@ namespace LiquidBackend.Util
                     {
                         return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - (numDoubleBonds), 1, 11 + tri - mono, 0, 1);
                     }
-                    break;
                 case LipidClass.Cer:
                     if (containsOH)
                     {
@@ -381,36 +375,27 @@ namespace LiquidBackend.Util
                             return new Composition(numCarbons, (2*(numCarbons + 0)) + 3 - (2*numDoubleBonds), 1, 2 + tri - mono, 0, 0); 
                         }
                     }
-                    break;
                 case LipidClass.CerH2O:
                     return new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 3 + tri - mono, 0, 0) - Composition.H2O;
-                    break;
                 case LipidClass.Cer2H2O:
                     return new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 3 + tri - mono, 0, 0) - Composition.H2O - Composition.H2O;
-                    break;
                 case LipidClass.SM:
                     return new Composition(numCarbons + 5, (2 * (numCarbons + 5)) + 3 - (2 * numDoubleBonds), 2, 6, 0, 1);
-                    break;
                 case LipidClass.GalCer:
                     if (containsOH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 9 + tri - mono, 0, 0);
                     return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 8, 0, 0);
                 case LipidClass.GlcCer:
                     if (containsOH) return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 9 + tri - mono, 0, 0);
                     return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 8, 0, 0);
-                    break;
                 case LipidClass.LacCer:
                     if (containsOH) return new Composition(numCarbons + 12, (2 * (numCarbons + 12)) - 1 - (2 * numDoubleBonds), 1, 14 + tri - mono, 0, 0);
                     return new Composition(numCarbons + 12, (2 * (numCarbons + 12)) - 1 - (2 * numDoubleBonds), 1, 13, 0, 0);
-                    break;
                 case LipidClass.CerP:
-                    return new Composition(numCarbons, (2 * (numCarbons + 0)) + 2 - (2 * numDoubleBonds), 1, 6 + tri - mono, 0, 1);
-                    break;
+                    return new Composition(numCarbons, (2 * (numCarbons + 0)) + 2 - (2 * numDoubleBonds), 1, 6 + tri - mono, 0, 1);                    
                 case LipidClass.Cholesterol:
                     return new Composition(27, 46, 0, 1, 0, 0);
-                    break;
                 case LipidClass.CE:
                     return new Composition(numCarbons + 27, (2 * (numCarbons + 27)) - 10 - (2 * numDoubleBonds), 0, 2, 0, 0);
-                    break;
                 case LipidClass.Ubiquinone:
                     if(commonName.EndsWith("Q10")) return new Composition(59, 90, 0, 4, 0, 0);
                     else if (commonName.EndsWith("Q4")) return new Composition(29, 42, 0, 4, 0, 0);
@@ -420,22 +405,16 @@ namespace LiquidBackend.Util
                     break;
                 case LipidClass.MG:
                     return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) + 0 - (2 * numDoubleBonds), 0, 4, 0, 0);
-                    break;
                 case LipidClass.DG:
                     return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) - 2 - (2 * numDoubleBonds), 0, 5, 0, 0);
-                    break;
                 case LipidClass.TG:
                     return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) - 4 - (2 * numDoubleBonds), 0, 6, 0, 0);
-                    break;
                 case LipidClass.MGDG:
                     return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 4 - (2 * numDoubleBonds), 0, 10, 0, 0);
-                    break;
                 case LipidClass.SQDG:
                     return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 4 - (2 * numDoubleBonds), 0, 12, 1, 0);
-                    break;
                 case LipidClass.DGDG:
                     return new Composition(numCarbons + 15, (2 * (numCarbons + 15)) - 6 - (2 * numDoubleBonds), 0, 15, 0, 0);
-                    break;
                 case LipidClass.PI:
                     if (numChains > 1)
                     {
@@ -445,18 +424,14 @@ namespace LiquidBackend.Util
                     {
                         return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 1 - (2 * numDoubleBonds), 0, 12, 0, 1);
                     }
-                    break;
                 case LipidClass.DGTSA:
                     return new Composition(numCarbons + 10, (2 * numCarbons) + 17 - (2 * numDoubleBonds), 1, 7, 0, 0);
                 case LipidClass.PIP:
                     return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 2 - (2 * numDoubleBonds), 0, 16, 0, 2);
-                    break;
                 case LipidClass.PIP2:
                     return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 1 - (2 * numDoubleBonds), 0, 19, 0, 3);
-                    break;
                 case LipidClass.PIP3:
                     return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) + 0 - (2 * numDoubleBonds), 0, 22, 0, 4);
-                    break;
                 case LipidClass.PA:
                     if (numChains > 1)
                     {
@@ -466,36 +441,26 @@ namespace LiquidBackend.Util
                     {
                         return new Composition(numCarbons + 3, (2 * (numCarbons + 3)) + 1 - (2 * numDoubleBonds), 0, 7, 0, 1);
                     }
-                    break;
                 case LipidClass.CL:
                     return new Composition(numCarbons + 9, (2 * (numCarbons + 9)) - 4 - (2 * numDoubleBonds), 0, 17, 0, 2);
-                    break;
                 case LipidClass.Sulfatide:
                     return new Composition(numCarbons + 6, (2 * (numCarbons + 6)) - 1 - (2 * numDoubleBonds), 1, 11, 1, 0);
-                    break;
                 case LipidClass.WE:
                     return new Composition(numCarbons, (2 * numCarbons - 2 * numDoubleBonds), 0, 2, 0);
-                    break;
                 case LipidClass.Ganglioside:
                     Composition glycan = ParseGlycan(commonName);
                     Composition cer = new Composition(numCarbons, (2 * (numCarbons + 0)) + 1 - (2 * numDoubleBonds), 1, 3 + tri - mono + hydroxyCount, 0, 0);
                     return cer + glycan - Composition.H2O;
-                    break;
                 case LipidClass.MIPC:
                     return new Composition(numCarbons + 12, (2 * (numCarbons + 12) - 2 - numDoubleBonds), 1, 18, 0, 1);
-                    break;
                 case LipidClass.MIP2C:
                     return new Composition(numCarbons + 18, (2 * (numCarbons + 18) - 3 - numDoubleBonds), 1, 26, 0, 2);
-                    break;
                 case LipidClass.anandamide:
                     return new Composition(numCarbons + 2, (2 * (numCarbons + 2) + 1 - 2 * numDoubleBonds), 1, 2, 0, 0);
-                    break;
                 case LipidClass.carnitine:
                     return new Composition(numCarbons + 7, 2 * (numCarbons + 7) - 1 - (2 * numDoubleBonds), 1, 4, 0, 0);
-                    break;
                 case LipidClass.FAHFA:
                     return new Composition(numCarbons, (2 * numCarbons) - 2 - (2 * numDoubleBonds), 0, 4, 0, 0);
-                    break;
             }
 
             throw new SystemException("No empirical formula calculator found for " + commonName);
