@@ -81,6 +81,10 @@ namespace Liquid.ViewModel
             }
             else
             {
+                // Assure that the source data file is closed
+                if (this.LcMsRun != null)
+                    this.LcMsRun.Close();
+
                 this.LcMsRun = LcMsDataFactory.GetLcMsData(rawFileLocation);
                 OnPropertyChanged("LcMsRun");
             }

@@ -115,7 +115,10 @@ namespace LiquidBackend.Scoring
 						}
 					}
 				}
-			}
+
+                // Assure that the source data file is closed
+                globalWorkflow.LcMsRun.Close();
+            }
 
 			List<ScoreModelUnit> liquidScoreModelUnitList = PartitionIntoModelUnits(observationDictionary);
 			ScoreModel liquidScoreModel = new ScoreModel(liquidScoreModelUnitList);

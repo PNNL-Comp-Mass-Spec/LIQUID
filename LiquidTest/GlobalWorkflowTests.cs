@@ -56,6 +56,9 @@ namespace LiquidTest
             LipidGroupSearchResultWriter.AddHeaderForScoring(filteredLipidGroupSearchResults[0], textWriter);
             LipidGroupSearchResultWriter.WriteToCsvForScoring(filteredLipidGroupSearchResults, textWriter, "Dey_lipids_Bottom_2_1_pos_dil_Gimli_RZ-12-07-05");
 
+            // Assure that the source data file is closed
+            globalWorkflow.LcMsRun.Close();
+
             textWriter.Close();
         }
 
@@ -71,6 +74,9 @@ namespace LiquidTest
             List<Lipid> lipidList = lipidReader.ReadFile(fileInfo);
 
             globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
+
+            // Assure that the source data file is closed
+            globalWorkflow.LcMsRun.Close();
         }
 
         [Test]
@@ -205,6 +211,9 @@ namespace LiquidTest
                 // Output results
                 if (datasetIndex == 0) LipidGroupSearchResultWriter.AddHeaderForScoring(filteredLipidGroupSearchResults[0], textWriter);
                 LipidGroupSearchResultWriter.WriteToCsvForScoring(filteredLipidGroupSearchResults, textWriter, datasetName);
+
+                // Assure that the source data file is closed
+                globalWorkflow.LcMsRun.Close();
             }
 
             textWriter.Close();
@@ -327,6 +336,9 @@ namespace LiquidTest
                     // Output results
                     LipidGroupSearchResultWriter.OutputResults(targetResults, targetResultsPath, rawFileName);
                     LipidGroupSearchResultWriter.OutputResults(decoyResults, decoyResultsPath, rawFileName);
+
+                    // Assure that the source data file is closed
+                    globalWorkflow.LcMsRun.Close();
                 }
                 catch (Exception)
                 {
@@ -376,6 +388,9 @@ namespace LiquidTest
                 // Output results
                 LipidGroupSearchResultWriter.OutputResults(targetResults, targetResultsPath, rawFileName);
                 LipidGroupSearchResultWriter.OutputResults(decoyResults, decoyResultsPath, rawFileName);
+
+                // Assure that the source data file is closed
+                globalWorkflow.LcMsRun.Close();
             }
         }
     }

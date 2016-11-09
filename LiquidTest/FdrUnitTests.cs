@@ -375,6 +375,9 @@ namespace LiquidTest
                 {
                     LipidGroupSearchResultWriter.OutputResults(lipidGroupSearchResults, outputFileName, rawFileName, null, true, false);
                 }
+
+                // Assure that the source data file is closed
+                globalWorkflow.LcMsRun.Close();
             }
         }
 
