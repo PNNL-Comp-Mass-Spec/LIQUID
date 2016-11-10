@@ -76,6 +76,9 @@
     <Reference Include="OxyPlot.Wpf">
       <HintPath>..\lib\OxyPlot\OxyPlot.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="PSI_Interface">
+      <HintPath>..\lib\PSI_Interface.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Controls.Ribbon" />

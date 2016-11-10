@@ -81,6 +81,7 @@ namespace Liquid.ViewModel
 		    }
 		    else
 		    {
+                if(this.LcMsRun != null) this.LcMsRun.Close();
 		        this.LcMsRun = LcMsDataFactory.GetLcMsData(rawFileLocation);
                 OnPropertyChanged("LcMsRun");
 		    }
@@ -206,6 +207,7 @@ namespace Liquid.ViewModel
 	                OnExportGlobalResults(file.Replace(".tsv", ".msp"));
                     
                     //Delete the raw files we copied from DMS to save space
+                    this.LcMsRun.Close();
 	                this.LcMsRun = null;
                     OnPropertyChanged("LcMsRun");
                     GC.Collect();
