@@ -37,7 +37,7 @@
                         <RibbonApplicationMenuItem Header="Open File" Click="RawFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
                         <RibbonApplicationMenuItem Header="Load Previous IDs" Click="LoadIdentificationsFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
                         <RibbonApplicationMenuItem Header="Export Target Info" Click="ExportTargetInfoButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
-                        <RibbonApplicationMenuItem Header="Build Library" Click="BuildLibraryButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> <!--Comment Out When Done-->                      
+                        <!--<RibbonApplicationMenuItem Header="Build Library" Click="BuildLibraryButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> --> <!--Comment Out When Done-->                      
                     </RibbonApplicationMenu>
                 </Ribbon.ApplicationMenu>
                 <RibbonTab x:Name="InformedRibbonTab" Header="Single Target" KeyTip="S"/>

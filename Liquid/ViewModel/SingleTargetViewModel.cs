@@ -199,22 +199,29 @@ namespace Liquid.ViewModel
 	            var index = header.IndexOf("Raw Data File");
 	            if (index != -1)
 	            {
-	                var rawFileName = reader.ReadLine().Split(new char[]{'\t'})[index];
-                    LibraryBuilder.AddDmsDataset(rawFileName);
-	                UpdateRawFileLocation(rawFileName);
-                    OnProcessAllTarget(hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
-	                LoadLipidIdentifications(file);
-	                OnExportGlobalResults(file.Replace(".tsv", ".msp"));
-                    
-                    //Delete the raw files we copied from DMS to save space
-                    this.LcMsRun.Close();
-	                this.LcMsRun = null;
-                    OnPropertyChanged("LcMsRun");
-                    GC.Collect();
+	                try
+	                {
+	                    var rawFileName = reader.ReadLine().Split(new char[] {'\t'})[index];
+	                    LibraryBuilder.AddDmsDataset(rawFileName);
+	                    UpdateRawFileLocation(rawFileName);
+	                    OnProcessAllTarget(hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
+	                    LoadLipidIdentifications(file);
+	                    OnExportGlobalResults(file.Replace(".tsv", ".msp"));
+
+	                    //Delete the raw files we copied from DMS to save space
+	                    this.LcMsRun.Close();
+	                    this.LcMsRun = null;
+	                    OnPropertyChanged("LcMsRun");
+	                    GC.Collect();
 
 
-                    File.Delete(rawFileName);
-                    File.Delete(rawFileName.Replace(Path.GetExtension(rawFileName),"pbf"));
+	                    //File.Delete(rawFileName);
+	                    File.Delete(rawFileName.Replace(Path.GetExtension(rawFileName), "pbf"));
+	                }
+	                catch (Exception ex)
+	                {
+	                    continue;
+	                }
 	            }
 	        }
 
