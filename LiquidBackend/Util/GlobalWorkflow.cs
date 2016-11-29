@@ -157,7 +157,6 @@ namespace LiquidBackend.Util
                 foreach (var grouping in lipidsGroupedByTarget)
                 {
                     LipidTarget lipidTarget = grouping.Key;
-                    //double lipidMz = lipidTarget.Composition.Mass; //change to real mz
                     double lipidMz = lipidTarget.MzRounded;
 
                     // If we reached the point where the m/z is too high, we can exit
@@ -263,7 +262,13 @@ namespace LiquidBackend.Util
 				//Console.WriteLine(DateTime.Now + "\tProcessing Scan" + i);
 
 				// Grab Precursor Spectrum
-				int precursorScanNumber = lcmsRun.GetPrecursorScanNum(i);
+			    			    
+			    int precursorScanNumber = 0;
+                if (lcmsRun.MinMsLevel == 1) //Make sure there are precursor scans in file
+			    {
+			        precursorScanNumber = lcmsRun.GetPrecursorScanNum(i); 	        
+			    }
+				
 				Spectrum precursorSpectrum = lcmsRun.GetSpectrum(precursorScanNumber);
 
 				// Assign each MS/MS spectrum to HCD or CID

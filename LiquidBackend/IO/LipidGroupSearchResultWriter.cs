@@ -340,7 +340,7 @@ namespace LiquidBackend.IO
 			{
 				if (writeHeader) 
 				{
-                    textWriter.WriteLine("Raw Data File\tLM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tApex RT\tPrecursor RT\tApex NET\tIntensity\tPeak Area\tScore\tPearson Corr Score\tPearson Corr M-1 Score\tCosine Score\tCosine M-1 Score\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
+                    textWriter.WriteLine("Raw Data File\tLM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tApex RT\tPrecursor RT\tApex NET\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
 			    }
 				int progressCounter = 0;
 
@@ -384,10 +384,6 @@ namespace LiquidBackend.IO
 						line.Append(spectrumSearchResult.ApexIntensity + "\t");
 						line.Append(spectrumSearchResult.PeakArea + "\t");
 						line.Append(score + "\t");
-					    line.Append(lipidGroupSearchResult.PearsonCorrScore + "\t");
-					    line.Append(lipidGroupSearchResult.PearsonCorrScoreMinus1 + "\t");
-					    line.Append(lipidGroupSearchResult.CosineScore + "\t");
-					    line.Append(lipidGroupSearchResult.CosineScoreMinus1 + "\t");
 						line.Append(msmsScan + "\t");
                         if (Precursor) line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t"); else line.Append("\t");
 						line.Append(spectrumSearchResult.ApexScanNum + "\t");

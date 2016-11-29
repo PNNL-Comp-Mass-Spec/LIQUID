@@ -36,8 +36,8 @@
                         </RibbonApplicationMenu.SmallImageSource>
                         <RibbonApplicationMenuItem Header="Open File" Click="RawFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
                         <RibbonApplicationMenuItem Header="Load Previous IDs" Click="LoadIdentificationsFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
-                        <RibbonApplicationMenuItem Header="Export Target Info" Click="ExportTargetInfoButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
-                        <!--<RibbonApplicationMenuItem Header="Build Library" Click="BuildLibraryButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> --> <!--Comment Out When Done-->                      
+                        <!--<RibbonApplicationMenuItem Header="Export Target Info" Click="ExportTargetInfoButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> -->
+                        <!--<RibbonApplicationMenuItem Header="Build Library" Click="BuildLibraryButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> -->                      
                     </RibbonApplicationMenu>
                 </Ribbon.ApplicationMenu>
                 <RibbonTab x:Name="InformedRibbonTab" Header="Single Target" KeyTip="S"/>
@@ -98,8 +98,8 @@
                                 <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="LipidTargetsProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding LipidTargetLoadProgress, Mode=OneWay}" />
                             </DockPanel>
                             <DockPanel>
-                                <CheckBox Margin="5,5,5,0" IsChecked="{Binding Path=AverageSpec, Mode=TwoWay}"></CheckBox>
-                                <TextBlock x:Name="AverageSpectraBlock" Width="Auto" Text="Average Spectra" Margin="0,3,10,0"/>
+                                <!--<CheckBox Margin="5,5,5,0" IsChecked="{Binding Path=AverageSpec, Mode=TwoWay}"></CheckBox>
+                                <TextBlock x:Name="AverageSpectraBlock" Width="Auto" Text="Average Spectra" Margin="0,3,10,0"/> -->
                                 <TextBlock x:Name="NumberOfTargetsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding LipidTargetList.Count, StringFormat='  # of Targets: \{0\}'}" Margin="0,5,0,0" DockPanel.Dock="Left" />
                             </DockPanel>
                             <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">

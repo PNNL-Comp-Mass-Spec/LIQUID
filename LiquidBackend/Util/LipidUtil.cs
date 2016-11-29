@@ -530,8 +530,9 @@ namespace LiquidBackend.Util
                 if (lipidClass == LipidClass.PC)
                 {
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 15, 1, 4, 0, 1).Mass, "C5H15O4NP", true));
-                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 13, 1, 3, 0, 1).Mass, "C5H15O4NP-H2O")); //syd
-                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(5, 15, 1, 4, 0, 1).Mass, "M-C5H15O4NP")); //syd
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 13, 1, 3, 0, 1).Mass, "C5H15O4NP-H2O"));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(5, 15, 1, 4, 0, 1).Mass, "M-C5H15O4NP"));
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(5, 14, 1, 4, 0, 1).Mass, "M-C5H14O4NP"));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 9, 1, 0, 0, 0).Mass, "M-(CH2)3NH3"));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 14, 1, 1, 0, 0).Mass, "C5H14ON"));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 6, 0, 4, 0, 1).Mass, "C2H6O4P"));

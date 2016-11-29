@@ -105,9 +105,14 @@ namespace LiquidBackend.Util
 
 				// Find the MS1 data
 				//Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(targetMz, hcdTolerance, firstScanNumber);
-                int precursorScanNumber = lcmsRun.GetPrecursorScanNum(firstScanNumber);
+                int precursorScanNumber = 0;
+                if (lcmsRun.MinMsLevel == 1) //Make sure there are precursor scans in file
+                {
+                    precursorScanNumber = lcmsRun.GetPrecursorScanNum(matchingMsMsScanNumbers[i]);
+                }
                 Spectrum precursorSpectrum = lcmsRun.GetSpectrum(precursorScanNumber);
 				Xic xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(targetMz, hcdTolerance);
+
 
 				// Bogus data
                 if (precursorSpectrum != null && (xic.GetApexScanNum() < 0 || xic.GetSumIntensities() <= 0)) continue;
@@ -173,13 +178,17 @@ namespace LiquidBackend.Util
                 if (scanTracker.Contains(MsMsSpectrum.ScanNum)) continue;
 
                 double msmsPrecursorMz = MsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
-                int msmsPrecursorScan = lcmsRun.GetPrecursorScanNum(scan);
+                
 
                 Xic xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(msmsPrecursorMz, hcdTolerance);
 
                 // Bogus data
                 //if (xic.GetApexScanNum() < 0) continue;
-
+                int msmsPrecursorScan = 0;
+                if (lcmsRun.MinMsLevel == 1) //Make sure there are precursor scans in file
+                {
+                    msmsPrecursorScan = lcmsRun.GetPrecursorScanNum(scan);
+                }
                 Spectrum precursorSpectrum = lcmsRun.GetSpectrum(msmsPrecursorScan);
 
                 // Get all matching peaks
