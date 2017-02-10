@@ -1,14 +1,22 @@
-﻿<RibbonWindow
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:oxy="http://oxyplot.codeplex.com"
-        xmlns:controls="clr-namespace:Liquid.Controls"
-        xmlns:liquid="clr-namespace:Liquid"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Liquid.View.SingleTargetWindow"
-        Title="Liquid: Lipid Informed Quantitation and Identification" Height="845" Width="1075">
+﻿<RibbonWindow xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              Height="845"
+              mc:Ignorable="d"
+              Title="Liquid: Lipid Informed Quantitation and Identification"
+              Width="1075"
+              x:Class="Liquid.View.SingleTargetWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:controls="clr-namespace:Liquid.Controls"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:liquid="clr-namespace:Liquid"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:oxy="http://oxyplot.codeplex.com">
     <Grid x:Name="MainGrid">
-        <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left">
-            <Ribbon x:Name="RibbonWin" SelectedIndex="1" Height="45">
+        <StackPanel Height="Auto"
+                    HorizontalAlignment="Left"
+                    Width="Auto">
+            <Ribbon x:Name="RibbonWin"
+                    Height="45"
+                    SelectedIndex="1">
                 <Ribbon.ApplicationMenu>
                     <RibbonApplicationMenu KeyTip="F">
                         <RibbonApplicationMenu.SmallImageSource>
@@ -16,17 +24,16 @@
                                 <DrawingImage.Drawing>
                                     <GlyphRunDrawing ForegroundBrush="White">
                                         <GlyphRunDrawing.GlyphRun>
-                                            <GlyphRun
-												CaretStops="{x:Null}" 
-												ClusterMap="{x:Null}" 
-												IsSideways="False" 
-												GlyphOffsets="{x:Null}" 
-												GlyphIndices="41 76 79 72" 
-												FontRenderingEmSize="12" 
-												DeviceFontName="{x:Null}" 
-												AdvanceWidths="5.859375 2.90625 2.90625 6.275390625">
+                                            <GlyphRun AdvanceWidths="5.859375 2.90625 2.90625 6.275390625"
+                                                      CaretStops="{x:Null}"
+                                                      ClusterMap="{x:Null}"
+                                                      DeviceFontName="{x:Null}"
+                                                      FontRenderingEmSize="12"
+                                                      GlyphIndices="41 76 79 72"
+                                                      GlyphOffsets="{x:Null}"
+                                                      IsSideways="False">
                                                 <GlyphRun.GlyphTypeface>
-                                                    <GlyphTypeface FontUri="C:\WINDOWS\Fonts\SEGOEUI.TTF"/>
+                                                    <GlyphTypeface FontUri="C:\WINDOWS\Fonts\SEGOEUI.TTF" />
                                                 </GlyphRun.GlyphTypeface>
                                             </GlyphRun>
                                         </GlyphRunDrawing.GlyphRun>
@@ -34,146 +41,539 @@
                                 </DrawingImage.Drawing>
                             </DrawingImage>
                         </RibbonApplicationMenu.SmallImageSource>
-                        <RibbonApplicationMenuItem Header="Open File" Click="RawFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
-                        <RibbonApplicationMenuItem Header="Load Previous IDs" Click="LoadIdentificationsFileButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/>
+                        <RibbonApplicationMenuItem Click="RawFileButtonClick"
+                                                   Header="Open File"
+                                                   ImageSource="..\Images\open-file-icon_32x32.png" />
+                        <RibbonApplicationMenuItem Click="LoadIdentificationsFileButtonClick"
+                                                   Header="Load Previous IDs"
+                                                   ImageSource="..\Images\open-file-icon_32x32.png" />
                         <!--<RibbonApplicationMenuItem Header="Export Target Info" Click="ExportTargetInfoButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> -->
-                        <!--<RibbonApplicationMenuItem Header="Build Library" Click="BuildLibraryButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> -->                      
+                        <!--<RibbonApplicationMenuItem Header="Build Library" Click="BuildLibraryButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> -->
                     </RibbonApplicationMenu>
                 </Ribbon.ApplicationMenu>
-                <RibbonTab x:Name="InformedRibbonTab" Header="Single Target" KeyTip="S"/>
-                <RibbonTab x:Name="GloblWorkflowRibbonTab" Header="Global Analysis" KeyTip="G"/>
-                <RibbonTab x:Name="FragmentSearchRibbonTab" Header="Fragment Search" KeyTip="F"/>
+                <RibbonTab x:Name="InformedRibbonTab"
+                           Header="Single Target"
+                           KeyTip="S" />
+                <RibbonTab x:Name="GloblWorkflowRibbonTab"
+                           Header="Global Analysis"
+                           KeyTip="G" />
+                <RibbonTab x:Name="FragmentSearchRibbonTab"
+                           Header="Fragment Search"
+                           KeyTip="F" />
             </Ribbon>
-            <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left">
-                <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                    <!--Button Content="Open File" Click="RawFileButtonClick" Height="23" HorizontalAlignment="Left" Name="RawFileButton" VerticalAlignment="Top" Width="60" /-->
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="RawFileLocationTextBlock" Text="{Binding RawFileName, StringFormat=File Loaded: \{0\}}" VerticalAlignment="Top" Width="Auto" Visibility="Visible" />
+            <StackPanel Height="Auto"
+                        HorizontalAlignment="Left"
+                        Width="Auto">
+                <DockPanel Height="Auto"
+                           FlowDirection="LeftToRight"
+                           Width="Auto">
+                    <!--  Button Content="Open File" Click="RawFileButtonClick" Height="23" HorizontalAlignment="Left" Name="RawFileButton" VerticalAlignment="Top" Width="60" /  -->
+                    <TextBlock x:Name="RawFileLocationTextBlock"
+                               Height="23"
+                               VerticalAlignment="Top"
+                               HorizontalAlignment="Left"
+                               Margin="5,3,0,0"
+                               Text="{Binding RawFileName,
+                                              StringFormat=File Loaded: \{0\}}"
+                               Visibility="Visible"
+                               Width="Auto" />
                 </DockPanel>
-                <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                    <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left">
-                        <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                            <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="HcdErrorTextBlock" Text="HCD Mass Error:" VerticalAlignment="Top" Width="100" />
-                            <TextBox Text="30" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="HcdErrorTextBox" VerticalAlignment="Top" Width="50" />
+                <DockPanel Height="Auto"
+                           FlowDirection="LeftToRight"
+                           Width="Auto">
+                    <StackPanel Height="Auto"
+                                HorizontalAlignment="Left"
+                                Width="Auto">
+                        <DockPanel Height="Auto"
+                                   FlowDirection="LeftToRight"
+                                   Width="Auto">
+                            <TextBlock x:Name="HcdErrorTextBlock"
+                                       Height="23"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="5,5,0,0"
+                                       Text="HCD Mass Error:"
+                                       Width="100" />
+                            <TextBox x:Name="HcdErrorTextBox"
+                                     Height="23"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,3,0,0"
+                                     Text="30"
+                                     Width="50" />
                         </DockPanel>
-                        <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                            <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="CidErrorTextBlock" Text="CID Mass Error:" VerticalAlignment="Top" Width="100" />
-                            <TextBox Text="500" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="CidErrorTextBox" VerticalAlignment="Top" Width="50" />
+                        <DockPanel Height="Auto"
+                                   FlowDirection="LeftToRight"
+                                   Width="Auto">
+                            <TextBlock x:Name="CidErrorTextBlock"
+                                       Height="23"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="5,5,0,0"
+                                       Text="CID Mass Error:"
+                                       Width="100" />
+                            <TextBox x:Name="CidErrorTextBox"
+                                     Height="23"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,3,0,0"
+                                     Text="500"
+                                     Width="50" />
                         </DockPanel>
-                        <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                            <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="FragmentationModeTextBlock" Text="Ionization Mode:" VerticalAlignment="Top" Width="100" />
-                            <ComboBox ItemsSource="{Binding FragmentationModeList}" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="FragmentationModeComboBox" VerticalAlignment="Top" Width="110" />
+                        <DockPanel Height="Auto"
+                                   FlowDirection="LeftToRight"
+                                   Width="Auto">
+                            <TextBlock x:Name="FragmentationModeTextBlock"
+                                       Height="23"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="5,5,0,0"
+                                       Text="Ionization Mode:"
+                                       Width="100" />
+                            <ComboBox x:Name="FragmentationModeComboBox"
+                                      Height="23"
+                                      VerticalAlignment="Top"
+                                      HorizontalAlignment="Left"
+                                      ItemsSource="{Binding FragmentationModeList}"
+                                      Margin="5,3,0,0"
+                                      Width="110" />
                         </DockPanel>
-                        <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=InformedRibbonTab}">
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="CommonNameTextBlock" Text="Common Name:" VerticalAlignment="Top" Width="100" />
-                                <TextBox Text="PE(18:3/20:5)" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="CommonNameTextBox" VerticalAlignment="Top" Width="110" />
+                        <StackPanel Height="Auto"
+                                    HorizontalAlignment="Left"
+                                    Visibility="{Binding IsSelected,
+                                                         Converter={StaticResource BooleanToVisibilityConverter},
+                                                         ElementName=InformedRibbonTab}"
+                                    Width="Auto">
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Width="Auto">
+                                <TextBlock x:Name="CommonNameTextBlock"
+                                           Height="23"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="5,5,0,0"
+                                           Text="Common Name:"
+                                           Width="100" />
+                                <TextBox x:Name="CommonNameTextBox"
+                                         Height="23"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Left"
+                                         Margin="5,3,0,0"
+                                         Text="PE(18:3/20:5)"
+                                         Width="110" />
                             </DockPanel>
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="AdductTextBlock" Text="Adduct:" VerticalAlignment="Top" Width="100" />
-                                <ComboBox ItemsSource="{Binding AdductList}" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="AdductComboBox" VerticalAlignment="Top" Width="110" />
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Width="Auto">
+                                <TextBlock x:Name="AdductTextBlock"
+                                           Height="23"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="5,5,0,0"
+                                           Text="Adduct:"
+                                           Width="100" />
+                                <ComboBox x:Name="AdductComboBox"
+                                          Height="23"
+                                          VerticalAlignment="Top"
+                                          HorizontalAlignment="Left"
+                                          ItemsSource="{Binding AdductList}"
+                                          Margin="5,3,0,0"
+                                          Width="110" />
                             </DockPanel>
 
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                <Button Content="Search For Target!" Click="SearchForTargetButtonClick" Height="23" HorizontalAlignment="Center" x:Name="SearchForTargetButton" VerticalAlignment="Top" Width="120" Margin="0,5,0,0" DockPanel.Dock="Right" IsEnabled="False" />
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Width="Auto">
+                                <Button x:Name="SearchForTargetButton"
+                                        Height="23"
+                                        VerticalAlignment="Top"
+                                        Click="SearchForTargetButtonClick"
+                                        Content="Search For Target!"
+                                        DockPanel.Dock="Right"
+                                        HorizontalAlignment="Center"
+                                        IsEnabled="False"
+                                        Margin="0,5,0,0"
+                                        Width="120" />
                             </DockPanel>
-                            <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Center">
-                                <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                    <TextBox x:Name="EmpiricalFormulaTextBlock" Width="Auto" FontWeight="Bold" Text="  Formula:" Margin="0,5,0,0" Style="{StaticResource SelectableTextBlockLikeStyle}" />
-                                    <RichTextBox x:Name="EmpiricalFormulaRichTextBlock" FontWeight="Bold" Width="160" Margin="0,5,0,0" Style="{StaticResource SelectableRichTextBlockLikeStyle}"/>
+                            <StackPanel Height="Auto"
+                                        HorizontalAlignment="Center"
+                                        Width="Auto">
+                                <DockPanel Height="Auto"
+                                           FlowDirection="LeftToRight"
+                                           Width="Auto">
+                                    <TextBox x:Name="EmpiricalFormulaTextBlock"
+                                             FontWeight="Bold"
+                                             Margin="0,5,0,0"
+                                             Style="{StaticResource SelectableTextBlockLikeStyle}"
+                                             Text="  Formula:"
+                                             Width="Auto" />
+                                    <RichTextBox x:Name="EmpiricalFormulaRichTextBlock"
+                                                 FontWeight="Bold"
+                                                 Margin="0,5,0,0"
+                                                 Style="{StaticResource SelectableRichTextBlockLikeStyle}"
+                                                 Width="160" />
                                 </DockPanel>
-                                <TextBox x:Name="TargetMzTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding CurrentLipidTarget.MzRounded, Mode=OneWay, StringFormat='  Target m/z: \{0\}'}" Margin="0,5,0,0" Style="{StaticResource SelectableTextBlockLikeStyle}" />
-                                <TextBlock x:Name="NumberOfResultsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding SpectrumSearchResultList.Count, StringFormat='  # of Results: \{0\}'}" Margin="0,5,0,0" />
-                                <DataGrid x:Name="SpectrumSearchResultsDataGrid" ItemsSource="{Binding SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="SpectrumSearchResultSelectionChange" Height="Auto" MaxHeight="350" Width="Auto" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                                <TextBox x:Name="TargetMzTextBlock"
+                                         FontWeight="Bold"
+                                         Margin="0,5,0,0"
+                                         Style="{StaticResource SelectableTextBlockLikeStyle}"
+                                         Text="{Binding CurrentLipidTarget.MzRounded,
+                                                        Mode=OneWay,
+                                                        StringFormat='  Target m/z: \{0\}'}"
+                                         Width="Auto" />
+                                <TextBlock x:Name="NumberOfResultsTextBlock"
+                                           FontWeight="Bold"
+                                           Margin="0,5,0,0"
+                                           Text="{Binding SpectrumSearchResultList.Count,
+                                                          StringFormat='  # of Results: \{0\}'}"
+                                           Width="Auto" />
+                                <DataGrid x:Name="SpectrumSearchResultsDataGrid"
+                                          Height="Auto"
+                                          MaxHeight="350"
+                                          AutoGenerateColumns="False"
+                                          HeadersVisibility="Column"
+                                          HorizontalAlignment="Left"
+                                          ItemsSource="{Binding SpectrumSearchResultList,
+                                                                Mode=OneWay}"
+                                          Margin="5,5,0,0"
+                                          SelectionChanged="SpectrumSearchResultSelectionChange"
+                                          SelectionMode="Single"
+                                          Width="Auto">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Precursor" Binding="{Binding PrecursorSpectrum.ScanNum, Mode=OneWay}" Width="75" />
-                                        <DataGridTextColumn Header="Apex" Binding="{Binding ApexScanNum, Mode=OneWay}" Width="75" />
-                                        <DataGridTextColumn Header="Score" Binding="{Binding ModelScore, Mode=OneWay, StringFormat=0.00}" Width="75" />
+                                        <DataGridTextColumn Binding="{Binding PrecursorSpectrum.ScanNum,
+                                                                              Mode=OneWay}"
+                                                            Header="Precursor"
+                                                            Width="75" />
+                                        <DataGridTextColumn Binding="{Binding ApexScanNum,
+                                                                              Mode=OneWay}"
+                                                            Header="Apex"
+                                                            Width="75" />
+                                        <DataGridTextColumn Binding="{Binding ModelScore,
+                                                                              Mode=OneWay,
+                                                                              StringFormat=0.00}"
+                                                            Header="Score"
+                                                            Width="75" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=GloblWorkflowRibbonTab}">
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight" Margin="0,5,0,0">
-                                <Button Content="Load Lipid Targets" Click="LoadTargetsFileButtonClick" Height="23" HorizontalAlignment="Left" x:Name="LoadTargetsButton" VerticalAlignment="Top" Width="110" Margin="5,0,0,0" />
-                                <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="LipidTargetsProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding LipidTargetLoadProgress, Mode=OneWay}" />
+                        <StackPanel Height="Auto"
+                                    HorizontalAlignment="Left"
+                                    Visibility="{Binding IsSelected,
+                                                         Converter={StaticResource BooleanToVisibilityConverter},
+                                                         ElementName=GloblWorkflowRibbonTab}"
+                                    Width="Auto">
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Margin="0,5,0,0"
+                                       Width="Auto">
+                                <Button x:Name="LoadTargetsButton"
+                                        Height="23"
+                                        VerticalAlignment="Top"
+                                        Click="LoadTargetsFileButtonClick"
+                                        Content="Load Lipid Targets"
+                                        HorizontalAlignment="Left"
+                                        Margin="5,0,0,0"
+                                        Width="110" />
+                                <ProgressBar x:Name="LipidTargetsProgressBar"
+                                             Height="23"
+                                             VerticalAlignment="Top"
+                                             Value="{Binding LipidTargetLoadProgress,
+                                                             Mode=OneWay}"
+                                             HorizontalAlignment="Left"
+                                             Margin="5,0,0,0"
+                                             Width="100" />
                             </DockPanel>
                             <DockPanel>
                                 <!--<CheckBox Margin="5,5,5,0" IsChecked="{Binding Path=AverageSpec, Mode=TwoWay}"></CheckBox>
-                                <TextBlock x:Name="AverageSpectraBlock" Width="Auto" Text="Average Spectra" Margin="0,3,10,0"/> -->
-                                <TextBlock x:Name="NumberOfTargetsTextBlock" Width="Auto" FontWeight="Bold" Text="{Binding LipidTargetList.Count, StringFormat='  # of Targets: \{0\}'}" Margin="0,5,0,0" DockPanel.Dock="Left" />
+                                <TextBlock x:Name="AverageSpectraBlock" Width="Auto" Text="Average Spectra" Margin="0,3,10,0"/>-->
+                                <TextBlock x:Name="NumberOfTargetsTextBlock"
+                                           DockPanel.Dock="Left"
+                                           FontWeight="Bold"
+                                           Margin="0,5,0,0"
+                                           Text="{Binding LipidTargetList.Count,
+                                                          StringFormat='  # of Targets: \{0\}'}"
+                                           Width="Auto" />
                             </DockPanel>
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="ResultsPerScanTextBlock" Text="Results Per Scan:" VerticalAlignment="Top" Width="105" />
-                                <TextBox Text="1" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="ResultsPerScanTextBox" VerticalAlignment="Top" Width="30" />
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Width="Auto">
+                                <TextBlock x:Name="ResultsPerScanTextBlock"
+                                           Height="23"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="5,5,0,0"
+                                           Text="Results Per Scan:"
+                                           Width="105" />
+                                <TextBox x:Name="ResultsPerScanTextBox"
+                                         Height="23"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Left"
+                                         Margin="5,3,0,0"
+                                         Text="1"
+                                         Width="30" />
                             </DockPanel>
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight" Margin="0,0,0,0">
-                                <Button Content="Process Targets!" Click="ProcessAllTargetsButtonClick" Height="23" HorizontalAlignment="Left" x:Name="ProcessAllTargetsButton" VerticalAlignment="Top" Width="110" Margin="5,5,0,0" IsEnabled="False" />
-                                <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="GlobalWorkflowProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding GlobalWorkflowProgress, Mode=OneWay}" />
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Margin="0,0,0,0"
+                                       Width="Auto">
+                                <Button x:Name="ProcessAllTargetsButton"
+                                        Height="23"
+                                        VerticalAlignment="Top"
+                                        Click="ProcessAllTargetsButtonClick"
+                                        Content="Process Targets!"
+                                        HorizontalAlignment="Left"
+                                        IsEnabled="False"
+                                        Margin="5,5,0,0"
+                                        Width="110" />
+                                <ProgressBar x:Name="GlobalWorkflowProgressBar"
+                                             Height="23"
+                                             VerticalAlignment="Top"
+                                             Value="{Binding GlobalWorkflowProgress,
+                                                             Mode=OneWay}"
+                                             HorizontalAlignment="Left"
+                                             Margin="5,5,0,0"
+                                             Width="100" />
                             </DockPanel>
-                            <DataGrid x:Name="LipidGroupSearchResultsDataGrid" ItemsSource="{Binding LipidGroupSearchResultList, Mode=OneWay}" SelectionChanged="LipidGroupSearchResultSelectionChange" Height="Auto" MaxHeight="437" Width="262" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                            <DataGrid x:Name="LipidGroupSearchResultsDataGrid"
+                                      Height="Auto"
+                                      MaxHeight="437"
+                                      AutoGenerateColumns="False"
+                                      HeadersVisibility="Column"
+                                      HorizontalAlignment="Left"
+                                      ItemsSource="{Binding LipidGroupSearchResultList,
+                                                            Mode=OneWay}"
+                                      Margin="5,5,0,0"
+                                      SelectionChanged="LipidGroupSearchResultSelectionChange"
+                                      SelectionMode="Single"
+                                      Width="262">
                                 <DataGrid.Columns>
                                     <DataGridCheckBoxColumn Binding="{Binding ShouldExport, Mode=TwoWay}" />
-                                    <DataGridTextColumn Header="Scan" Binding="{Binding DisplayScanNum, Mode=OneWay}" Width="40" />
-                                    <DataGridTextColumn Header="Lipid" Binding="{Binding LipidTarget.StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="133" />
-                                    <!--DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=SpectrumSearchResult.NumMatchingMsMsPeaks, StringFormat=0}" Width="60" /-->
-                                    <DataGridTextColumn Header="Score" Binding="{Binding Score, StringFormat=0.00}" Width="50" />
-                                    <DataGridTextColumn Header="M/Z" Binding="{Binding DisplayMz, StringFormat=0.00}" Width="50" />
+                                    <DataGridTextColumn Binding="{Binding DisplayScanNum,
+                                                                          Mode=OneWay}"
+                                                        Header="Scan"
+                                                        Width="40" />
+                                    <DataGridTextColumn Binding="{Binding LipidTarget.StrippedDisplay,
+                                                                          Mode=OneWay,
+                                                                          StringFormat=0}"
+                                                        Header="Lipid"
+                                                        Width="133" />
+                                    <!--  DataGridTextColumn Header="# MS/MS" Binding="{Binding Path=SpectrumSearchResult.NumMatchingMsMsPeaks, StringFormat=0}" Width="60" /  -->
+                                    <DataGridTextColumn Binding="{Binding Score,
+                                                                          StringFormat=0.00}"
+                                                        Header="Score"
+                                                        Width="50" />
+                                    <DataGridTextColumn Binding="{Binding DisplayMz,
+                                                                          StringFormat=0.00}"
+                                                        Header="M/Z"
+                                                        Width="50" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Content="Export Selected Results" Click="ExportGlobalResultsButtonClick" Height="23" HorizontalAlignment="Center" x:Name="ExportGlobalResultsButton" VerticalAlignment="Top" Width="140" Margin="0,5,0,0" />
-                            <Button Content="Export All Results" Click="ExportAllGlobalResultsButtonClick" Height="23" HorizontalAlignment="Center" x:Name="ExportAllGlobalResultsButton" VerticalAlignment="Top" Width="140" Margin="0,5,0,0" />
+                            <Button x:Name="ExportGlobalResultsButton"
+                                    Height="23"
+                                    VerticalAlignment="Top"
+                                    Click="ExportGlobalResultsButtonClick"
+                                    Content="Export Selected Results"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,5,0,0"
+                                    Width="140" />
+                            <Button x:Name="ExportAllGlobalResultsButton"
+                                    Height="23"
+                                    VerticalAlignment="Top"
+                                    Click="ExportAllGlobalResultsButtonClick"
+                                    Content="Export All Results"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,5,0,0"
+                                    Width="140" />
                         </StackPanel>
-                        <StackPanel Height="Auto" Width="Auto" HorizontalAlignment="Left" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=FragmentSearchRibbonTab}">
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="IonTypeTextBlock" Text="Ion Type:" VerticalAlignment="Top" Width="100" />
-                                <ComboBox ItemsSource="{Binding IonTypeList}" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="IonTypeComboBox" VerticalAlignment="Top" Width="110" />
+                        <StackPanel Height="Auto"
+                                    HorizontalAlignment="Left"
+                                    Visibility="{Binding IsSelected,
+                                                         Converter={StaticResource BooleanToVisibilityConverter},
+                                                         ElementName=FragmentSearchRibbonTab}"
+                                    Width="Auto">
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Width="Auto">
+                                <TextBlock x:Name="IonTypeTextBlock"
+                                           Height="23"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="5,5,0,0"
+                                           Text="Ion Type:"
+                                           Width="100" />
+                                <ComboBox x:Name="IonTypeComboBox"
+                                          Height="23"
+                                          VerticalAlignment="Top"
+                                          HorizontalAlignment="Left"
+                                          ItemsSource="{Binding IonTypeList}"
+                                          Margin="5,3,0,0"
+                                          Width="110" />
                             </DockPanel>
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="AdductTextBlock2" Text="Adduct:" VerticalAlignment="Top" Width="100" />
-                                <ComboBox ItemsSource="{Binding AdductList}" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="AdductComboBox2" VerticalAlignment="Top" Width="110" />
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Width="Auto">
+                                <TextBlock x:Name="AdductTextBlock2"
+                                           Height="23"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="5,5,0,0"
+                                           Text="Adduct:"
+                                           Width="100" />
+                                <ComboBox x:Name="AdductComboBox2"
+                                          Height="23"
+                                          VerticalAlignment="Top"
+                                          HorizontalAlignment="Left"
+                                          ItemsSource="{Binding AdductList}"
+                                          Margin="5,3,0,0"
+                                          Width="110" />
                             </DockPanel>
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="FragmentMassTextBlock" Text="Fragment Mass:" VerticalAlignment="Top" Width="100" />
-                                <TextBox Text="" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="FragmentMassTextBox" VerticalAlignment="Top" Width="110" />
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Width="Auto">
+                                <TextBlock x:Name="FragmentMassTextBlock"
+                                           Height="23"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="5,5,0,0"
+                                           Text="Fragment Mass:"
+                                           Width="100" />
+                                <TextBox x:Name="FragmentMassTextBox"
+                                         Height="23"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Left"
+                                         Margin="5,3,0,0"
+                                         Text=""
+                                         Width="110" />
                             </DockPanel>
-                            <DockPanel Height="Auto" Width="Auto" FlowDirection="LeftToRight">
-                                <TextBlock Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="MinimumMatchesTextBlock" Text="Min. # Matches:" VerticalAlignment="Top" Width="100" />
-                                <TextBox Text="1" Height="23" HorizontalAlignment="Left" Margin="5,3,0,0" x:Name="MinimumMatchesTextBox" VerticalAlignment="Top" Width="110" />
+                            <DockPanel Height="Auto"
+                                       FlowDirection="LeftToRight"
+                                       Width="Auto">
+                                <TextBlock x:Name="MinimumMatchesTextBlock"
+                                           Height="23"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="5,5,0,0"
+                                           Text="Min. # Matches:"
+                                           Width="100" />
+                                <TextBox x:Name="MinimumMatchesTextBox"
+                                         Height="23"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Left"
+                                         Margin="5,3,0,0"
+                                         Text="1"
+                                         Width="110" />
                             </DockPanel>
                             <DockPanel>
-                                <Button Content="Add Fragment" Click="AddFragmentButton_OnClick" Height="23" HorizontalAlignment="Left" x:Name="AddFragmentButton" VerticalAlignment="Top" Width="100" Margin="5,5,0,0" IsEnabled="True" />
-                                <Button Content="Remove Fragment" Click="RemoveFragmentButton_OnClick" Height="23" HorizontalAlignment="Left" x:Name="RemoveFragmentButton" VerticalAlignment="Top" Width="110" Margin="5,5,0,0" IsEnabled="False" />
+                                <Button x:Name="AddFragmentButton"
+                                        Height="23"
+                                        VerticalAlignment="Top"
+                                        Click="AddFragmentButton_OnClick"
+                                        Content="Add Fragment"
+                                        HorizontalAlignment="Left"
+                                        IsEnabled="True"
+                                        Margin="5,5,0,0"
+                                        Width="100" />
+                                <Button x:Name="RemoveFragmentButton"
+                                        Height="23"
+                                        VerticalAlignment="Top"
+                                        Click="RemoveFragmentButton_OnClick"
+                                        Content="Remove Fragment"
+                                        HorizontalAlignment="Left"
+                                        IsEnabled="False"
+                                        Margin="5,5,0,0"
+                                        Width="110" />
                                 <!--<ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" Name="FragmentSearchProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding FragmentSearchProgress, Mode=OneWay}" /> -->
                             </DockPanel>
                             <DockPanel>
-                                <DataGrid Name="FragmentSearchListDataGrid" ItemsSource="{Binding Path=FragmentSearchList, Mode=OneWay}" Height="Auto" MaxHeight="120" Width="Auto" SelectionChanged="FragmentSelectionChange" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Extended" Margin="5,5,0,0" HorizontalAlignment="Left">
+                                <DataGrid Height="Auto"
+                                          MaxHeight="120"
+                                          AutoGenerateColumns="False"
+                                          HeadersVisibility="Column"
+                                          HorizontalAlignment="Left"
+                                          ItemsSource="{Binding Path=FragmentSearchList,
+                                                                Mode=OneWay}"
+                                          Margin="5,5,0,0"
+                                          Name="FragmentSearchListDataGrid"
+                                          SelectionChanged="FragmentSelectionChange"
+                                          SelectionMode="Extended"
+                                          Width="Auto">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="M/Z" Binding="{Binding Path=Mz, Mode=OneWay}" Width="100" />
-                                        <DataGridTextColumn Header="Ion Type" Binding="{Binding Path=Description, Mode=OneWay}" Width="112" />
+                                        <DataGridTextColumn Binding="{Binding Path=Mz,
+                                                                              Mode=OneWay}"
+                                                            Header="M/Z"
+                                                            Width="100" />
+                                        <DataGridTextColumn Binding="{Binding Path=Description,
+                                                                              Mode=OneWay}"
+                                                            Header="Ion Type"
+                                                            Width="112" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DockPanel>
                             <DockPanel>
-                                <Button Content="Search For Target!" Click="SearchForFragmentsButtonClick" Height="23" HorizontalAlignment="Center" x:Name="SearchForFragmentsButton" VerticalAlignment="Top" Width="110" Margin="5,5,0,0" IsEnabled="False" />
-                                <ProgressBar Height="23" HorizontalAlignment="Left" Margin="5,5,0,0" x:Name="FragmentWorkflowProgressBar" VerticalAlignment="Top" Width="100" Value="{Binding FragmentSearchProgress, Mode=OneWay}"/>
+                                <Button x:Name="SearchForFragmentsButton"
+                                        Height="23"
+                                        VerticalAlignment="Top"
+                                        Click="SearchForFragmentsButtonClick"
+                                        Content="Search For Target!"
+                                        HorizontalAlignment="Center"
+                                        IsEnabled="False"
+                                        Margin="5,5,0,0"
+                                        Width="110" />
+                                <ProgressBar x:Name="FragmentWorkflowProgressBar"
+                                             Height="23"
+                                             VerticalAlignment="Top"
+                                             Value="{Binding FragmentSearchProgress,
+                                                             Mode=OneWay}"
+                                             HorizontalAlignment="Left"
+                                             Margin="5,5,0,0"
+                                             Width="100" />
                             </DockPanel>
                             <DockPanel>
-                                <DataGrid x:Name="FragmentSearchResultsDataGrid" ItemsSource="{Binding SpectrumSearchResultList, Mode=OneWay}" SelectionChanged="MsMsSearchResultSelectionChange" Height="Auto" MaxHeight="350" Width="262" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" Margin="5,5,0,0" HorizontalAlignment="Left">
+                                <DataGrid x:Name="FragmentSearchResultsDataGrid"
+                                          Height="Auto"
+                                          MaxHeight="350"
+                                          AutoGenerateColumns="False"
+                                          HeadersVisibility="Column"
+                                          HorizontalAlignment="Left"
+                                          ItemsSource="{Binding SpectrumSearchResultList,
+                                                                Mode=OneWay}"
+                                          Margin="5,5,0,0"
+                                          SelectionChanged="MsMsSearchResultSelectionChange"
+                                          SelectionMode="Single"
+                                          Width="262">
                                     <DataGrid.Columns>
                                         <DataGridCheckBoxColumn Binding="{Binding ShouldExport, Mode=TwoWay}" />
-                                        <DataGridTextColumn Header="Scan" Binding="{Binding DisplayScanNum, Mode=OneWay}" Width="50" />
-                                        <DataGridTextColumn Header="M/Z" Binding="{Binding StrippedDisplay, Mode=OneWay, StringFormat=0}" Width="80" />
-                                        <DataGridTextColumn Header="# Matched" Binding="{Binding NumObservedPeaks, Mode=OneWay}" Width="*"/>
+                                        <DataGridTextColumn Binding="{Binding DisplayScanNum,
+                                                                              Mode=OneWay}"
+                                                            Header="Scan"
+                                                            Width="50" />
+                                        <DataGridTextColumn Binding="{Binding StrippedDisplay,
+                                                                              Mode=OneWay,
+                                                                              StringFormat=0}"
+                                                            Header="M/Z"
+                                                            Width="80" />
+                                        <DataGridTextColumn Binding="{Binding NumObservedPeaks,
+                                                                              Mode=OneWay}"
+                                                            Header="# Matched"
+                                                            Width="*" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </DockPanel>
                             <DockPanel>
-                                <Button Content="Export Selected Results" Click="ExportFragmentResultsButtonClick" Height="23" HorizontalAlignment="Center" x:Name="ExportFragmentResultsButton" VerticalAlignment="Top" Width="140" Margin="0,5,0,0" />
+                                <Button x:Name="ExportFragmentResultsButton"
+                                        Height="23"
+                                        VerticalAlignment="Top"
+                                        Click="ExportFragmentResultsButtonClick"
+                                        Content="Export Selected Results"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,5,0,0"
+                                        Width="140" />
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>
-                    <controls:MsMsInfoUserControl x:Name="MsMsInfoUserControl"/>
-                    <controls:MsOneInfoUserControl x:Name="MsOneInfoUserControl"/>
+                    <controls:MsMsInfoUserControl x:Name="MsMsInfoUserControl" />
+                    <controls:MsOneInfoUserControl x:Name="MsOneInfoUserControl" />
                 </DockPanel>
             </StackPanel>
         </StackPanel>
