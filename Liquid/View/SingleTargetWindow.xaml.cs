@@ -463,7 +463,7 @@ namespace Liquid.View
                 this.SingleTargetViewModel.OnWriteFragmentInfo(fileLocation);
             }
 	    }
-
+        /*
         public static RenderTargetBitmap GetImage(View view)
         {
             Size size = new Size(view.ActualWidth, view.ActualHeight);
@@ -482,5 +482,6 @@ namespace Liquid.View
             result.Render(drawingvisual);
             return result;
         }
+         * */
 	}
 }

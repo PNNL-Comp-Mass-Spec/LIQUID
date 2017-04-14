@@ -10,92 +10,92 @@ using LiquidBackend.Scoring;
 
 namespace LiquidBackend.Domain
 {
-	public class SpectrumSearchResult
-	{
-		public Spectrum PrecursorSpectrum { get; private set; }
+    public class SpectrumSearchResult
+    {
+        public Spectrum PrecursorSpectrum { get; private set; }
         public Tolerance PrecursorTolerance { get; set; }
-		public ProductSpectrum HcdSpectrum { get; private set; }
-		public ProductSpectrum CidSpectrum { get; private set; }
-		public List<MsMsSearchResult> HcdSearchResultList { get; private set; }
-		public List<MsMsSearchResult> CidSearchResultList { get; private set; }
-		public Xic Xic { get; private set; }
-		public LcMsRun LcMsRun { get; private set; }
+        public ProductSpectrum HcdSpectrum { get; private set; }
+        public ProductSpectrum CidSpectrum { get; private set; }
+        public List<MsMsSearchResult> HcdSearchResultList { get; private set; }
+        public List<MsMsSearchResult> CidSearchResultList { get; private set; }
+        public Xic Xic { get; private set; }
+        public LcMsRun LcMsRun { get; private set; }
         public double RunLength { get; private set; }
         public bool ShouldExport { get; set; }
         public double ModelScore { get; set; }
 
-		public int NumMatchingMsMsPeaks
-		{
-			get { return GetNumMatchingMsMsPeaks(); }
-		}
+        public int NumMatchingMsMsPeaks
+        {
+            get { return GetNumMatchingMsMsPeaks(); }
+        }
 
-		public int ApexScanNum { get; private set; }
+        public int ApexScanNum { get; private set; }
 
-	    public string StrippedDisplay
-	    {
-	        get { return HcdSpectrum != null? HcdSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString(): CidSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString(); }
-	    }
+        public string StrippedDisplay
+        {
+            get { return HcdSpectrum != null? HcdSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString(): CidSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString(); }
+        }
 
-	    public int DisplayScanNum
-	    {
-	        get 
+        public int DisplayScanNum
+        {
+            get 
             {
-	            return HcdSpectrum != null ? HcdSpectrum.ScanNum : CidSpectrum.ScanNum;
-	        }
-	    }
+                return HcdSpectrum != null ? HcdSpectrum.ScanNum : CidSpectrum.ScanNum;
+            }
+        }
 
-	    public double ApexIntensity { get; private set; }
+        public double ApexIntensity { get; private set; }
 
-		//Implemented by grant. Used as a way to pass the area under the curve selected by the user to the exported results.
-		public double? PeakArea { get; set; }
+        //Implemented by grant. Used as a way to pass the area under the curve selected by the user to the exported results.
+        public double? PeakArea { get; set; }
 
-	    public double RetentionTime { get; private set; }
+        public double RetentionTime { get; private set; }
 
-		public double NormalizedElutionTime
-		{
-			get
+        public double NormalizedElutionTime
+        {
+            get
             { 
-			    return RetentionTime/RunLength;
-		    }
-		}
+                return RetentionTime/RunLength;
+            }
+        }
 
-	    public int NumObservedPeaks
-	    {
-	        get
-	        {
-	            return this.HcdSearchResultList.Count(x => x.ObservedPeak != null) + this.CidSearchResultList.Count(x => x.ObservedPeak != null);
-	        }
-	    } 
+        public int NumObservedPeaks
+        {
+            get
+            {
+                return this.HcdSearchResultList.Count(x => x.ObservedPeak != null) + this.CidSearchResultList.Count(x => x.ObservedPeak != null);
+            }
+        } 
 
-		public double Score
-		{
-			get
-			{
-				//XicPoint searchPoint = new XicPoint(this.PrecursorSpectrum.ScanNum, 0);
-				//int index = this.Xic.BinarySearch(searchPoint);
-				//double intensityOfPrecursor = this.Xic[index].Intensity;
-				//return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + this.CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity)) / intensityOfPrecursor;
-				return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + this.CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity));
-			}
-		}
+        public double Score
+        {
+            get
+            {
+                //XicPoint searchPoint = new XicPoint(this.PrecursorSpectrum.ScanNum, 0);
+                //int index = this.Xic.BinarySearch(searchPoint);
+                //double intensityOfPrecursor = this.Xic[index].Intensity;
+                //return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + this.CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity)) / intensityOfPrecursor;
+                return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + this.CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity));
+            }
+        }
 
-		public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, Spectrum precursorSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, Xic xic, LcMsRun lcMsRun, ScoreModel scoreModel = null, LipidTarget lipidTarget = null)
-		{
-			this.HcdSpectrum = hcdSpectrum;
-			this.CidSpectrum = cidSpectrum;
-			this.PrecursorSpectrum = precursorSpectrum;
-			this.HcdSearchResultList = hcdSearchResultList;
-			this.CidSearchResultList = cidSearchResultList;
-			this.Xic = xic;
-			this.LcMsRun = lcMsRun;
-			this.PeakArea = null;
-		    this.RunLength = lcMsRun.GetElutionTime(lcMsRun.MaxLcScan);
+        public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, Spectrum precursorSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, Xic xic, LcMsRun lcMsRun, ScoreModel scoreModel = null, LipidTarget lipidTarget = null)
+        {
+            this.HcdSpectrum = hcdSpectrum;
+            this.CidSpectrum = cidSpectrum;
+            this.PrecursorSpectrum = precursorSpectrum;
+            this.HcdSearchResultList = hcdSearchResultList;
+            this.CidSearchResultList = cidSearchResultList;
+            this.Xic = xic;
+            this.LcMsRun = lcMsRun;
+            this.PeakArea = null;
+            this.RunLength = lcMsRun.GetElutionTime(lcMsRun.MaxLcScan);
             this.ApexScanNum = this.Xic.GetNearestApexScanNum(this.PrecursorSpectrum.ScanNum, true);
             this.ApexIntensity = this.Xic.Where(x => x.ScanNum == this.ApexScanNum).Sum(x => x.Intensity);
             this.RetentionTime = this.LcMsRun.GetElutionTime(this.ApexScanNum);
-		    if(scoreModel != null && lipidTarget != null) this.ModelScore = scoreModel.ScoreLipid(lipidTarget, this);
+            if(scoreModel != null && lipidTarget != null) this.ModelScore = scoreModel.ScoreLipid(lipidTarget, this);
 
-		}
+        }
 
         public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, LcMsRun lcMsRun, ScoreModel scoreModel = null, LipidTarget lipidTarget = null)
         {
@@ -114,9 +114,9 @@ namespace LiquidBackend.Domain
             if (scoreModel != null && lipidTarget != null) this.ModelScore = scoreModel.ScoreLipid(lipidTarget, this);
         }
 
-		public int GetNumMatchingMsMsPeaks()
-		{
-			return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Union(this.CidSearchResultList.Where(x => x.ObservedPeak != null))).Count();
-		}
-	}
+        public int GetNumMatchingMsMsPeaks()
+        {
+            return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Union(this.CidSearchResultList.Where(x => x.ObservedPeak != null))).Count();
+        }
+    }
 }
