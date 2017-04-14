@@ -67,7 +67,7 @@ namespace LiquidBackend.Domain
                     for (int i = 0; i < acylChainList.Count; i++)
                     {
                         AcylChain acylChain = acylChainList[i];
-                        if (LipidClass == LipidClass.Ganglioside)
+                        /*if (LipidClass == LipidClass.Ganglioside)
                         {
                             carbons += acylChain.NumCarbons;
                             db += acylChain.NumDoubleBonds;
@@ -76,12 +76,12 @@ namespace LiquidBackend.Domain
                                 if (LipidType == LipidType.TwoChainsDihidroxy) stringBuilder.Append(carbons + ":" + db + "(2OH)");
                                 else stringBuilder.Append(carbons + ":" + db);
                             }
-                        }
-                        else
-                        {
+                        }*/
+                        //else
+                        //{
                             stringBuilder.Append(acylChain);
                             if (i < acylChainList.Count - 1) stringBuilder.Append("/");
-                        }
+                        //}
                     }
                     stringBuilder.Append(")");
                 }

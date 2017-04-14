@@ -430,6 +430,10 @@ namespace LiquidBackend.Util
 			int nextMsMsScanNumber = lcmsRun.GetNextScanNum(firstMsMsScanNumber, 2);
 			ProductSpectrum nextMsMsSpectrum = lcmsRun.GetSpectrum(nextMsMsScanNumber) as ProductSpectrum;
 
+            //Treat PQD scans as if they were CID
+            if(firstMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) firstMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
+            if(nextMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) nextMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
+
 			if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
 			{
 				if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.HcdOnly;

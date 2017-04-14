@@ -140,7 +140,7 @@ namespace LiquidBackend.Util
 
         public static List<SpectrumSearchResult> RunFragmentWorkflow(ICollection<MsMsSearchUnit> fragments, LcMsRun lcmsRun, double hcdMassError, double cidMassError, int minMatches, IProgress<int> progress = null )
         {
-            IEnumerable<MsMsSearchUnit> PISearchUnits = fragments.Where(x => x.Description.Equals("Primary Ion"));
+            IEnumerable<MsMsSearchUnit> PISearchUnits = fragments.Where(x => x.Description.Equals("Product Ion"));
             Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
             Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
             List<int> scanTracker = new List<int>(); //track what scans have been included in spectrumSearchResultsList so we don't make duplicate entries for matched CID and HCD

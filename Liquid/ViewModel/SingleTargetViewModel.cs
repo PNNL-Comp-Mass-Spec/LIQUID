@@ -7,7 +7,10 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using InformedProteomics.Backend.Data.Composition;
 using InformedProteomics.Backend.Data.Sequence;
 using InformedProteomics.Backend.Data.Spectrometry;
@@ -57,7 +60,7 @@ namespace Liquid.ViewModel
 			this.FragmentationModeList = new List<FragmentationMode> { FragmentationMode.Positive, FragmentationMode.Negative };
 			//this.AdductList = new List<Adduct> { Adduct.Hydrogen, Adduct.Dihydrogen, Adduct.Ammonium, Adduct.Acetate };
 		    this.AdductList = Enum.GetValues(typeof (Adduct)).Cast<Adduct>().ToList();
-            this.IonTypeList = new List<string>{"Primary Ion", "Neutral Loss"};
+            this.IonTypeList = new List<string>{"Product Ion", "Neutral Loss"};
 			this.SpectrumSearchResultList = new List<SpectrumSearchResult>();
 			this.LipidTargetList = new List<Lipid>();
 		    this.FragmentSearchList = new ObservableCollection<MsMsSearchUnit>();
@@ -375,6 +378,25 @@ namespace Liquid.ViewModel
 	        this.ExportProgress = value;
             OnPropertyChanged("ExportProgress");
 	    }
+
+        public static RenderTargetBitmap GetImage(OverallView view)
+        {
+            Size size = new Size(view.ActualWidth, view.ActualHeight);
+            if (size.IsEmpty)
+                return null;
+
+            RenderTargetBitmap result = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
+
+            DrawingVisual drawingvisual = new DrawingVisual();
+            using (DrawingContext context = drawingvisual.RenderOpen())
+            {
+                context.DrawRectangle(new VisualBrush(view), null, new Rect(new Point(), size));
+                context.Close();
+            }
+
+            result.Render(drawingvisual);
+            return result;
+        }
 
 	}
 }

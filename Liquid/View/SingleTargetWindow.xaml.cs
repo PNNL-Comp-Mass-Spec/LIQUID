@@ -40,7 +40,7 @@ namespace Liquid.View
 			this.FragmentationModeComboBox.SelectedValue = FragmentationMode.Positive;
 			this.AdductComboBox.SelectedValue = Adduct.Hydrogen;
             this.AdductComboBox2.SelectedValue = Adduct.Hydrogen;
-		    this.IonTypeComboBox.SelectedIndex = 0; //"Primary Ion"
+		    this.IonTypeComboBox.SelectedIndex = 0; //"Product Ion"
 			this.TargetMzTextBlock.Visibility = Visibility.Collapsed;
 			this.EmpiricalFormulaTextBlock.Visibility = Visibility.Collapsed;
 			this.EmpiricalFormulaRichTextBlock.Visibility = Visibility.Collapsed;
@@ -463,5 +463,24 @@ namespace Liquid.View
                 this.SingleTargetViewModel.OnWriteFragmentInfo(fileLocation);
             }
 	    }
+
+        public static RenderTargetBitmap GetImage(View view)
+        {
+            Size size = new Size(view.ActualWidth, view.ActualHeight);
+            if (size.IsEmpty)
+                return null;
+
+            RenderTargetBitmap result = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
+
+            DrawingVisual drawingvisual = new DrawingVisual();
+            using (DrawingContext context = drawingvisual.RenderOpen())
+            {
+                context.DrawRectangle(new VisualBrush(view), null, new Rect(new Point(), size));
+                context.Close();
+            }
+
+            result.Render(drawingvisual);
+            return result;
+        }
 	}
 }
