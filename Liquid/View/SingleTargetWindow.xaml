@@ -89,13 +89,31 @@
                         <DockPanel Height="Auto"
                                    FlowDirection="LeftToRight"
                                    Width="Auto">
+                            <TextBlock x:Name="PrecursorErrorTextBlock"
+                                       Height="23"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
+                                       Margin="5,5,0,0"
+                                       Text="Precursor Mass Error:"
+                                       Width="115" />
+                            <TextBox x:Name="PrecursorErrorTextBox"
+                                     Height="23"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="5,3,0,0"
+                                     Text="30"
+                                     Width="50" />
+                        </DockPanel>
+                        <DockPanel Height="Auto"
+                                   FlowDirection="LeftToRight"
+                                   Width="Auto">
                             <TextBlock x:Name="HcdErrorTextBlock"
                                        Height="23"
                                        VerticalAlignment="Top"
                                        HorizontalAlignment="Left"
                                        Margin="5,5,0,0"
                                        Text="HCD Mass Error:"
-                                       Width="100" />
+                                       Width="115" />
                             <TextBox x:Name="HcdErrorTextBox"
                                      Height="23"
                                      VerticalAlignment="Top"
@@ -113,7 +131,7 @@
                                        HorizontalAlignment="Left"
                                        Margin="5,5,0,0"
                                        Text="CID Mass Error:"
-                                       Width="100" />
+                                       Width="115" />
                             <TextBox x:Name="CidErrorTextBox"
                                      Height="23"
                                      VerticalAlignment="Top"
@@ -287,8 +305,8 @@
                                              Width="100" />
                             </DockPanel>
                             <DockPanel>
-                                <!--<CheckBox Margin="5,5,5,0" IsChecked="{Binding Path=AverageSpec, Mode=TwoWay}"></CheckBox>
-                                <TextBlock x:Name="AverageSpectraBlock" Width="Auto" Text="Average Spectra" Margin="0,3,10,0"/>-->
+                                <CheckBox Margin="5,5,5,0" IsChecked="{Binding Path=AverageSpec, Mode=TwoWay}"></CheckBox>
+                                <TextBlock x:Name="AverageSpectraBlock" Width="Auto" Text="Average Spectra" Margin="0,3,10,0"/>
                                 <TextBlock x:Name="NumberOfTargetsTextBlock"
                                            DockPanel.Dock="Left"
                                            FontWeight="Bold"

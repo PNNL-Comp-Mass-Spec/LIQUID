@@ -17,9 +17,11 @@ using System.Windows.Shapes;
 using Liquid.ViewModel;
 using LiquidBackend.Domain;
 using Ookii.Dialogs;
+using PSI_Interface.MSData;
 using DataGrid = System.Windows.Controls.DataGrid;
 using MessageBox = System.Windows.MessageBox;
 using MessageBoxOptions = System.Windows.MessageBoxOptions;
+using Run = System.Windows.Documents.Run;
 
 namespace Liquid.View
 {
@@ -230,6 +232,7 @@ namespace Liquid.View
 	    private async void BuildLibraryButtonClick(object sender, RoutedEventArgs e)
 	    {
             FragmentationMode fragmentationMode = (FragmentationMode)this.FragmentationModeComboBox.SelectedItem;
+            double precursorError = double.Parse(this.PrecursorErrorTextBox.Text);
             double hcdMassError = double.Parse(this.HcdErrorTextBox.Text);
             double cidMassError = double.Parse(this.CidErrorTextBox.Text);
             int resultsPerScan = int.Parse(this.ResultsPerScanTextBox.Text);
@@ -250,21 +253,22 @@ namespace Liquid.View
 
                 // Open file 
                 var fileNames = dialog.FileNames;
-                await Task.Run(() => this.SingleTargetViewModel.OnBuildLibrary(fileNames, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
+                await Task.Run(() => this.SingleTargetViewModel.OnBuildLibrary(fileNames, precursorError, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
             }
 	    }
 
 		private async void ProcessAllTargetsButtonClick(object sender, RoutedEventArgs e)
 		{
 			FragmentationMode fragmentationMode = (FragmentationMode)this.FragmentationModeComboBox.SelectedItem;
-			double hcdMassError = double.Parse(this.HcdErrorTextBox.Text);
+            double precursorError = double.Parse(this.PrecursorErrorTextBox.Text);
+            double hcdMassError = double.Parse(this.HcdErrorTextBox.Text);
 			double cidMassError = double.Parse(this.CidErrorTextBox.Text);
 			int resultsPerScan = int.Parse(this.ResultsPerScanTextBox.Text);
 
 			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
 			this.ExportGlobalResultsButton.Visibility = Visibility.Hidden;
 			this.ExportAllGlobalResultsButton.Visibility = Visibility.Hidden;
-			await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
+			await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(precursorError, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
 			this.LipidGroupSearchResultsDataGrid.Visibility = Visibility.Visible;
 			this.ExportGlobalResultsButton.Visibility = Visibility.Visible;
 			this.ExportAllGlobalResultsButton.Visibility = Visibility.Visible;

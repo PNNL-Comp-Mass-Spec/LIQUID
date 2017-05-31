@@ -192,7 +192,7 @@ namespace Liquid.ViewModel
             OnPropertyChanged("LipidIdentifications");
         }
 
-        public void OnBuildLibrary(IList<string> filesList, double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
+        public void OnBuildLibrary(IList<string> filesList, double precursorError, double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
         {
 
             foreach (var file in filesList)
@@ -207,7 +207,7 @@ namespace Liquid.ViewModel
                         var rawFileName = reader.ReadLine().Split(new char[] {'\t'})[index];
                         LibraryBuilder.AddDmsDataset(rawFileName);
                         UpdateRawFileLocation(rawFileName);
-                        OnProcessAllTarget(hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
+                        OnProcessAllTarget(precursorError, hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
                         LoadLipidIdentifications(file);
                         OnExportGlobalResults(file.Replace(".tsv", ".msp"));
 
@@ -230,7 +230,7 @@ namespace Liquid.ViewModel
 
         }
 
-        public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
+        public void OnProcessAllTarget(double precursorError, double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
         {
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
 
@@ -244,12 +244,12 @@ namespace Liquid.ViewModel
             var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
             if (AverageSpec)
             {
-                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, this.LcMsRun, hcdError, cidError, this.ScoreModel, progress);
+                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, this.LcMsRun, precursorError, hcdError, cidError, this.ScoreModel, progress);
                 resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? x.SpectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz : x.SpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz);
             }
             else 
             {
-                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, hcdError, cidError, this.ScoreModel, progress);
+                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, precursorError, hcdError, cidError, this.ScoreModel, progress);
                 resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? (Double)x.SpectrumSearchResult.HcdSpectrum.ScanNum : (Double)x.SpectrumSearchResult.CidSpectrum.ScanNum);
             }
 
