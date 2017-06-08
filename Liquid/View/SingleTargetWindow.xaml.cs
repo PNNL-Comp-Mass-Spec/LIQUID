@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -17,6 +16,7 @@ using System.Windows.Shapes;
 using Liquid.ViewModel;
 using LiquidBackend.Domain;
 using Ookii.Dialogs;
+using Ookii.Dialogs.Wpf;
 using DataGrid = System.Windows.Controls.DataGrid;
 using MessageBox = System.Windows.MessageBox;
 using MessageBoxOptions = System.Windows.MessageBoxOptions;
@@ -61,8 +61,8 @@ namespace Liquid.View
             var dialog = new VistaOpenFileDialog { DefaultExt = ".raw", Filter = "Thermo(*.raw)|*.raw|mzML(*.mzML, *.mzML.gz)|*.mzml;*.mzML;*.mzML.gz;*.mzml.gz" };
 
             // Get the selected file name and display in a TextBox
-            DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
             {
                 this.RawFileLocationTextBlock.Text = "Loading file...";
 
@@ -178,8 +178,8 @@ namespace Liquid.View
             var dialog = new VistaOpenFileDialog { DefaultExt = ".txt", Filter = "Text Files (*.txt)|*.txt|Tab Separated Files (.tsv)|*.tsv|All Files (*.*)|*.*" };
 
             // Get the selected file name and display in a TextBox
-            DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
             {
                 // Disable processing button while file is loading
                 this.ProcessAllTargetsButton.IsEnabled = false;
@@ -210,8 +210,8 @@ namespace Liquid.View
                 };
 
                 // Get the selected file name and display in a TextBox
-                DialogResult result = dialog.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK)
+                var result = dialog.ShowDialog();
+                if (result.HasValue && result.Value)
                 {
                     // Disable processing button while file is loading
                     this.ProcessAllTargetsButton.IsEnabled = false;
@@ -242,8 +242,8 @@ namespace Liquid.View
             };
 
             // Get the selected file name and display in a TextBox
-            DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
             {
                 // Disable processing button while file is loading
                 this.ProcessAllTargetsButton.IsEnabled = false;
@@ -337,8 +337,8 @@ namespace Liquid.View
             dialog.DefaultExt = ".tsv";
             dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp";
 
-            DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
             {
                 string fileLocation = dialog.FileName;
                 await Task.Run(() => this.SingleTargetViewModel.OnExportGlobalResults(fileLocation));
@@ -354,8 +354,8 @@ namespace Liquid.View
             dialog.DefaultExt = ".tsv";
             dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp";
 
-            DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
             {
                 string fileLocation = dialog.FileName;
                 this.SingleTargetViewModel.OnExportAllGlobalResults(fileLocation);
@@ -371,8 +371,8 @@ namespace Liquid.View
             dialog.DefaultExt = ".tsv";
             dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp";
 
-            DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
             {
                 string fileLocation = dialog.FileName;
                 this.SingleTargetViewModel.OnWriteTargetInfo(fileLocation);
@@ -456,8 +456,8 @@ namespace Liquid.View
             dialog.DefaultExt = ".tsv";
             dialog.Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp";
 
-            DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
             {
                 string fileLocation = dialog.FileName;
                 this.SingleTargetViewModel.OnWriteFragmentInfo(fileLocation);
