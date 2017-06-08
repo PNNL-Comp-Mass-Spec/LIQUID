@@ -8,6 +8,7 @@ using InformedProteomics.Backend.Data.Composition;
 using InformedProteomics.Backend.Data.Sequence;
 using InformedProteomics.Backend.Data.Spectrometry;
 using InformedProteomics.Backend.MassSpecData;
+using InformedProteomics.Backend.Utils;
 using LiquidBackend.Domain;
 using LiquidBackend.Scoring;
 
@@ -19,7 +20,10 @@ namespace LiquidBackend.Util
 
         public InformedWorkflow(string rawFileLocation)
         {
-            this.LcMsRun = LcMsDataFactory.GetLcMsData(rawFileLocation);
+            var dataFactory = new LcMsDataFactory();
+            dataFactory.ProgressChanged += LcMsDataFactory_ProgressChanged;
+
+            this.LcMsRun = dataFactory.GetLcMsData(rawFileLocation);
         }
 
         public List<SpectrumSearchResult> RunInformedWorkflow(LipidTarget target, double hcdMassError, double cidMassError)
@@ -242,5 +246,19 @@ namespace LiquidBackend.Util
 
             return spectrumSearchResultList;
         }
+
+        #region "Events"
+
+        private void LcMsDataFactory_ProgressChanged(object sender, ProgressData e)
+        {
+            ProgressChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raised for each reported progress value
+        /// </summary>
+        public event EventHandler<ProgressData> ProgressChanged;
+
+        #endregion
     }
 }

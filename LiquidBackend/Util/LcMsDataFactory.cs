@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InformedProteomics.Backend.MassSpecData;
+using InformedProteomics.Backend.Utils;
 
 namespace LiquidBackend.Util
 {
@@ -19,12 +20,17 @@ namespace LiquidBackend.Util
         /// </summary>
         /// <param name="rawFilePath"></param>
         /// <returns></returns>
-        public static LcMsRun GetLcMsData(string rawFilePath)
+        public LcMsRun GetLcMsData(string rawFilePath)
         {
-            LcMsRun run = null;
+            var progress = new Progress<ProgressData>();
+
+            progress.ProgressChanged += Progress_ProgressChanged;
+
+            var run = PbfLcMsRun.GetLcMsRun(rawFilePath, progress);
+
+            /*
             string ext = Path.GetExtension(rawFilePath);
-            run = PbfLcMsRun.GetLcMsRun(rawFilePath);
-            /*switch (ext.ToLower())
+            switch (ext.ToLower())
             {
                 case ".raw":
                     run = PbfLcMsRun.GetLcMsRun(rawFilePath, MassSpecDataType.XCaliburRun);
@@ -42,6 +48,20 @@ namespace LiquidBackend.Util
 
             return run;
         }
+
+        #region "Events"
+
+        private void Progress_ProgressChanged(object sender, ProgressData e)
+        {
+            ProgressChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raised for each reported progress value
+        /// </summary>
+        public event EventHandler<ProgressData> ProgressChanged;
+
+        #endregion
 
     }
 }
