@@ -64,7 +64,6 @@ namespace Liquid.View
             var result = dialog.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                this.RawFileLocationTextBlock.Text = "Loading file...";
 
                 // Disable buttons while files is loading
                 this.ProcessAllTargetsButton.IsEnabled = false;
@@ -74,13 +73,11 @@ namespace Liquid.View
                 string fileName = dialog.FileName;
                 FileInfo fileInfo = new FileInfo(fileName);
 
-
                 await Task.Run(() => this.SingleTargetViewModel.UpdateRawFileLocation(fileInfo.FullName));
+
                 //Make sure we loaded a file
                 if (this.SingleTargetViewModel.LcMsRun != null)
                 {
-                    this.RawFileLocationTextBlock.Text = "File Loaded: " + fileInfo.Name;
-
                     // Enable processing all targets button if applicable
                     if (this.SingleTargetViewModel.LipidTargetList != null && this.SingleTargetViewModel.LipidTargetList.Any())
                         this.ProcessAllTargetsButton.IsEnabled = true;
@@ -88,7 +85,11 @@ namespace Liquid.View
                     // Enable search for target button
                     this.SearchForTargetButton.IsEnabled = true;
                 }
-                else { this.RawFileLocationTextBlock.Text = "File Loaded: None Loaded"; }
+
+                // Delay before clearing the progress to give the data loading thread a chance to report the final progress value
+                System.Threading.Thread.Sleep(250);
+                this.SingleTargetViewModel.ClearProgress();
+
             }
         }
 
