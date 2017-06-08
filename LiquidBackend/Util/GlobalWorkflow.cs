@@ -28,7 +28,7 @@ namespace LiquidBackend.Util
 
         public List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double precursorMassError, double hcdMassError, double cidMassError, IProgress<int> progress = null)
         {
-            return RunGlobalWorkflow(lipidList, this.LcMsRun, precursorMassError, hcdMassError, cidMassError, this.ScoreModel, progress);
+            return RunGlobalWorkflow(lipidList, LcMsRun, precursorMassError, hcdMassError, cidMassError, ScoreModel, progress);
         }
 
         /*
@@ -106,7 +106,14 @@ namespace LiquidBackend.Util
         }
         */
 
-        public static List<LipidGroupSearchResult> RunGlobalWorkflowAvgSpec(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double precursorMassError, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
+        public static List<LipidGroupSearchResult> RunGlobalWorkflowAvgSpec(
+            IEnumerable<Lipid> lipidList,
+            LcMsRun lcmsRun,
+            double precursorMassError,
+            double hcdMassError,
+            double cidMassError,
+            ScoreModel scoreModel,
+            IProgress<int> progress = null)
         {
             var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 
@@ -145,7 +152,7 @@ namespace LiquidBackend.Util
                     summedCidSpec.IsolationWindow = new IsolationWindow(mz, cidMassError, cidMassError);
                 }
 
-                double mzToSearchTolerance = precursorMassError * mz / 1000000;
+                var mzToSearchTolerance = precursorMassError * mz / 1000000;
                 var lowMz = mz - mzToSearchTolerance;
                 var highMz = mz + mzToSearchTolerance;
 
@@ -238,7 +245,7 @@ namespace LiquidBackend.Util
 
             var activationMethodCombination = FigureOutActivationMethodCombination(lcmsRun);
             if (activationMethodCombination == ActivationMethodCombination.Unsupported) throw new SystemException("Unsupported activation method.");
-            var useTwoScans = (activationMethodCombination == ActivationMethodCombination.CidThenHcd || activationMethodCombination == ActivationMethodCombination.HcdThenCid);
+            var useTwoScans = activationMethodCombination == ActivationMethodCombination.CidThenHcd || activationMethodCombination == ActivationMethodCombination.HcdThenCid;
 
             for (var i = minLcScan; i <= maxLcScan; i++)
             {
@@ -287,7 +294,7 @@ namespace LiquidBackend.Util
                 }
 
                 var msMsPrecursorMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
-                double mzToSearchTolerance = precursorMassError * msMsPrecursorMz / 1000000;
+                var mzToSearchTolerance = precursorMassError * msMsPrecursorMz / 1000000;
                 var lowMz = msMsPrecursorMz - mzToSearchTolerance;
                 var highMz = msMsPrecursorMz + mzToSearchTolerance;
 
@@ -348,7 +355,7 @@ namespace LiquidBackend.Util
                 // Report progress
                 if (progress != null)
                 {
-                    var currentProgress = (int)((i / maxLcScan) * 100);
+                    var currentProgress = (int)(i / maxLcScan * 100);
                     progress.Report(currentProgress);
                 }
             }
@@ -377,7 +384,7 @@ namespace LiquidBackend.Util
             {
                 var target = kvp.Key;
 
-                var spectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(target, lcmsRun, hcdMassError, 500, null);
+                var spectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(target, lcmsRun, hcdMassError, 500, scoreModel: null);
 
                 if (spectrumSearchResultList.Any())
                 {
@@ -409,7 +416,7 @@ namespace LiquidBackend.Util
             if (Ms1ScanNumbers.Count > 0)
             {
                 // Grab an MS1 Scan thats about 33% through the file so that we get accurate MS2 data
-                var indexToGrab = (int) Math.Floor(Ms1ScanNumbers.Count/3.0);
+                var indexToGrab = (int)Math.Floor(Ms1ScanNumbers.Count / 3.0);
                 var ms1ScanNumberInMiddleOfRun = Ms1ScanNumbers[indexToGrab];
 
                 firstMsMsScanNumber = lcmsRun.GetNextScanNum(ms1ScanNumberInMiddleOfRun, 2);
@@ -419,40 +426,40 @@ namespace LiquidBackend.Util
             }
             else
             {
-                var indexToGrab = (int) Math.Floor(Ms2ScanNumbers.Count/3.0);
+                var indexToGrab = (int)Math.Floor(Ms2ScanNumbers.Count / 3.0);
                 var ms2ScanNumberInMiddleOfRun = Ms2ScanNumbers[indexToGrab];
                 firstMsMsSpectrum = lcmsRun.GetSpectrum(ms2ScanNumberInMiddleOfRun) as ProductSpectrum;
                 firstMsMsScanNumber = firstMsMsSpectrum.ScanNum;
             }
 
-            if(firstMsMsSpectrum == null) return ActivationMethodCombination.Unsupported;
+            if (firstMsMsSpectrum == null) return ActivationMethodCombination.Unsupported;
 
             // Lookup the second MS/MS Spectrum
             var nextMsMsScanNumber = lcmsRun.GetNextScanNum(firstMsMsScanNumber, 2);
             var nextMsMsSpectrum = lcmsRun.GetSpectrum(nextMsMsScanNumber) as ProductSpectrum;
 
-            //Treat PQD scans as if they were CID
-            if(firstMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) firstMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
-            if(nextMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) nextMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
+            // Treat PQD scans as if they were CID
+            if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) firstMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
+            if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) nextMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
 
-			if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
-			{
-				if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.HcdOnly;
-				if (nextMsMsSpectrum == null) return ActivationMethodCombination.HcdOnly;
-				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.HcdThenCid;
-				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.HcdOnly;
-                
-			}
-			else if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.CID)
-			{
-				if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.CidOnly;
-				if (nextMsMsSpectrum == null) return ActivationMethodCombination.CidOnly;
-				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.CidThenHcd;
-				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.CidOnly;
-			}
+            if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
+            {
+                if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.HcdOnly;
+                if (nextMsMsSpectrum == null) return ActivationMethodCombination.HcdOnly;
+                if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.HcdThenCid;
+                if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.HcdOnly;
 
-			return ActivationMethodCombination.Unsupported;
-		}
+            }
+            else if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.CID)
+            {
+                if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.CidOnly;
+                if (nextMsMsSpectrum == null) return ActivationMethodCombination.CidOnly;
+                if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.CidThenHcd;
+                if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.CidOnly;
+            }
+
+            return ActivationMethodCombination.Unsupported;
+        }
 
         #region "Events"
 
@@ -468,5 +475,5 @@ namespace LiquidBackend.Util
 
         #endregion
 
-	}   
+    }
 }

@@ -9,7 +9,6 @@ using System.Windows.Media;
 using Liquid.ViewModel;
 using LiquidBackend.Domain;
 using Ookii.Dialogs.Wpf;
-using PSI_Interface.MSData;
 using DataGrid = System.Windows.Controls.DataGrid;
 using MessageBox = System.Windows.MessageBox;
 using Run = System.Windows.Documents.Run;
@@ -33,7 +32,7 @@ namespace Liquid.View
             FragmentationModeComboBox.SelectedValue = FragmentationMode.Positive;
             AdductComboBox.SelectedValue = Adduct.Hydrogen;
             AdductComboBox2.SelectedValue = Adduct.Hydrogen;
-		    this.IonTypeComboBox.SelectedIndex = 0; //"Product Ion"
+            IonTypeComboBox.SelectedIndex = 0; //"Product Ion"
             TargetMzTextBlock.Visibility = Visibility.Collapsed;
             EmpiricalFormulaTextBlock.Visibility = Visibility.Collapsed;
             EmpiricalFormulaRichTextBlock.Visibility = Visibility.Collapsed;
@@ -224,7 +223,7 @@ namespace Liquid.View
         private async void BuildLibraryButtonClick(object sender, RoutedEventArgs e)
         {
             var fragmentationMode = (FragmentationMode)FragmentationModeComboBox.SelectedItem;
-            double precursorError = double.Parse(this.PrecursorErrorTextBox.Text);
+            var precursorError = double.Parse(PrecursorErrorTextBox.Text);
             var hcdMassError = double.Parse(HcdErrorTextBox.Text);
             var cidMassError = double.Parse(CidErrorTextBox.Text);
             var resultsPerScan = int.Parse(ResultsPerScanTextBox.Text);
@@ -252,7 +251,7 @@ namespace Liquid.View
         private async void ProcessAllTargetsButtonClick(object sender, RoutedEventArgs e)
         {
             var fragmentationMode = (FragmentationMode)FragmentationModeComboBox.SelectedItem;
-            double precursorError = double.Parse(this.PrecursorErrorTextBox.Text);
+            var precursorError = double.Parse(PrecursorErrorTextBox.Text);
             var hcdMassError = double.Parse(HcdErrorTextBox.Text);
             var cidMassError = double.Parse(CidErrorTextBox.Text);
             var resultsPerScan = int.Parse(ResultsPerScanTextBox.Text);
@@ -260,7 +259,7 @@ namespace Liquid.View
             LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
             ExportGlobalResultsButton.Visibility = Visibility.Hidden;
             ExportAllGlobalResultsButton.Visibility = Visibility.Hidden;
-            await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(precursorError, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
+            await Task.Run(() => SingleTargetViewModel.OnProcessAllTarget(precursorError, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
             LipidGroupSearchResultsDataGrid.Visibility = Visibility.Visible;
             ExportGlobalResultsButton.Visibility = Visibility.Visible;
             ExportAllGlobalResultsButton.Visibility = Visibility.Visible;

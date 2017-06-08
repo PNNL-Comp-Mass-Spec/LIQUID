@@ -421,9 +421,9 @@ namespace LiquidBackend.Util
                     var cer = new Composition(numCarbons, 2 * (numCarbons + 0) + 1 - 2 * numDoubleBonds, 1, 3 + tri - mono + hydroxyCount, 0, 0);
                     return cer + glycan - Composition.H2O;
                 case LipidClass.MIPC:
-                    return new Composition(numCarbons + 12, (2 * (numCarbons + 12) - 2 - numDoubleBonds), 1, 16 + tri - mono + hydroxyCount, 0, 1);
+                    return new Composition(numCarbons + 12, 2 * (numCarbons + 12) - 2 - numDoubleBonds, 1, 16 + tri - mono + hydroxyCount, 0, 1);
                 case LipidClass.MIP2C:
-                    return new Composition(numCarbons + 18, (2 * (numCarbons + 18) - 3 - numDoubleBonds), 1, 24 + tri - mono + hydroxyCount, 0, 2);
+                    return new Composition(numCarbons + 18, 2 * (numCarbons + 18) - 3 - numDoubleBonds, 1, 24 + tri - mono + hydroxyCount, 0, 2);
                 case LipidClass.anandamide:
                     return new Composition(numCarbons + 2, 2 * (numCarbons + 2) + 1 - 2 * numDoubleBonds, 1, 2, 0, 0);
                 case LipidClass.carnitine:

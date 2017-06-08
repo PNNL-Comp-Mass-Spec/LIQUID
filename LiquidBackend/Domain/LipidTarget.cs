@@ -61,8 +61,8 @@ namespace LiquidBackend.Domain
                 if (acylChainList.Count > 0)
                 {
                     stringBuilder.Append("(");
-                    var carbons = 0;
-                    var db = 0;
+                    //var carbons = 0;
+                    //var db = 0;
                     for (var i = 0; i < acylChainList.Count; i++)
                     {
                         var acylChain = acylChainList[i];

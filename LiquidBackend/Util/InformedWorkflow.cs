@@ -28,7 +28,12 @@ namespace LiquidBackend.Util
             return RunInformedWorkflow(target, LcMsRun, hcdMassError, cidMassError);
         }
 
-        public static List<SpectrumSearchResult> RunInformedWorkflow(LipidTarget target, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel = null)
+        public static List<SpectrumSearchResult> RunInformedWorkflow(
+            LipidTarget target,
+            LcMsRun lcmsRun,
+            double hcdMassError,
+            double cidMassError,
+            ScoreModel scoreModel = null)
         {
             IEnumerable<MsMsSearchUnit> msMsSearchUnits = target.GetMsMsSearchUnits();
 
@@ -143,7 +148,7 @@ namespace LiquidBackend.Util
 
         public static List<SpectrumSearchResult> RunFragmentWorkflow(ICollection<MsMsSearchUnit> fragments, LcMsRun lcmsRun, double hcdMassError, double cidMassError, int minMatches, IProgress<int> progress = null )
         {
-            IEnumerable<MsMsSearchUnit> PISearchUnits = fragments.Where(x => x.Description.Equals("Product Ion"));
+            var PISearchUnits = fragments.Where(x => x.Description.Equals("Product Ion")).ToList();
             var hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
             var cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
             var scanTracker = new List<int>(); //track what scans have been included in spectrumSearchResultsList so we don't make duplicate entries for matched CID and HCD
@@ -248,7 +253,7 @@ namespace LiquidBackend.Util
                 // Report progress
                 if (progress != null)
                 {
-                    var currentProgress = (int)(((double)scan / maxScans) * 100);
+                    var currentProgress = (int)((double)scan / maxScans * 100);
                     progress.Report(currentProgress);
                 }
             }

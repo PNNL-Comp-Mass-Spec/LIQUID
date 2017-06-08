@@ -9,7 +9,7 @@ namespace Liquid.OxyPlot
 
 		public MsMsAnnotation(FragmentationType fragmentationType)
 		{
-			this.FragmentionType = fragmentationType;
+			FragmentionType = fragmentationType;
 		}
 	}
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
 using LiquidBackend.Domain;
 using LiquidBackend.IO;
@@ -362,7 +362,7 @@ namespace LiquidTest
                 var globalWorkflow = new GlobalWorkflow(rawFilePath);
 
                 // Run workflow
-                List<LipidGroupSearchResult> lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 30, 500);
+                var lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 30, 500);
 
                 if (!headerWritten)
                 {
@@ -522,14 +522,14 @@ namespace LiquidTest
                         {
                             var lipid = new Lipid { CommonName = splitTarget[1], AdductFull = splitTarget[2] };
                             var newTarget = lipid.CreateLipidTarget();
-                            splitTarget[massCol] = newTarget.Composition.Mass.ToString();
+                            splitTarget[massCol] = newTarget.Composition.Mass.ToString(CultureInfo.InvariantCulture);
                             splitTarget[compCol] = newTarget.Composition.ToPlainString();
                         }
 
                         var rebuilt = new StringBuilder();
                         rebuilt.Append(splitTarget[0]);
 
-                        for (var i = 1; i < splitTarget.Count(); i++)
+                        for (var i = 1; i < splitTarget.Length; i++)
                         {
                             rebuilt.Append("\t" + splitTarget[i]);
                         }
@@ -538,7 +538,7 @@ namespace LiquidTest
                     }
                     catch (Exception)
                     {
-
+                        // Ignore the error
                     }
                 }
             }

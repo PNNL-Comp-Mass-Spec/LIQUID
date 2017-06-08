@@ -38,14 +38,14 @@ namespace LiquidBackend.Util
 				}
 
 				// Put into negative bin
-				if (error < 0 || (zeroError && zeroErrorCount%2 == 0))
+				if (error < 0 || zeroError && zeroErrorCount%2 == 0)
 				{
 					var curBin = -increment;
 					while (error < curBin) curBin -= increment;
 					++hist[curBin];
 				}
 					// Put into positive bin
-				else if (error > 0 || (zeroError && zeroErrorCount%2 == 1))
+				else if (error > 0 || zeroError && zeroErrorCount%2 == 1)
 				{
 					var curBin = increment;
 					while (error > curBin) curBin += increment;

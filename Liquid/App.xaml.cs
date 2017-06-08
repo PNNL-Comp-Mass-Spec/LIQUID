@@ -14,7 +14,7 @@ namespace Liquid
 	{
 		public App() : base()
 		{
-			this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
+			Dispatcher.UnhandledException += OnDispatcherUnhandledException;
 		}
 
 		void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

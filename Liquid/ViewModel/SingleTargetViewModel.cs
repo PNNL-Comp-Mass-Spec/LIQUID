@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using InformedProteomics.Backend.MassSpecData;
 using InformedProteomics.Backend.Utils;
 using LiquidBackend.Domain;
@@ -21,16 +18,16 @@ namespace Liquid.ViewModel
         public string FeatureFilePath { get; private set; } //Probably replace with a feature table
         public string RawFileName { get; private set; }
         public LipidTarget CurrentLipidTarget { get; private set; }
-        public List<FragmentationMode> FragmentationModeList { get; private set; }
+        public List<FragmentationMode> FragmentationModeList { get; }
         public List<SpectrumSearchResult> SpectrumSearchResultList { get; private set; }
-        public ObservableCollection<MsMsSearchUnit> FragmentSearchList { get; private set; }
+        public ObservableCollection<MsMsSearchUnit> FragmentSearchList { get; }
         public SpectrumSearchResult CurrentSpectrumSearchResult { get; private set; }
-        public List<Adduct> AdductList { get; private set; }
-        public List<string> IonTypeList { get; private set; }
-        public List<Lipid> LipidTargetList { get; private set; }
-        public List<Tuple<string, int>> LipidIdentifications { get; private set; }
+        public List<Adduct> AdductList { get; }
+        public List<string> IonTypeList { get; }
+        public List<Lipid> LipidTargetList { get; }
+        public List<Tuple<string, int>> LipidIdentifications { get; }
         public List<LipidGroupSearchResult> LipidGroupSearchResultList { get; private set; }
-        public ScoreModel ScoreModel { get; private set; }
+        public ScoreModel ScoreModel { get; }
         public Adduct TargetAdduct { get; set; }
         public FragmentationMode TargetFragmentationMode { get; set; }
 
@@ -266,17 +263,17 @@ namespace Liquid.ViewModel
             // Run global analysis
             LipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 
-            IEnumerable<IGrouping<Double, LipidGroupSearchResult>> resultsGrouped = null;
-            var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
+            IEnumerable<IGrouping<double, LipidGroupSearchResult>> resultsGrouped;
+            List<LipidGroupSearchResult> lipidGroupSearchResultList;
             if (AverageSpec)
             {
-                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, this.LcMsRun, precursorError, hcdError, cidError, this.ScoreModel, progress);
-                resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? x.SpectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz : x.SpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz);
+                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, LcMsRun, precursorError, hcdError, cidError, ScoreModel, progress);
+                resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum?.IsolationWindow.IsolationWindowTargetMz ?? x.SpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz);
             }
             else
             {
-                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, precursorError, hcdError, cidError, this.ScoreModel, progress);
-                resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? (Double)x.SpectrumSearchResult.HcdSpectrum.ScanNum : (Double)x.SpectrumSearchResult.CidSpectrum.ScanNum);
+                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, LcMsRun, precursorError, hcdError, cidError, ScoreModel, progress);
+                resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum?.ScanNum ?? (double)x.SpectrumSearchResult.CidSpectrum.ScanNum);
             }
 
             // Group results of same scan together
@@ -309,7 +306,7 @@ namespace Liquid.ViewModel
 
         public void RemoveFragment(IList<MsMsSearchUnit> items)
         {
-            foreach(var i in items)FragmentSearchList.Remove(i);
+            foreach (var i in items) FragmentSearchList.Remove(i);
         }
 
         public void SearchForFragments(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude, int minMatches, Adduct adduct)
@@ -322,7 +319,7 @@ namespace Liquid.ViewModel
             {
                 var spectrumSearchResult =
                     SpectrumSearchResultList.OrderByDescending(x => x.ApexScanNum).First();
-                CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum??spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, fragmentationMode, adduct);
+                CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum ?? spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, fragmentationMode, adduct);
                 //OnMsMsSearchResultChange(spectrumSearchResult);
                 OnSpectrumSearchResultChange(spectrumSearchResult);
 
@@ -404,12 +401,6 @@ namespace Liquid.ViewModel
             ExportProgress = value;
             OnPropertyChanged("ExportProgress");
         }
-        /*
-        public static RenderTargetBitmap GetImage(OverallView view)
-        {
-            Size size = new Size(view.ActualWidth, view.ActualHeight);
-            if (size.IsEmpty)
-                return null;
 
         private void ReportMsDataLoadProgress(double value)
         {
@@ -417,13 +408,16 @@ namespace Liquid.ViewModel
                 MsDataLoadProgress = string.Empty;
             else
                 MsDataLoadProgress = string.Format("Caching data ... {0:F1}%", value);
+
             OnPropertyChanged("MsDataLoadProgress");
         }
+
         #region "Events"
+
         private void LcMsDataFactory_ProgressChanged(object sender, ProgressData e)
         {
             ReportMsDataLoadProgress(e.Percent);
         }
         #endregion
-	}
+    }
 }
