@@ -166,9 +166,7 @@
       <Name>LiquidBackend</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\open-file-icon_32x32.png" />
   </ItemGroup>
