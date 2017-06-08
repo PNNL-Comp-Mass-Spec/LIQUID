@@ -37,8 +37,8 @@ namespace Liquid.ViewModel
 
         private void CreateMsMsPlots()
         {
-            var hcdSearchResultList = CurrentSpectrumSearchResult.HcdSearchResultList.Where(x => x.ObservedPeak != null);
-            var cidSearchResultList = CurrentSpectrumSearchResult.CidSearchResultList.Where(x => x.ObservedPeak != null);
+            var hcdSearchResultList = CurrentSpectrumSearchResult.HcdSearchResultList.Where(x => x.ObservedPeak != null).ToList();
+            var cidSearchResultList = CurrentSpectrumSearchResult.CidSearchResultList.Where(x => x.ObservedPeak != null).ToList();
 
             // Reset annotation list
             MsMsAnnotationList = new List<MsMsAnnotation>();
@@ -59,7 +59,7 @@ namespace Liquid.ViewModel
             OnPropertyChanged("MsMsAnnotationList");
         }
 
-        private PlotModel CreateMsMsPlot(IEnumerable<MsMsSearchResult> searchResultList, ProductSpectrum productSpectrum)
+        private PlotModel CreateMsMsPlot(List<MsMsSearchResult> searchResultList, ProductSpectrum productSpectrum)
         {
             var spectrumSearchResult = CurrentSpectrumSearchResult;
             var lipidTarget = CurrentLipidTarget;
@@ -129,7 +129,7 @@ namespace Liquid.ViewModel
 
                 var isDiagnostic = false;
 
-                var matchedPeaks = searchResultList.Where(x => x.ObservedPeak.Equals(msPeak));
+                var matchedPeaks = searchResultList.Where(x => x.ObservedPeak.Equals(msPeak)).ToList();
                 foreach (var matchedSearchResult in matchedPeaks)
                 {
                     var annotation = new MsMsAnnotation(fragmentationType)
