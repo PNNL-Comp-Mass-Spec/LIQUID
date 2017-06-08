@@ -15,10 +15,10 @@ namespace Liquid.ViewModel
 
         public LipidTarget CurrentLipidTarget { get; private set; }
         public SpectrumSearchResult CurrentSpectrumSearchResult { get; private set; }
+
         public PlotModel MsMsHcdPlot { get; private set; }
         public PlotModel MsMsCidPlot { get; private set; }
-        public PlotModel IsotopicProfilePlot { get; private set; }
-        public PlotModel XicPlot { get; private set; }
+
         public List<MsMsAnnotation> MsMsAnnotationList { get; private set; }
 
         public void OnLipidTargetChange(LipidTarget lipidTarget)
