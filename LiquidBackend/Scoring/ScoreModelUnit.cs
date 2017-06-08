@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using LiquidBackend.Domain;
 
@@ -31,6 +32,10 @@ namespace LiquidBackend.Scoring
         [DataMember(Name = "ProbabilityNoise", Order = 7)]
         public double ProbabilityNoise { get; private set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <remarks>Empty because items are initialized via ScoreModelSerialization</remarks>
         private ScoreModelUnit()
         {
 
@@ -71,6 +76,7 @@ namespace LiquidBackend.Scoring
             return Equals((ScoreModelUnit)obj);
         }
 
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
             unchecked
