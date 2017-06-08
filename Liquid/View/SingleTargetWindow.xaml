@@ -5,7 +5,7 @@
     xmlns:controls="clr-namespace:Liquid.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Liquid: Lipid Informed Quantitation and Identification"
+    Title="LIQUID: Lipid Informed Quantitation and Identification"
     Width="1075"
     Height="845"
     mc:Ignorable="d">
