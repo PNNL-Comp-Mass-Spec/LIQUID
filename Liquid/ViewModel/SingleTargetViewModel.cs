@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using InformedProteomics.Backend.MassSpecData;
 using InformedProteomics.Backend.Utils;
 using LiquidBackend.Domain;
@@ -46,7 +49,7 @@ namespace Liquid.ViewModel
             FragmentationModeList = new List<FragmentationMode> { FragmentationMode.Positive, FragmentationMode.Negative };
             //this.AdductList = new List<Adduct> { Adduct.Hydrogen, Adduct.Dihydrogen, Adduct.Ammonium, Adduct.Acetate };
             AdductList = Enum.GetValues(typeof (Adduct)).Cast<Adduct>().ToList();
-            IonTypeList = new List<string>{"Primary Ion", "Neutral Loss"};
+            this.IonTypeList = new List<string>{"Product Ion", "Neutral Loss"};
             SpectrumSearchResultList = new List<SpectrumSearchResult>();
             LipidTargetList = new List<Lipid>();
             FragmentSearchList = new ObservableCollection<MsMsSearchUnit>();
@@ -215,7 +218,7 @@ namespace Liquid.ViewModel
             OnPropertyChanged("LipidIdentifications");
         }
 
-        public void OnBuildLibrary(IList<string> filesList, double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
+        public void OnBuildLibrary(IList<string> filesList, double precursorError, double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
         {
 
             foreach (var file in filesList)
@@ -230,7 +233,7 @@ namespace Liquid.ViewModel
                         var rawFileName = reader.ReadLine().Split(new char[] {'\t'})[index];
                         LibraryBuilder.AddDmsDataset(rawFileName);
                         UpdateRawFileLocation(rawFileName);
-                        OnProcessAllTarget(hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
+                        OnProcessAllTarget(precursorError, hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
                         LoadLipidIdentifications(file);
                         OnExportGlobalResults(file.Replace(".tsv", ".msp"));
 
@@ -253,7 +256,7 @@ namespace Liquid.ViewModel
 
         }
 
-        public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
+        public void OnProcessAllTarget(double precursorError, double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
         {
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
 
@@ -267,12 +270,12 @@ namespace Liquid.ViewModel
             var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
             if (AverageSpec)
             {
-                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, LcMsRun, hcdError, cidError, ScoreModel, progress);
+                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, this.LcMsRun, precursorError, hcdError, cidError, this.ScoreModel, progress);
                 resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? x.SpectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz : x.SpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz);
             }
             else
             {
-                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, LcMsRun, hcdError, cidError, ScoreModel, progress);
+                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, this.LcMsRun, precursorError, hcdError, cidError, this.ScoreModel, progress);
                 resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum != null ? (Double)x.SpectrumSearchResult.HcdSpectrum.ScanNum : (Double)x.SpectrumSearchResult.CidSpectrum.ScanNum);
             }
 
@@ -401,6 +404,12 @@ namespace Liquid.ViewModel
             ExportProgress = value;
             OnPropertyChanged("ExportProgress");
         }
+        /*
+        public static RenderTargetBitmap GetImage(OverallView view)
+        {
+            Size size = new Size(view.ActualWidth, view.ActualHeight);
+            if (size.IsEmpty)
+                return null;
 
         private void ReportMsDataLoadProgress(double value)
         {
@@ -408,17 +417,13 @@ namespace Liquid.ViewModel
                 MsDataLoadProgress = string.Empty;
             else
                 MsDataLoadProgress = string.Format("Caching data ... {0:F1}%", value);
-
             OnPropertyChanged("MsDataLoadProgress");
         }
-
         #region "Events"
-
         private void LcMsDataFactory_ProgressChanged(object sender, ProgressData e)
         {
             ReportMsDataLoadProgress(e.Percent);
         }
-
         #endregion
-    }
+	}
 }

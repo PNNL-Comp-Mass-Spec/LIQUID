@@ -26,9 +26,9 @@ namespace LiquidBackend.Util
             ScoreModel = ScoreModelSerialization.Deserialize(scoreModelLocation);
         }
 
-        public List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double hcdMassError, double cidMassError, IProgress<int> progress = null)
+        public List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double precursorMassError, double hcdMassError, double cidMassError, IProgress<int> progress = null)
         {
-            return RunGlobalWorkflow(lipidList, LcMsRun, hcdMassError, cidMassError, ScoreModel, progress);
+            return RunGlobalWorkflow(lipidList, this.LcMsRun, precursorMassError, hcdMassError, cidMassError, this.ScoreModel, progress);
         }
 
         /*
@@ -106,7 +106,7 @@ namespace LiquidBackend.Util
         }
         */
 
-        public static List<LipidGroupSearchResult> RunGlobalWorkflowAvgSpec(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
+        public static List<LipidGroupSearchResult> RunGlobalWorkflowAvgSpec(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double precursorMassError, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
         {
             var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 
@@ -145,7 +145,7 @@ namespace LiquidBackend.Util
                     summedCidSpec.IsolationWindow = new IsolationWindow(mz, cidMassError, cidMassError);
                 }
 
-                var mzToSearchTolerance = hcdMassError * mz / 1000000;
+                double mzToSearchTolerance = precursorMassError * mz / 1000000;
                 var lowMz = mz - mzToSearchTolerance;
                 var highMz = mz + mzToSearchTolerance;
 
@@ -220,7 +220,7 @@ namespace LiquidBackend.Util
             return lipidGroupSearchResultList;
         }
 
-        public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
+        public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double precursorMassError, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
         {
             //TextWriter textWriter = new StreamWriter("outputNeg.tsv");
             var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
@@ -287,7 +287,7 @@ namespace LiquidBackend.Util
                 }
 
                 var msMsPrecursorMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
-                var mzToSearchTolerance = hcdMassError * msMsPrecursorMz / 1000000;
+                double mzToSearchTolerance = precursorMassError * msMsPrecursorMz / 1000000;
                 var lowMz = msMsPrecursorMz - mzToSearchTolerance;
                 var highMz = msMsPrecursorMz + mzToSearchTolerance;
 
@@ -431,24 +431,28 @@ namespace LiquidBackend.Util
             var nextMsMsScanNumber = lcmsRun.GetNextScanNum(firstMsMsScanNumber, 2);
             var nextMsMsSpectrum = lcmsRun.GetSpectrum(nextMsMsScanNumber) as ProductSpectrum;
 
-            if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
-            {
-                if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.HcdOnly;
-                if (nextMsMsSpectrum == null) return ActivationMethodCombination.HcdOnly;
-                if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.HcdThenCid;
-                if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.HcdOnly;
+            //Treat PQD scans as if they were CID
+            if(firstMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) firstMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
+            if(nextMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) nextMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
 
-            }
-            else if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.CID)
-            {
-                if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.CidOnly;
-                if (nextMsMsSpectrum == null) return ActivationMethodCombination.CidOnly;
-                if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.CidThenHcd;
-                if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.CidOnly;
-            }
+			if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
+			{
+				if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.HcdOnly;
+				if (nextMsMsSpectrum == null) return ActivationMethodCombination.HcdOnly;
+				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.HcdThenCid;
+				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.HcdOnly;
+                
+			}
+			else if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.CID)
+			{
+				if (nextMsMsScanNumber - firstMsMsScanNumber > 1) return ActivationMethodCombination.CidOnly;
+				if (nextMsMsSpectrum == null) return ActivationMethodCombination.CidOnly;
+				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.CidThenHcd;
+				if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.CidOnly;
+			}
 
-            return ActivationMethodCombination.Unsupported;
-        }
+			return ActivationMethodCombination.Unsupported;
+		}
 
         #region "Events"
 
@@ -464,5 +468,5 @@ namespace LiquidBackend.Util
 
         #endregion
 
-    }
+	}   
 }

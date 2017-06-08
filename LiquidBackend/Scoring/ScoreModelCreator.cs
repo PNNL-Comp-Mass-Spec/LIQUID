@@ -33,7 +33,7 @@ namespace LiquidBackend.Scoring
                 var globalWorkflow = new GlobalWorkflow(datasetLocation);
 
                 // Run workflow
-                var lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(LipidList, 30, 500);
+                List<LipidGroupSearchResult> lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(this.LipidList, 30, 30, 500);
 
                 // Group results of same scan together
                 var resultsGroupedByScan = lipidGroupSearchResults.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum.ScanNum);

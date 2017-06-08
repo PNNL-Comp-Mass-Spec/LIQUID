@@ -362,7 +362,7 @@ namespace LiquidTest
                 var globalWorkflow = new GlobalWorkflow(rawFilePath);
 
                 // Run workflow
-                var lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
+                List<LipidGroupSearchResult> lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 30, 500);
 
                 if (!headerWritten)
                 {

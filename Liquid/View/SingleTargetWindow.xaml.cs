@@ -9,8 +9,10 @@ using System.Windows.Media;
 using Liquid.ViewModel;
 using LiquidBackend.Domain;
 using Ookii.Dialogs.Wpf;
+using PSI_Interface.MSData;
 using DataGrid = System.Windows.Controls.DataGrid;
 using MessageBox = System.Windows.MessageBox;
+using Run = System.Windows.Documents.Run;
 
 namespace Liquid.View
 {
@@ -31,7 +33,7 @@ namespace Liquid.View
             FragmentationModeComboBox.SelectedValue = FragmentationMode.Positive;
             AdductComboBox.SelectedValue = Adduct.Hydrogen;
             AdductComboBox2.SelectedValue = Adduct.Hydrogen;
-            IonTypeComboBox.SelectedIndex = 0; //"Primary Ion"
+		    this.IonTypeComboBox.SelectedIndex = 0; //"Product Ion"
             TargetMzTextBlock.Visibility = Visibility.Collapsed;
             EmpiricalFormulaTextBlock.Visibility = Visibility.Collapsed;
             EmpiricalFormulaRichTextBlock.Visibility = Visibility.Collapsed;
@@ -222,6 +224,7 @@ namespace Liquid.View
         private async void BuildLibraryButtonClick(object sender, RoutedEventArgs e)
         {
             var fragmentationMode = (FragmentationMode)FragmentationModeComboBox.SelectedItem;
+            double precursorError = double.Parse(this.PrecursorErrorTextBox.Text);
             var hcdMassError = double.Parse(HcdErrorTextBox.Text);
             var cidMassError = double.Parse(CidErrorTextBox.Text);
             var resultsPerScan = int.Parse(ResultsPerScanTextBox.Text);
@@ -242,13 +245,14 @@ namespace Liquid.View
 
                 // Open file
                 var fileNames = dialog.FileNames;
-                await Task.Run(() => SingleTargetViewModel.OnBuildLibrary(fileNames, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
+                await Task.Run(() => SingleTargetViewModel.OnBuildLibrary(fileNames, precursorError, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
             }
         }
 
         private async void ProcessAllTargetsButtonClick(object sender, RoutedEventArgs e)
         {
             var fragmentationMode = (FragmentationMode)FragmentationModeComboBox.SelectedItem;
+            double precursorError = double.Parse(this.PrecursorErrorTextBox.Text);
             var hcdMassError = double.Parse(HcdErrorTextBox.Text);
             var cidMassError = double.Parse(CidErrorTextBox.Text);
             var resultsPerScan = int.Parse(ResultsPerScanTextBox.Text);
@@ -256,7 +260,7 @@ namespace Liquid.View
             LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
             ExportGlobalResultsButton.Visibility = Visibility.Hidden;
             ExportAllGlobalResultsButton.Visibility = Visibility.Hidden;
-            await Task.Run(() => SingleTargetViewModel.OnProcessAllTarget(hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
+            await Task.Run(() => this.SingleTargetViewModel.OnProcessAllTarget(precursorError, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
             LipidGroupSearchResultsDataGrid.Visibility = Visibility.Visible;
             ExportGlobalResultsButton.Visibility = Visibility.Visible;
             ExportAllGlobalResultsButton.Visibility = Visibility.Visible;
@@ -449,5 +453,25 @@ namespace Liquid.View
                 SingleTargetViewModel.OnWriteFragmentInfo(fileLocation);
             }
         }
+        /*
+        public static RenderTargetBitmap GetImage(View view)
+        {
+            Size size = new Size(view.ActualWidth, view.ActualHeight);
+            if (size.IsEmpty)
+                return null;
+
+            RenderTargetBitmap result = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
+
+            DrawingVisual drawingvisual = new DrawingVisual();
+            using (DrawingContext context = drawingvisual.RenderOpen())
+            {
+                context.DrawRectangle(new VisualBrush(view), null, new Rect(new Point(), size));
+                context.Close();
+            }
+
+            result.Render(drawingvisual);
+            return result;
+        }
+         * */
     }
 }
