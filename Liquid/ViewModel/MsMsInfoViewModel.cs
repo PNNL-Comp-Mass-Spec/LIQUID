@@ -11,6 +11,8 @@ namespace Liquid.ViewModel
 {
     public class MsMsInfoViewModel : ViewModelBase
     {
+        private const int MINOR_TICK_SIZE = 3;
+
         public LipidTarget CurrentLipidTarget { get; private set; }
         public SpectrumSearchResult CurrentSpectrumSearchResult { get; private set; }
         public PlotModel MsMsHcdPlot { get; private set; }
@@ -165,7 +167,7 @@ namespace Liquid.ViewModel
             plotModel.Series.Add(annotatedPeakSeries);
             plotModel.Series.Add(diagnosticPeakSeries);
 
-            var yAxis = new LinearAxis()
+            var yAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
                 Title = "Intensity",
@@ -176,18 +178,18 @@ namespace Liquid.ViewModel
             //yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
             if (secondMaxIntensity > 0)
             {
-                yAxis.Maximum = secondMaxIntensity + (secondMaxIntensity*.25);
-                yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity*.25);
-                yAxis.MinorTickSize = 2;
-                yAxis.MajorStep = (secondMaxIntensity + (secondMaxIntensity*.25))/5.0;
+                yAxis.Maximum = secondMaxIntensity + secondMaxIntensity * .25;
+                yAxis.AbsoluteMaximum = maxIntensity + maxIntensity * .25;
+                yAxis.MinorTickSize = MINOR_TICK_SIZE;
+                yAxis.MajorStep = (secondMaxIntensity + secondMaxIntensity * .25) / 5.0;
                 yAxis.StringFormat = "0.0E00";
             }
             else if (maxIntensity > 0)
             {
-                yAxis.Maximum = maxIntensity + (maxIntensity * .25);
-                yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .25);
-                yAxis.MinorTickSize = 2;
-                yAxis.MajorStep = (maxIntensity + (maxIntensity * .25)) / 5.0;
+                yAxis.Maximum = maxIntensity + maxIntensity * .25;
+                yAxis.AbsoluteMaximum = maxIntensity + maxIntensity * .25;
+                yAxis.MinorTickSize = MINOR_TICK_SIZE;
+                yAxis.MajorStep = (maxIntensity + maxIntensity * .25) / 5.0;
                 yAxis.StringFormat = "0.0E00";
             }
             else
@@ -201,7 +203,7 @@ namespace Liquid.ViewModel
 
             yAxis.AxisChanged += OnYAxisChange;
 
-            var xAxis = new LinearAxis()
+            var xAxis = new LinearAxis
             {
                 Position = AxisPosition.Bottom,
                 Title = "m/z",

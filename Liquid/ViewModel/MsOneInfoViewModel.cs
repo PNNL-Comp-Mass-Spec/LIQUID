@@ -10,6 +10,8 @@ namespace Liquid.ViewModel
 {
     public class MsOneInfoViewModel : ViewModelBase
     {
+        private const int MINOR_TICK_SIZE = 3;
+
         public LipidTarget CurrentLipidTarget { get; private set; }
         public SpectrumSearchResult CurrentSpectrumSearchResult { get; private set; }
         public PlotModel IsotopicProfilePlot { get; set; }
@@ -69,7 +71,7 @@ namespace Liquid.ViewModel
 
             if (CurrentSpectrumSearchResult.PrecursorSpectrum != null)
             {
-                if(CurrentLipidTarget.Composition != null) UpdateFitScores();
+                if (CurrentLipidTarget.Composition != null) UpdateFitScores();
 
                 StartScanForAreaUnderCurve = CurrentSpectrumSearchResult.ApexScanNum;
                 StopScanForAreaUnderCurve = CurrentSpectrumSearchResult.ApexScanNum;
@@ -180,16 +182,16 @@ namespace Liquid.ViewModel
 
             //plotModel.Series.Add(isotopicPeakSeries);
 
-            var yAxis = new LinearAxis()
+            var yAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
                 Title = "Intensity",
                 Minimum = 0,
                 AbsoluteMinimum = 0,
-                Maximum = maxLocalIntensity + (maxLocalIntensity * .05),
-                AbsoluteMaximum = maxIntensity + (maxIntensity * .05),
-                MinorTickSize = 2,
-                MajorStep = (maxLocalIntensity + (maxLocalIntensity * .05)) / 5.0,
+                Maximum = maxLocalIntensity + maxLocalIntensity * .05,
+                AbsoluteMaximum = maxIntensity + maxIntensity * .05,
+                MinorTickSize = MINOR_TICK_SIZE,
+                MajorStep = (maxLocalIntensity + maxLocalIntensity * .05) / 5.0,
                 //yAxis.IsAxisVisible = false;
                 AxisTickToLabelDistance = 0,
                 StringFormat = "0.0E00",
@@ -197,7 +199,7 @@ namespace Liquid.ViewModel
             };
             yAxis.AxisChanged += OnYAxisChange;
 
-            var xAxis = new LinearAxis()
+            var xAxis = new LinearAxis
             {
                 Position = AxisPosition.Bottom,
                 Title = "m/z",
@@ -307,16 +309,16 @@ namespace Liquid.ViewModel
             plotModel.Series.Add(peakCenterSeries);
             plotModel.Series.Add(precursorSeries);
 
-            var yAxis = new LinearAxis()
+            var yAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
                 Title = "Intensity",
                 Minimum = 0,
                 AbsoluteMinimum = 0,
-                Maximum = localMaxIntensity + (localMaxIntensity * .05),
-                AbsoluteMaximum = maxIntensity + (maxIntensity * .05),
-                MinorTickSize = 2,
-                MajorStep = (localMaxIntensity + (localMaxIntensity * .05)) / 5.0,
+                Maximum = localMaxIntensity + localMaxIntensity * .05,
+                AbsoluteMaximum = maxIntensity + maxIntensity * .05,
+                MinorTickSize = MINOR_TICK_SIZE,
+                MajorStep = (localMaxIntensity + localMaxIntensity * .05) / 5.0,
                 //yAxis.IsAxisVisible = false;
                 AxisTickToLabelDistance = 0,
                 StringFormat = "0.0E00",
@@ -324,7 +326,7 @@ namespace Liquid.ViewModel
             };
             yAxis.AxisChanged += OnYAxisChange;
 
-            var xAxis = new LinearAxis()
+            var xAxis = new LinearAxis
             {
                 Position = AxisPosition.Bottom,
                 Title = "Scan #",
