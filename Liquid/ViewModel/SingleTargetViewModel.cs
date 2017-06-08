@@ -225,14 +225,36 @@ namespace Liquid.ViewModel
 
             foreach (var file in filesList)
             {
-                var reader = new StreamReader(file);
-                var header = reader.ReadLine().Split(new char[]{'\t'}).ToList();
-                var index = header.IndexOf("Raw Data File");
-                if (index != -1)
+                using (var reader = new StreamReader(file))
                 {
+                    if (reader.EndOfStream)
+                        continue;
+
+                    var headerLine = reader.ReadLine();
+                    if (string.IsNullOrWhiteSpace(headerLine))
+                    {
+                        // Empty header line
+                        continue;
+                    }
+                    var header = headerLine.Split('\t').ToList();
+
+                    var index = header.IndexOf("Raw Data File");
+                    if (index == -1)
+                        continue;
+
+                    if (reader.EndOfStream)
+                        continue;
+
                     try
                     {
-                        var rawFileName = reader.ReadLine().Split(new char[] {'\t'})[index];
+                        var dataLine = reader.ReadLine();
+                        if (string.IsNullOrWhiteSpace(dataLine))
+                        {
+                            // Empty data line
+                            continue;
+                        }
+
+                        var rawFileName = dataLine.Split('\t')[index];
                         LibraryBuilder.AddDmsDataset(rawFileName);
                         UpdateRawFileLocation(rawFileName);
                         OnProcessAllTarget(precursorError, hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
@@ -245,15 +267,21 @@ namespace Liquid.ViewModel
                         OnPropertyChanged("LcMsRun");
                         GC.Collect();
 
-
                         //File.Delete(rawFileName);
-                        File.Delete(rawFileName.Replace(Path.GetExtension(rawFileName), "pbf"));
+                        var pbfFilePath = Path.ChangeExtension(rawFileName, ".pbf");
+                        if (string.IsNullOrWhiteSpace(pbfFilePath))
+                            continue;
+
+                        var pbfFile = new FileInfo(pbfFilePath);
+                        if (pbfFile.Exists)
+                            pbfFile.Delete();
                     }
                     catch (Exception)
                     {
-                        continue;
+                        // Ignore the error
                     }
                 }
+
             }
 
         }
