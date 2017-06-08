@@ -73,7 +73,8 @@ namespace Liquid.ViewModel
 
             string plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + " // Precursor Scan - " + parentScan + " (" + productSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString("0.0000") + " m/z)";
 
-            PlotModel plotModel = new PlotModel(plotTitle);
+            PlotModel plotModel = new PlotModel();
+            plotModel.Title = plotTitle;
             plotModel.TitleFontSize = 14;
             plotModel.Padding = new OxyThickness(0);
             plotModel.PlotMargins = new OxyThickness(0);
@@ -130,10 +131,10 @@ namespace Liquid.ViewModel
                 {
                     MsMsAnnotation annotation = new MsMsAnnotation(fragmentationType);
                     annotation.Text = matchedSearchResult.TheoreticalPeak.DescriptionForUi;
-                    annotation.Position = dataPoint;
-                    annotation.VerticalAlignment = VerticalAlignment.Middle;
-                    annotation.HorizontalAlignment = HorizontalAlignment.Left;
-                    annotation.Rotation = -90;
+                    annotation.TextPosition = dataPoint;
+                    annotation.TextVerticalAlignment = VerticalAlignment.Middle;
+                    annotation.TextHorizontalAlignment = HorizontalAlignment.Left;
+                    annotation.TextRotation = -90;
                     annotation.StrokeThickness = 0;
                     annotation.Offset = new ScreenVector(0, -5);
                     annotation.Selectable = true;
@@ -162,7 +163,9 @@ namespace Liquid.ViewModel
             plotModel.Series.Add(annotatedPeakSeries);
             plotModel.Series.Add(diagnosticPeakSeries);
 
-            var yAxis = new LinearAxis(AxisPosition.Left, "Intensity");
+            var yAxis = new LinearAxis();
+            yAxis.Position = AxisPosition.Left;
+            yAxis.Title = "Intensity";
             yAxis.Minimum = 0;
             yAxis.AbsoluteMinimum = 0;
             //yAxis.Maximum = maxIntensity + (maxIntensity * .05);
@@ -171,7 +174,7 @@ namespace Liquid.ViewModel
             {
                 yAxis.Maximum = secondMaxIntensity + (secondMaxIntensity*.25);
                 yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity*.25);
-                yAxis.ShowMinorTicks = true;
+                yAxis.MinorTickSize = 2;
                 yAxis.MajorStep = (secondMaxIntensity + (secondMaxIntensity*.25))/5.0;
                 yAxis.StringFormat = "0.0E00";
             }
@@ -179,7 +182,7 @@ namespace Liquid.ViewModel
             {
                 yAxis.Maximum = maxIntensity + (maxIntensity * .25);
                 yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .25);
-                yAxis.ShowMinorTicks = true;
+                yAxis.MinorTickSize = 2;
                 yAxis.MajorStep = (maxIntensity + (maxIntensity * .25)) / 5.0;
                 yAxis.StringFormat = "0.0E00";
             }
@@ -187,14 +190,16 @@ namespace Liquid.ViewModel
             {
                 yAxis.Maximum = 1;
                 yAxis.AbsoluteMaximum = 1;
-                yAxis.ShowMinorTicks = false;
+                yAxis.MinorTickSize = 0;
                 yAxis.MajorStep = 1;
                 yAxis.StringFormat = "0.0";
             }
 
             yAxis.AxisChanged += OnYAxisChange;
 
-            var xAxis = new LinearAxis(AxisPosition.Bottom, "m/z");
+            var xAxis = new LinearAxis();
+            xAxis.Position = AxisPosition.Bottom;
+            xAxis.Title = "m/z";
             xAxis.Minimum = minMz - 20;
             xAxis.AbsoluteMinimum = minMz - 20;
             xAxis.Maximum = maxMz + 20;
