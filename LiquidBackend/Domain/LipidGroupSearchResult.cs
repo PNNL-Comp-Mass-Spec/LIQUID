@@ -50,9 +50,20 @@ namespace LiquidBackend.Domain
             SpectrumSearchResult = spectrumSearchResult;
             ShouldExport = false;
             Score = scoreModel.ScoreLipid(this);
-            
+
+            if (spectrumSearchResult.HcdSpectrum != null)
+            {
+                DisplayScanNum = spectrumSearchResult.HcdSpectrum.ScanNum;
+                DisplayMz = spectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz;
+            }
+            else if (spectrumSearchResult.CidSpectrum != null)
+            {
+                DisplayScanNum = spectrumSearchResult.CidSpectrum.ScanNum;
+                DisplayMz = spectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz;
+            }
+
             if (spectrumSearchResult.PrecursorSpectrum == null) return;
-            
+
             var pearsonCorrelationCalculator = new PearsonCorrelationFitUtil();
             PearsonCorrScore = pearsonCorrelationCalculator.GetFitScore(spectrumSearchResult, lipidTarget.Composition);
             PearsonCorrScoreMinus1 = pearsonCorrelationCalculator.GetFitMinus1Score(spectrumSearchResult, lipidTarget.Composition);
