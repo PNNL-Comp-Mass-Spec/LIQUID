@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LiquidBackend.Domain;
 using LiquidBackend.Util;
 using NUnit.Framework;
@@ -15,7 +13,7 @@ namespace LiquidTest
         public void TestParseLipidCommonNameIntoAcylChainsTwoChains()
         {
             const string commonName = "PC(16:0/18:1)";
-            List<AcylChain> acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+            var acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
 
             Assert.Contains(new AcylChain("16:0"), acylChains);
             Assert.Contains(new AcylChain("18:1"), acylChains);
@@ -25,7 +23,7 @@ namespace LiquidTest
         public void TestParseLipidCommonNameIntoAcylChainsTwoChainsOnePlasmogen()
         {
             const string commonName = "PC(P-16:0/18:1)";
-            List<AcylChain> acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+            var acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
 
             Assert.Contains(new AcylChain("P-16:0"), acylChains);
             Assert.Contains(new AcylChain("18:1"), acylChains);
@@ -35,7 +33,7 @@ namespace LiquidTest
         public void TestParseLipidCommonNameIntoAcylChainsTwoChainsOneEther()
         {
             const string commonName = "PC(O-16:0/18:1)";
-            List<AcylChain> acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+            var acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
 
             Assert.Contains(new AcylChain("O-16:0"), acylChains);
             Assert.Contains(new AcylChain("18:1"), acylChains);
@@ -45,7 +43,7 @@ namespace LiquidTest
         public void TestParseLipidCommonNameIntoAcylChainsTwoChainsOneDihydro()
         {
             const string commonName = "SM(d18:1/25:0)";
-            List<AcylChain> acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+            var acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
 
             Assert.Contains(new AcylChain("d18:1"), acylChains);
             Assert.Contains(new AcylChain("25:0"), acylChains);
@@ -55,7 +53,7 @@ namespace LiquidTest
         public void TestParseLipidCommonNameIntoAcylChainsThreeChains()
         {
             const string commonName = "TG(12:0/16:0/18:0)";
-            List<AcylChain> acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+            var acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
 
             Assert.Contains(new AcylChain("12:0"), acylChains);
             Assert.Contains(new AcylChain("16:0"), acylChains);
@@ -66,7 +64,7 @@ namespace LiquidTest
         public void TestParseLipidCommonNameIntoAcylChainsTwoChainsDoubleBondPositions()
         {
             const string commonName = "PE(18:3(6Z,9Z,12Z)/20:5(5Z,8Z,11Z,14Z,17Z))";
-            List<AcylChain> acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+            var acylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(commonName).ToList();
 
             Assert.Contains(new AcylChain("18:3"), acylChains);
             Assert.Contains(new AcylChain("20:5"), acylChains);
@@ -76,7 +74,7 @@ namespace LiquidTest
         public void TestParseLipidCommonNameIntoClass()
         {
             const string commonName = "PE(18:3(6Z,9Z,12Z)/20:5(5Z,8Z,11Z,14Z,17Z))";
-            LipidClass lipidClass = LipidUtil.ParseLipidCommonNameIntoClass(commonName);
+            var lipidClass = LipidUtil.ParseLipidCommonNameIntoClass(commonName);
 
             Assert.AreEqual(LipidClass.PE, lipidClass);
         }
@@ -84,11 +82,8 @@ namespace LiquidTest
         [Test]
         public void TestCreateEmpiricalFormulaFromCommonName()
         {
-            string commonName;
-            string empiricalFormula;
-
-            commonName = "PC(11:0/11:0)";
-            empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+            var commonName = "PC(11:0/11:0)";
+            var empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
             Console.WriteLine(commonName + " = " + empiricalFormula);
 
             commonName = "PC(O-16:0/18:1(9Z))";
@@ -261,15 +256,10 @@ namespace LiquidTest
         {
             const FragmentationMode fragmentationMode = FragmentationMode.Positive;
 
-            string commonName;
-            string empiricalFormula;
-            LipidTarget lipidTarget;
-            List<MsMsSearchUnit> msMsSearchUnitList;
-
-            commonName = "PC(16:0/18:1(9Z))";
-            empiricalFormula = "C42H83NO8P";
-            lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
-            msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.CommonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+            var commonName = "PC(16:0/18:1(9Z))";
+            var empiricalFormula = "C42H83NO8P";
+            var lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.CommonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
             Console.WriteLine(commonName + "\t" + empiricalFormula);
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -613,15 +603,10 @@ namespace LiquidTest
         {
             const FragmentationMode fragmentationMode = FragmentationMode.Negative;
 
-            string commonName;
-            string empiricalFormula;
-            LipidTarget lipidTarget;
-            List<MsMsSearchUnit> msMsSearchUnitList;
-
-            commonName = "PC(16:0/18:1(9Z))";
-            empiricalFormula = "C42H81NO8P";
-            lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
-            msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.CommonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+            var commonName = "PC(16:0/18:1(9Z))";
+            var empiricalFormula = "C42H81NO8P";
+            var lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.CommonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
             Console.WriteLine(commonName + "\t" + empiricalFormula);
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -865,11 +850,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPcPositive()
         {
             // Testing PC(16:0/18:1) +H
-            double precursorMz = 760.5855988;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("18:1") };
+            var precursorMz = 760.5855988;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("18:1") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -904,11 +889,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPcEtherPositive()
         {
             // Testing PC(O-16:0/18:1) +H
-            double precursorMz = 746.606333;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("18:1") };
+            var precursorMz = 746.606333;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("18:1") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -939,11 +924,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPcPlasmalogenPositive()
         {
             // Testing PC(P-16:0/18:1) +H
-            double precursorMz = 744.5906838;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("18:1") };
+            var precursorMz = 744.5906838;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("18:1") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -976,11 +961,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpcPositive()
         {
             // Testing PC(16:0/0:0) +H
-            double precursorMz = 496.3402966;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("0:0") };
+            var precursorMz = 496.3402966;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("0:0") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -1005,11 +990,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpcPlasmalogenPositive()
         {
             // Testing PC(P-16:0/0:0) +H
-            double precursorMz = 480.3453816;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("0:0") };
+            var precursorMz = 480.3453816;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("0:0") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -1031,11 +1016,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpcEtherPositive()
         {
             // Testing PC(O-16:0/0:0) +H
-            double precursorMz = 482.3610308;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("0:0") };
+            var precursorMz = 482.3610308;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("0:0") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -1057,11 +1042,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPePositive()
         {
             // Testing PE(16:0/18:1) +H
-            double precursorMz = 718.5386512;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("18:1") };
+            var precursorMz = 718.5386512;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("18:1") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -1091,11 +1076,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPeEtherPositive()
         {
             // Testing PE(O-16:0/18:1) +H
-            double precursorMz = 704.5593854;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("18:1") };
+            var precursorMz = 704.5593854;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("18:1") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -1119,11 +1104,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPePlasmalogenPositive()
         {
             // Testing PE(P-16:0/18:1) +H
-            double precursorMz = 702.5437362;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("18:1") };
+            var precursorMz = 702.5437362;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("18:1") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -1149,11 +1134,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpePositive()
         {
             // Testing PE(16:0/0:0) +H
-            double precursorMz = 454.293349;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("0:0") };
+            var precursorMz = 454.293349;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("0:0") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -1173,11 +1158,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpePlasmalogenPositive()
         {
             // Testing PE(P-16:0/0:0) +H
-            double precursorMz = 438.298434;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("0:0") };
+            var precursorMz = 438.298434;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("0:0") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {
@@ -1194,11 +1179,11 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpeEtherPositive()
         {
             // Testing PE(O-16:0/0:0) +H
-            double precursorMz = 440.3140832;
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            List<AcylChain> acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("0:0") };
+            var precursorMz = 440.3140832;
+            var fragmentationMode = FragmentationMode.Positive;
+            var acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("0:0") };
 
-            List<MsMsSearchUnit> msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
+            var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
 
             foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
             {

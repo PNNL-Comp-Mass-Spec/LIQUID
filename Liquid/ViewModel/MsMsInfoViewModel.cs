@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using InformedProteomics.Backend.Data.Spectrometry;
 using Liquid.OxyPlot;
 using LiquidBackend.Domain;
@@ -24,35 +21,35 @@ namespace Liquid.ViewModel
 
         public void OnLipidTargetChange(LipidTarget lipidTarget)
         {
-            this.CurrentLipidTarget = lipidTarget;
+            CurrentLipidTarget = lipidTarget;
             OnPropertyChanged("CurrentLipidTarget");
         }
 
         public void OnSpectrumSearchResultChange(SpectrumSearchResult spectrumSearchResult)
         {
-            this.CurrentSpectrumSearchResult = spectrumSearchResult;
+            CurrentSpectrumSearchResult = spectrumSearchResult;
             OnPropertyChanged("CurrentSpectrumSearchResult");
 
-            this.CreateMsMsPlots();
+            CreateMsMsPlots();
         }
 
         private void CreateMsMsPlots()
         {
-            IEnumerable<MsMsSearchResult> hcdSearchResultList = this.CurrentSpectrumSearchResult.HcdSearchResultList.Where(x => x.ObservedPeak != null);
-            IEnumerable<MsMsSearchResult> cidSearchResultList = this.CurrentSpectrumSearchResult.CidSearchResultList.Where(x => x.ObservedPeak != null);
+            var hcdSearchResultList = CurrentSpectrumSearchResult.HcdSearchResultList.Where(x => x.ObservedPeak != null);
+            var cidSearchResultList = CurrentSpectrumSearchResult.CidSearchResultList.Where(x => x.ObservedPeak != null);
 
             // Reset annotation list
-            this.MsMsAnnotationList = new List<MsMsAnnotation>();
+            MsMsAnnotationList = new List<MsMsAnnotation>();
 
             // Create the plot models
-            PlotModel hcdPlot = new PlotModel();
-            PlotModel cidPlot = new PlotModel();
+            var hcdPlot = new PlotModel();
+            var cidPlot = new PlotModel();
 
-            if (this.CurrentSpectrumSearchResult.HcdSpectrum != null) hcdPlot = CreateMsMsPlot(hcdSearchResultList, this.CurrentSpectrumSearchResult.HcdSpectrum);
-            if (this.CurrentSpectrumSearchResult.CidSpectrum != null) cidPlot = CreateMsMsPlot(cidSearchResultList, this.CurrentSpectrumSearchResult.CidSpectrum);
+            if (CurrentSpectrumSearchResult.HcdSpectrum != null) hcdPlot = CreateMsMsPlot(hcdSearchResultList, CurrentSpectrumSearchResult.HcdSpectrum);
+            if (CurrentSpectrumSearchResult.CidSpectrum != null) cidPlot = CreateMsMsPlot(cidSearchResultList, CurrentSpectrumSearchResult.CidSpectrum);
 
-            this.MsMsHcdPlot = hcdPlot;
-            this.MsMsCidPlot = cidPlot;
+            MsMsHcdPlot = hcdPlot;
+            MsMsCidPlot = cidPlot;
 
             // Update GUI
             OnPropertyChanged("MsMsHcdPlot");
@@ -62,53 +59,57 @@ namespace Liquid.ViewModel
 
         private PlotModel CreateMsMsPlot(IEnumerable<MsMsSearchResult> searchResultList, ProductSpectrum productSpectrum)
         {
-            SpectrumSearchResult spectrumSearchResult = this.CurrentSpectrumSearchResult;
-            LipidTarget lipidTarget = this.CurrentLipidTarget;
-            string commonName = lipidTarget.StrippedDisplay;
-            int parentScan = spectrumSearchResult.PrecursorSpectrum != null? spectrumSearchResult.PrecursorSpectrum.ScanNum : 0;
+            var spectrumSearchResult = CurrentSpectrumSearchResult;
+            var lipidTarget = CurrentLipidTarget;
+            var commonName = lipidTarget.StrippedDisplay;
+            var parentScan = spectrumSearchResult.PrecursorSpectrum?.ScanNum ?? 0;
             var peakList = productSpectrum.Peaks;
             var fragmentationType = productSpectrum.ActivationMethod == ActivationMethod.CID ? FragmentationType.CID : FragmentationType.HCD;
 
             if (!peakList.Any()) return new PlotModel();
 
-            string plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + " // Precursor Scan - " + parentScan + " (" + productSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString("0.0000") + " m/z)";
+            var plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + " // Precursor Scan - " + parentScan + " (" + productSpectrum.IsolationWindow.IsolationWindowTargetMz.ToString("0.0000") + " m/z)";
 
-            PlotModel plotModel = new PlotModel();
-            plotModel.Title = plotTitle;
-            plotModel.TitleFontSize = 14;
-            plotModel.Padding = new OxyThickness(0);
-            plotModel.PlotMargins = new OxyThickness(0);
-
-            var mzPeakSeries = new StemSeries();
-            mzPeakSeries.Color = OxyColors.Black;
-            mzPeakSeries.StrokeThickness = 0.5;
-            mzPeakSeries.Title = "Peaks";
-
-            var annotatedPeakSeries = new StemSeries();
-            annotatedPeakSeries.Color = OxyColors.Green;
-            annotatedPeakSeries.StrokeThickness = 2;
-            annotatedPeakSeries.Title = "Matched Ions";
-
-            var diagnosticPeakSeries = new StemSeries();
-            diagnosticPeakSeries.Color = OxyColors.Red;
-            diagnosticPeakSeries.StrokeThickness = 2;
-            diagnosticPeakSeries.Title = "Diagnostic Ion";
-
+            var plotModel = new PlotModel
+            {
+                Title = plotTitle,
+                TitleFontSize = 14,
+                Padding = new OxyThickness(0),
+                PlotMargins = new OxyThickness(0)
+            };
+            var mzPeakSeries = new StemSeries
+            {
+                Color = OxyColors.Black,
+                StrokeThickness = 0.5,
+                Title = "Peaks"
+            };
+            var annotatedPeakSeries = new StemSeries
+            {
+                Color = OxyColors.Green,
+                StrokeThickness = 2,
+                Title = "Matched Ions"
+            };
+            var diagnosticPeakSeries = new StemSeries
+            {
+                Color = OxyColors.Red,
+                StrokeThickness = 2,
+                Title = "Diagnostic Ion"
+            };
             plotModel.IsLegendVisible = true;
             plotModel.LegendPosition = LegendPosition.TopRight;
             plotModel.LegendPlacement = LegendPlacement.Inside;
             plotModel.LegendMargin = 0;
             plotModel.LegendFontSize = 10;
 
-            double minMz = double.MaxValue;
-            double maxMz = double.MinValue;
-            double maxIntensity = double.MinValue;
-            double secondMaxIntensity = double.MinValue;
+            var minMz = double.MaxValue;
+            var maxMz = double.MinValue;
+            var maxIntensity = double.MinValue;
+            var secondMaxIntensity = double.MinValue;
 
             foreach (var msPeak in peakList)
             {
-                double mz = msPeak.Mz;
-                double intensity = msPeak.Intensity;
+                var mz = msPeak.Mz;
+                var intensity = msPeak.Intensity;
 
                 if (mz < minMz) minMz = mz;
                 if (mz > maxMz) maxMz = mz;
@@ -122,25 +123,26 @@ namespace Liquid.ViewModel
                     secondMaxIntensity = intensity;
                 }
 
-                DataPoint dataPoint = new DataPoint(mz, intensity);
+                var dataPoint = new DataPoint(mz, intensity);
 
-                bool isDiagnostic = false;
+                var isDiagnostic = false;
 
                 var matchedPeaks = searchResultList.Where(x => x.ObservedPeak.Equals(msPeak));
                 foreach (var matchedSearchResult in matchedPeaks)
                 {
-                    MsMsAnnotation annotation = new MsMsAnnotation(fragmentationType);
-                    annotation.Text = matchedSearchResult.TheoreticalPeak.DescriptionForUi;
-                    annotation.TextPosition = dataPoint;
-                    annotation.TextVerticalAlignment = VerticalAlignment.Middle;
-                    annotation.TextHorizontalAlignment = HorizontalAlignment.Left;
-                    annotation.TextRotation = -90;
-                    annotation.StrokeThickness = 0;
-                    annotation.Offset = new ScreenVector(0, -5);
-                    annotation.Selectable = true;
-
+                    var annotation = new MsMsAnnotation(fragmentationType)
+                    {
+                        Text = matchedSearchResult.TheoreticalPeak.DescriptionForUi,
+                        TextPosition = dataPoint,
+                        TextVerticalAlignment = VerticalAlignment.Middle,
+                        TextHorizontalAlignment = HorizontalAlignment.Left,
+                        TextRotation = -90,
+                        StrokeThickness = 0,
+                        Offset = new ScreenVector(0, -5),
+                        Selectable = true
+                    };
                     plotModel.Annotations.Add(annotation);
-                    this.MsMsAnnotationList.Add(annotation);
+                    MsMsAnnotationList.Add(annotation);
 
                     if (!isDiagnostic) isDiagnostic = matchedSearchResult.TheoreticalPeak.IsDiagnostic;
                 }
@@ -163,11 +165,13 @@ namespace Liquid.ViewModel
             plotModel.Series.Add(annotatedPeakSeries);
             plotModel.Series.Add(diagnosticPeakSeries);
 
-            var yAxis = new LinearAxis();
-            yAxis.Position = AxisPosition.Left;
-            yAxis.Title = "Intensity";
-            yAxis.Minimum = 0;
-            yAxis.AbsoluteMinimum = 0;
+            var yAxis = new LinearAxis()
+            {
+                Position = AxisPosition.Left,
+                Title = "Intensity",
+                Minimum = 0,
+                AbsoluteMinimum = 0
+            };
             //yAxis.Maximum = maxIntensity + (maxIntensity * .05);
             //yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
             if (secondMaxIntensity > 0)
@@ -197,14 +201,15 @@ namespace Liquid.ViewModel
 
             yAxis.AxisChanged += OnYAxisChange;
 
-            var xAxis = new LinearAxis();
-            xAxis.Position = AxisPosition.Bottom;
-            xAxis.Title = "m/z";
-            xAxis.Minimum = minMz - 20;
-            xAxis.AbsoluteMinimum = minMz - 20;
-            xAxis.Maximum = maxMz + 20;
-            xAxis.AbsoluteMaximum = maxMz + 20;
-
+            var xAxis = new LinearAxis()
+            {
+                Position = AxisPosition.Bottom,
+                Title = "m/z",
+                Minimum = minMz - 20,
+                AbsoluteMinimum = minMz - 20,
+                Maximum = maxMz + 20,
+                AbsoluteMaximum = maxMz + 20
+            };
             plotModel.Axes.Add(yAxis);
             plotModel.Axes.Add(xAxis);
 

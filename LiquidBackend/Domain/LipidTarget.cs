@@ -2,53 +2,52 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using InformedProteomics.Backend.Data.Composition;
-using InformedProteomics.Backend.Data.Sequence;
 using LiquidBackend.Util;
 
 namespace LiquidBackend.Domain
 {
     public class LipidTarget
     {
-        public string CommonName { get; private set; }
-        public LipidClass LipidClass { get; private set; }
-        public FragmentationMode FragmentationMode { get; private set; }
-        public Composition Composition { get; private set; }
-        public IEnumerable<AcylChain> AcylChainList { get; private set; }
-        public Adduct Adduct { get; private set; }
-        public LipidType LipidType { get; private set; }
+        public string CommonName { get; }
+        public LipidClass LipidClass { get; }
+        public FragmentationMode FragmentationMode { get; }
+        public Composition Composition { get; }
+        public List<AcylChain> AcylChainList { get; }
+        public Adduct Adduct { get; }
+        public LipidType LipidType { get; }
 
         public double MzRounded
         {
             get
             {
-                if (Composition != null) return Math.Round(this.Composition.Mass/Charge, 4);
-                else return Double.Parse(CommonName); //If this is an unknown target i.e. composition is unknown
+                if (Composition != null)
+                    return Math.Round(Composition.Mass/Charge, 4);
+
+                return double.Parse(CommonName); //If this is an unknown target i.e. composition is unknown
             }
         }
 
-        public int Charge { get; private set; }
+        public int Charge { get; }
 
         public List<MsMsSearchUnit> SortedMsMsSearchUnits
         {
             get
             {
-                if (this.LipidClass != LipidClass.Unknown) return this.GetMsMsSearchUnits().OrderBy(x => x.Mz).ToList();
-                else return null;
+                if (LipidClass != LipidClass.Unknown)
+                    return GetMsMsSearchUnits().OrderBy(x => x.Mz).ToList();
+
+                return null;
             }
         }
 
-        public string EmpiricalFormula
-        {
-            get { return this.Composition.ToPlainString(); }
-        }
+        public string EmpiricalFormula => Composition.ToPlainString();
 
         public string StrippedDisplay
         {
             get
             {
-                StringBuilder stringBuilder = new StringBuilder();
+                var stringBuilder = new StringBuilder();
                 if (LipidClass == LipidClass.Unknown)
                 {
                     stringBuilder.Append(CommonName);
@@ -56,17 +55,17 @@ namespace LiquidBackend.Domain
                 }
                 if (LipidClass == LipidClass.Ganglioside){ stringBuilder.Append(CommonName.Split('(')[0]); }
                 else if (LipidClass == LipidClass.Ubiquinone) {stringBuilder.Append("Co" + CommonName.Split(' ')[1]);}
-                else { stringBuilder.Append(this.LipidClass); }
-                
-                List<AcylChain> acylChainList = this.AcylChainList.ToList();
+                else { stringBuilder.Append(LipidClass); }
+
+                var acylChainList = AcylChainList;
                 if (acylChainList.Count > 0)
                 {
                     stringBuilder.Append("(");
-                    int carbons = 0;
-                    int db = 0;
-                    for (int i = 0; i < acylChainList.Count; i++)
+                    var carbons = 0;
+                    var db = 0;
+                    for (var i = 0; i < acylChainList.Count; i++)
                     {
-                        AcylChain acylChain = acylChainList[i];
+                        var acylChain = acylChainList[i];
                         if (LipidClass == LipidClass.Ganglioside)
                         {
                             carbons += acylChain.NumCarbons;
@@ -90,28 +89,31 @@ namespace LiquidBackend.Domain
             }
         }
 
-        public string AdductString
-        {
-            get { return this.Adduct.ToString(); }
-        }
+        public string AdductString => Adduct.ToString();
 
-        public LipidTarget(string commonName, LipidClass lipidClass, FragmentationMode fragmentationMode, Composition composition, IEnumerable<AcylChain> acylChainList, Adduct adduct = Adduct.Hydrogen, int charge = 1)
+        public LipidTarget(
+            string commonName,
+            LipidClass lipidClass,
+            FragmentationMode fragmentationMode,
+            Composition composition,
+            IEnumerable<AcylChain> acylChainList,
+            Adduct adduct = Adduct.Hydrogen, int charge = 1)
         {
             CommonName = commonName;
             LipidClass = lipidClass;
             FragmentationMode = fragmentationMode;
             Composition = composition;
-            AcylChainList = acylChainList;
+            AcylChainList = acylChainList.ToList();
             Adduct = adduct;
             Charge = charge;
 
-            this.LipidType = FigureOutLipidType();
+            LipidType = FigureOutLipidType();
         }
 
 
         public List<MsMsSearchUnit> GetMsMsSearchUnits()
         {
-            return LipidUtil.CreateMsMsSearchUnits(this.CommonName, this.Composition.Mass/this.Charge, this.LipidClass, this.FragmentationMode, this.AcylChainList);
+            return LipidUtil.CreateMsMsSearchUnits(CommonName, Composition.Mass/Charge, LipidClass, FragmentationMode, AcylChainList);
         }
 
         protected bool Equals(LipidTarget other)
@@ -128,18 +130,16 @@ namespace LiquidBackend.Domain
                                    .ThenBy(x => x.NumDoubleBonds)
                                    .ThenBy(x => x.AcylChainType));
             }
-            else
-            {
-                return LipidClass == other.LipidClass && FragmentationMode == other.FragmentationMode &&
-                CommonName.Equals(other.CommonName);
-            }
+
+            return LipidClass == other.LipidClass && FragmentationMode == other.FragmentationMode &&
+                   CommonName.Equals(other.CommonName);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((LipidTarget) obj);
         }
 
@@ -147,7 +147,7 @@ namespace LiquidBackend.Domain
         {
             unchecked
             {
-                int hashCode = (int) LipidClass;
+                var hashCode = (int) LipidClass;
                 hashCode = (hashCode*397) ^ (int) FragmentationMode;
                 hashCode = (hashCode*397) ^ (Composition != null ? Composition.GetHashCode() : 0);
                 if (AcylChainList != null) hashCode = AcylChainList.OrderBy(x => x.NumCarbons).ThenBy(x => x.NumDoubleBonds).ThenBy(x => x.AcylChainType).Aggregate(hashCode, (current, acylChain) => (current * 397) ^ acylChain.GetHashCode());
@@ -157,23 +157,23 @@ namespace LiquidBackend.Domain
 
         private LipidType FigureOutLipidType()
         {
-            if (this.LipidClass == LipidClass.Ubiquinone || this.LipidClass == LipidClass.Cholesterol || this.LipidClass == LipidClass.Unknown) return LipidType.Standard;
+            if (LipidClass == LipidClass.Ubiquinone || LipidClass == LipidClass.Cholesterol || LipidClass == LipidClass.Unknown) return LipidType.Standard;
 
-            int chainCount = 0;
-            int standardChainCount = 0;
-            int plasmogenChainCount = 0;
-            int etherChainCount = 0;
-            int oxoCHOChainCount = 0;
-            int oxoCOOHChainCount = 0;
-            int dihydroxyChainCount = 0;
-            int monohydroxyChainCount = 0;
-            int trihydroChainCount = 0;
+            var chainCount = 0;
+            var standardChainCount = 0;
+            var plasmogenChainCount = 0;
+            var etherChainCount = 0;
+            var oxoCHOChainCount = 0;
+            var oxoCOOHChainCount = 0;
+            var dihydroxyChainCount = 0;
+            var monohydroxyChainCount = 0;
+            var trihydroChainCount = 0;
 
-            foreach (AcylChain acylChain in AcylChainList)
+            foreach (var acylChain in AcylChainList)
             {
                 if (acylChain.NumCarbons < 1) continue;
 
-                AcylChainType chainType = acylChain.AcylChainType;
+                var chainType = acylChain.AcylChainType;
                 if (chainType == AcylChainType.Standard) standardChainCount++;
                 else if (chainType == AcylChainType.Plasmalogen) plasmogenChainCount++;
                 else if (chainType == AcylChainType.Ether) etherChainCount++;
@@ -203,8 +203,10 @@ namespace LiquidBackend.Domain
                 if (oxoCOOHChainCount == 1) return LipidType.TwoChainsOxoCOOH;
                 if (trihydroChainCount == 1)
                 {
-                    if (dihydroxyChainCount == 1) return LipidType.TwoChainsDihidroxyPhyto;
-                    else return LipidType.TwoChainsPhyto;
+                    if (dihydroxyChainCount == 1)
+                        return LipidType.TwoChainsDihidroxyPhyto;
+
+                    return LipidType.TwoChainsPhyto;
                 }
                 if (dihydroxyChainCount == 1) return LipidType.TwoChainsDihidroxy;
                 if (dihydroxyChainCount == 2) return LipidType.TwoChainsTwoDihidroxy;
@@ -219,7 +221,7 @@ namespace LiquidBackend.Domain
                 return LipidType.FourChains;
             }
 
-            throw new SystemException("Unable to determine LipidType for LipidTarget: " + this.ToString());
+            throw new SystemException("Unable to determine LipidType for LipidTarget: " + ToString());
         }
     }
 }

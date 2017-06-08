@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InformedProteomics.Backend.Data.Spectrometry;
 using LiquidBackend.Domain;
 using LiquidBackend.Util;
 using OxyPlot;
@@ -12,9 +8,6 @@ using OxyPlot.Series;
 
 namespace Liquid.ViewModel
 {
-    using InformedProteomics.Backend.Data.Biology;
-    using InformedProteomics.Backend.Data.Composition;
-
     public class MsOneInfoViewModel : ViewModelBase
     {
         public LipidTarget CurrentLipidTarget { get; private set; }
@@ -37,7 +30,7 @@ namespace Liquid.ViewModel
         private double _stopScanForAreaUnderTheCurve;
         public double StartScanForAreaUnderCurve
         {
-            get { return _startScanForAreaUnderTheCurve; }
+            get => _startScanForAreaUnderTheCurve;
             set
             {
                 _startScanForAreaUnderTheCurve = Convert.ToDouble(value);
@@ -46,7 +39,7 @@ namespace Liquid.ViewModel
         }
         public double StopScanForAreaUnderCurve
         {
-            get { return _stopScanForAreaUnderTheCurve; }
+            get => _stopScanForAreaUnderTheCurve;
             set
             {
                 _stopScanForAreaUnderTheCurve = Convert.ToDouble(value);
@@ -58,28 +51,28 @@ namespace Liquid.ViewModel
 
         public void OnLipidTargetChange(LipidTarget lipidTarget)
         {
-            this.CurrentLipidTarget = lipidTarget;
+            CurrentLipidTarget = lipidTarget;
             OnPropertyChanged("CurrentLipidTarget");
         }
 
         public void OnSpectrumSearchResultChange(SpectrumSearchResult spectrumSearchResult)
         {
-            this.CurrentSpectrumSearchResult = spectrumSearchResult;
+            CurrentSpectrumSearchResult = spectrumSearchResult;
             OnPropertyChanged("CurrentSpectrumSearchResult");
-            if (this.CurrentSpectrumSearchResult.PrecursorSpectrum != null)
+            if (CurrentSpectrumSearchResult.PrecursorSpectrum != null)
             {
-                this.CreateIsotopicProfilePlot();
-                this.CreateXicPlot();
+                CreateIsotopicProfilePlot();
+                CreateXicPlot();
             }
 
-            this.UpdatePpmError();
+            UpdatePpmError();
 
-            if (this.CurrentSpectrumSearchResult.PrecursorSpectrum != null)
+            if (CurrentSpectrumSearchResult.PrecursorSpectrum != null)
             {
-                if(this.CurrentLipidTarget.Composition != null) this.UpdateFitScores();
+                if(CurrentLipidTarget.Composition != null) UpdateFitScores();
 
-                this.StartScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
-                this.StopScanForAreaUnderCurve = this.CurrentSpectrumSearchResult.ApexScanNum;
+                StartScanForAreaUnderCurve = CurrentSpectrumSearchResult.ApexScanNum;
+                StopScanForAreaUnderCurve = CurrentSpectrumSearchResult.ApexScanNum;
             }
         }
 
@@ -89,13 +82,13 @@ namespace Liquid.ViewModel
         /// <returns></returns>
         private void GetAreaUnderMs1()
         {
-            var chromatogram = this.CurrentSpectrumSearchResult.Xic;
+            var chromatogram = CurrentSpectrumSearchResult.Xic;
             double areaUnderCurve = 0;
 
             foreach (var xicPeak in chromatogram)
             {
                 double scanLc = xicPeak.ScanNum;
-                double intensity = xicPeak.Intensity;
+                var intensity = xicPeak.Intensity;
 
                 if (scanLc >= StartScanForAreaUnderCurve && scanLc <= StopScanForAreaUnderCurve)
                 {
@@ -111,64 +104,67 @@ namespace Liquid.ViewModel
 
         private void UpdatePpmError()
         {
-            var targetMz = this.CurrentLipidTarget.MzRounded;
-            if (this.CurrentSpectrumSearchResult.PrecursorSpectrum != null)
+            var targetMz = CurrentLipidTarget.MzRounded;
+            if (CurrentSpectrumSearchResult.PrecursorSpectrum != null)
             {
-                var massSpectrum = this.CurrentSpectrumSearchResult.PrecursorSpectrum.Peaks;
+                var massSpectrum = CurrentSpectrumSearchResult.PrecursorSpectrum.Peaks;
                 var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
-                this.CurrentMz = closestPeak.Mz;
+                CurrentMz = closestPeak.Mz;
                 OnPropertyChanged("CurrentMz");
             }
             else
             {
-                var isolationMz = this.CurrentSpectrumSearchResult.HcdSpectrum != null
-                    ? this.CurrentSpectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz
-                    : this.CurrentSpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz;
-                this.CurrentMz = isolationMz;
+                var isolationMz = CurrentSpectrumSearchResult.HcdSpectrum?.IsolationWindow.IsolationWindowTargetMz ??
+                    CurrentSpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz;
+
+                CurrentMz = isolationMz;
                 OnPropertyChanged("CurrentMz");
             }
 
-            this.CurrentPpmError = LipidUtil.PpmError(targetMz, this.CurrentMz);
+            CurrentPpmError = LipidUtil.PpmError(targetMz, CurrentMz);
             OnPropertyChanged("CurrentPpmError");
         }
 
         private void CreateIsotopicProfilePlot()
         {
-            PlotModel plotModel = new PlotModel();
-            plotModel.Title = "Isotopic Profile";
-            plotModel.Padding = new OxyThickness(0);
-            plotModel.PlotMargins = new OxyThickness(0);
-
-            var mzPeakSeries = new StemSeries();
-            mzPeakSeries.Color = OxyColors.Black;
-            mzPeakSeries.StrokeThickness = 1;
+            var plotModel = new PlotModel()
+            {
+                Title = "Isotopic Profile",
+                Padding = new OxyThickness(0),
+                PlotMargins = new OxyThickness(0)
+            };
+            var mzPeakSeries = new StemSeries()
+            {
+                Color = OxyColors.Black,
+                StrokeThickness = 1
+            };
 
             //var isotopicPeakSeries = new StemSeries();
             //isotopicPeakSeries.Color = OxyColors.Red;
             //isotopicPeakSeries.StrokeThickness = 2;
 
-            double currentMz = this.CurrentLipidTarget.MzRounded;
+            var currentMz = CurrentLipidTarget.MzRounded;
 
-            double minMz = double.MaxValue;
-            double maxMz = double.MinValue;
-            double minLocalMz = currentMz - 2;
-            double maxLocalMz = currentMz + 5;
-            double maxIntensity = double.MinValue;
-            double maxLocalIntensity = double.MinValue;
+            var minMz = double.MaxValue;
+            var maxMz = double.MinValue;
+            var minLocalMz = currentMz - 2;
+            var maxLocalMz = currentMz + 5;
+            var maxIntensity = double.MinValue;
+            var maxLocalIntensity = double.MinValue;
 
-            var massSpectrum = this.CurrentSpectrumSearchResult.PrecursorSpectrum.Peaks;
+            var massSpectrum = CurrentSpectrumSearchResult.PrecursorSpectrum.Peaks;
 
             foreach (var msPeak in massSpectrum)
             {
-                double mz = msPeak.Mz;
-                double intensity = msPeak.Intensity;
+                var mz = msPeak.Mz;
+                var intensity = msPeak.Intensity;
 
                 if (intensity > maxLocalIntensity && mz > minLocalMz && mz < maxLocalMz) maxLocalIntensity = intensity;
                 if (intensity > maxIntensity) maxIntensity = intensity;
                 if (mz < minMz) minMz = mz;
                 if (mz > maxMz) maxMz = mz;
 
-                DataPoint dataPoint = new DataPoint(mz, intensity);
+                var dataPoint = new DataPoint(mz, intensity);
                 mzPeakSeries.Points.Add(dataPoint);
             }
 
@@ -184,33 +180,36 @@ namespace Liquid.ViewModel
 
             //plotModel.Series.Add(isotopicPeakSeries);
 
-            var yAxis = new LinearAxis();
-            yAxis.Position = AxisPosition.Left;
-            yAxis.Title = "Intensity";
-            yAxis.Minimum = 0;
-            yAxis.AbsoluteMinimum = 0;
-            yAxis.Maximum = maxLocalIntensity + (maxLocalIntensity * .05);
-            yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
-            yAxis.MinorTickSize = 2;
-            yAxis.MajorStep = (maxLocalIntensity + (maxLocalIntensity * .05)) / 5.0;
-            //yAxis.IsAxisVisible = false;
-            yAxis.AxisTickToLabelDistance = 0;
-            yAxis.StringFormat = "0.0E00";
-            yAxis.FontSize = 10;
+            var yAxis = new LinearAxis()
+            {
+                Position = AxisPosition.Left,
+                Title = "Intensity",
+                Minimum = 0,
+                AbsoluteMinimum = 0,
+                Maximum = maxLocalIntensity + (maxLocalIntensity * .05),
+                AbsoluteMaximum = maxIntensity + (maxIntensity * .05),
+                MinorTickSize = 2,
+                MajorStep = (maxLocalIntensity + (maxLocalIntensity * .05)) / 5.0,
+                //yAxis.IsAxisVisible = false;
+                AxisTickToLabelDistance = 0,
+                StringFormat = "0.0E00",
+                FontSize = 10
+            };
             yAxis.AxisChanged += OnYAxisChange;
 
-            var xAxis = new LinearAxis();
-            xAxis.Position = AxisPosition.Bottom;
-            xAxis.Title = "m/z";
-            xAxis.Minimum = minLocalMz;
-            xAxis.AbsoluteMinimum = minMz - 10;
-            xAxis.Maximum = maxLocalMz;
-            xAxis.AbsoluteMaximum = maxMz + 10;
-
+            var xAxis = new LinearAxis()
+            {
+                Position = AxisPosition.Bottom,
+                Title = "m/z",
+                Minimum = minLocalMz,
+                AbsoluteMinimum = minMz - 10,
+                Maximum = maxLocalMz,
+                AbsoluteMaximum = maxMz + 10
+            };
             plotModel.Axes.Add(yAxis);
             plotModel.Axes.Add(xAxis);
 
-            this.IsotopicProfilePlot = plotModel;
+            IsotopicProfilePlot = plotModel;
             OnPropertyChanged("IsotopicProfilePlot");
         }
 
@@ -218,119 +217,126 @@ namespace Liquid.ViewModel
         {
             var pearsonCorrelationCalculator = new PearsonCorrelationFitUtil();
             PearsonCorrScore = pearsonCorrelationCalculator.GetFitScore(
-                this.CurrentSpectrumSearchResult,
-                this.CurrentLipidTarget.Composition);
+                CurrentSpectrumSearchResult,
+                CurrentLipidTarget.Composition);
             OnPropertyChanged("PearsonCorrScore");
 
             PearsonCorrMinus1Score = pearsonCorrelationCalculator.GetFitMinus1Score(
-                this.CurrentSpectrumSearchResult,
-                this.CurrentLipidTarget.Composition);
+                CurrentSpectrumSearchResult,
+                CurrentLipidTarget.Composition);
             OnPropertyChanged("PearsonCorrMinus1Score");
 
             var cosineCalculator = new CosineFitUtil();
-            this.CosineScore = cosineCalculator.GetFitScore(
-                this.CurrentSpectrumSearchResult,
-                this.CurrentLipidTarget.Composition);
+            CosineScore = cosineCalculator.GetFitScore(
+                CurrentSpectrumSearchResult,
+                CurrentLipidTarget.Composition);
             OnPropertyChanged("CosineScore");
 
-            this.CosineMinus1Score = cosineCalculator.GetFitMinus1Score(
-                this.CurrentSpectrumSearchResult,
-                this.CurrentLipidTarget.Composition);
+            CosineMinus1Score = cosineCalculator.GetFitMinus1Score(
+                CurrentSpectrumSearchResult,
+                CurrentLipidTarget.Composition);
             OnPropertyChanged("CosineMinus1Score");
         }
 
         private void CreateXicPlot()
         {
-            PlotModel plotModel = new PlotModel();
-            plotModel.Title = "XIC";
-            plotModel.Padding = new OxyThickness(0);
-            plotModel.PlotMargins = new OxyThickness(0);
-
-            var mzPeakSeries = new LineSeries();
-            mzPeakSeries.Color = OxyColors.Black;
-            mzPeakSeries.StrokeThickness = 1;
-
-            var peakCenterSeries = new StemSeries();
-            peakCenterSeries.Color = OxyColors.Red;
-            peakCenterSeries.StrokeThickness = 0.5;
-            peakCenterSeries.LineStyle = LineStyle.Dash;
-            peakCenterSeries.Title = "Apex";
-
-            var precursorSeries = new StemSeries();
-            precursorSeries.Color = OxyColors.Green;
-            precursorSeries.StrokeThickness = 0.5;
-            precursorSeries.LineStyle = LineStyle.Dash;
-            precursorSeries.Title = "Precursor";
-
+            var plotModel = new PlotModel()
+            {
+                Title = "XIC",
+                Padding = new OxyThickness(0),
+                PlotMargins = new OxyThickness(0)
+            };
+            var mzPeakSeries = new LineSeries()
+            {
+                Color = OxyColors.Black,
+                StrokeThickness = 1
+            };
+            var peakCenterSeries = new StemSeries()
+            {
+                Color = OxyColors.Red,
+                StrokeThickness = 0.5,
+                LineStyle = LineStyle.Dash,
+                Title = "Apex"
+            };
+            var precursorSeries = new StemSeries()
+            {
+                Color = OxyColors.Green,
+                StrokeThickness = 0.5,
+                LineStyle = LineStyle.Dash,
+                Title = "Precursor"
+            };
             plotModel.IsLegendVisible = true;
             plotModel.LegendPosition = LegendPosition.TopRight;
             plotModel.LegendPlacement = LegendPlacement.Inside;
             plotModel.LegendMargin = 0;
             plotModel.LegendFontSize = 10;
 
-            double peakCenter = this.CurrentSpectrumSearchResult.ApexScanNum;
-            double localMinScanLc = peakCenter - 500;
-            double localMaxScanLc = peakCenter + 500;
+            double peakCenter = CurrentSpectrumSearchResult.ApexScanNum;
+            var localMinScanLc = peakCenter - 500;
+            var localMaxScanLc = peakCenter + 500;
 
-            double absoluteMaxScanLc = double.MinValue;
-            double absoluteMinScanLc = double.MaxValue;
-            double maxIntensity = double.MinValue;
-            double localMaxIntensity = double.MinValue;
+            var absoluteMaxScanLc = double.MinValue;
+            var absoluteMinScanLc = double.MaxValue;
+            var maxIntensity = double.MinValue;
+            var localMaxIntensity = double.MinValue;
 
-            var chromatogram = this.CurrentSpectrumSearchResult.Xic;
+            var chromatogram = CurrentSpectrumSearchResult.Xic;
 
             foreach (var xicPeak in chromatogram)
             {
                 double scanLc = xicPeak.ScanNum;
-                double intensity = xicPeak.Intensity;
+                var intensity = xicPeak.Intensity;
 
                 if (scanLc > absoluteMaxScanLc) absoluteMaxScanLc = scanLc;
                 if (scanLc < absoluteMinScanLc) absoluteMinScanLc = scanLc;
                 if (intensity > maxIntensity) maxIntensity = intensity;
                 if (intensity > localMaxIntensity && scanLc <= localMaxScanLc && scanLc >= localMinScanLc) localMaxIntensity = intensity;
 
-                DataPoint dataPoint = new DataPoint(scanLc, intensity);
+                var dataPoint = new DataPoint(scanLc, intensity);
                 mzPeakSeries.Points.Add(dataPoint);
             }
 
-            DataPoint peakCenterDataPoint = new DataPoint(peakCenter, maxIntensity);
+            var peakCenterDataPoint = new DataPoint(peakCenter, maxIntensity);
             peakCenterSeries.Points.Add(peakCenterDataPoint);
 
-            int precursorScan = this.CurrentSpectrumSearchResult.PrecursorSpectrum.ScanNum;
-            DataPoint precursorDataPoint = new DataPoint(precursorScan, maxIntensity);
+            var precursorScan = CurrentSpectrumSearchResult.PrecursorSpectrum.ScanNum;
+            var precursorDataPoint = new DataPoint(precursorScan, maxIntensity);
             precursorSeries.Points.Add(precursorDataPoint);
 
             plotModel.Series.Add(mzPeakSeries);
             plotModel.Series.Add(peakCenterSeries);
             plotModel.Series.Add(precursorSeries);
 
-            var yAxis = new LinearAxis();
-            yAxis.Position = AxisPosition.Left;
-            yAxis.Title = "Intensity";
-            yAxis.Minimum = 0;
-            yAxis.AbsoluteMinimum = 0;
-            yAxis.Maximum = localMaxIntensity + (localMaxIntensity * .05);
-            yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
-            yAxis.MinorTickSize = 2;
-            yAxis.MajorStep = (localMaxIntensity + (localMaxIntensity * .05)) / 5.0;
-            //yAxis.IsAxisVisible = false;
-            yAxis.AxisTickToLabelDistance = 0;
-            yAxis.StringFormat = "0.0E00";
-            yAxis.FontSize = 10;
+            var yAxis = new LinearAxis()
+            {
+                Position = AxisPosition.Left,
+                Title = "Intensity",
+                Minimum = 0,
+                AbsoluteMinimum = 0,
+                Maximum = localMaxIntensity + (localMaxIntensity * .05),
+                AbsoluteMaximum = maxIntensity + (maxIntensity * .05),
+                MinorTickSize = 2,
+                MajorStep = (localMaxIntensity + (localMaxIntensity * .05)) / 5.0,
+                //yAxis.IsAxisVisible = false;
+                AxisTickToLabelDistance = 0,
+                StringFormat = "0.0E00",
+                FontSize = 10
+            };
             yAxis.AxisChanged += OnYAxisChange;
 
-            var xAxis = new LinearAxis();
-            xAxis.Position = AxisPosition.Bottom;
-            xAxis.Title = "Scan #";
-            xAxis.Minimum = peakCenter - 500;
-            xAxis.AbsoluteMinimum = absoluteMinScanLc - 500;
-            xAxis.Maximum = peakCenter + 500;
-            xAxis.AbsoluteMaximum = absoluteMaxScanLc + 500;
-
+            var xAxis = new LinearAxis()
+            {
+                Position = AxisPosition.Bottom,
+                Title = "Scan #",
+                Minimum = peakCenter - 500,
+                AbsoluteMinimum = absoluteMinScanLc - 500,
+                Maximum = peakCenter + 500,
+                AbsoluteMaximum = absoluteMaxScanLc + 500
+            };
             plotModel.Axes.Add(yAxis);
             plotModel.Axes.Add(xAxis);
 
-            this.XicPlot = plotModel;
+            XicPlot = plotModel;
             OnPropertyChanged("XicPlot");
         }
     }

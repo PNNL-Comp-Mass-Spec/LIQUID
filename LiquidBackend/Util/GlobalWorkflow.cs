@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using InformedProteomics.Backend.Data.Biology;
 using InformedProteomics.Backend.Data.Composition;
 using InformedProteomics.Backend.Data.Spectrometry;
@@ -19,21 +14,21 @@ namespace LiquidBackend.Util
 {
     public class GlobalWorkflow
     {
-        public LcMsRun LcMsRun { get; private set; }
-        public ScoreModel ScoreModel { get; private set; }
+        public LcMsRun LcMsRun { get; }
+        public ScoreModel ScoreModel { get; }
 
         public GlobalWorkflow(string rawFileLocation, string scoreModelLocation = "DefaultScoringModel.xml")
         {
             var dataFactory = new LcMsDataFactory();
             dataFactory.ProgressChanged += LcMsDataFactory_ProgressChanged;
 
-            this.LcMsRun = dataFactory.GetLcMsData(rawFileLocation);
-            this.ScoreModel = ScoreModelSerialization.Deserialize(scoreModelLocation);
+            LcMsRun = dataFactory.GetLcMsData(rawFileLocation);
+            ScoreModel = ScoreModelSerialization.Deserialize(scoreModelLocation);
         }
 
         public List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double hcdMassError, double cidMassError, IProgress<int> progress = null)
         {
-            return RunGlobalWorkflow(lipidList, this.LcMsRun, hcdMassError, cidMassError, this.ScoreModel, progress);
+            return RunGlobalWorkflow(lipidList, LcMsRun, hcdMassError, cidMassError, ScoreModel, progress);
         }
 
         /*
@@ -43,7 +38,7 @@ namespace LiquidBackend.Util
             Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
 
             var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList();
-            int MS1Frames = ImsRun.GetNumberOfFrames(DataReader.FrameType.MS1); 
+            int MS1Frames = ImsRun.GetNumberOfFrames(DataReader.FrameType.MS1);
             int MS2Frames = ImsRun.GetNumberOfFrames(DataReader.FrameType.MS2);
 
             var gp = ImsRun.GetGlobalParams();
@@ -92,14 +87,14 @@ namespace LiquidBackend.Util
                             double[] mzArray;
                             int[] intensityArray;
                             ImsRun.GetSpectrum(lcScan, lcScan, DataReader.FrameType.MS1, imsScan, imsScan, out mzArray, out intensityArray);
-                            
+
                             foreach (var mz in mzArray)
                             {
                                 if (mz > highMz) break;
                                 if (mz > lowMz)
                                 {
                                     //Target IMS feature found in this scan
-                                    feature.AddCoord(lcScan, imsScan);  
+                                    feature.AddCoord(lcScan, imsScan);
                                 }
                             }
                         }
@@ -112,47 +107,47 @@ namespace LiquidBackend.Util
         */
 
         public static List<LipidGroupSearchResult> RunGlobalWorkflowAvgSpec(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
-        {                                                                   
-            List<LipidGroupSearchResult> lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
+        {
+            var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 
-            Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
-            Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
+            var hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
+            var cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
 
             var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.MzRounded).GroupBy(x => x.LipidTarget).ToList();
 
-            int minLcScan = lcmsRun.MinLcScan;
+            var minLcScan = lcmsRun.MinLcScan;
             double maxLcScan = lcmsRun.MaxLcScan;
 
             var ms2scans = lcmsRun.GetScanNumbers(2);
-            List<ProductSpectrum> ms2spectra = ms2scans.Select(scan => lcmsRun.GetSpectrum(scan) as ProductSpectrum).ToList();
+            var ms2spectra = ms2scans.Select(scan => lcmsRun.GetSpectrum(scan) as ProductSpectrum).ToList();
             var uniqueMz = (from spectrum in ms2spectra select spectrum.IsolationWindow.IsolationWindowTargetMz).ToList().Distinct().ToList();
 
             foreach (var mz in uniqueMz)
             {
-                var hcdScans = ms2spectra.Where(x => x.IsolationWindow.IsolationWindowTargetMz == mz && x.ActivationMethod == ActivationMethod.HCD).Select(x => x.ScanNum).ToList();
+                var hcdScans = ms2spectra.Where(x => Math.Abs(x.IsolationWindow.IsolationWindowTargetMz - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.HCD).Select(x => x.ScanNum).ToList();
                 var summedSpec = lcmsRun.GetSummedSpectrum(hcdScans);
-                ProductSpectrum summedHcdSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.HCD };
+                var summedHcdSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.HCD };
 
-                var cidScans = ms2spectra.Where(x => x.IsolationWindow.IsolationWindowTargetMz == mz && x.ActivationMethod == ActivationMethod.CID).Select(x => x.ScanNum).ToList();
+                var cidScans = ms2spectra.Where(x => Math.Abs(x.IsolationWindow.IsolationWindowTargetMz - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.CID).Select(x => x.ScanNum).ToList();
                 summedSpec = lcmsRun.GetSummedSpectrum(cidScans);
-                ProductSpectrum summedCidSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.CID };
+                var summedCidSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.CID };
 
-                bool HcdPresent = summedHcdSpec.Peaks.Any();
-                bool CidPresent = summedCidSpec.Peaks.Any();
+                var HcdPresent = summedHcdSpec.Peaks.Any();
+                var CidPresent = summedCidSpec.Peaks.Any();
 
                 if (HcdPresent)
                 {
                     summedHcdSpec.IsolationWindow = new IsolationWindow(mz, hcdMassError, hcdMassError);
-                    
+
                 }
                 if (CidPresent)
                 {
                     summedCidSpec.IsolationWindow = new IsolationWindow(mz, cidMassError, cidMassError);
                 }
 
-                double mzToSearchTolerance = hcdMassError * mz / 1000000;
-                double lowMz = mz - mzToSearchTolerance;
-                double highMz = mz + mzToSearchTolerance;
+                var mzToSearchTolerance = hcdMassError * mz / 1000000;
+                var lowMz = mz - mzToSearchTolerance;
+                var highMz = mz + mzToSearchTolerance;
 
                 var hcdSpectrum = summedHcdSpec;
                 var cidSpectrum = summedCidSpec;
@@ -160,8 +155,8 @@ namespace LiquidBackend.Util
 
                 foreach (var grouping in lipidsGroupedByTarget)
                 {
-                    LipidTarget lipidTarget = grouping.Key;
-                    double lipidMz = lipidTarget.MzRounded;
+                    var lipidTarget = grouping.Key;
+                    var lipidMz = lipidTarget.MzRounded;
 
                     // If we reached the point where the m/z is too high, we can exit
                     if (lipidMz > highMz) break;
@@ -170,7 +165,7 @@ namespace LiquidBackend.Util
                     {
                         // Find the MS1 data
                         //Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(lipidMz, hcdTolerance, i);
-                        Xic xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(lipidMz, hcdTolerance);
+                        var xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(lipidMz, hcdTolerance);
 
                         // Bogus data
                         if (precursorSpectrum != null && (xic.GetApexScanNum() < 0 || xic.GetSumIntensities() <= 0)) continue;
@@ -179,12 +174,12 @@ namespace LiquidBackend.Util
                         IEnumerable<MsMsSearchUnit> msMsSearchUnits = lipidTarget.GetMsMsSearchUnits();
 
                         // Get all matching peaks
-                        List<MsMsSearchResult> hcdSearchResultList = hcdSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
-                        List<MsMsSearchResult> cidSearchResultList = cidSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
+                        var hcdSearchResultList = hcdSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
+                        var cidSearchResultList = cidSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
 
                         // Create spectrum search results
-                        SpectrumSearchResult spectrumSearchResult = null;
-                        LipidGroupSearchResult lipidGroupSearchResult = null;
+                        SpectrumSearchResult spectrumSearchResult;
+                        LipidGroupSearchResult lipidGroupSearchResult;
                         if (precursorSpectrum != null)
                         {
                             spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic, lcmsRun)
@@ -202,7 +197,7 @@ namespace LiquidBackend.Util
                             lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult, scoreModel);
                         }
 
-                        
+
                         lipidGroupSearchResultList.Add(lipidGroupSearchResult);
 
                         //textWriter.WriteLine(lipidTarget.CommonName + "\t" + spectrumSearchResult.Score);
@@ -211,44 +206,44 @@ namespace LiquidBackend.Util
                 }
 
             }
-            
-            
-            
-            
-            
+
+
+
+
+
             //var summedHcdSpectra = uniqueMz.Select(mz => new Tuple<double, ProductSpectrum>(mz, lcmsRun.GetSummedMs2Spectrum(mz, minLcScan, (int)maxLcScan, 1, 2, ActivationMethod.HCD))).ToDictionary(x => x.Item1, x => x.Item2);
             //if (summedHcdSpectra != null) { foreach (var spec in summedHcdSpectra) { spec.Value.IsolationWindow = new IsolationWindow(spec.Key, spec.Key, spec.Key); } }
             //var summedCidSpectra = uniqueMz.Select(mz => lcmsRun.GetSummedMs2Spectrum(mz, minLcScan, (int)maxLcScan, 1, 2, ActivationMethod.CID)).ToList();
 
 
- 
+
             return lipidGroupSearchResultList;
         }
 
         public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
         {
             //TextWriter textWriter = new StreamWriter("outputNeg.tsv");
-            List<LipidGroupSearchResult> lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
+            var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 
-            Tolerance hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
-            Tolerance cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
+            var hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
+            var cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
 
             //var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList(); //order by mz
             var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.MzRounded).GroupBy(x => x.LipidTarget).ToList();
 
-            int minLcScan = lcmsRun.MinLcScan;
+            var minLcScan = lcmsRun.MinLcScan;
             double maxLcScan = lcmsRun.MaxLcScan;
 
 
 
-            ActivationMethodCombination activationMethodCombination = FigureOutActivationMethodCombination(lcmsRun);
+            var activationMethodCombination = FigureOutActivationMethodCombination(lcmsRun);
             if (activationMethodCombination == ActivationMethodCombination.Unsupported) throw new SystemException("Unsupported activation method.");
-            bool useTwoScans = (activationMethodCombination == ActivationMethodCombination.CidThenHcd || activationMethodCombination == ActivationMethodCombination.HcdThenCid);
+            var useTwoScans = (activationMethodCombination == ActivationMethodCombination.CidThenHcd || activationMethodCombination == ActivationMethodCombination.HcdThenCid);
 
-            for (int i = minLcScan; i <= maxLcScan; i++)
+            for (var i = minLcScan; i <= maxLcScan; i++)
             {
                 // Lookup the MS/MS Spectrum
-                ProductSpectrum firstMsMsSpectrum = lcmsRun.GetSpectrum(i) as ProductSpectrum;
+                var firstMsMsSpectrum = lcmsRun.GetSpectrum(i) as ProductSpectrum;
                 if (firstMsMsSpectrum == null) continue;
 
                 // Lookup the MS/MS Spectrum
@@ -259,21 +254,23 @@ namespace LiquidBackend.Util
                     if (secondMsMsSpectrum == null) continue;
 
                     // If m/z values of the MS/MS spectrums do not match, just move on
-                    if (Math.Abs(firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz - secondMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz) > 0.01) continue;
+                    var deltaMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz -
+                                  secondMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
+                    if (Math.Abs(deltaMz) > 0.01) continue;
                 }
 
                 //textWriter.WriteLine(i);
                 //Console.WriteLine(DateTime.Now + "\tProcessing Scan" + i);
 
                 // Grab Precursor Spectrum
-                                
-                int precursorScanNumber = 0;
+
+                var precursorScanNumber = 0;
                 if (lcmsRun.MinMsLevel == 1) //Make sure there are precursor scans in file
                 {
-                    precursorScanNumber = lcmsRun.GetPrecursorScanNum(i); 	        
+                    precursorScanNumber = lcmsRun.GetPrecursorScanNum(i);
                 }
-                
-                Spectrum precursorSpectrum = lcmsRun.GetSpectrum(precursorScanNumber);
+
+                var precursorSpectrum = lcmsRun.GetSpectrum(precursorScanNumber);
 
                 // Assign each MS/MS spectrum to HCD or CID
                 ProductSpectrum hcdSpectrum;
@@ -289,15 +286,15 @@ namespace LiquidBackend.Util
                     cidSpectrum = firstMsMsSpectrum;
                 }
 
-                double msMsPrecursorMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
-                double mzToSearchTolerance = hcdMassError * msMsPrecursorMz / 1000000;
-                double lowMz = msMsPrecursorMz - mzToSearchTolerance;
-                double highMz = msMsPrecursorMz + mzToSearchTolerance;
+                var msMsPrecursorMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
+                var mzToSearchTolerance = hcdMassError * msMsPrecursorMz / 1000000;
+                var lowMz = msMsPrecursorMz - mzToSearchTolerance;
+                var highMz = msMsPrecursorMz + mzToSearchTolerance;
 
                 foreach (var grouping in lipidsGroupedByTarget)
                 {
-                    LipidTarget lipidTarget = grouping.Key;
-                    double lipidMz = lipidTarget.MzRounded;
+                    var lipidTarget = grouping.Key;
+                    var lipidMz = lipidTarget.MzRounded;
 
                     // If we reached the point where the m/z is too high, we can exit
                     if (lipidMz > highMz) break;
@@ -306,7 +303,7 @@ namespace LiquidBackend.Util
                     {
                         // Find the MS1 data
                         //Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(lipidMz, hcdTolerance, i);
-                        Xic xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(lipidMz, hcdTolerance);
+                        var xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(lipidMz, hcdTolerance);
 
                         // Bogus data
                         if (precursorSpectrum != null && (xic.GetApexScanNum() < 0 || xic.GetSumIntensities() <= 0)) continue;
@@ -315,13 +312,13 @@ namespace LiquidBackend.Util
                         IEnumerable<MsMsSearchUnit> msMsSearchUnits = lipidTarget.GetMsMsSearchUnits();
 
                         // Get all matching peaks
-                        List<MsMsSearchResult> hcdSearchResultList = hcdSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
-                        List<MsMsSearchResult> cidSearchResultList = cidSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
+                        var hcdSearchResultList = hcdSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
+                        var cidSearchResultList = cidSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
 
                         // Create spectrum search results
-                        SpectrumSearchResult spectrumSearchResult = null;
-                        LipidGroupSearchResult lipidGroupSearchResult = null;
-                       
+                        SpectrumSearchResult spectrumSearchResult;
+                        LipidGroupSearchResult lipidGroupSearchResult;
+
                         if (precursorSpectrum != null)
                         {
                             spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, precursorSpectrum, hcdSearchResultList, cidSearchResultList, xic, lcmsRun)
@@ -338,8 +335,8 @@ namespace LiquidBackend.Util
                             };
                             lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult, scoreModel);
                         }
-                        
-                       
+
+
                         lipidGroupSearchResultList.Add(lipidGroupSearchResult);
 
                     }
@@ -351,7 +348,7 @@ namespace LiquidBackend.Util
                 // Report progress
                 if (progress != null)
                 {
-                    int currentProgress = (int)((i / maxLcScan) * 100);
+                    var currentProgress = (int)((i / maxLcScan) * 100);
                     progress.Report(currentProgress);
                 }
             }
@@ -367,53 +364,53 @@ namespace LiquidBackend.Util
 
         public MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, double hcdMassError, IProgress<int> progress = null)
         {
-            return RunMassCalibration(lipidList, this.LcMsRun, hcdMassError, progress);
+            return RunMassCalibration(lipidList, LcMsRun, hcdMassError, progress);
         }
 
         public static MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, IProgress<int> progress = null)
         {
-            List<double> ppmErrorList = new List<double>();
+            var ppmErrorList = new List<double>();
 
             var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList();
 
             foreach (var kvp in lipidsGroupedByTarget)
             {
-                LipidTarget target = kvp.Key;
+                var target = kvp.Key;
 
                 var spectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(target, lcmsRun, hcdMassError, 500, null);
 
                 if (spectrumSearchResultList.Any())
                 {
                     var targetIon = new Ion(target.Composition - Composition.Hydrogen, 1);
-                    double targetMz = targetIon.GetMonoIsotopicMz();
+                    var targetMz = targetIon.GetMonoIsotopicMz();
 
                     var bestSpectrumSearchResult = spectrumSearchResultList.OrderBy(x => x.Score).First();
 
                     var massSpectrum = bestSpectrumSearchResult.PrecursorSpectrum.Peaks;
                     var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
 
-                    double ppmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
+                    var ppmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
                     ppmErrorList.Add(ppmError);
                 }
             }
 
-            SortedDictionary<double, int> ppmHistogram = QcUtil.CalculateHistogram(ppmErrorList, hcdMassError, 0.25);
+            var ppmHistogram = QcUtil.CalculateHistogram(ppmErrorList, hcdMassError, 0.25);
 
-            MassCalibrationResults massCalibrationResults = new MassCalibrationResults(ppmHistogram);
+            var massCalibrationResults = new MassCalibrationResults(ppmHistogram);
             return massCalibrationResults;
         }
 
         public static ActivationMethodCombination FigureOutActivationMethodCombination(LcMsRun lcmsRun)
         {
-            List<int> Ms1ScanNumbers = lcmsRun.GetScanNumbers(1).ToList();
-            List<int> Ms2ScanNumbers = lcmsRun.GetScanNumbers(2).ToList();
-            ProductSpectrum firstMsMsSpectrum = null;
-            int firstMsMsScanNumber = 0;
+            var Ms1ScanNumbers = lcmsRun.GetScanNumbers(1).ToList();
+            var Ms2ScanNumbers = lcmsRun.GetScanNumbers(2).ToList();
+            ProductSpectrum firstMsMsSpectrum;
+            int firstMsMsScanNumber;
             if (Ms1ScanNumbers.Count > 0)
             {
                 // Grab an MS1 Scan thats about 33% through the file so that we get accurate MS2 data
-                int indexToGrab = (int) Math.Floor(Ms1ScanNumbers.Count/3.0);
-                int ms1ScanNumberInMiddleOfRun = Ms1ScanNumbers[indexToGrab];
+                var indexToGrab = (int) Math.Floor(Ms1ScanNumbers.Count/3.0);
+                var ms1ScanNumberInMiddleOfRun = Ms1ScanNumbers[indexToGrab];
 
                 firstMsMsScanNumber = lcmsRun.GetNextScanNum(ms1ScanNumberInMiddleOfRun, 2);
 
@@ -422,8 +419,8 @@ namespace LiquidBackend.Util
             }
             else
             {
-                int indexToGrab = (int) Math.Floor(Ms2ScanNumbers.Count/3.0);
-                int ms2ScanNumberInMiddleOfRun = Ms2ScanNumbers[indexToGrab];
+                var indexToGrab = (int) Math.Floor(Ms2ScanNumbers.Count/3.0);
+                var ms2ScanNumberInMiddleOfRun = Ms2ScanNumbers[indexToGrab];
                 firstMsMsSpectrum = lcmsRun.GetSpectrum(ms2ScanNumberInMiddleOfRun) as ProductSpectrum;
                 firstMsMsScanNumber = firstMsMsSpectrum.ScanNum;
             }
@@ -431,8 +428,8 @@ namespace LiquidBackend.Util
             if(firstMsMsSpectrum == null) return ActivationMethodCombination.Unsupported;
 
             // Lookup the second MS/MS Spectrum
-            int nextMsMsScanNumber = lcmsRun.GetNextScanNum(firstMsMsScanNumber, 2);
-            ProductSpectrum nextMsMsSpectrum = lcmsRun.GetSpectrum(nextMsMsScanNumber) as ProductSpectrum;
+            var nextMsMsScanNumber = lcmsRun.GetNextScanNum(firstMsMsScanNumber, 2);
+            var nextMsMsSpectrum = lcmsRun.GetSpectrum(nextMsMsScanNumber) as ProductSpectrum;
 
             if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
             {
@@ -440,7 +437,7 @@ namespace LiquidBackend.Util
                 if (nextMsMsSpectrum == null) return ActivationMethodCombination.HcdOnly;
                 if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.HcdThenCid;
                 if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.HcdOnly;
-                
+
             }
             else if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.CID)
             {

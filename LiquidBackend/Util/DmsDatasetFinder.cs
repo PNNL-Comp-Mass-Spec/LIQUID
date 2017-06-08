@@ -1,40 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Mage;
 
 namespace LiquidBackend.Util
 {
-	public class DmsDatasetFinder
-	{
-		public static string FindLocationOfDataset(string datasetName)
-		{
-			MSSQLReader reader = new MSSQLReader();
-			reader.Server = "gigasax";
-			reader.Database = "DMS5";
-			reader.SQLText = "SELECT * FROM V_Mage_Dataset_List WHERE Dataset = '" + datasetName + "'";
+    public class DmsDatasetFinder
+    {
+        public static string FindLocationOfDataset(string datasetName)
+        {
+            var reader = new MSSQLReader()
+            {
+                Server = "gigasax",
+                Database = "DMS5",
+                SQLText = "SELECT * FROM V_Mage_Dataset_List WHERE Dataset = '" + datasetName + "'"
+            };
+            var fileFilter = new FileListFilter()
+            {
+                FileColumnName = "Name",
+                OutputColumnList = "Item|+|text, Name|+|text, Folder, Dataset, Dataset_ID, *",
+                FileNameSelector = ".raw" // regex style filter for file names – blank means pass all
+            };
+            var sink = new SimpleSink();
 
-			FileListFilter fileFilter = new FileListFilter();
-			fileFilter.FileColumnName = "Name";
-			fileFilter.OutputColumnList = "Item|+|text, Name|+|text, Folder, Dataset, Dataset_ID, *";
-			fileFilter.FileNameSelector = ".raw"; // regex style filter for file names – blank means pass all
+            var pipeline = ProcessingPipeline.Assemble("test_pipeline", reader, fileFilter, sink);
+            pipeline.RunRoot(null);
 
-			SimpleSink sink = new SimpleSink();
+            if (sink.Rows == null || sink.Rows.Count != 1)
+            {
+                throw new InvalidOperationException("Mage returned invalid results.");
+            }
 
-			ProcessingPipeline pipeline = ProcessingPipeline.Assemble("test_pipeline", reader, fileFilter, sink);
-			pipeline.RunRoot(null);
+            var folderColumnIndex = sink.ColumnIndex["Folder"];
+            var folderName = sink.Rows[0].GetValue(folderColumnIndex).ToString();
 
-			if (sink.Rows == null || sink.Rows.Count != 1)
-			{
-				throw new InvalidOperationException("Mage returned invalid results.");
-			}
-
-			int folderColumnIndex = sink.ColumnIndex["Folder"];
-			string folderName = sink.Rows[0].GetValue(folderColumnIndex).ToString();
-
-			return folderName;
-		}
-	}
+            return folderName;
+        }
+    }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiquidBackend.IO
 {
@@ -10,7 +7,7 @@ namespace LiquidBackend.IO
     {
         private const string COMMON_NAME = "COMMON NAME";
         private const string MSMS_SCAN = "MS/MS SCAN";
-       
+
         /// <summary>
         /// Creates a mapping of column titles to their indices.
         /// </summary>
@@ -19,11 +16,11 @@ namespace LiquidBackend.IO
         protected override Dictionary<string, int> CreateColumnMapping(String columnString)
         {
             var columnMap = new Dictionary<string, int>();
-            string[] columnTitles = columnString.Split('\t', '\n');
+            var columnTitles = columnString.Split('\t', '\n');
 
-            for (int i = 0; i < columnTitles.Count(); i++)
+            for (var i = 0; i < columnTitles.Length; i++)
             {
-                String columnTitle = columnTitles[i].ToUpper();
+                var columnTitle = columnTitles[i].ToUpper();
 
                 switch (columnTitle)
                 {
@@ -46,12 +43,12 @@ namespace LiquidBackend.IO
         /// <returns>A dictionary pairing common name with the scan the lipid was detected in.</returns>
         protected override T ParseLine(String line, IDictionary<string, int> columnMapping)
         {
-            string[] columns = line.Split('\t', '\n');
+            var columns = line.Split('\t', '\n');
 
             if (!columnMapping.ContainsKey(COMMON_NAME)) throw new SystemException("Common Name is required for lipid import.");
             if (!columnMapping.ContainsKey(MSMS_SCAN)) throw new SystemException("MS/MS Scan is required for lipid import.");
-            string name = columns[columnMapping[COMMON_NAME]];
-            int scan = Int32.Parse(columns[columnMapping[MSMS_SCAN]]);
+            var name = columns[columnMapping[COMMON_NAME]];
+            var scan = Int32.Parse(columns[columnMapping[MSMS_SCAN]]);
             //var Id = new T();
             var ID = new Tuple<string, int>(name, scan);
             //Id.Add(name,scan);

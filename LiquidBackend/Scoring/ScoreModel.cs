@@ -1,22 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
 using LiquidBackend.Domain;
 
 namespace LiquidBackend.Scoring
 {
-    using InformedProteomics.Backend.Data.Biology;
-    using InformedProteomics.Backend.Data.Composition;
-    using InformedProteomics.Backend.Data.Spectrometry;
-
-    using LiquidBackend.Util;
-
     [DataContract]
     public class ScoreModel
     {
@@ -25,24 +14,24 @@ namespace LiquidBackend.Scoring
 
         private ScoreModel()
         {
-            
+
         }
 
         public ScoreModel(List<ScoreModelUnit> scoreModelUnitList)
         {
             ScoreModelUnitList = scoreModelUnitList;
-            this.ScoreModelUnitList.Sort();
+            ScoreModelUnitList.Sort();
         }
 
         public double ScoreLipid(LipidTarget lipidTarget, SpectrumSearchResult spectrumSearchResult)
         {
-            List<ScoreModelUnit> relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidTarget);
+            var relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidTarget);
 
-            List<MsMsSearchResult> cidResultList = spectrumSearchResult.CidSearchResultList;
-            List<MsMsSearchResult> hcdResultList = spectrumSearchResult.HcdSearchResultList;
+            var cidResultList = spectrumSearchResult.CidSearchResultList;
+            var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-            double cidMaxIntensity = spectrumSearchResult.CidSpectrum != null && spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-            double hcdMaxIntensity = spectrumSearchResult.HcdSpectrum != null && spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var cidMaxIntensity = spectrumSearchResult.CidSpectrum != null && spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var hcdMaxIntensity = spectrumSearchResult.HcdSpectrum != null && spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
             double lipidScore = 0;
 
@@ -63,14 +52,14 @@ namespace LiquidBackend.Scoring
 
         public double ScoreLipid(LipidGroupSearchResult lipidGroupSearchResult)
         {
-            List<ScoreModelUnit> relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidGroupSearchResult);
+            var relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidGroupSearchResult);
 
-            SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
-            List<MsMsSearchResult> cidResultList = spectrumSearchResult.CidSearchResultList;
-            List<MsMsSearchResult> hcdResultList = spectrumSearchResult.HcdSearchResultList;
+            var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
+            var cidResultList = spectrumSearchResult.CidSearchResultList;
+            var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-            double cidMaxIntensity = spectrumSearchResult.CidSpectrum != null && spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-            double hcdMaxIntensity = spectrumSearchResult.HcdSpectrum != null && spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var cidMaxIntensity = spectrumSearchResult.CidSpectrum != null && spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var hcdMaxIntensity = spectrumSearchResult.HcdSpectrum != null && spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
             double lipidScore = 0;
 
@@ -91,14 +80,14 @@ namespace LiquidBackend.Scoring
 
         public double ScoreLipidDissimilarity(LipidGroupSearchResult lipidGroupSearchResult)
         {
-            List<ScoreModelUnit> relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidGroupSearchResult);
+            var relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidGroupSearchResult);
 
-            SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
-            List<MsMsSearchResult> cidResultList = spectrumSearchResult.CidSearchResultList;
-            List<MsMsSearchResult> hcdResultList = spectrumSearchResult.HcdSearchResultList;
+            var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
+            var cidResultList = spectrumSearchResult.CidSearchResultList;
+            var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-            double cidMaxIntensity = spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-            double hcdMaxIntensity = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var cidMaxIntensity = spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var hcdMaxIntensity = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
             double lipidScore = 0;
 
@@ -119,26 +108,29 @@ namespace LiquidBackend.Scoring
 
         private List<ScoreModelUnit> GetRelatedScoreModelUnits(LipidGroupSearchResult lipidGroupSearchResult)
         {
-            LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;
+            var lipidTarget = lipidGroupSearchResult.LipidTarget;
             return GetRelatedScoreModelUnits(lipidTarget);
         }
 
         private List<ScoreModelUnit> GetRelatedScoreModelUnits(LipidTarget lipidTarget)
         {
-            LipidClass lipidClass = lipidTarget.LipidClass;
-            LipidType lipidType = lipidTarget.LipidType;
-            FragmentationMode fragmentationMode = lipidTarget.FragmentationMode;
+            var lipidClass = lipidTarget.LipidClass;
+            var lipidType = lipidTarget.LipidType;
+            var fragmentationMode = lipidTarget.FragmentationMode;
 
-            return this.ScoreModelUnitList.Where(x => x.LipidClass == lipidClass && x.LipidType == lipidType && x.FragmentationMode == fragmentationMode).ToList();
+            return ScoreModelUnitList.Where(x => x.LipidClass == lipidClass && x.LipidType == lipidType && x.FragmentationMode == fragmentationMode).ToList();
         }
 
-        private double ScoreSingleFragmentationType(IEnumerable<MsMsSearchResult> searchResultList, IEnumerable<ScoreModelUnit> relatedScoreModelUnits, FragmentationType fragmentationType, double maxIntensity)
+        private double ScoreSingleFragmentationType(
+            IEnumerable<MsMsSearchResult> searchResultList,
+            List<ScoreModelUnit> relatedScoreModelUnits,
+            FragmentationType fragmentationType, double maxIntensity)
         {
             double fragmentationTypeScore = 0;
 
             foreach (var result in searchResultList)
             {
-                string fragment = result.TheoreticalPeak.Description;
+                var fragment = result.TheoreticalPeak.Description;
                 double intensity = 0;
 
                 if (result.ObservedPeak != null)
@@ -147,7 +139,7 @@ namespace LiquidBackend.Scoring
                 }
 
                 var scoreUnits = relatedScoreModelUnits.Where(x => x.FragmentationType == fragmentationType && x.FragmentDescription.Equals(fragment));
-                bool found = false;
+                var found = false;
 
                 foreach (var scoreUnit in scoreUnits)
                 {
@@ -172,13 +164,17 @@ namespace LiquidBackend.Scoring
             return fragmentationTypeScore;
         }
 
-        private double ScoreSingleFragmentationTypeDissimilarity(IEnumerable<MsMsSearchResult> searchResultList, IEnumerable<ScoreModelUnit> relatedScoreModelUnits, FragmentationType fragmentationType, double maxIntensity)
+        private double ScoreSingleFragmentationTypeDissimilarity(
+            IEnumerable<MsMsSearchResult> searchResultList,
+            List<ScoreModelUnit> relatedScoreModelUnits,
+            FragmentationType fragmentationType,
+            double maxIntensity)
         {
             double fragmentationTypeScore = 0;
 
             foreach (var result in searchResultList)
             {
-                string fragment = result.TheoreticalPeak.Description;
+                var fragment = result.TheoreticalPeak.Description;
                 double intensity = 0;
 
                 if (result.ObservedPeak != null)
@@ -187,13 +183,13 @@ namespace LiquidBackend.Scoring
                 }
 
                 var scoreUnits = relatedScoreModelUnits.Where(x => x.FragmentationType == fragmentationType && x.FragmentDescription.Equals(fragment));
-                bool found = false;
+                var found = false;
 
                 foreach (var scoreUnit in scoreUnits)
                 {
                     double fragmentScore;
 
-                    double inverseProbability = 1 - scoreUnit.Probability;
+                    var inverseProbability = 1 - scoreUnit.Probability;
 
                     // Observed
                     if (!found && intensity <= scoreUnit.IntensityMax)

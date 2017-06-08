@@ -1,41 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiquidBackend.Domain
 {
 	public class MsMsSearchUnit
 	{
-		public double Mz { get; set; }
-		public string Description { get; private set; }
-		public AcylChain AcylChain { get; private set; }
-		public bool IsDiagnostic { get; private set; }
+		public double Mz { get; }
+		public string Description { get; }
+		public AcylChain AcylChain { get; }
+		public bool IsDiagnostic { get; }
 
 		public string DescriptionForUi
 		{
 			get
 			{
-				if (this.AcylChain == null) return this.Description;
-				return this.Description + " (" + this.AcylChain.ToString() + ")";
+				if (AcylChain == null) return Description;
+				return Description + " (" + AcylChain + ")";
 			}
 		}
 
 		public MsMsSearchUnit(double mz, string description, bool isDiagnostic = false)
 		{
-			this.Mz = mz;
-			this.Description = description;
-			this.AcylChain = null;
-			this.IsDiagnostic = isDiagnostic;
+			Mz = mz;
+			Description = description;
+			AcylChain = null;
+			IsDiagnostic = isDiagnostic;
 		}
 
 		public MsMsSearchUnit(double mz, string description, AcylChain acylChain, bool isDiagnostic = false)
 		{
-			this.Mz = mz;
-			this.Description = description;
-			this.AcylChain = acylChain;
-			this.IsDiagnostic = isDiagnostic;
+			Mz = mz;
+			Description = description;
+			AcylChain = acylChain;
+			IsDiagnostic = isDiagnostic;
 		}
 
 		public override string ToString()
@@ -52,7 +48,7 @@ namespace LiquidBackend.Domain
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != this.GetType()) return false;
+			if (obj.GetType() != GetType()) return false;
 			return Equals((MsMsSearchUnit) obj);
 		}
 

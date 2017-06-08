@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LiquidBackend.Domain;
+﻿using LiquidBackend.Domain;
 using NUnit.Framework;
 
 namespace LiquidTest
@@ -13,8 +8,8 @@ namespace LiquidTest
 		[Test]
 		public void TestCreateAcylChain()
 		{
-			String chainString = "16:0";
-			AcylChain chain = new AcylChain(chainString);
+			var chainString = "16:0";
+			var chain = new AcylChain(chainString);
 
 			Assert.AreEqual(16, chain.NumCarbons);
 			Assert.AreEqual(0, chain.NumDoubleBonds);
@@ -25,8 +20,8 @@ namespace LiquidTest
 		[Test]
 		public void TestCreateAcylChainPlasmalogen()
 		{
-			String chainString = "P-18:1";
-			AcylChain chain = new AcylChain(chainString);
+			var chainString = "P-18:1";
+			var chain = new AcylChain(chainString);
 
 			Assert.AreEqual(18, chain.NumCarbons);
 			Assert.AreEqual(1, chain.NumDoubleBonds);
@@ -37,8 +32,8 @@ namespace LiquidTest
 		[Test]
 		public void TestCreateAcylChainEther()
 		{
-			String chainString = "O-20:4";
-			AcylChain chain = new AcylChain(chainString);
+			var chainString = "O-20:4";
+			var chain = new AcylChain(chainString);
 
 			Assert.AreEqual(20, chain.NumCarbons);
 			Assert.AreEqual(4, chain.NumDoubleBonds);
@@ -49,8 +44,8 @@ namespace LiquidTest
 		[Test]
 		public void TestCreateAcylChainMonohydro()
 		{
-			String chainString = "m12:2";
-			AcylChain chain = new AcylChain(chainString);
+			var chainString = "m12:2";
+			var chain = new AcylChain(chainString);
 
 			Assert.AreEqual(12, chain.NumCarbons);
 			Assert.AreEqual(2, chain.NumDoubleBonds);
@@ -61,8 +56,8 @@ namespace LiquidTest
 		[Test]
 		public void TestCreateAcylChainDinohydro()
 		{
-			String chainString = "d8:3";
-			AcylChain chain = new AcylChain(chainString);
+			var chainString = "d8:3";
+			var chain = new AcylChain(chainString);
 
 			Assert.AreEqual(8, chain.NumCarbons);
 			Assert.AreEqual(3, chain.NumDoubleBonds);
@@ -73,8 +68,8 @@ namespace LiquidTest
 		[Test]
 		public void TestCreateAcylChainTrinohydro()
 		{
-			String chainString = "t31:6";
-			AcylChain chain = new AcylChain(chainString);
+			var chainString = "t31:6";
+			var chain = new AcylChain(chainString);
 
 			Assert.AreEqual(31, chain.NumCarbons);
 			Assert.AreEqual(6, chain.NumDoubleBonds);

@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InformedProteomics.Backend.Data.Biology;
 using InformedProteomics.Backend.Data.Composition;
 using InformedProteomics.Backend.Data.Spectrometry;
 using InformedProteomics.Backend.MassSpecData;
@@ -13,7 +10,6 @@ using NUnit.Framework;
 
 namespace LiquidTest
 {
-    using LiquidBackend.IO;
     using LiquidBackend.Util;
 
     [TestFixture]
@@ -38,7 +34,7 @@ namespace LiquidTest
 
         public string GetRawFilePath(string directory, string datasetName)
         {
-            string rawFileName = datasetName + ".raw";
+            var rawFileName = datasetName + ".raw";
             var rawFilePath = Path.Combine(directory, rawFileName);
 
             Console.WriteLine(DateTime.Now + ": Processing " + datasetName);
@@ -54,9 +50,9 @@ namespace LiquidTest
                     Console.WriteLine(DateTime.Now + ": Dataset does not exist locally, so we will go get it");
 
                     // Lookup in DMS via Mage
-                    string dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetName);
-                    DirectoryInfo dmsDirectoryInfo = new DirectoryInfo(dmsFolder);
-                    string fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, rawFileName);
+                    var dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetName);
+                    var dmsDirectoryInfo = new DirectoryInfo(dmsFolder);
+                    var fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, rawFileName);
 
                     // Copy Locally
                     // TODO: Handle files that are on MyEMSL
@@ -97,23 +93,25 @@ namespace LiquidTest
                 }
 
                 var lcmsRun = PbfLcMsRun.GetLcMsRun(pathToRaw);
-                Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
-                var datasetDirPath = Path.GetDirectoryName(pathToResults);
+                var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
                 using (var reader = new StreamReader(pathToResults))
                 {
                     results.Add(new Dictionary<string, List<string>>()); // Add dictionary for new dataset.
                     var datasetResults = results.Last(); // Results for the current dataset.
-                    int lineCount = 0;
+                    var lineCount = 0;
                     var headerToIndex = new Dictionary<string, int>();
-                    while (reader.Peek() > -1)
+                    while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
+                        if (string.IsNullOrWhiteSpace(line))
+                            continue;
+
                         var pieces = line.Split('\t').ToArray();
 
                         if (lineCount++ == 0)
                         {   // First line
 
-                            for (int i = 0; i < pieces.Length; i++)
+                            for (var i = 0; i < pieces.Length; i++)
                             {
                                 var header = pieces[i];
                                 headerToIndex.Add(header, i);
@@ -131,7 +129,7 @@ namespace LiquidTest
 
                         var precursor = Convert.ToInt32(pieces[headerToIndex["Precursor Scan"]]);
                         var commonName = pieces[headerToIndex["Common Name"]];
-                        var adduct = pieces[headerToIndex["Adduct"]]; 
+                        var adduct = pieces[headerToIndex["Adduct"]];
                         var spectrum = lcmsRun.GetSpectrum(precursor);
                         if (spectrum == null)
                         {
@@ -179,8 +177,8 @@ namespace LiquidTest
                 // Write data
                 foreach (var datasetResults in results)
                 {
-                    var fileLength = datasetResults["Pearson Corr Score"].Count();
-                    for (int i = 0; i < fileLength; i++)
+                    var fileLength = datasetResults["Pearson Corr Score"].Count;
+                    for (var i = 0; i < fileLength; i++)
                     {
                         foreach (var header in headers)
                         {
@@ -210,7 +208,7 @@ namespace LiquidTest
                 }
 
                 var lcmsRun = PbfLcMsRun.GetLcMsRun(pathToRaw);
-                Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
+                var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
                 var rawFileName = Path.GetFileName(pathToRaw);
                 var datasetDirPath = Path.GetDirectoryName(pathToResults);
                 var outputFileName = string.Format("{0}_training.tsv", datasetName);
@@ -218,18 +216,21 @@ namespace LiquidTest
                 using (var writer = new StreamWriter(outputPath))
                 using (var reader = new StreamReader(pathToResults))
                 {
-                    int lineCount = 0;
+                    var lineCount = 0;
                     var headerToIndex = new Dictionary<string, int>();
-                    while (reader.Peek() > -1)
+                    while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
+                        if (string.IsNullOrWhiteSpace(line))
+                            continue;
+
                         var pieces = line.Split('\t').ToArray();
 
                         if (lineCount++ == 0)
                         {   // First line
 
                             writer.Write("Raw File\t");
-                            for (int i = 0; i < pieces.Length; i++)
+                            for (var i = 0; i < pieces.Length; i++)
                             {
                                 headerToIndex.Add(pieces[i], i);
                                 writer.Write("{0}\t", pieces[i]);
@@ -280,18 +281,18 @@ namespace LiquidTest
           [TestCase(4909, "[M-H]-", "PG(21:0/22:4)", "4914", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_SL_8_Lipid_pooled_2_NEG_150mm_09Nov15_Polaroid_HSST3-02.raw")]
         public void TestIndividualLipidTargets(int precursor, string adduct, string commonName, string id, string rawFilePath)
         {
-            Lipid lipid = new Lipid() {AdductFull = adduct, CommonName = commonName};
-            LipidTarget lipidTarget = lipid.CreateLipidTarget();
+            var lipid = new Lipid() {AdductFull = adduct, CommonName = commonName};
+            var lipidTarget = lipid.CreateLipidTarget();
 
-            Composition composition = lipidTarget.Composition;
+            var composition = lipidTarget.Composition;
 
             var lcmsRun = PbfLcMsRun.GetLcMsRun(rawFilePath);
 
             var spectrum = lcmsRun.GetSpectrum(precursor);
 
-            double relativeIntensityThreshold = 0.1;
+            var relativeIntensityThreshold = 0.1;
 
-            Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
+            var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
 
             //Get the values to use to calculate pearson correlation
             var observedPeaks = LipidUtil.GetAllIsotopePeaks(spectrum, composition, tolerance,
@@ -318,7 +319,7 @@ namespace LiquidTest
             {
                 Console.WriteLine(value + ", ");
             }
-            
+
             Console.WriteLine("The observed peak intensity x values are: ");
             foreach (var value in observedIntensities)
             {
@@ -342,19 +343,19 @@ namespace LiquidTest
         [TestCase(4909, "[M-H]-", "PG(21:0/22:4)", "4914", @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_SL_8_Lipid_pooled_2_NEG_150mm_09Nov15_Polaroid_HSST3-02.raw")]
         public void TestFitMinusOneScore(int precursor, string adduct, string commonName, string id, string rawFilePath)
         {
-            Lipid lipid = new Lipid() { AdductFull = adduct, CommonName = commonName };
-            LipidTarget lipidTarget = lipid.CreateLipidTarget();
+            var lipid = new Lipid() { AdductFull = adduct, CommonName = commonName };
+            var lipidTarget = lipid.CreateLipidTarget();
 
-            Composition composition = lipidTarget.Composition;
-            Composition compMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P); //Subtract one hydrogen to make this a minus1 fit score
+            var composition = lipidTarget.Composition;
+            var compMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P); //Subtract one hydrogen to make this a minus1 fit score
 
             var lcmsRun = PbfLcMsRun.GetLcMsRun(rawFilePath);
 
             var spectrum = lcmsRun.GetSpectrum(precursor);
 
-            double relativeIntensityThreshold = 0.1;
+            var relativeIntensityThreshold = 0.1;
 
-            Tolerance tolerance = new Tolerance(30, ToleranceUnit.Ppm);
+            var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
 
             //Get the values to use to calculate pearson correlation
             var observedPeaks = LipidUtil.GetAllIsotopePeaks(spectrum, compMinus1, tolerance,
@@ -363,7 +364,7 @@ namespace LiquidTest
 
             var isotopomerEnvelope = IsoProfilePredictor.GetIsotopomerEnvelop(
                 compMinus1.C,
-                compMinus1.H, 
+                compMinus1.H,
                 compMinus1.N,
                 compMinus1.O,
                 compMinus1.S);

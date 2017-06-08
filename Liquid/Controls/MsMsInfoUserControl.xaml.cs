@@ -1,17 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Liquid.ViewModel;
 
 namespace Liquid.Controls
@@ -21,20 +9,20 @@ namespace Liquid.Controls
     /// </summary>
     public partial class MsMsInfoUserControl
     {
-        public MsMsInfoViewModel MsMsInfoViewModel { get; private set; }
+        public MsMsInfoViewModel MsMsInfoViewModel { get; }
 
         public MsMsInfoUserControl()
         {
             InitializeComponent();
 
-            this.MsMsInfoViewModel = new MsMsInfoViewModel();
-            this.DataContext = this.MsMsInfoViewModel;
+            MsMsInfoViewModel = new MsMsInfoViewModel();
+            DataContext = MsMsInfoViewModel;
         }
 
         private void CopyCIDSpectra(object sender, RoutedEventArgs e)
         {
-            var peaks = this.MsMsInfoViewModel.CurrentSpectrumSearchResult.CidSpectrum.Peaks;
-            string spectrumString = "Mz\tIntensity\n";
+            var peaks = MsMsInfoViewModel.CurrentSpectrumSearchResult.CidSpectrum.Peaks;
+            var spectrumString = "Mz\tIntensity\n";
             foreach (var peak in peaks)
             {
                 spectrumString += String.Format("{0}\t{1}\n", peak.Mz, peak.Intensity);
@@ -44,8 +32,8 @@ namespace Liquid.Controls
 
         private void CopyHCDSpectra(object sender, RoutedEventArgs e)
         {
-            var peaks = this.MsMsInfoViewModel.CurrentSpectrumSearchResult.HcdSpectrum.Peaks;
-            string spectrumString = "Mz\tIntensity\n";
+            var peaks = MsMsInfoViewModel.CurrentSpectrumSearchResult.HcdSpectrum.Peaks;
+            var spectrumString = "Mz\tIntensity\n";
             foreach (var peak in peaks)
             {
                 spectrumString += String.Format("{0}\t{1}\n", peak.Mz, peak.Intensity);

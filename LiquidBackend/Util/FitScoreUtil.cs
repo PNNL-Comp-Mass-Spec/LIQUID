@@ -1,4 +1,6 @@
-﻿namespace LiquidBackend.Util
+﻿using System.Collections.Generic;
+
+namespace LiquidBackend.Util
 {
     using System.Linq;
 
@@ -7,7 +9,7 @@
     using InformedProteomics.Backend.Data.Spectrometry;
     using InformedProteomics.Backend.Utils;
 
-    using LiquidBackend.Domain;
+    using Domain;
 
     /// <summary>
     /// Base class for calculating the fit between a theoretical isotopic profile and observed
@@ -23,7 +25,7 @@
         /// <returns>The correlation score between the theoretical spectrum and actual.</returns>
         public double GetFitScore(SpectrumSearchResult spectrumResult, Composition composition)
         {
-            return this.GetFitScore(
+            return GetFitScore(
                             spectrumResult.PrecursorSpectrum,
                             composition,
                             spectrumResult.PrecursorTolerance);
@@ -38,7 +40,7 @@
         public double GetFitMinus1Score(SpectrumSearchResult spectrumResult, Composition composition)
         {
             var compositionMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P);
-            return this.GetFitScore(
+            return GetFitScore(
                                 spectrumResult.PrecursorSpectrum,
                                 compositionMinus1,
                                 spectrumResult.PrecursorTolerance);
@@ -53,7 +55,7 @@
         /// <returns>The correlation score between the theoretical spectrum and actual.</returns>
         public double GetFitScore(Spectrum precursorSpectrum, Tolerance precursorTolerance, Composition composition)
         {
-            return this.GetFitScore(
+            return GetFitScore(
                             precursorSpectrum,
                             composition,
                             precursorTolerance);
@@ -69,7 +71,7 @@
         public double GetFitMinus1Score(Spectrum precursorSpectrum, Tolerance precursorTolerance, Composition composition)
         {
             var compositionMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P);
-            return this.GetFitScore(
+            return GetFitScore(
                                 precursorSpectrum,
                                 compositionMinus1,
                                 precursorTolerance);
@@ -95,7 +97,7 @@
         /// This differs from the GetAllIsotopePeaks in <see cref="LipidUtil" /> in that it accepts the isotopomer envelope
         /// as an argument rather than calculating it on its own. This way we only calculate it once.
         /// </remarks>
-        private Peak[] GetAllIsotopePeaks(Spectrum spectrum, double[] isotopomerEnvelope, double mass, Tolerance tolerance)
+        private Peak[] GetAllIsotopePeaks(Spectrum spectrum, IReadOnlyCollection<double> isotopomerEnvelope, double mass, Tolerance tolerance)
         {
             var peaks = spectrum.Peaks;
             var mostAbundantIsotopeIndex = 0;
@@ -103,12 +105,12 @@
             var mostAbundantIsotopeMatchedPeakIndex = spectrum.FindPeakIndex(mostAbundantIsotopeMz, tolerance);
             if (mostAbundantIsotopeMatchedPeakIndex < 0) return null;
 
-            var observedPeaks = new Peak[isotopomerEnvelope.Length];
+            var observedPeaks = new Peak[isotopomerEnvelope.Count];
             observedPeaks[mostAbundantIsotopeIndex] = peaks[mostAbundantIsotopeMatchedPeakIndex];
 
             // go up
             var peakIndex = mostAbundantIsotopeMatchedPeakIndex + 1;
-            for (var isotopeIndex = mostAbundantIsotopeIndex + 1; isotopeIndex < isotopomerEnvelope.Length; isotopeIndex++)
+            for (var isotopeIndex = mostAbundantIsotopeIndex + 1; isotopeIndex < isotopomerEnvelope.Count; isotopeIndex++)
             {
                 var isotopeMz = mostAbundantIsotopeMz + isotopeIndex * Constants.C13MinusC12;
                 var tolTh = tolerance.GetToleranceAsTh(isotopeMz);
@@ -151,14 +153,14 @@
             Tolerance tolerance,
             double relativeIntensityThreshold = 0.1)
         {
-            var theoreticalIntensities = this.GetTheoreticalIntensities(composition, relativeIntensityThreshold);
-            var observedIntensities = this.GetObservedIntensities(
+            var theoreticalIntensities = GetTheoreticalIntensities(composition, relativeIntensityThreshold);
+            var observedIntensities = GetObservedIntensities(
                                                 spectrum,
                                                 theoreticalIntensities,
                                                 composition.Mass,
                                                 tolerance);
 
-            var fitScore = this.GetFitScore(theoreticalIntensities, observedIntensities);
+            var fitScore = GetFitScore(theoreticalIntensities, observedIntensities);
             return fitScore;
         }
 
@@ -188,9 +190,9 @@
         /// <param name="mass">Monoisotopic mass of the lipid.</param>
         /// <param name="tolerance">The m/z tolerance of the isotope peaks.</param>
         /// <returns>The observed isotopic profile.</returns>
-        private double[] GetObservedIntensities(Spectrum spectrum, double[] isotopomerEnvelope, double mass, Tolerance tolerance)
+        private double[] GetObservedIntensities(Spectrum spectrum, IReadOnlyCollection<double> isotopomerEnvelope, double mass, Tolerance tolerance)
         {
-            var observedPeaks = this.GetAllIsotopePeaks(spectrum, isotopomerEnvelope, mass, tolerance);
+            var observedPeaks = GetAllIsotopePeaks(spectrum, isotopomerEnvelope, mass, tolerance);
             if (observedPeaks == null) return null;
             var observedIntensities = new double[observedPeaks.Length];
 

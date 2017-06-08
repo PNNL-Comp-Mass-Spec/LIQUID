@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiquidBackend.IO
 {
@@ -28,21 +26,21 @@ namespace LiquidBackend.IO
 
 			using (TextReader textReader = new StreamReader(fileInfo.FullName))
 			{
-				string columnHeaders = textReader.ReadLine();
-				Dictionary<string, int> columnMapping = CreateColumnMapping(columnHeaders);
+				var columnHeaders = textReader.ReadLine();
+				var columnMapping = CreateColumnMapping(columnHeaders);
 
 				string line;
 				while ((line = textReader.ReadLine()) != null)
 				{
 					currentLineNumber++;
 
-					T createdObject = ParseLine(line, columnMapping);
+					var createdObject = ParseLine(line, columnMapping);
 					if (createdObject != null) list.Add(createdObject);
 
 					// Report progress
 					if (progress != null)
 					{
-						int currentProgress = (int)((currentLineNumber / totalLines) * 100);
+						var currentProgress = (int)((currentLineNumber / totalLines) * 100);
 						progress.Report(currentProgress);
 					}
 				}

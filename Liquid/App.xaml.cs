@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,20 +19,20 @@ namespace Liquid
 
 		void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
-			string errorMessage = string.Format("An unhandled exception occurred: {0}\n{1}", e.Exception.Message, e.Exception.StackTrace);
+			var errorMessage = string.Format("An unhandled exception occurred: {0}\n{1}", e.Exception.Message, e.Exception.StackTrace);
 			MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 			e.Handled = true;
 		}
 
 		private void DataGridCell_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			DataGridCell cell = sender as DataGridCell;
+			var cell = sender as DataGridCell;
 			GridColumnFastEdit(cell, e);
 		}
 
 		private void DataGridCell_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
-			DataGridCell cell = sender as DataGridCell;
+			var cell = sender as DataGridCell;
 			GridColumnFastEdit(cell, e);
 		}
 
@@ -46,7 +41,7 @@ namespace Liquid
 			if (cell == null || cell.IsEditing || cell.IsReadOnly)
 				return;
 
-			DataGrid dataGrid = FindVisualParent<DataGrid>(cell);
+			var dataGrid = FindVisualParent<DataGrid>(cell);
 			if (dataGrid == null)
 				return;
 
@@ -64,7 +59,7 @@ namespace Liquid
 				}
 				else
 				{
-					DataGridRow row = FindVisualParent<DataGridRow>(cell);
+					var row = FindVisualParent<DataGridRow>(cell);
 					if (row != null && !row.IsSelected)
 					{
 						row.IsSelected = true;
@@ -73,7 +68,7 @@ namespace Liquid
 			}
 			else
 			{
-				ComboBox cb = cell.Content as ComboBox;
+				var cb = cell.Content as ComboBox;
 				if (cb != null)
 				{
 					//DataGrid dataGrid = FindVisualParent<DataGrid>(cell);
@@ -89,10 +84,10 @@ namespace Liquid
 
 		private static T FindVisualParent<T>(UIElement element) where T : UIElement
 		{
-			UIElement parent = element;
+			var parent = element;
 			while (parent != null)
 			{
-				T correctlyTyped = parent as T;
+				var correctlyTyped = parent as T;
 				if (correctlyTyped != null)
 				{
 					return correctlyTyped;

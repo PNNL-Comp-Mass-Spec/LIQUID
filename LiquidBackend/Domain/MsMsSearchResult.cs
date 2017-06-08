@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InformedProteomics.Backend.Data.Spectrometry;
+﻿using InformedProteomics.Backend.Data.Spectrometry;
 
 namespace LiquidBackend.Domain
 {
 	public class MsMsSearchResult
 	{
-		public MsMsSearchUnit TheoreticalPeak { get; private set; }
-		public Peak ObservedPeak { get; private set; }
+		public MsMsSearchUnit TheoreticalPeak { get; }
+		public Peak ObservedPeak { get; }
 
 		public MsMsSearchResult(MsMsSearchUnit msMsSearchUnit, Peak observedPeak)
 		{
-			this.TheoreticalPeak = msMsSearchUnit;
-			this.ObservedPeak = observedPeak;
+			TheoreticalPeak = msMsSearchUnit;
+			ObservedPeak = observedPeak;
 		}
 
 		protected bool Equals(MsMsSearchResult other)
@@ -27,7 +22,7 @@ namespace LiquidBackend.Domain
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != this.GetType()) return false;
+			if (obj.GetType() != GetType()) return false;
 			return Equals((MsMsSearchResult) obj);
 		}
 

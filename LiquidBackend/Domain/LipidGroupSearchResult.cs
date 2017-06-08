@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using LiquidBackend.Scoring;
 
 namespace LiquidBackend.Domain
 {
-    using LiquidBackend.Util;
+    using Util;
 
     public class LipidGroupSearchResult
     {
-        public LipidTarget LipidTarget { get; private set; }
-        public List<Lipid> LipidList { get; private set; }
-        public SpectrumSearchResult SpectrumSearchResult { get; private set; }
+        public LipidTarget LipidTarget { get; }
+        public List<Lipid> LipidList { get; }
+        public SpectrumSearchResult SpectrumSearchResult { get; }
         public bool ShouldExport { get; set; }
         public int DisplayScanNum { get; set; }
         public double DisplayMz { get; set; }
-        public double Score { get; private set; }
-        public double PearsonCorrScore { get; private set; }
-        public double PearsonCorrScoreMinus1 { get; private set; }
-        public double CosineScore { get; private set; }
-        public double CosineScoreMinus1 { get; private set; }
+        public double Score { get; }
+        public double PearsonCorrScore { get; }
+        public double PearsonCorrScoreMinus1 { get; }
+        public double CosineScore { get; }
+        public double CosineScoreMinus1 { get; }
 
         public LipidGroupSearchResult(LipidTarget lipidTarget, List<Lipid> lipidList, SpectrumSearchResult spectrumSearchResult)
         {
@@ -54,8 +50,6 @@ namespace LiquidBackend.Domain
             SpectrumSearchResult = spectrumSearchResult;
             ShouldExport = false;
             Score = scoreModel.ScoreLipid(this);
-            DisplayScanNum = spectrumSearchResult.HcdSpectrum.ScanNum;
-            DisplayMz = spectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz;
             
             if (spectrumSearchResult.PrecursorSpectrum == null) return;
             

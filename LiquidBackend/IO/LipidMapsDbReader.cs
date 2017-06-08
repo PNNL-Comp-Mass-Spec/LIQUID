@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LiquidBackend.Domain;
-using LiquidBackend.Util;
 
 namespace LiquidBackend.IO
 {
@@ -33,11 +29,11 @@ namespace LiquidBackend.IO
 		protected override Dictionary<string, int> CreateColumnMapping(String columnString)
 		{
 			var columnMap = new Dictionary<string, int>();
-			string[] columnTitles = columnString.Split('\t', '\n');
+			var columnTitles = columnString.Split('\t', '\n');
 
-			for (int i = 0; i < columnTitles.Count(); i++)
+			for (var i = 0; i < columnTitles.Length; i++)
 			{
-				String columnTitle = columnTitles[i].ToUpper();
+				var columnTitle = columnTitles[i].ToUpper();
 
 				switch (columnTitle)
 				{
@@ -97,7 +93,7 @@ namespace LiquidBackend.IO
 		/// <returns>A LipidMapsEntry object.</returns>
 		protected override T ParseLine(String line, IDictionary<string, int> columnMapping)
 		{
-			string[] columns = line.Split('\t', '\n');
+			var columns = line.Split('\t', '\n');
 
 			var lipidEntry = new T();
 
@@ -129,12 +125,12 @@ namespace LiquidBackend.IO
 			if (columnMapping.ContainsKey(HMDBID)) lipidEntry.HmdbId = columns[columnMapping[HMDBID]];
 			if (columnMapping.ContainsKey(CHEBI_ID))
 			{
-				string value = columns[columnMapping[CHEBI_ID]];
+				var value = columns[columnMapping[CHEBI_ID]];
 				if (!value.Equals("")) lipidEntry.ChebiId = int.Parse(value);
 			}
 			if (columnMapping.ContainsKey(LIPIDAT_ID))
 			{
-				string value = columns[columnMapping[LIPIDAT_ID]];
+				var value = columns[columnMapping[LIPIDAT_ID]];
 				if (!value.Equals("")) lipidEntry.LipidatId = int.Parse(value);
 			}
 			if (columnMapping.ContainsKey(LIPIDBANK_ID)) lipidEntry.LipidBankId = columns[columnMapping[LIPIDBANK_ID]];

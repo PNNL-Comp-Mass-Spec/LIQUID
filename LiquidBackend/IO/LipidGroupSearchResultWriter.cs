@@ -4,11 +4,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using InformedProteomics.Backend.MassSpecData;
 using LiquidBackend.Domain;
 using LiquidBackend.Util;
-using MathNet.Numerics.Interpolation;
 
 namespace LiquidBackend.IO
 {
@@ -16,12 +14,12 @@ namespace LiquidBackend.IO
     {
         public static void AddHeaderForScoring(LipidGroupSearchResult lipidGroupSearchResult, TextWriter textWriter)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             stringBuilder.Append("Dataset,Lipid,");
 
-            SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
-            List<MsMsSearchResult> cidResultList = spectrumSearchResult.CidSearchResultList;
-            List<MsMsSearchResult> hcdResultList = spectrumSearchResult.HcdSearchResultList;
+            var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
+            var cidResultList = spectrumSearchResult.CidSearchResultList;
+            var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
             foreach (var cidResult in cidResultList)
             {
@@ -40,16 +38,16 @@ namespace LiquidBackend.IO
         {
             foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
             {
-                LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;
-                string targetName = lipidTarget.StrippedDisplay;
-                SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
-                List<MsMsSearchResult> cidResultList = spectrumSearchResult.CidSearchResultList;
-                List<MsMsSearchResult> hcdResultList = spectrumSearchResult.HcdSearchResultList;
+                var lipidTarget = lipidGroupSearchResult.LipidTarget;
+                var targetName = lipidTarget.StrippedDisplay;
+                var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
+                var cidResultList = spectrumSearchResult.CidSearchResultList;
+                var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-                double cidMaxValue = spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-                double hcdMaxValue = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+                var cidMaxValue = spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+                var hcdMaxValue = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
-                StringBuilder stringBuilder = new StringBuilder();
+                var stringBuilder = new StringBuilder();
                 stringBuilder.Append(datasetName + ",");
                 stringBuilder.Append(targetName + ",");
 
@@ -75,7 +73,7 @@ namespace LiquidBackend.IO
             }
         }
 
-        public static void OutputResults(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null, bool append = false, bool writeHeader = true)
+        public static void OutputResults(List<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null, bool append = false, bool writeHeader = true)
         {
             if (File.Exists(fileLocation) && !append) File.Delete(fileLocation);
 
@@ -89,7 +87,7 @@ namespace LiquidBackend.IO
             }
             else if (Path.GetExtension(fileLocation) == ".msp")
             {
-                OutputResultsToMspLibrary(lipidGroupSearchResults, fileLocation, rawFileName, progress);
+                OutputResultsToMspLibrary(lipidGroupSearchResults, fileLocation);
             }
         }
 
@@ -98,11 +96,11 @@ namespace LiquidBackend.IO
         {
             using (TextWriter textWriter = new StreamWriter(fileLocation))
             {
-                int progressCounter = 0;
+                var progressCounter = 0;
                 textWriter.WriteLine("Common Name\tFormula\tm/z\tIonization\tAdduct\tCharge\tC\tH\tN\tO\tS");
                 foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
                 {
-                    StringBuilder line = new StringBuilder();
+                    var line = new StringBuilder();
                     var target = lipidGroupSearchResult.LipidTarget;
                     line.Append(target.StrippedDisplay + "\t");
                     line.Append(target.EmpiricalFormula + "\t");
@@ -114,14 +112,14 @@ namespace LiquidBackend.IO
                     line.Append(target.Composition.H + "\t");
                     line.Append(target.Composition.N + "\t");
                     line.Append(target.Composition.O + "\t");
-                    line.Append(target.Composition.S + "\t"); 
-                    
+                    line.Append(target.Composition.S + "\t");
+
                     textWriter.WriteLine(line.ToString());
 
                     if (progress != null)
                     {
                         progressCounter++;
-                        int currentProgress = (int)((progressCounter / (double)lipidGroupSearchResults.Count()) * 100);
+                        var currentProgress = (int)(progressCounter / (double)lipidGroupSearchResults.Count * 100);
                         progress.Report(currentProgress);
                     }
                 }
@@ -129,15 +127,14 @@ namespace LiquidBackend.IO
             }
         }
 
-        private static void OutputResultsToMspLibrary(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults,
-            string fileLocation, string rawFileName, IProgress<int> progress = null)
+        private static void OutputResultsToMspLibrary(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation)
         {
             using (TextWriter textWriter = new StreamWriter(fileLocation))
             {
                 foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
                 {
-                    LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;
-                    SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
+                    var lipidTarget = lipidGroupSearchResult.LipidTarget;
+                    var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
                     var massSpectrum = spectrumSearchResult.PrecursorSpectrum.Peaks;
                     var targetMz = lipidTarget.MzRounded;
                     var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
@@ -145,11 +142,18 @@ namespace LiquidBackend.IO
                     var cidResults = spectrumSearchResult.CidSearchResultList;
                     var hcdSpectrum = spectrumSearchResult.HcdSpectrum;
                     var cidSpectrum = spectrumSearchResult.CidSpectrum;
-                    var hcdCount = hcdSpectrum.Peaks.Count();
-                    var cidCount = cidSpectrum.Peaks.Count();
-                    
+                    var hcdCount = hcdSpectrum.Peaks.Length;
+                    var cidCount = cidSpectrum.Peaks.Length;
+
                     var name = lipidTarget.StrippedDisplay;
-                    var adduct = lipidGroupSearchResult.LipidList.FirstOrDefault().AdductFull;
+
+                    var firstLipid = lipidGroupSearchResult.LipidList.FirstOrDefault();
+                    string adduct;
+                    if (firstLipid == null)
+                        adduct = string.Empty;
+                    else
+                        adduct = firstLipid.AdductFull;
+
                     var observedMz = closestPeak.Mz;
                     var formula = lipidTarget.EmpiricalFormula;
                     var RT = spectrumSearchResult.RetentionTime;
@@ -161,16 +165,16 @@ namespace LiquidBackend.IO
                     }
                     else if (lipidTarget.FragmentationMode == FragmentationMode.Negative)
                     {
-                        MW = lipidTarget.Composition.Mass + LipidUtil.GetCompositionOfAdduct(lipidTarget.Adduct).Mass; 
+                        MW = lipidTarget.Composition.Mass + LipidUtil.GetCompositionOfAdduct(lipidTarget.Adduct).Mass;
                     }
-                    
+
                     textWriter.WriteLine("Name: {0}; {1}", name, adduct);
                     textWriter.WriteLine("MW: {0}", MW);
                     textWriter.WriteLine("PRECURSORMZ: {0}", observedMz);
                     textWriter.WriteLine("RETENTIONTIME: {0}", RT);
                     textWriter.WriteLine("FORMULA: {0}", formula);
                     textWriter.WriteLine("Comment: CID");
-                    textWriter.WriteLine("Num Peaks: {0}", cidCount);	                
+                    textWriter.WriteLine("Num Peaks: {0}", cidCount);
                     foreach (var peak in cidSpectrum.Peaks)
                     {
                         var mz = peak.Mz;
@@ -183,11 +187,11 @@ namespace LiquidBackend.IO
                         }
                         else
                         {
-                            textWriter.WriteLine("{0} {1}", mz, intensity); 
+                            textWriter.WriteLine("{0} {1}", mz, intensity);
                         }
                     }
                     textWriter.WriteLine();
-                    
+
 
                     textWriter.WriteLine("Name: {0}; {1}", name, adduct);
                     textWriter.WriteLine("MW: {0}", MW);
@@ -211,18 +215,18 @@ namespace LiquidBackend.IO
                             textWriter.WriteLine("{0} {1}", mz, intensity);
                         }
                     }
-                    textWriter.WriteLine();	               
+                    textWriter.WriteLine();
                 }
             }
         }
 
 
-        private static void OutputResultsToMzTab(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults,
+        private static void OutputResultsToMzTab(IReadOnlyCollection<LipidGroupSearchResult> lipidGroupSearchResults,
             string fileLocation, string rawFileName, IProgress<int> progress = null)
         {
             using (TextWriter textWriter = new StreamWriter(fileLocation))
             {
-                int progressCounter = 0;
+                var progressCounter = 0;
                 var mods = new List<string>();
                 foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
                 {
@@ -244,13 +248,13 @@ namespace LiquidBackend.IO
                 textWriter.WriteLine("MTD\tfixed_mod[1]\t[MS, MS:1002038, unlabeled sample, ]");
                 foreach (var variableMod in mods)
                 {
-                    textWriter.WriteLine(string.Format("MTD\tvariable_mod[1]\t[, , {0}]", variableMod)); 
+                    textWriter.WriteLine("MTD\tvariable_mod[1]\t[, , {0}]", variableMod);
                 }
                 textWriter.WriteLine("MTD\tquantification_method\t[, , LIQUID_Analysis, ]");
                 textWriter.WriteLine("MTD\tsmall_molecule-quantification_unit\t[PRIDE, PRIDE:0000330, Arbitrary quantification unit, ]");
                 //Get the raw/mzml location
-                
-                textWriter.WriteLine(string.Format("MTD\tms_run[1]-location\t{0}", rawFileName)); //TODO:
+
+                textWriter.WriteLine("MTD\tms_run[1]-location\t{0}", rawFileName); //TODO:
                 textWriter.WriteLine("MTD\tassay[1]-quantification_reagent\t[MS, MS:1002038, unlabeled sample, ]");
                 textWriter.WriteLine("MTD\tassay[1]-ms_run_ref\tms_run[1]");
                 textWriter.WriteLine("MTD\tstudy_variable[1]-assay_refs\tassay[1]");
@@ -264,7 +268,7 @@ namespace LiquidBackend.IO
                 //Write small molecule section datas
                 foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
                 {
-                    
+
                     var lipidTarget = lipidGroupSearchResult.LipidTarget;
                     var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
                     var targetMz = lipidTarget.MzRounded;
@@ -273,15 +277,13 @@ namespace LiquidBackend.IO
                     var observedMz = closestPeak.Mz;
                     var ppmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
                     var score = lipidGroupSearchResult.Score;
-                    var msmsScan = spectrumSearchResult.HcdSpectrum != null
-                        ? spectrumSearchResult.HcdSpectrum.ScanNum
-                        : spectrumSearchResult.CidSpectrum.ScanNum;
+                    var msmsScan = spectrumSearchResult.HcdSpectrum?.ScanNum ?? spectrumSearchResult.CidSpectrum.ScanNum;
 
                     //TODO: var charge = calculatedFromMZ
 
-                    foreach (Lipid lipid in lipidGroupSearchResult.LipidList)
+                    foreach (var lipid in lipidGroupSearchResult.LipidList)
                     {
-                        StringBuilder line = new StringBuilder();
+                        var line = new StringBuilder();
                         line.Append("SML\t");
 
                         //var indexToStartRemove = lipid.LipidTarget.StrippedDisplay.IndexOf("/");
@@ -318,13 +320,13 @@ namespace LiquidBackend.IO
                         line.Append("null" + "\t");                         // ^^Study_variable[1]
                         line.Append("null" + "\t");                         // stdev_study_variable[1]
                         line.Append("null" + "\t");                         // std_err_study_variable[1]
-                        
+
                         textWriter.WriteLine(line.ToString());
                     }
                     if (progress != null)
                     {
                         progressCounter++;
-                        int currentProgress = (int)((progressCounter/(double)lipidGroupSearchResults.Count())*100);
+                        var currentProgress = (int)(progressCounter / (double)lipidGroupSearchResults.Count * 100);
                         progress.Report(currentProgress);
                     }
 
@@ -332,40 +334,47 @@ namespace LiquidBackend.IO
             }
         }
 
-        private static void OutputResultsToTsv(IEnumerable<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null, bool writeHeader = true)
+        private static void OutputResultsToTsv(
+            IReadOnlyCollection<LipidGroupSearchResult> lipidGroupSearchResults,
+            string fileLocation,
+            string rawFileName,
+            IProgress<int> progress = null,
+            bool writeHeader = true)
         {
 
             using (TextWriter textWriter = new StreamWriter(fileLocation, true))
             {
-                if (writeHeader) 
+                if (writeHeader)
                 {
                     textWriter.WriteLine("Raw Data File\tLM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tApex RT\tPrecursor RT\tApex NET\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
                 }
-                int progressCounter = 0;
+                var progressCounter = 0;
 
-                foreach (LipidGroupSearchResult lipidGroupSearchResult in lipidGroupSearchResults)
+                foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
                 {
-                    
-                    LipidTarget lipidTarget = lipidGroupSearchResult.LipidTarget;
-                    SpectrumSearchResult spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
-                    bool Precursor = spectrumSearchResult.PrecursorSpectrum != null;
 
-                    double targetMz = lipidTarget.MzRounded;
-                    double observedMz = spectrumSearchResult.HcdSpectrum != null ? spectrumSearchResult.HcdSpectrum.IsolationWindow.IsolationWindowTargetMz : spectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz;;
+                    var lipidTarget = lipidGroupSearchResult.LipidTarget;
+                    var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
+                    var Precursor = spectrumSearchResult.PrecursorSpectrum != null;
+
+                    var targetMz = lipidTarget.MzRounded;
+                    var observedMz = spectrumSearchResult.HcdSpectrum?.IsolationWindow.IsolationWindowTargetMz ??
+                        spectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz;
+
                     if (Precursor)
                     {
                         var massSpectrum = spectrumSearchResult.PrecursorSpectrum.Peaks;
                         var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
                         observedMz = closestPeak.Mz;
                     }
-                    
-                    double score = lipidGroupSearchResult.Score;
-                    int msmsScan = spectrumSearchResult.HcdSpectrum != null ? spectrumSearchResult.HcdSpectrum.ScanNum : spectrumSearchResult.CidSpectrum.ScanNum;
-                    double ppmError = LipidUtil.PpmError(targetMz, observedMz);
 
-                    foreach (Lipid lipid in lipidGroupSearchResult.LipidList)
+                    var score = lipidGroupSearchResult.Score;
+                    var msmsScan = spectrumSearchResult.HcdSpectrum?.ScanNum ?? spectrumSearchResult.CidSpectrum.ScanNum;
+                    var ppmError = LipidUtil.PpmError(targetMz, observedMz);
+
+                    foreach (var lipid in lipidGroupSearchResult.LipidList)
                     {
-                        StringBuilder line = new StringBuilder();
+                        var line = new StringBuilder();
                         line.Append(rawFileName + "\t");
                         line.Append(lipid.LipidMapsId + "\t");
                         line.Append(lipidTarget.StrippedDisplay + "\t");
@@ -379,7 +388,7 @@ namespace LiquidBackend.IO
                         line.Append(ppmError + "\t");
                         line.Append(spectrumSearchResult.RetentionTime + "\t");
                         if (Precursor) line.Append(spectrumSearchResult.PrecursorSpectrum.ElutionTime + "\t"); else line.Append("\t");
-                        line.Append(spectrumSearchResult.NormalizedElutionTime + "\t");			    
+                        line.Append(spectrumSearchResult.NormalizedElutionTime + "\t");
                         line.Append(spectrumSearchResult.ApexIntensity + "\t");
                         line.Append(spectrumSearchResult.PeakArea + "\t");
                         line.Append(score + "\t");
@@ -400,7 +409,7 @@ namespace LiquidBackend.IO
                     if (progress != null)
                     {
                         progressCounter++;
-                        int currentProgress = (int)((progressCounter/(double)lipidGroupSearchResults.Count())*100);
+                        var currentProgress = (int)(progressCounter / (double)lipidGroupSearchResults.Count * 100);
                         progress.Report(currentProgress);
                     }
                 }
@@ -422,22 +431,20 @@ namespace LiquidBackend.IO
                     var hcd = result.HcdSpectrum;
                     var cid = result.CidSpectrum;
                     var apex = result.ApexScanNum;
-                    var msmsScan = hcd != null ? hcd.ScanNum : cid.ScanNum;
+                    var msmsScan = hcd?.ScanNum ?? cid.ScanNum;
                     var precursorScan = lcmsRun.GetPrecursorScanNum(msmsScan);
                     var apexRt = result.RetentionTime;
                     var precRT = lcmsRun.GetElutionTime(precursorScan);
                     var net = result.NormalizedElutionTime;
-                    var mz = hcd == null
-                        ? cid.IsolationWindow.IsolationWindowTargetMz
-                        : hcd.IsolationWindow.IsolationWindowTargetMz;
+                    var mz = hcd?.IsolationWindow.IsolationWindowTargetMz ?? cid.IsolationWindow.IsolationWindowTargetMz;
 
                     var intensity = result.ApexIntensity;
-                    var query = FragmentSearchList.Aggregate("",(i, j) => i + (j.Mz + "("+ j.Description + ")" + ";"));
+                    var query = FragmentSearchList.Aggregate("", (i, j) => i + (j.Mz + "(" + j.Description + ")" + ";"));
                     var hcdIons = result.HcdSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
                     var cidIons = result.CidSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
 
-                   
-                    StringBuilder line = new StringBuilder();
+
+                    var line = new StringBuilder();
                     line.Append(rawFileName + "\t");
                     line.Append(targetAdduct + "\t");
                     line.Append(mz + "\t");

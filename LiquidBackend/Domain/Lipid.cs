@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LiquidBackend.Util;
 
 namespace LiquidBackend.Domain
@@ -26,57 +22,54 @@ namespace LiquidBackend.Domain
         public int LipidatId { get; set; }
         public string LipidBankId { get; set; }
 
-        public LipidTarget LipidTarget
-        {
-            get { return _lipidTarget ?? (_lipidTarget = CreateLipidTarget()); }
-        }
+        public LipidTarget LipidTarget => _lipidTarget ?? (_lipidTarget = CreateLipidTarget());
 
         public LipidTarget CreateLipidTarget()
         {
             Adduct adduct;
             FragmentationMode fragmentationMode;
 
-            if (this.AdductFull == "[M+H]+")
+            if (AdductFull == "[M+H]+")
             {
                 adduct = Adduct.Hydrogen;
                 fragmentationMode = FragmentationMode.Positive;
             }
-            else if (this.AdductFull == "[M+NH4]+")
+            else if (AdductFull == "[M+NH4]+")
             {
                 adduct = Adduct.Ammonium;
                 fragmentationMode = FragmentationMode.Positive;
             }
-            else if (this.AdductFull == "[M+Na]+")
+            else if (AdductFull == "[M+Na]+")
             {
                 adduct = Adduct.Sodium;
                 fragmentationMode = FragmentationMode.Positive;
             }
-            else if (this.AdductFull == "[M+K]+")
+            else if (AdductFull == "[M+K]+")
             {
                 adduct = Adduct.Potassium;
                 fragmentationMode = FragmentationMode.Positive;
             }
-            else if (this.AdductFull == "[M+Oac]-")
+            else if (AdductFull == "[M+Oac]-")
             {
                 adduct = Adduct.Acetate;
                 fragmentationMode = FragmentationMode.Negative;
             }
-            else if (this.AdductFull == "[M-H]-")
+            else if (AdductFull == "[M-H]-")
             {
                 adduct = Adduct.Hydrogen;
                 fragmentationMode = FragmentationMode.Negative;
             }
-            else if (this.AdductFull == "[M-2H]--")
+            else if (AdductFull == "[M-2H]--")
             {
                 adduct = Adduct.Dihydrogen;
                 fragmentationMode = FragmentationMode.Negative;
             }
             else
             {
-                throw new SystemException("Unknown adduct: " + this.AdductFull);
+                throw new SystemException("Unknown adduct: " + AdductFull);
             }
 
-            LipidTarget lipidTarget = LipidUtil.CreateLipidTarget(this.CommonName, fragmentationMode, adduct);
+            var lipidTarget = LipidUtil.CreateLipidTarget(CommonName, fragmentationMode, adduct);
             return lipidTarget;
         }
     }
