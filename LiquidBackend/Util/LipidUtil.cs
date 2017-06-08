@@ -1670,7 +1670,7 @@ namespace LiquidBackend.Util
                 {
                     var carbons = (from chain in acylChainList select chain.NumCarbons).Sum();
                     var doubleBonds = (from chain in acylChainList select chain.NumDoubleBonds).Sum();
-                    var acylChains = new AcylChain(String.Format("{0}:{1}", carbons, doubleBonds));
+                    var acylChains = new AcylChain(string.Format("{0}:{1}", carbons, doubleBonds));
                     var sialic = commonName.Split('(')[0][1];
                     var sugar = commonName.Split('(')[0][0];
 

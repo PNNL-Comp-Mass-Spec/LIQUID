@@ -25,7 +25,7 @@ namespace Liquid.Controls
             var spectrumString = "Mz\tIntensity\n";
             foreach (var peak in peaks)
             {
-                spectrumString += String.Format("{0}\t{1}\n", peak.Mz, peak.Intensity);
+                spectrumString += string.Format("{0}\t{1}\n", peak.Mz, peak.Intensity);
             }
             Clipboard.SetText(spectrumString);
         }
@@ -36,7 +36,7 @@ namespace Liquid.Controls
             var spectrumString = "Mz\tIntensity\n";
             foreach (var peak in peaks)
             {
-                spectrumString += String.Format("{0}\t{1}\n", peak.Mz, peak.Intensity);
+                spectrumString += string.Format("{0}\t{1}\n", peak.Mz, peak.Intensity);
             }
             Clipboard.SetText(spectrumString);
         }
