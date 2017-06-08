@@ -44,6 +44,9 @@ namespace Liquid.View
             ExportAllGlobalResultsButton.Visibility = Visibility.Hidden;
             ExportFragmentResultsButton.Visibility = Visibility.Hidden;
             FragmentSearchResultsDataGrid.Visibility = Visibility.Hidden;
+
+            // Show the program version in the progress box
+            SingleTargetViewModel.ClearProgress();
         }
 
         private async void RawFileButtonClick(object sender, RoutedEventArgs e)

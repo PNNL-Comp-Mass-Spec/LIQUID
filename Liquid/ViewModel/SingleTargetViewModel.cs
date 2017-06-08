@@ -56,9 +56,29 @@ namespace Liquid.ViewModel
 
         }
 
-        public void ClearProgress()
+        /// <summary>
+        /// Clear the progress box, optionally showing the program version,
+        /// </summary>
+        /// <param name="showProgramVersion"></param>
+        public void ClearProgress(bool showProgramVersion = true)
         {
-            MsDataLoadProgress = "";
+            if (showProgramVersion)
+            {
+                ShowProgramVersion();
+                return;
+            }
+
+            MsDataLoadProgress = string.Empty;
+            OnPropertyChanged("MsDataLoadProgress");
+        }
+
+        /// <summary>
+        /// Show the program version in the MsDataLoadProgress textbox
+        /// </summary>
+        private void ShowProgramVersion()
+        {
+            var programVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            MsDataLoadProgress = string.Format("LIQUID v{0}.{1}.{2}", programVersion.Major, programVersion.Minor, programVersion.Build);
             OnPropertyChanged("MsDataLoadProgress");
         }
 
