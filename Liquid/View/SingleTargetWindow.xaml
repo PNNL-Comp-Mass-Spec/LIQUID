@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:liquid="clr-namespace:Liquid"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:oxy="http://oxyplot.codeplex.com"
     Title="Liquid: Lipid Informed Quantitation and Identification"
     Width="1075"
     Height="845"
