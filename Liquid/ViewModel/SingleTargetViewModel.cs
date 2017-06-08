@@ -16,7 +16,12 @@ namespace Liquid.ViewModel
     {
         public LcMsRun LcMsRun { get; private set; }
         public string FeatureFilePath { get; private set; } //Probably replace with a feature table
-        public string RawFileName { get; private set; }
+
+        /// <summary>
+        /// Raw file path
+        /// </summary>
+        public string RawFilePath { get; private set; }
+
         public LipidTarget CurrentLipidTarget { get; private set; }
         public List<FragmentationMode> FragmentationModeList { get; }
         public List<SpectrumSearchResult> SpectrumSearchResultList { get; private set; }
@@ -42,11 +47,11 @@ namespace Liquid.ViewModel
 
         public SingleTargetViewModel()
         {
-            RawFileName = "File loaded: none";
+            RawFilePath = "File loaded: none";
             FragmentationModeList = new List<FragmentationMode> { FragmentationMode.Positive, FragmentationMode.Negative };
             //this.AdductList = new List<Adduct> { Adduct.Hydrogen, Adduct.Dihydrogen, Adduct.Ammonium, Adduct.Acetate };
-            AdductList = Enum.GetValues(typeof (Adduct)).Cast<Adduct>().ToList();
-            this.IonTypeList = new List<string>{"Product Ion", "Neutral Loss"};
+            AdductList = Enum.GetValues(typeof(Adduct)).Cast<Adduct>().ToList();
+            IonTypeList = new List<string> { "Product Ion", "Neutral Loss" };
             SpectrumSearchResultList = new List<SpectrumSearchResult>();
             LipidTargetList = new List<Lipid>();
             FragmentSearchList = new ObservableCollection<MsMsSearchUnit>();
@@ -87,8 +92,8 @@ namespace Liquid.ViewModel
             var rawFileInfo = new FileInfo(rawFileLocation);
             IsIms = Path.GetExtension(rawFileLocation).ToLower() == ".uimf";
 
-            RawFileName = "File loaded: none";
-            OnPropertyChanged("RawFileName");
+            RawFilePath = "File loaded: none";
+            OnPropertyChanged("RawFilePath");
             ClearProgress();
 
             if (IsIms)
@@ -99,8 +104,8 @@ namespace Liquid.ViewModel
             {
                 LcMsRun?.Close();
 
-                RawFileName = rawFileInfo.FullName;
-                OnPropertyChanged("RawFileName");
+                RawFilePath = rawFileInfo.FullName;
+                OnPropertyChanged("RawFilePath");
 
                 MsDataLoadProgress = "Opening file";
                 OnPropertyChanged("MsDataLoadProgress");
@@ -352,21 +357,21 @@ namespace Liquid.ViewModel
         {
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
             var resultsToExport = LipidGroupSearchResultList.Where(x => x.ShouldExport).ToList();
-            LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation, RawFileName, progress);
+            LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation, Path.GetFileName(RawFilePath), progress);
             progress.Report(0);
         }
 
         public void OnExportAllGlobalResults(string fileLocation)
         {
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
-            LipidGroupSearchResultWriter.OutputResults(LipidGroupSearchResultList, fileLocation, RawFileName, progress);
+            LipidGroupSearchResultWriter.OutputResults(LipidGroupSearchResultList, fileLocation, Path.GetFileName(RawFilePath), progress);
             progress.Report(0);
         }
 
         public void OnWriteTargetInfo(string fileLocation)
         {
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
-            LipidGroupSearchResultWriter.OutputTargetInfo(LipidTargetList, fileLocation, RawFileName, progress);
+            LipidGroupSearchResultWriter.OutputTargetInfo(LipidTargetList, fileLocation, Path.GetFileName(RawFilePath), progress);
             progress.Report(0);
         }
 
@@ -374,7 +379,7 @@ namespace Liquid.ViewModel
         {
             IProgress<int> progress = new Progress<int>(ReportFragmentSearchProgress);
             var resultsToExport = SpectrumSearchResultList.Where(x => x.ShouldExport).ToList();
-            LipidGroupSearchResultWriter.OutputFragmentInfo(resultsToExport, TargetAdduct, FragmentSearchList, LcMsRun, fileLocation, RawFileName, progress);
+            LipidGroupSearchResultWriter.OutputFragmentInfo(resultsToExport, TargetAdduct, FragmentSearchList, LcMsRun, fileLocation, Path.GetFileName(RawFilePath), progress);
             progress.Report(0);
         }
 
