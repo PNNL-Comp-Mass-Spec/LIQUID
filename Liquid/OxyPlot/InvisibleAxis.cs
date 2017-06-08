@@ -11,9 +11,9 @@ namespace Liquid.OxyPlot
 	public class InvisibleAxis : LinearAxis
 	{
 		public InvisibleAxis(AxisPosition axisPosition, string title)
-			: base(axisPosition, title)
 		{
-
+		    Position = axisPosition;
+		    Title = title;
 		}
 
 		public override bool IsXyAxis()

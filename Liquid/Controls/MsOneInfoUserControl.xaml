@@ -4,18 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:oxy="http://oxyplot.codeplex.com"
+             xmlns:wpf="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
              d:DesignHeight="805" d:DesignWidth="255">
     <Grid>
         <StackPanel Height="Auto" HorizontalAlignment="Right" Margin="10,0,5,5" Name="MsFeaturePanel" VerticalAlignment="Stretch" Width="Auto" Orientation="Vertical">
-            <oxy:Plot Model="{Binding IsotopicProfilePlot}" Margin="0,0,0,0" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
-            <oxy:Plot Model="{Binding XicPlot}" Margin="0,0,0,20" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="Start Scan:" HorizontalAlignment="Left" Margin="0,0,5,0"/>
-				<TextBox Text="{Binding Path=StartScanForAreaUnderCurve, Mode=TwoWay}" Width="55" HorizontalAlignment="Left" />
-				<TextBlock Text="Stop Scan:" HorizontalAlignment="Left"  Margin="5,0,5,0"/>
-				<TextBox Text="{Binding Path=StopScanForAreaUnderCurve, Mode=TwoWay}" Width="55" HorizontalAlignment="Left" />
-			</StackPanel>
+            <wpf:PlotView Model="{Binding IsotopicProfilePlot}" Margin="0,0,0,0" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
+            <wpf:PlotView Model="{Binding XicPlot}" Margin="0,0,0,20" Height="Auto" MinHeight="200" Width="Auto" MinWidth="240" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Start Scan:" HorizontalAlignment="Left" Margin="0,0,5,0"/>
+                <TextBox Text="{Binding Path=StartScanForAreaUnderCurve, Mode=TwoWay}" Width="55" HorizontalAlignment="Left" />
+                <TextBlock Text="Stop Scan:" HorizontalAlignment="Left"  Margin="5,0,5,0"/>
+                <TextBox Text="{Binding Path=StopScanForAreaUnderCurve, Mode=TwoWay}" Width="55" HorizontalAlignment="Left" />
+            </StackPanel>
             <StackPanel Height="Auto" HorizontalAlignment="Left" Margin="0,0,0,0" Name="LipidInfoPanel" VerticalAlignment="Bottom" Width="Auto" Orientation="Vertical">
                 <Label Content="Target Lipid Info" Height="Auto" Padding="5,5,5,5" Name="LipidInfoLabel" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Width="Auto" />
                 <Grid Height="Auto" MinHeight="75" HorizontalAlignment="Left" Margin="0,0,0,0" Name="LipidInfoGrid" VerticalAlignment="Bottom" Width="Auto" MinWidth="250">
@@ -66,8 +67,8 @@
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.RetentionTime, Mode=OneWay, StringFormat=0.00}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Intensity" FontWeight="Bold" />
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.ApexIntensity, Mode=OneWay, StringFormat=0.00E00}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
-					<TextBlock Grid.Row="5" Grid.Column="0" Text="Area Under Curve" FontWeight="Bold" />
-					<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=AreaUnderCurve, Mode=OneWay, StringFormat='#,#.'}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Area Under Curve" FontWeight="Bold" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Path=AreaUnderCurve, Mode=OneWay, StringFormat='#,#.'}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
                     <!--<TextBlock Grid.Row="6" Grid.Column="0" Text="MS/MS Score" FontWeight="Bold" />
                     <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Path=CurrentSpectrumSearchResult.Score, Mode=OneWay, StringFormat=0.00E00}" Style="{StaticResource SelectableTextBlockLikeStyle}" />
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Pearson Corr Score" FontWeight="Bold" />

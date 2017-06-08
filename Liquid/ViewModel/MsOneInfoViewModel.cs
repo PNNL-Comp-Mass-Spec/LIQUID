@@ -54,7 +54,7 @@ namespace Liquid.ViewModel
             }
         }
 
-        
+
 
         public void OnLipidTargetChange(LipidTarget lipidTarget)
         {
@@ -134,7 +134,8 @@ namespace Liquid.ViewModel
 
         private void CreateIsotopicProfilePlot()
         {
-            PlotModel plotModel = new PlotModel("Isotopic Profile");
+            PlotModel plotModel = new PlotModel();
+            plotModel.Title = "Isotopic Profile";
             plotModel.Padding = new OxyThickness(0);
             plotModel.PlotMargins = new OxyThickness(0);
 
@@ -183,12 +184,14 @@ namespace Liquid.ViewModel
 
             //plotModel.Series.Add(isotopicPeakSeries);
 
-            var yAxis = new LinearAxis(AxisPosition.Left, "Intensity");
+            var yAxis = new LinearAxis();
+            yAxis.Position = AxisPosition.Left;
+            yAxis.Title = "Intensity";
             yAxis.Minimum = 0;
             yAxis.AbsoluteMinimum = 0;
             yAxis.Maximum = maxLocalIntensity + (maxLocalIntensity * .05);
             yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
-            yAxis.ShowMinorTicks = true;
+            yAxis.MinorTickSize = 2;
             yAxis.MajorStep = (maxLocalIntensity + (maxLocalIntensity * .05)) / 5.0;
             //yAxis.IsAxisVisible = false;
             yAxis.AxisTickToLabelDistance = 0;
@@ -196,7 +199,9 @@ namespace Liquid.ViewModel
             yAxis.FontSize = 10;
             yAxis.AxisChanged += OnYAxisChange;
 
-            var xAxis = new LinearAxis(AxisPosition.Bottom, "m/z");
+            var xAxis = new LinearAxis();
+            xAxis.Position = AxisPosition.Bottom;
+            xAxis.Title = "m/z";
             xAxis.Minimum = minLocalMz;
             xAxis.AbsoluteMinimum = minMz - 10;
             xAxis.Maximum = maxLocalMz;
@@ -236,7 +241,8 @@ namespace Liquid.ViewModel
 
         private void CreateXicPlot()
         {
-            PlotModel plotModel = new PlotModel("XIC");
+            PlotModel plotModel = new PlotModel();
+            plotModel.Title = "XIC";
             plotModel.Padding = new OxyThickness(0);
             plotModel.PlotMargins = new OxyThickness(0);
 
@@ -298,12 +304,14 @@ namespace Liquid.ViewModel
             plotModel.Series.Add(peakCenterSeries);
             plotModel.Series.Add(precursorSeries);
 
-            var yAxis = new LinearAxis(AxisPosition.Left, "Intensity");
+            var yAxis = new LinearAxis();
+            yAxis.Position = AxisPosition.Left;
+            yAxis.Title = "Intensity";
             yAxis.Minimum = 0;
             yAxis.AbsoluteMinimum = 0;
             yAxis.Maximum = localMaxIntensity + (localMaxIntensity * .05);
             yAxis.AbsoluteMaximum = maxIntensity + (maxIntensity * .05);
-            yAxis.ShowMinorTicks = true;
+            yAxis.MinorTickSize = 2;
             yAxis.MajorStep = (localMaxIntensity + (localMaxIntensity * .05)) / 5.0;
             //yAxis.IsAxisVisible = false;
             yAxis.AxisTickToLabelDistance = 0;
@@ -311,7 +319,9 @@ namespace Liquid.ViewModel
             yAxis.FontSize = 10;
             yAxis.AxisChanged += OnYAxisChange;
 
-            var xAxis = new LinearAxis(AxisPosition.Bottom, "Scan #");
+            var xAxis = new LinearAxis();
+            xAxis.Position = AxisPosition.Bottom;
+            xAxis.Title = "Scan #";
             xAxis.Minimum = peakCenter - 500;
             xAxis.AbsoluteMinimum = absoluteMinScanLc - 500;
             xAxis.Maximum = peakCenter + 500;
