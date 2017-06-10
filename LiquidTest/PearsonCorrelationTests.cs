@@ -94,7 +94,7 @@ namespace LiquidTest
 
                 var lcmsRun = PbfLcMsRun.GetLcMsRun(pathToRaw);
                 var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
-                using (var reader = new StreamReader(pathToResults))
+                using (var reader = new StreamReader(new FileStream(pathToResults, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
                 {
                     results.Add(new Dictionary<string, List<string>>()); // Add dictionary for new dataset.
                     var datasetResults = results.Last(); // Results for the current dataset.
@@ -214,7 +214,7 @@ namespace LiquidTest
                 var outputFileName = string.Format("{0}_training.tsv", datasetName);
                 var outputPath = Path.Combine(datasetDirPath, outputFileName);
                 using (var writer = new StreamWriter(outputPath))
-                using (var reader = new StreamReader(pathToResults))
+                using (var reader = new StreamReader(new FileStream(pathToResults, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
                 {
                     var lineCount = 0;
                     var headerToIndex = new Dictionary<string, int>();

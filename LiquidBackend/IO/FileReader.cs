@@ -24,18 +24,26 @@ namespace LiquidBackend.IO
             double totalLines = File.ReadLines(fileInfo.FullName).Count();
             double currentLineNumber = 0;
 
-            using (TextReader textReader = new StreamReader(fileInfo.FullName))
+            using (var reader = new StreamReader(new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
-                var columnHeaders = textReader.ReadLine();
+                if (reader.EndOfStream)
+                    return list;
+
+                var columnHeaders = reader.ReadLine();
                 var columnMapping = CreateColumnMapping(columnHeaders);
 
-                string line;
-                while ((line = textReader.ReadLine()) != null)
+                while (!reader.EndOfStream)
                 {
+                    var line = reader.ReadLine();
+
                     currentLineNumber++;
 
+                    if (string.IsNullOrWhiteSpace(line))
+                        continue;
+
                     var createdObject = ParseLine(line, columnMapping);
-                    if (createdObject != null) list.Add(createdObject);
+                    if (createdObject != null)
+                        list.Add(createdObject);
 
                     // Report progress
                     if (progress != null)

@@ -393,7 +393,7 @@ namespace LiquidTest
             var subclasses = new Dictionary<string, int>();
             var total = 0;
 
-            using (var reader = new StreamReader(inFilename))
+            using (var reader = new StreamReader(new FileStream(inFilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 //Read the header
                 reader.ReadLine();
@@ -449,7 +449,7 @@ namespace LiquidTest
 
             var subclasses = new Dictionary<string, List<string>>();
 
-            using (var reader = new StreamReader(inFilename))
+            using (var reader = new StreamReader(new FileStream(inFilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 //Read the header
                 header = reader.ReadLine();
@@ -504,7 +504,7 @@ namespace LiquidTest
 
             var output = new List<string>();
 
-            using (var targets = new StreamReader(targetsFile))
+            using (var targets = new StreamReader(new FileStream(targetsFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 var header = targets.ReadLine();
                 output.Add(header);

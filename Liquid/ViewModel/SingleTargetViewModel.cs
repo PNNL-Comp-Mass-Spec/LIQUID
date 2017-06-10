@@ -15,7 +15,9 @@ namespace Liquid.ViewModel
     public class SingleTargetViewModel : ViewModelBase
     {
         public LcMsRun LcMsRun { get; private set; }
-        public string FeatureFilePath { get; private set; } //Probably replace with a feature table
+
+        // Unused
+        // public string FeatureFilePath { get; private set; }
 
         /// <summary>
         /// Raw file path
@@ -225,7 +227,7 @@ namespace Liquid.ViewModel
 
             foreach (var file in filesList)
             {
-                using (var reader = new StreamReader(file))
+                using (var reader = new StreamReader(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
                 {
                     if (reader.EndOfStream)
                         continue;
