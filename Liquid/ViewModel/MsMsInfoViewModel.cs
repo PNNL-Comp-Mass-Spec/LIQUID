@@ -135,6 +135,7 @@ namespace Liquid.ViewModel
                     var annotation = new MsMsAnnotation(fragmentationType)
                     {
                         Text = matchedSearchResult.TheoreticalPeak.DescriptionForUi,
+                        TextColor = OxyColors.Blue,
                         TextPosition = dataPoint,
                         TextVerticalAlignment = VerticalAlignment.Middle,
                         TextHorizontalAlignment = HorizontalAlignment.Left,
