@@ -20,16 +20,20 @@
             <wpf:PlotView
                 Width="Auto"
                 Height="Auto"
-                MinWidth="240"
-                MinHeight="200"
-                Margin="0,0,0,0"
+                MinWidth="210"
+                MinHeight="175"
+                Margin="55,0,5,40"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
                 Model="{Binding IsotopicProfilePlot}" />
             <wpf:PlotView
                 Width="Auto"
                 Height="Auto"
-                MinWidth="240"
-                MinHeight="200"
-                Margin="0,0,0,20"
+                MinWidth="210"
+                MinHeight="175"
+                Margin="55,0,5,40"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
                 Model="{Binding XicPlot}" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock
