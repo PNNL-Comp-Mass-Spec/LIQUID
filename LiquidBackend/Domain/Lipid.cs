@@ -72,5 +72,10 @@ namespace LiquidBackend.Domain
             var lipidTarget = LipidUtil.CreateLipidTarget(CommonName, fragmentationMode, adduct);
             return lipidTarget;
         }
+
+        public override string ToString()
+        {
+            return CommonName;
+        }
     }
 }
