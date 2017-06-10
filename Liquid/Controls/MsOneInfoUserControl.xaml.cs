@@ -3,19 +3,19 @@ using Liquid.ViewModel;
 
 namespace Liquid.Controls
 {
-	/// <summary>
-	/// Interaction logic for MsOneInfoUserControl.xaml
-	/// </summary>
-	public partial class MsOneInfoUserControl : UserControl
-	{
-		public MsOneInfoViewModel MsOneInfoViewModel { get; }
+    /// <summary>
+    /// Interaction logic for MsOneInfoUserControl.xaml
+    /// </summary>
+    public partial class MsOneInfoUserControl : UserControl
+    {
+        public MsOneInfoViewModel MsOneInfoViewModel { get; }
 
-		public MsOneInfoUserControl()
-		{
-			InitializeComponent();
+        public MsOneInfoUserControl()
+        {
+            InitializeComponent();
 
-			MsOneInfoViewModel = new MsOneInfoViewModel();
-			DataContext = MsOneInfoViewModel;
-		}
-	}
+            MsOneInfoViewModel = new MsOneInfoViewModel();
+            DataContext = MsOneInfoViewModel;
+        }
+    }
 }

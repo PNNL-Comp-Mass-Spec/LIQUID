@@ -1,6 +1,6 @@
 ﻿namespace LiquidBackend.Scoring
 {
-	public class Scorer
-	{
-	}
+    public class Scorer
+    {
+    }
 }

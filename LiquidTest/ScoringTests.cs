@@ -81,18 +81,18 @@ namespace LiquidTest
 
             //foreach (string datasetName in datasetNames)
             //{
-            //	// Setup workflow
-            //	GlobalWorkflow globalWorkflow = new GlobalWorkflow(datasetName);
+            //  // Setup workflow
+            //  GlobalWorkflow globalWorkflow = new GlobalWorkflow(datasetName);
 
-            //	// Run workflow
-            //	List<LipidGroupSearchResult> lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
+            //  // Run workflow
+            //  List<LipidGroupSearchResult> lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
 
-            //	foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
-            //	{
-            //		double score = scoreModel.ScoreLipid(lipidGroupSearchResult);
+            //  foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
+            //  {
+            //      double score = scoreModel.ScoreLipid(lipidGroupSearchResult);
 
-            //		//Console.WriteLine(score + "\t" + lipidGroupSearchResult.LipidTarget.StrippedDisplay);
-            //	}
+            //      //Console.WriteLine(score + "\t" + lipidGroupSearchResult.LipidTarget.StrippedDisplay);
+            //  }
             //}
         }
 
@@ -151,18 +151,18 @@ namespace LiquidTest
 
             //foreach (string datasetName in datasetNames)
             //{
-            //	// Setup workflow
-            //	GlobalWorkflow globalWorkflow = new GlobalWorkflow(datasetName);
+            //  // Setup workflow
+            //  GlobalWorkflow globalWorkflow = new GlobalWorkflow(datasetName);
 
-            //	// Run workflow
-            //	List<LipidGroupSearchResult> lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
+            //  // Run workflow
+            //  List<LipidGroupSearchResult> lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
 
-            //	foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
-            //	{
-            //		double score = scoreModel.ScoreLipid(lipidGroupSearchResult);
+            //  foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
+            //  {
+            //      double score = scoreModel.ScoreLipid(lipidGroupSearchResult);
 
-            //		//Console.WriteLine(score + "\t" + lipidGroupSearchResult.LipidTarget.StrippedDisplay);
-            //	}
+            //      //Console.WriteLine(score + "\t" + lipidGroupSearchResult.LipidTarget.StrippedDisplay);
+            //  }
             //}
         }
 

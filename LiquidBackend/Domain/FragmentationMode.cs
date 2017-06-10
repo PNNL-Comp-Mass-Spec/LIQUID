@@ -1,8 +1,8 @@
 ﻿namespace LiquidBackend.Domain
 {
-	public enum FragmentationMode
-	{
-		Positive,
-		Negative
-	}
+    public enum FragmentationMode
+    {
+        Positive,
+        Negative
+    }
 }

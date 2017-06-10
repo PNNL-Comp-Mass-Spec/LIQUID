@@ -1,10 +1,10 @@
 namespace Liquid
 {
-	public partial class Plot
-	{
-		public Plot()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class Plot
+    {
+        public Plot()
+        {
+            InitializeComponent();
+        }
+    }
 }

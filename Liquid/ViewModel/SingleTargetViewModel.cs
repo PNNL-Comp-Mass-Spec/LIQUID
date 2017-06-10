@@ -183,16 +183,16 @@ namespace Liquid.ViewModel
             //var groupByLipidClass = this.LipidTargetList.GroupBy(x => x.LipidTarget.LipidClass);
             //foreach (LipidClass lipidClass in groupByLipidClass.Select(@group => @group.Key))
             //{
-            //	this.LipidClassList.Add(lipidClass);
+            //  this.LipidClassList.Add(lipidClass);
             //}
 
             //if (this.LipidClassList.Count > 0)
             //{
-            //	LipidClass lipidClass = this.LipidClassList[0];
-            //	this.CurrentLipidClass = lipidClass;
-            //	this.CurrentLipidTargetList = this.LipidTargetList.Where(x => x.LipidClass == lipidClass).ToList();
+            //  LipidClass lipidClass = this.LipidClassList[0];
+            //  this.CurrentLipidClass = lipidClass;
+            //  this.CurrentLipidTargetList = this.LipidTargetList.Where(x => x.LipidClass == lipidClass).ToList();
 
-            //	OnPropertyChanged("CurrentLipidClass");
+            //  OnPropertyChanged("CurrentLipidClass");
             //}
 
             //OnPropertyChanged("LipidClassList");
