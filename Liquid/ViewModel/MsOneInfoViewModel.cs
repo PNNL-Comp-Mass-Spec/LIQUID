@@ -203,6 +203,8 @@ namespace Liquid.ViewModel
             {
                 Position = AxisPosition.Bottom,
                 Title = "m/z",
+                TitlePosition = 0.9,
+                AxisTitleDistance = 1,
                 Minimum = minLocalMz,
                 AbsoluteMinimum = minMz - 10,
                 Maximum = maxLocalMz,
@@ -330,6 +332,8 @@ namespace Liquid.ViewModel
             {
                 Position = AxisPosition.Bottom,
                 Title = "Scan #",
+                TitlePosition = 0.9,
+                AxisTitleDistance = 1,
                 Minimum = peakCenter - 500,
                 AbsoluteMinimum = absoluteMinScanLc - 500,
                 Maximum = peakCenter + 500,
