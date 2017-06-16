@@ -193,7 +193,6 @@ namespace Liquid.ViewModel
                 MinorTickSize = MINOR_TICK_SIZE,
                 MajorStep = (maxLocalIntensity + maxLocalIntensity * .05) / 5.0,
                 //yAxis.IsAxisVisible = false;
-                AxisTickToLabelDistance = 0,
                 StringFormat = "0.0E00",
                 FontSize = 10
             };
@@ -322,7 +321,6 @@ namespace Liquid.ViewModel
                 MinorTickSize = MINOR_TICK_SIZE,
                 MajorStep = (localMaxIntensity + localMaxIntensity * .05) / 5.0,
                 //yAxis.IsAxisVisible = false;
-                AxisTickToLabelDistance = 0,
                 StringFormat = "0.0E00",
                 FontSize = 10
             };
