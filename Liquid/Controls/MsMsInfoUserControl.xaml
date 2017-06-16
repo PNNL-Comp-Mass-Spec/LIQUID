@@ -75,11 +75,11 @@
                                     Header="Type" />
                                 <DataGridTextColumn
                                     Width="75"
-                                    Binding="{Binding Path=Position.X, Mode=OneWay, StringFormat=0.####}"
+                                    Binding="{Binding Path=TextPosition.X, Mode=OneWay, StringFormat=0.####}"
                                     Header="m/z" />
                                 <DataGridTextColumn
                                     Width="100"
-                                    Binding="{Binding Path=Position.Y, Mode=OneWay, StringFormat=0}"
+                                    Binding="{Binding Path=TextPosition.Y, Mode=OneWay, StringFormat=0}"
                                     Header="Intensity" />
                                 <DataGridTextColumn
                                     Width="*"
