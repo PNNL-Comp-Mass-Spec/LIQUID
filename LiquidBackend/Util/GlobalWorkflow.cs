@@ -26,9 +26,9 @@ namespace LiquidBackend.Util
             ScoreModel = ScoreModelSerialization.Deserialize(scoreModelLocation);
         }
 
-        public List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double precursorMassError, double hcdMassError, double cidMassError, IProgress<int> progress = null)
+        public List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double hcdMassError, double cidMassError, IProgress<int> progress = null)
         {
-            return RunGlobalWorkflow(lipidList, LcMsRun, precursorMassError, hcdMassError, cidMassError, ScoreModel, progress);
+            return RunGlobalWorkflow(lipidList, LcMsRun, hcdMassError, cidMassError, ScoreModel, progress);
         }
 
         /*
@@ -109,7 +109,6 @@ namespace LiquidBackend.Util
         public static List<LipidGroupSearchResult> RunGlobalWorkflowAvgSpec(
             IEnumerable<Lipid> lipidList,
             LcMsRun lcmsRun,
-            double precursorMassError,
             double hcdMassError,
             double cidMassError,
             ScoreModel scoreModel,
@@ -152,7 +151,7 @@ namespace LiquidBackend.Util
                     summedCidSpec.IsolationWindow = new IsolationWindow(mz, cidMassError, cidMassError);
                 }
 
-                var mzToSearchTolerance = precursorMassError * mz / 1000000;
+                var mzToSearchTolerance = hcdMassError * mz / 1000000;
                 var lowMz = mz - mzToSearchTolerance;
                 var highMz = mz + mzToSearchTolerance;
 
@@ -227,7 +226,7 @@ namespace LiquidBackend.Util
             return lipidGroupSearchResultList;
         }
 
-        public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double precursorMassError, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
+        public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
         {
             //TextWriter textWriter = new StreamWriter("outputNeg.tsv");
             var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
@@ -294,7 +293,7 @@ namespace LiquidBackend.Util
                 }
 
                 var msMsPrecursorMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
-                var mzToSearchTolerance = precursorMassError * msMsPrecursorMz / 1000000;
+                var mzToSearchTolerance = hcdMassError * msMsPrecursorMz / 1000000;
                 var lowMz = msMsPrecursorMz - mzToSearchTolerance;
                 var highMz = msMsPrecursorMz + mzToSearchTolerance;
 

@@ -12,6 +12,8 @@ using Ookii.Dialogs.Wpf;
 using DataGrid = System.Windows.Controls.DataGrid;
 using MessageBox = System.Windows.MessageBox;
 using Run = System.Windows.Documents.Run;
+using LiquidBackend.Util;
+using System.Collections.Generic;
 
 namespace Liquid.View
 {
@@ -223,7 +225,6 @@ namespace Liquid.View
         private async void BuildLibraryButtonClick(object sender, RoutedEventArgs e)
         {
             var fragmentationMode = (FragmentationMode)FragmentationModeComboBox.SelectedItem;
-            var precursorError = double.Parse(PrecursorErrorTextBox.Text);
             var hcdMassError = double.Parse(HcdErrorTextBox.Text);
             var cidMassError = double.Parse(CidErrorTextBox.Text);
             var resultsPerScan = int.Parse(ResultsPerScanTextBox.Text);
@@ -244,7 +245,7 @@ namespace Liquid.View
 
                 // Open file
                 var fileNames = dialog.FileNames;
-                await Task.Run(() => SingleTargetViewModel.OnBuildLibrary(fileNames, precursorError, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
+                await Task.Run(() => SingleTargetViewModel.OnBuildLibrary(fileNames, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
             }
         }
 
@@ -259,7 +260,7 @@ namespace Liquid.View
             LipidGroupSearchResultsDataGrid.Visibility = Visibility.Hidden;
             ExportGlobalResultsButton.Visibility = Visibility.Hidden;
             ExportAllGlobalResultsButton.Visibility = Visibility.Hidden;
-            await Task.Run(() => SingleTargetViewModel.OnProcessAllTarget(precursorError, hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
+            await Task.Run(() => SingleTargetViewModel.OnProcessAllTarget(hcdMassError, cidMassError, fragmentationMode, resultsPerScan));
             LipidGroupSearchResultsDataGrid.Visibility = Visibility.Visible;
             ExportGlobalResultsButton.Visibility = Visibility.Visible;
             ExportAllGlobalResultsButton.Visibility = Visibility.Visible;
@@ -267,6 +268,35 @@ namespace Liquid.View
             // Select the best spectrum search result
             if (SingleTargetViewModel.LipidGroupSearchResultList.Count > 0)
             {
+                double currentMz = 0;
+                List<LipidGroupSearchResult> removeList = new List<LipidGroupSearchResult>();
+                foreach (LipidGroupSearchResult entry in SingleTargetViewModel.LipidGroupSearchResultList)
+                {
+                    var targetMz = entry.LipidTarget.MzRounded;
+                    if (entry.SpectrumSearchResult.PrecursorSpectrum != null)
+                    {
+                        var massSpectrum = entry.SpectrumSearchResult.PrecursorSpectrum.Peaks;
+                        var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
+                        currentMz = closestPeak.Mz;
+                    }
+                    else
+                    {
+                        var isolationMz = entry.SpectrumSearchResult.HcdSpectrum?.IsolationWindow.IsolationWindowTargetMz ??
+                            entry.SpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz;
+
+                        currentMz = isolationMz;
+                    }
+                    double currentPpmError = LipidUtil.PpmError(targetMz, currentMz);
+                    if (Math.Abs(currentPpmError) > Math.Abs(precursorError))
+                    {
+                        removeList.Add(entry);
+                    }
+                }
+                foreach(LipidGroupSearchResult remove in removeList)
+                {
+                    SingleTargetViewModel.LipidGroupSearchResultList.Remove(remove);
+                }
+
                 var dataGrid = LipidGroupSearchResultsDataGrid;
 
                 dataGrid.SelectedItem = SingleTargetViewModel.LipidGroupSearchResultList[0];

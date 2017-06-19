@@ -22,7 +22,7 @@ namespace LiquidTest
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(fileInfo);
 
-            var lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 30, 500);
+            var lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
 
             var filteredLipidGroupSearchResults = new List<LipidGroupSearchResult>();
 
@@ -66,7 +66,7 @@ namespace LiquidTest
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(fileInfo);
 
-            globalWorkflow.RunGlobalWorkflow(lipidList, 30, 30, 500);
+            globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
 
             // Assure that the source data file is closed
             globalWorkflow.LcMsRun.Close();
@@ -177,7 +177,7 @@ namespace LiquidTest
                 var globalWorkflow = new GlobalWorkflow(rawFileName);
 
                 // Run workflow
-                var lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 30, 500);
+                var lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
 
                 var filteredLipidGroupSearchResults = new List<LipidGroupSearchResult>();
 
@@ -324,8 +324,8 @@ namespace LiquidTest
 
                     // Run liquid global workflow
                     var globalWorkflow = new GlobalWorkflow(rawFilePath);
-                    var targetResults = GetBestResultPerSpectrum(globalWorkflow.RunGlobalWorkflow(targets, hcdError, hcdError, cidError));
-                    var decoyResults = GetBestResultPerSpectrum(globalWorkflow.RunGlobalWorkflow(decoys, hcdError, hcdError, cidError));
+                    var targetResults = GetBestResultPerSpectrum(globalWorkflow.RunGlobalWorkflow(targets, hcdError, cidError));
+                    var decoyResults = GetBestResultPerSpectrum(globalWorkflow.RunGlobalWorkflow(decoys, hcdError, cidError));
 
                     // Output results
                     LipidGroupSearchResultWriter.OutputResults(targetResults, targetResultsPath, rawFileName);
@@ -376,8 +376,8 @@ namespace LiquidTest
 
                 // Run liquid global workflow
                 var globalWorkflow = new GlobalWorkflow(rawFilePath);
-                var targetResults = globalWorkflow.RunGlobalWorkflow(targets, hcdError, hcdError, cidError);
-                var decoyResults = globalWorkflow.RunGlobalWorkflow(decoys, hcdError, hcdError, cidError);
+                var targetResults = globalWorkflow.RunGlobalWorkflow(targets, hcdError, cidError);
+                var decoyResults = globalWorkflow.RunGlobalWorkflow(decoys, hcdError, cidError);
 
                 // Output results
                 LipidGroupSearchResultWriter.OutputResults(targetResults, targetResultsPath, rawFileName);
