@@ -86,6 +86,7 @@
     <Compile Include="Domain\AcylChain.cs" />
     <Compile Include="Domain\AcylChainType.cs" />
     <Compile Include="Domain\Adduct.cs" />
+    <Compile Include="Domain\CompositionFormula.cs" />
     <Compile Include="Domain\FragmentationMode.cs" />
     <Compile Include="Domain\FragmentationType.cs" />
     <Compile Include="Domain\Lipid.cs" />
