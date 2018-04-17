@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcylChainTests.cs" />
+    <Compile Include="CompositionFormulaTests.cs" />
     <Compile Include="FdrUnitTests.cs" />
     <Compile Include="GlobalWorkflowTests.cs" />
     <Compile Include="InformedWorkflowTests.cs" />
