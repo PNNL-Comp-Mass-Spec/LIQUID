@@ -122,6 +122,8 @@
     <Compile Include="Util\QcUtil.cs" />
     <Compile Include="IO\LipidFragmentationRuleReader.cs" />
     <Compile Include="Domain\LipidFragmentationRule.cs" />
+    <Compile Include="Domain\LipidFragmentationRuleForHeader.cs" />
+    <Compile Include="Domain\LipidFragmentationRuleForChain.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DefaultScoringModel.xml">

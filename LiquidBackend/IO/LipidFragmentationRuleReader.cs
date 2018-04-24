@@ -7,7 +7,7 @@ namespace LiquidBackend.IO
     public class LipidFragmentationRuleReader<T> : FileReader<T> where T : LipidFragmentationRule, new()
     {
 
-        private const string LIPID_CLASS = "LIPIDCLASS";
+        private const string LIPID_SUBCLASS = "LIPIDSUBCLASS";
         private const string FRAGMENTATION_MODE = "FRAGMENTATIONMODE";
         private const string LOSS_TYPE = "LOSSTYPE";
         private const string DESC1 = "DESCRIPTION1";
@@ -20,6 +20,8 @@ namespace LiquidBackend.IO
         private const string PHOSPHORUS = "P";
         //TODO: How to handle Na and K
         private const string OTHER = "OTHER";
+        private const string DIAGNOSTIC = "DIAGNOSTIC";
+        private const string HEADER_GROUP = "HEADERGROUP";
 
         protected override Dictionary<string, int> CreateColumnMapping(string columnString)
         {
@@ -32,8 +34,8 @@ namespace LiquidBackend.IO
 
                 switch (columnTitle)
                 {
-                    case LIPID_CLASS:
-                        columnMap.Add(LIPID_CLASS, i);
+                    case LIPID_SUBCLASS:
+                        columnMap.Add(LIPID_SUBCLASS, i);
                         break;
                     case FRAGMENTATION_MODE:
                         columnMap.Add(FRAGMENTATION_MODE, i);
@@ -68,6 +70,12 @@ namespace LiquidBackend.IO
                     case OTHER:
                         columnMap.Add(OTHER, i);
                         break;
+                    case DIAGNOSTIC:
+                        columnMap.Add(DIAGNOSTIC, i);
+                        break;
+                    case HEADER_GROUP:
+                        columnMap.Add(HEADER_GROUP, i);
+                        break;
                     }
             }
 
@@ -80,28 +88,36 @@ namespace LiquidBackend.IO
 
             var fragmentationRule = new T();
 
-            if (columnMapping.ContainsKey(LIPID_CLASS)) fragmentationRule.LipidClass = columns[columnMapping[LIPID_CLASS]];
+            if (columnMapping.ContainsKey(LIPID_SUBCLASS)) fragmentationRule.lpidSubClass = columns[columnMapping[LIPID_SUBCLASS]];
             else throw new SystemException("LipidClass is required for importing fragmentation rules: " + line);
 
-            if (columnMapping.ContainsKey(FRAGMENTATION_MODE)) fragmentationRule.FragmentationMode = columns[columnMapping[FRAGMENTATION_MODE]];
+            if (columnMapping.ContainsKey(FRAGMENTATION_MODE))
+            {
+                string fragmentationMode = columns[columnMapping[FRAGMENTATION_MODE]];
+                if (fragmentationMode.Equals("Positive")) fragmentationRule.fragmentationMode = FragmentationMode.Positive;
+                else if (fragmentationMode.Equals("Negative")) fragmentationRule.fragmentationMode = FragmentationMode.Negative;
+                else throw new SystemException("FragmentationMode is required to be Positive or Negative: " + line);
+            }
             else throw new SystemException("FragmentationMode is required for importing fragmentation rules: " + line);
 
-            if (columnMapping.ContainsKey(LOSS_TYPE)) fragmentationRule.LossType = columns[columnMapping[LOSS_TYPE]];
+            if (columnMapping.ContainsKey(LOSS_TYPE)) fragmentationRule.lossType = columns[columnMapping[LOSS_TYPE]];
             else throw new SystemException("LossType is required for importing fragmentation rules: " + line);
 
-            if (!(fragmentationRule.LossType.Equals("PI") ||
-                  fragmentationRule.LossType.Equals("NL")))
+            if (!(fragmentationRule.lossType.Equals("PI") ||
+                  fragmentationRule.lossType.Equals("NL")))
                 throw new SystemException("LossType should be PI or NL: " + line);
 
-            if (columnMapping.ContainsKey(DESC1)) fragmentationRule.Description1 = columns[columnMapping[DESC1]];
-            if (columnMapping.ContainsKey(DESC1)) fragmentationRule.Description2 = columns[columnMapping[DESC2]];
+            if (columnMapping.ContainsKey(DESC1)) fragmentationRule.description1 = columns[columnMapping[DESC1]];
+            if (columnMapping.ContainsKey(DESC1)) fragmentationRule.description2 = columns[columnMapping[DESC2]];
             if (columnMapping.ContainsKey(CARBON)) fragmentationRule.C = new CompositionFormula(columns[columnMapping[CARBON]]);
             if (columnMapping.ContainsKey(HYDROGEN)) fragmentationRule.H = new CompositionFormula(columns[columnMapping[HYDROGEN]]);
             if (columnMapping.ContainsKey(NITROGEN)) fragmentationRule.N = new CompositionFormula(columns[columnMapping[NITROGEN]]);
             if (columnMapping.ContainsKey(OXYGEN)) fragmentationRule.O = new CompositionFormula(columns[columnMapping[OXYGEN]]);
             if (columnMapping.ContainsKey(SULFUR)) fragmentationRule.S = new CompositionFormula(columns[columnMapping[SULFUR]]);
             if (columnMapping.ContainsKey(PHOSPHORUS)) fragmentationRule.P = new CompositionFormula(columns[columnMapping[PHOSPHORUS]]);
-            if (columnMapping.ContainsKey(OTHER)) fragmentationRule.Other = columns[columnMapping[OTHER]];
+            if (columnMapping.ContainsKey(OTHER)) fragmentationRule.other = columns[columnMapping[OTHER]];
+            if (columnMapping.ContainsKey(DIAGNOSTIC)) fragmentationRule.diagnastic = columns[columnMapping[DIAGNOSTIC]] == "1";
+            if (columnMapping.ContainsKey(HEADER_GROUP)) fragmentationRule.headerGroup = columns[columnMapping[HEADER_GROUP]] == "1";
 
             return fragmentationRule;
         }
