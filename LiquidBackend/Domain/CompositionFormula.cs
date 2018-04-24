@@ -69,5 +69,10 @@ namespace LiquidBackend.Domain
 		{
 			return CarbonMult * numCarbons + DoubleBondMult * numDoubleBonds + Constant;
 		}
+
+		public string GetEquationString()
+		{
+			return CarbonMult.ToString() + "X + " + DoubleBondMult.ToString() + "Y + " + Constant;
+		}
 	}
 }

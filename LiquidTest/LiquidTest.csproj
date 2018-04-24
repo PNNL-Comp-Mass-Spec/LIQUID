@@ -71,6 +71,7 @@
     <Compile Include="FdrUnitTests.cs" />
     <Compile Include="GlobalWorkflowTests.cs" />
     <Compile Include="InformedWorkflowTests.cs" />
+    <Compile Include="LipidCompositionRuleReaderTest.cs" />
     <Compile Include="LipidIOTests.cs" />
     <Compile Include="LipidUtilTests.cs" />
     <Compile Include="PearsonCorrelationTests.cs" />

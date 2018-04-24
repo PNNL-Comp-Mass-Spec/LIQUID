@@ -103,7 +103,7 @@
     <Compile Include="IO\IFileReader.cs" />
     <Compile Include="IO\LipidGroupSearchResultWriter.cs" />
     <Compile Include="IO\LipidMapsDbReader.cs" />
-    <Compile Include="IO\LipidCompositionReader.cs" />
+    <Compile Include="IO\LipidCompositionRuleReader.cs" />
     <Compile Include="IO\OutputFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scoring\ScoreModel.cs" />
