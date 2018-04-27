@@ -3,7 +3,7 @@ using InformedProteomics.Backend.Data.Composition;
 
 namespace LiquidBackend.Domain
 {
-    public class LipidFragmentationRule
+    public class LipidFragmentationRuleFromTable
     {
         public string lpidSubClass { get; set; }
         public FragmentationMode fragmentationMode { get; set; }

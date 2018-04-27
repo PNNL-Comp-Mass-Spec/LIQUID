@@ -120,10 +120,11 @@
     <Compile Include="Util\LipidUtil.cs" />
     <Compile Include="Util\LcMsDataFactory.cs" />
     <Compile Include="Util\QcUtil.cs" />
-    <Compile Include="IO\LipidFragmentationRuleReader.cs" />
+    <Compile Include="IO\LipidFragmentationRuleReaderFromTable.cs" />
+    <Compile Include="Domain\LipidFragmentationRuleFromTable.cs" />
     <Compile Include="Domain\LipidFragmentationRule.cs" />
-    <Compile Include="Domain\LipidFragmentationRuleForHeader.cs" />
-    <Compile Include="Domain\LipidFragmentationRuleForChain.cs" />
+    <Compile Include="IO\LipidFragmentationRuleReader.cs" />
+    <Compile Include="Domain\ConditionForInteger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DefaultScoringModel.xml">
