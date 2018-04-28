@@ -1626,6 +1626,9 @@ namespace LiquidBackend.Util
                         var carbons = acylChain.NumCarbons;
                         var doubleBonds = acylChain.NumDoubleBonds;
 
+                        // Ignore any 0:0 chains
+                        if (carbons == 0 && doubleBonds == 0) continue;
+
                         switch (acylChain.AcylChainType)
                         {
                             case AcylChainType.Standard:
