@@ -61,10 +61,14 @@ namespace LiquidTest
 		public void TestGetCompositionRuleForAllLipids()
 		{
 			Console.WriteLine("COMPOSITION RULES FOR ALL LIPIDS");
-			var lipidFilePath = @"C:\Users\fuji510\Desktop\LIQUID_REVISED\LIQUID_Subclass_chain_parsing_cleaned.txt";
+			var lipidFilePath = @"C:\Users\fuji510\Desktop\LIQUID_REVISED\LIQUID_Subclass_chain_parsing_cleaned_updated.txt";
 			var lipidFileInfo = new FileInfo(lipidFilePath);
 			var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
 			var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
+
+			bool printMatches = false;
+			bool printMissing = true;
+			bool printFailed = false;
 
 			List<int> percentage = new List<int>();
 
@@ -72,32 +76,48 @@ namespace LiquidTest
 			{
 				try
 				{
-					Console.WriteLine("----------------------------------------------------------------------------------------------------");
 					string oldCommonName = rule.Example;
 
 					Composition oldComp = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(oldCommonName);
 					var fattyAcylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(oldCommonName).ToList();
 					var carbons = fattyAcylChains.Sum(x => x.NumCarbons);
 					var dBonds = fattyAcylChains.Sum(x => x.NumDoubleBonds);
-					Console.WriteLine("OLD COMMON NAME: " + oldCommonName + " COMPOSITION: " + oldComp.ToPlainString());
 
 					Composition newComp = rule.GetComposition(carbons, dBonds);
 
 					if (newComp.Equals(oldComp))
 					{
-						Console.WriteLine(rule.LipidClass + "\t" + rule.LipidSubClass + "\t" + rule.Example + "\t" + newComp.ToPlainString());
+						if (printMatches)
+						{
+							Console.WriteLine("----------------------------------------------------------------------------------------------------");
+							Console.WriteLine("OLD COMMON NAME: " + oldCommonName + " COMPOSITION: " + oldComp.ToPlainString());
+							Console.WriteLine(rule.LipidClass + "\t" + rule.LipidSubClass + "\t" + rule.Example + "\t" + newComp.ToPlainString());
+						}
 						percentage.Add(1);
 					}
 					else
 					{
-						Console.WriteLine("------->NO MATCH<-------");
+						if (printMissing)
+						{
+							Console.WriteLine("----------------------------------------------------------------------------------------------------");
+							Console.WriteLine("OLD COMMON NAME: " + oldCommonName + " COMPOSITION: " + oldComp.ToPlainString());
+							Console.WriteLine("------->NO MATCH<------- " + newComp.ToPlainString());
+							Console.WriteLine("NEW EQUATIONS: C: " + rule.C.GetEquationString() + " H: " + rule.H.GetEquationString() + " N: " + rule.N.GetEquationString() +
+								" O: " + rule.O.GetEquationString() + " S: " + rule.S.GetEquationString() + " P: " + rule.P.GetEquationString());
+						}
+						LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(oldCommonName);
+						rule.GetComposition(carbons, dBonds);
 						percentage.Add(0);
 					}
 				}
 				catch(Exception e)
 				{
 					percentage.Add(0);
-					Console.WriteLine(rule.Example + " ------------------>" + e.Message);
+					if (printFailed)
+					{
+						Console.WriteLine("----------------------------------------------------------------------------------------------------");
+						Console.WriteLine(rule.Example + " ------------------>" + e.Message);
+					}
 					continue;
 				}
 			}
