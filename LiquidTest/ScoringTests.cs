@@ -339,7 +339,7 @@ namespace LiquidTest
                 "Sullivan_Cbaltica_5E6_test_POS_150mm_2Jun15_Polaroid_HSST3-02",
                 "Sullivan_Cbaltica_5E7_test_POS_150mm_2Jun15_Polaroid_HSST3-02"
             };
-            const string positiveTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_7b.txt";
+            const string positiveTargetsFileLocation = @"../../../testFiles/Global_ENV_Nov2017_POS_v12.txt";
             var positiveTargetsFileInfo = new FileInfo(positiveTargetsFileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(positiveTargetsFileInfo);
@@ -351,7 +351,7 @@ namespace LiquidTest
             var scoreModel = liquidScoreModelCreator.CreateScoreModel(30, 500);
             //Console.WriteLine(scoreModel.ToString());
 
-            ScoreModelSerialization.Serialize(scoreModel, "scoringTestPositive.xml");
+            ScoreModelSerialization.Serialize(scoreModel, "scoringTestPositive_Grant.xml");
         }
 
         /// <summary>
@@ -515,7 +515,7 @@ namespace LiquidTest
             var x = new Stopwatch();
             x.Start();
 
-            const string negativeTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4.txt";
+            const string negativeTargetsFileLocation = @"../../../testFiles/Global_ENV_Mtb_Dec2016_NEG_v7.txt";
             var negativeTargetsFileInfo = new FileInfo(negativeTargetsFileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(negativeTargetsFileInfo);
