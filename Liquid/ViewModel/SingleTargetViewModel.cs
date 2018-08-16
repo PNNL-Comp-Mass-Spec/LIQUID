@@ -60,6 +60,8 @@ namespace Liquid.ViewModel
             LipidIdentifications = new List<Tuple<string, int>>();
             ScoreModel = ScoreModelSerialization.Deserialize("DefaultScoringModel.xml");
             AverageSpec = false;
+            // load lipid rules
+            LipidRules.LoadLipidRules("DefaultCompositionRules.txt", "DefaultFragmentationRules.txt");
 
         }
 

@@ -42,6 +42,7 @@ namespace LiquidTest
             }
         }
 
+        /**
         public static List<LipidFragmentationRule> GetFragmentationRulesForLipidClass(
             string lipidClass,
             FragmentationMode fragmentationMode,
@@ -60,6 +61,7 @@ namespace LiquidTest
 
             return lipidFragmentationRulesList;
         }
+        
 
         public static List<MsMsSearchUnit> CreateMsMsSearchUnitsFromFragmentationRules(
             string commonName,
@@ -153,6 +155,7 @@ namespace LiquidTest
 
             return msMsSearchUnitList;
         }
+        **/
 
         public bool CheckFragmentaionRules(string commonName,
                                             string empiricalFormula,
@@ -163,8 +166,7 @@ namespace LiquidTest
 
             Console.WriteLine(commonName + "\t" + empiricalFormula);
 
-            var fragmentationRules = GetFragmentationRulesForLipidClass(lipidTarget.LipidClass.ToString(), fragmentationMode, lipidFragmentationRules);
-            List<MsMsSearchUnit> msMsSearchUnitListNew = CreateMsMsSearchUnitsFromFragmentationRules(commonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass.ToString(), fragmentationMode, lipidTarget.AcylChainList, fragmentationRules);
+            List<MsMsSearchUnit> msMsSearchUnitListNew = LipidUtil.CreateMsMsSearchUnitsFromFragmentationRules(commonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList, lipidFragmentationRules);
 
             string newResults = "";
             foreach (var msMsSearchUnit in msMsSearchUnitListNew.OrderBy(x => x.Mz))
@@ -199,7 +201,7 @@ namespace LiquidTest
         [Test()]
         public void TestGetFragmentationRules()
         {
-            var targetsFilePath = @"/Users/leej324/Documents/projects/Liquid/extract_rules_from_code_equations_fixed.txt";
+            var targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\extract_rules_from_code_equations_fixed.txt";
             var targetsFileInfo = new FileInfo(targetsFilePath);
             var lipidFragmentationRulesReader = new LipidFragmentationRuleReader<LipidFragmentationRule>();
             var lipidFragmentationRules = lipidFragmentationRulesReader.ReadFile(targetsFileInfo);
@@ -219,7 +221,7 @@ namespace LiquidTest
         [Test()]
         public void TestGetFragmentationRulesForLipidClass()
         {
-            var targetsFilePath = @"/Users/leej324/Documents/projects/Liquid/extract_rules_from_code_equations_fixed.txt";
+            var targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\extract_rules_from_code_equations_fixed.txt";
             var targetsFileInfo = new FileInfo(targetsFilePath);
             var lipidFragmentationRulesReader = new LipidFragmentationRuleReader<LipidFragmentationRule>();
             var lipidFragmentationRules = lipidFragmentationRulesReader.ReadFile(targetsFileInfo);
@@ -229,7 +231,7 @@ namespace LiquidTest
 
             Console.WriteLine("================ POSITIVE ================");
             FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            string[] lines = File.ReadAllLines(@"/Users/leej324/Documents/projects/Liquid/global_target_lipid_list/Global_April2018_all_POS.txt");
+            string[] lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_April2018_all_POS.txt");
             var numPosTargets = 0;
             var numCorrectPosTargets = 0;
             foreach (var line in lines)
@@ -253,7 +255,7 @@ namespace LiquidTest
 
             Console.WriteLine("================ NEGATIVE ================");
             fragmentationMode = FragmentationMode.Negative;
-            lines = File.ReadAllLines(@"/Users/leej324/Documents/projects/Liquid/global_target_lipid_list/Global_April2018_all_NEG.txt");
+            lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_April2018_all_NEG.txt");
             var numNegTargets = 0;
             var numCorrectNegTargets = 0;
 

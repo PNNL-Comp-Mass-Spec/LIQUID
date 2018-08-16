@@ -10,6 +10,9 @@ namespace LiquidBackend.Domain
         Monohydro,
         Dihydro,
         Trihydro,
-        Hydroxy
+        Hydroxy,
+        OOH,
+        OOHOH,
+        F2IsoP
     }
 }

@@ -1,0 +1,102 @@
+LipidClass	LipidSubClass	Category	MainClass	SubClass	C	H	N	O	S	P	Example	Formula-NoAdduct	IonizationMode	NumChains	ContainsEther	ContainsDiether	ContainsPlasmalogen	ContainsLCB	ContainsLCB+OH	 ContainsLCB-OH	IsOxoCHO	IsOxoCOOH	NumOH	ContainsOOH	ContainsF2IsoP
+anandamide	anandamide	Fatty Acyls [FA]	Fatty amides [FA08]	N-acyl ethanolamines (endocannabinoids) [FA0804]	X+2	2X+5-2Y	1	2			"Anandamide (20:4, n-6)"	C22H37NO2	pos	1	0	0	0	0	0	0	0	0	0	0	0
+carnitine	carnitine	Fatty Acyls [FA]	Fatty esters [FA07]	Fatty acyl carnitines [FA0707]	X+7	2X+13-2Y	1	4			carnitine(18:0)	C25H49NO4	pos	1	0	0	0	0	0	0	0	0	0	0	0
+FAHFA	FAHFA	Fatty Acyls [FA]	Fatty esters [FA07]	Wax monoesters [FA0701]	X	2X-2-2Y		4			FAHFA(16:0/5-O-18:0)	C34H66O4	pos	2	0	0	0	0	0	0	0	0	1	0	0
+WE	WE	Fatty Acyls [FA]	Fatty esters [FA07]	Wax monoesters [FA0701]	X	2X-2Y		2			"WE(20:0/18:2(9Z,12Z))"	C38H72O2	pos	2	0	0	0	0	0	0	0	0	0	0	0
+MG	MG	Glycerolipids [GL]	Monoradylglycerols [GL01]	Monoacylglycerols [GL0101]	X+3	2X+6-2Y		4			MG(16:0/0:0/0:0)	C19H38O4	pos	1	0	0	0	0	0	0	0	0	0	0	0
+DG	DG	Glycerolipids [GL]	Diradylglycerols [GL02]	Diacylglycerols [GL0201]	X+3	2X+4-2Y		5			DG(16:0/16:0/0:0)	C35H68O5	pos 	2	0	0	0	0	0	0	0	0	0	0	0
+TG	TG	Glycerolipids [GL]	Triradylglycerols [GL03]	Triacylglycerols [GL0301]	X+3	2X+2-2Y		6			TG(16:0/16:0/16:0)	C51H98O6	pos	3	0	0	0	0	0	0	0	0	0	0	0
+DGDG	DGDG	Glycerolipids [GL]	Glycosyldiradylglycerols [GL05]	Glycosyldiacylglycerols [GL0501]	X+15	2X+24-2Y		15			DGDG(18:5/18:4)	C51H78O15	pos 	2	0	0	0	0	0	0	0	0	0	0	0
+MGDG	MGDG	Glycerolipids [GL]	Glycosyldiradylglycerols [GL05]	Glycosyldiacylglycerols [GL0501]	X+9	2X+14-2Y		10			MGDG(16:0/18:1(9Z))	C43H80O10	pos	2	0	0	0	0	0	0	0	0	0	0	0
+SQDG	SQDG	Glycerolipids [GL]	Glycosyldiradylglycerols [GL05]	Glycosyldiacylglycerols [GL0501]	X+9	2X+14-2Y		12	1		SQDG(16:0/14:0)	C39H74O12S	pos	2	0	0	0	0	0	0	0	0	0	0	0
+DGTSA	DGTS/A	Glycerolipids [GL]	Other Glycerolipids [GL00]		X+10	2X+17-2Y	1	7			DGTS/A(16:0/16:0)	C42H81NO7	pos 	2	0	0	0	0	0	0	0	0	0	0	0
+PA	LPA	Glycerophospholipids [GP]	Glycerophosphates [GP10]	Monoacylglycerophosphates [GP1005]	X+3	2X+7-2Y		7		1	PA(18:0/0:0)	C21H43O7P	neg	1	0	0	0	0	0	0	0	0	0	0	0
+PA	LPA(O-	Glycerophospholipids [GP]	Glycerophosphates [GP10]	Monoalkylglycerophosphates [GP1006]	X+3	2X+9-2Y		6		1	PA(O-20:0/0:0)	C23H49O6P	neg	1	1	0	0	0	0	0	0	0	0	0	0
+PA	LPA(P-	Glycerophospholipids [GP]	Glycerophosphates [GP10]	1Z-alkenylglycerophosphates [GP1007]	X+3	2X+7-2Y		6		1	PA(P-20:0/0:0)	C23H47O6P	neg	1	0	0	1	0	0	0	0	0	0	0	0
+PA	PA	Glycerophospholipids [GP]	Glycerophosphates [GP10]	Diacylglycerophosphates [GP1001]	X+3	2X+5-2Y		8		1	PA(18:0/18:0)	C39H77O8P	neg	2	0	0	0	0	0	0	0	0	0	0	0
+PA	PA(O-	Glycerophospholipids [GP]	Glycerophosphates [GP10]	"1-alkyl,2-acylglycerophosphates [GP1002]"	X+3	2X+7-2Y		7		1	PA(O-18:0/21:0)	C42H85O7P	neg	2	1	0	0	0	0	0	0	0	0	0	0
+PA	PA(P-	Glycerophospholipids [GP]	Glycerophosphates [GP10]	"1-(1Z-alkenyl),2-acylglycerophosphates [GP1003]"	X+3	2X+5-2Y		7		1	PA(P-20:0/19:0)	C42H83O7P	neg	2	0	0	1	0	0	0	0	0	0	0	0
+PC	LPC	Glycerophospholipids [GP]	Glycerophosphocholines [GP01]	Monoacylglycerophosphocholines [GP0105]	X+8	2X+18-2Y	1	7		1	PC(16:0/0:0)	C24H50NO7P	pos	1	0	0	0	0	0	0	0	0	0	0	0
+PC	LPC(O-	Glycerophospholipids [GP]	Glycerophosphocholines [GP01]	Monoalkylglycerophosphocholines [GP0106]	X+8	2X+20-2Y	1	6		1	PC(O-16:0/0:0)	C24H52NO6P	pos	1	1	0	0	0	0	0	0	0	0	0	0
+PC	LPC(P-	Glycerophospholipids [GP]	Glycerophosphocholines [GP01]	1Z-alkenylglycerophosphocholines [GP0107]	X+8	2X+18-2Y	1	6		1	PC(P-18:0/0:0)	C26H54NO6P	pos	1	0	0	1	0	0	0	0	0	0	0	0
+PC	PC	Glycerophospholipids [GP]	Glycerophosphocholines [GP01]	Diacylglycerophosphocholines [GP0101]	X+8	2X+16-2Y	1	8		1	PC(11:0/11:0)	C30H60NO8P	pos	2	0	0	0	0	0	0	0	0	0	0	0
+PC	PC(O-	Glycerophospholipids [GP]	Glycerophosphocholines [GP01]	"1-alkyl,2-acylglycerophosphocholines [GP0102]"	X+8	2X+18-2Y	1	7		1	PC(O-16:0/18:1(9Z))	C42H84NO7P	pos	2	1	0	0	0	0	0	0	0	0	0	0
+PC	PC(P-	Glycerophospholipids [GP]	Glycerophosphocholines [GP01]	"1-(1Z-alkenyl),2-acylglycerophosphocholines [GP0103]"	X+8	2X+16-2Y	1	7		1	PC(P-18:0/18:1(9Z))	C44H86NO7P	pos	2	0	0	1	0	0	0	0	0	0	0	0
+PE	LPE	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Monoacylglycerophosphoethanolamines [GP0205]	X+5	2X+12-2Y	1	7		1	PE(18:0/0:0)	C23H48NO7P	both	1	0	0	0	0	0	0	0	0	0	0	0
+PE	LPE(O-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Monoalkylglycerophosphoethanolamines [GP0206]	X+5	2X+14-2Y	1	6		1	PE(O-16:0/0:0)	C21H46NO6P	both 	1	1	0	0	0	0	0	0	0	0	0	0
+PE	LPE(P-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	1Z-alkenylglycerophosphoethanolamines [GP0207]	X+5	2X+12-2Y	1	6		1	PE(P-16:0/0:0)	C21H44NO6P	both 	1	0	0	1	0	0	0	0	0	0	0	0
+PE	PE	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	X+5	2X+10-2Y	1	8		1	PE(16:0/16:0)	C37H74NO8P	both	2	0	0	0	0	0	0	0	0	0	0	0
+PE	PE(O-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	"1-alkyl,2-acylglycerophosphoethanolamines [GP0202]"	X+5	2X+12-2Y	1	7		1	PE(O-16:0/18:1(9Z))	C39H78NO7P	both	2	1	0	0	0	0	0	0	0	0	0	0
+PE	PE(P-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	"1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]"	X+5	2X+10-2Y	1	7		1	PE(P-18:0/18:1(9Z))	C41H80NO7P	both	2	0	0	1	0	0	0	0	0	0	0	0
+PE_NMe	PE-NMe	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	x+6	2X+12-2Y	1	8		1	PE-NMe(12:0/12:0)	C30H60NO8P	both	2	0	0	0	0	0	0	0	0	0	0	0
+PE_NMe2	PE-NMe2	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	x+7	2X+14-2Y	1	8		1	PE-NMe2(12:0/12:0)	C31H62NO8P	both	2	0	0	0	0	0	0	0	0	0	0	0
+PG	LPG	Glycerophospholipids [GP]	Glycerophosphoglycerols [GP04]	Monoacylglycerophosphoglycerols [GP0405]	X+6	2X+13-2Y		9		1	PG(18:0/0:0)	C24H49O9P	neg	1	0	0	0	0	0	0	0	0	0	0	0
+PG	LPG(O-	Glycerophospholipids [GP]	Glycerophosphoglycerols [GP04]	Monoalkylglycerophosphoglycerols [GP0406]	X+6	2X+15-2Y		8		1	PG(O-18:0/0:0)	C24H51O8P	neg	1	1	0	0	0	0	0	0	0	0	0	0
+PG	LPG(P-	Glycerophospholipids [GP]	Glycerophosphoglycerols [GP04]	1Z-alkenylglycerophosphoglycerols [GP0407]	X+6	2X+13-2Y		8		1	PG(P-18:0/0:0)	C24H49O8P	neg	1	0	0	1	0	0	0	0	0	0	0	0
+PG	PG	Glycerophospholipids [GP]	Glycerophosphoglycerols [GP04]	Diacylglycerophosphoglycerols [GP0401]	X+6	2X+11-2Y		10		1	PG(18:0/18:0)	C42H83O10P	neg	2	0	0	0	0	0	0	0	0	0	0	0
+PG	PG(O-	Glycerophospholipids [GP]	Glycerophosphoglycerols [GP04]	"1-alkyl,2-acylglycerophosphoglycerols [GP0402]"	X+6	2X+13-2Y		9		1	PG(O-18:0/21:0)	C45H91O9P	neg	2	1	0	0	0	0	0	0	0	0	0	0
+PG	PG(P-	Glycerophospholipids [GP]	Glycerophosphoglycerols [GP04]	"1-(1Z-alkenyl),2-acylglycerophosphoglycerols [GP0403]"	X+6	2X+11-2Y		9		1	PG(P-18:0/21:0)	C45H89O9P	neg	2	0	0	1	0	0	0	0	0	0	0	0
+PG	PG(diether	Glycerophospholipids [GP]	Glycerophosphoglycerols [GP04]	Dialkylglycerophosholgycerol	X+6	2X+15-2Y		8		1	PG(O-14:0/O-14:0)	C34H71O8P	neg	2	2	0	0	0	0	0	0	0	0	0	0
+CL	Cardiolipin	Glycerophospholipids [GP]	Glycerophosphoglycerophosphoglycerols [GP12]	Diacylglycerophosphoglycerophosphodiradylglycerols [GP1201]	X+9	2X+14-2Y		17		2	"CL(1'-[18:2/18:2],3'-[18:2/18:2])"	C81H142O17P2	neg	4	0	0	0	0	0	0	0	0	0	0	0
+PIP2	PIP2	Glycerophospholipids [GP]	Glycerophosphoinositol bisphosphates [GP08]	Diacylglycerophosphoinositol bisphosphates [GP0801]	X+9	2X+17-2Y		19		3	"PIP2[3',5'](17:0/20:4(5Z,8Z,11Z,14Z))"	C46H83O19P3	neg	2	0	0	0	0	0	0	0	0	0	0	0
+PIP	PIP	Glycerophospholipids [GP]	Glycerophosphoinositol monophosphates [GP07]	Diacylglycerophosphoinositol monophosphates [GP0701]	X+9	2X+16-2Y		16		2	"PIP[3'](17:0/20:4(5Z,8Z,11Z,14Z))"	C46H82O16P2	neg	2	0	0	0	0	0	0	0	0	0	0	0
+PIP3	PIP3	Glycerophospholipids [GP]	Glycerophosphoinositol trisphosphates [GP09]	Diacylglycerophosphoinositol trisphosphates [GP0901]	X+9	2X+18-2Y		22		4	"PIP3[3',4',5'](17:0/20:4(5Z,8Z,11Z,14Z))"	C46H84O22P4	neg	2	0	0	0	0	0	0	0	0	0	0	0
+PI	LPI	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Monoacylglycerophosphoinositols [GP0605]	X+9	2X+17-2Y		12		1	PI(18:0/0:0)	C27H53O12P	neg	1	0	0	0	0	0	0	0	0	0	0	0
+PI	LPI(O-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Monoalkylglycerophosphoinositols [GP0606]	X+9	2X+19-2Y		11		1	PI(O-18:0/0:0)	C27H55O11P	neg	1	1	0	0	0	0	0	0	0	0	0	0
+PI	LPI(P-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	1Z-alkenylglycerophosphoinositols [GP0607]	X+9	2X+17-2Y		11		1	PI(P-18:0/0:0)	C27H53O11P	neg	1	0	0	1	0	0	0	0	0	0	0	0
+PI	PI	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	X+9	2X+15-2Y		13		1	PI(16:0/16:0)	C41H79O13P	neg	2	0	0	0	0	0	0	0	0	0	0	0
+PI	PI(O-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	"1-alkyl,2-acylglycerophosphoinositols [GP0602]"	X+9	2X+17-2Y		12		1	PI(O-18:0/12:0)	C39H77O12P	neg	2	1	0	0	0	0	0	0	0	0	0	0
+PI	PI(P-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	"1-(1Z-alkenyl),2-acylglycerophosphoinositols [GP0603]"	X+9	2X+15-2Y		12		1	PI(P-18:0/12:0)	C39H75O12P	neg	2	0	0	1	0	0	0	0	0	0	0	0
+PS	LPS	Glycerophospholipids [GP]	Glycerophosphoserines [GP03]	Monoacylglycerophosphoserines [GP0305]	X+6	2X+12-2Y	1	9		1	PS(16:0/0:0)	C22H44NO9P	both	1	0	0	0	0	0	0	0	0	0	0	0
+PS	LPS(O-	Glycerophospholipids [GP]	Glycerophosphoserines [GP03]	Monoalkylglycerophosphoserines [GP0306]	X+6	2X+14-2Y	1	8		1	PS(O-18:0/0:0)	C24H50NO8P	both	1	1	0	0	0	0	0	0	0	0	0	0
+PS	LPS(P-	Glycerophospholipids [GP]	Glycerophosphoserines [GP03]	1Z-alkenylglycerophosphoserines [GP0307]	X+6	2X+12-2Y	1	8		1	PS(P-18:0/0:0)	C24H48NO8P	both	1	0	0	1	0	0	0	0	0	0	0	0
+PS	PS	Glycerophospholipids [GP]	Glycerophosphoserines [GP03]	Diacylglycerophosphoserines [GP0301]	X+6	2X+10-2Y	1	10		1	PS(12:0/12:0)	C30H58NO10P	both	2	0	0	0	0	0	0	0	0	0	0	0
+PS	PS(O-	Glycerophospholipids [GP]	Glycerophosphoserines [GP03]	"1-alkyl,2-acylglycerophosphoserines [GP0302]"	X+6	2X+12-2Y	1	9		1	PS(O-16:0/14:0)	C36H72NO9P	both	2	1	0	0	0	0	0	0	0	0	0	0
+PS	PS(P-	Glycerophospholipids [GP]	Glycerophosphoserines [GP03]	"1-(1Z-alkenyl),2-acylglycerophosphoserines [GP0303]"	X+6	2X+10-2Y	1	9		1	PS(P-16:0/13:0)	C35H68NO9P	both	2	0	0	1	0	0	0	0	0	0	0	0
+PC	F2IsoP PC	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]	X+8	2X+18-2Y	1	11		1	PC(18:0/F2IsoP-20:4)	C46H86NO11P	neg	2	0	0	0	0	0	0	0	0	3	0	1
+PE	F2IsoP PE	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]	X+5	2X+12-2Y	1	11		1	PE(18:0/F2IsoP-20:4)	C43H80NO11P	neg	2	0	0	0	0	0	0	0	0	3	0	1
+PE	PE(hydroxide	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]	X+5	2X+10-2Y	1	9		1	PE(18:0/20:4(OH))	C43H78NO9P	neg	2	0	0	0	0	0	0	0	0	1	0	0
+PE	PE(hydroperoxide	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]	X+5	2X+10-2Y	1	10		1	PE(18:0/20:4(OOH))	C43H78NO10P	neg	2	0	0	0	0	0	0	0	0	0	1	0
+PE	PE(hydroperoxide	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]	X+5	2X+10-2Y	1	11		1	PE(18:0/20:4(OOHOH))	C43H78NO11P	neg	2	0	0	0	0	0	0	0	0	1	1	0
+PC	PC(hydroxide 	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]	X+8	2X+16-2Y	1	9		1	PC(18:0/20:4(OH))	C46H84NO9P	both	2	0	0	0	0	0	0	0	0	1	0	0
+PC	PC(hydroperoxide 	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]	X+8	2X+16-2Y	1	10		1	PC(18:0/20:4(OOH))	C46H84NO10P	both	2	0	0	0	0	0	0	0	0	0	1	0
+PC	PC(hydroperoxide 	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]	X+8	2X+16-2Y	1	11		1	PC(18:0/20:4(OOHOH))	C46H84NO11P	both	2	0	0	0	0	0	0	0	0	1	1	0
+PI	PI(hydroxide 	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]	X+9	2X+15-2Y		14		1	PI(18:0/20:4(OH))	C47H83O14P	neg	2	0	0	0	0	0	0	0	0	1	0	0
+PI	PI(hydroperoxide 	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]	X+9	2X+15-2Y		15		1	PI(18:0/20:4(OOH))	C47H83O15P	neg	2	0	0	0	0	0	0	0	0	0	1	0
+PI	PI(hydroperoxide 	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]	X+9	2X+15-2Y		16		1	PI(18:0/20:4(OOHOH))	C47H83O16P	neg	2	0	0	0	0	0	0	0	0	1	1	0
+PI	F2IsoP PI	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]	X+9	2X+17-2Y		16		1	PI(18:0/F2IsoP-20:4)	C47H85O16P	neg	2	0	0	0	0	0	0	0	0	3	0	1
+PS	PS(hydroxide 	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]	X+6	2X+10-2Y	1	11		1	PS(18:0/20:4(OH))	C44H78NO11P	neg	2	0	0	0	0	0	0	0	0	1	0	0
+PS	PS(hydroperoxide 	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]	X+6	2X+10-2Y	1	12		1	PS(18:0/20:4(OOH))	C44H78NO12P	neg	2	0	0	0	0	0	0	0	0	0	1	0
+PS	PS(hydroperoxide 	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]	X+6	2X+10-2Y	1	13		1	PS(18:0/20:4(OOHOH))	C44H78NO13P	neg	2	0	0	0	0	0	0	0	0	1	1	0
+PS	F2IsoP PS	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]	X+6	2X+12-2Y	1	13		1	PS(18:0/F2IsoP-20:4)	C44H80NO13P	neg	2	0	0	0	0	0	0	0	0	3	0	1
+PC	PC(dicarboxylic acid)	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]	X+8	2X+14-2Y	1	10		1	PC(16:0/5:0(COOH))	C29H56NO10P	pos	2	0	0	0	0	0	0	0	1	0	0	0
+PC	PC(-oxo-)	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]	X+8	2X+14-2Y	1	9		1	PC(16:0/5:0(CHO))	C29H56NO9P	pos	2	0	0	0	0	0	0	1	0	0	0	0
+Ubiquinone	Ubiquinone - Coenzyme Q10	Prenol Lipids [PR]	Quinones and hydroquinones [PR02]	Ubiquinones [PR0201]	59	90		4			Coenzyme Q10	C59H90O4	pos	0	0	0	0	0	0	0	0	0	0	0	0
+Ubiquinone	Ubiquinone - Coenzyme Q4	Prenol Lipids [PR]	Quinones and hydroquinones [PR02]	Ubiquinones [PR0201]	29	42		4			Coenzyme Q4	C29H42O4	pos	0	0	0	0	0	0	0	0	0	0	0	0
+Ubiquinone	Ubiquinone - Coenzyme Q6	Prenol Lipids [PR]	Quinones and hydroquinones [PR02]	Ubiquinones [PR0201]	39	58		4			Coenzyme Q6	C39H58O4	pos	0	0	0	0	0	0	0	0	0	0	0	0
+Ubiquinone	Ubiquinone - Coenzyme Q8	Prenol Lipids [PR]	Quinones and hydroquinones [PR02]	Ubiquinones [PR0201]	49	74		4			Coenzyme Q8	C49H74O4	pos	0	0	0	0	0	0	0	0	0	0	0	0
+Ubiquinone	Ubiquinone - Coenzyme Q9	Prenol Lipids [PR]	Quinones and hydroquinones [PR02]	Ubiquinones [PR0201]	54	82		4			Coenzyme Q9	C54H82O4	pos	0	0	0	0	0	0	0	0	0	0	0	0
+GM3	GM3	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Gangliosides [SP0601]	X+23	2X+40-2Y	2	21			GM3(d14:1/18:1)	C55H98N2O21	neg	2	0	0	0	1	0	0	0	0	0	0	0
+Sulfatide	sulfatide	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	X+6	2X+11-2Y	1	11	1		sulfatide(d18:1/16:0)	C40H77NO11S	neg	2	0	0	0	1	0	0	0	0	0	0	0
+Sulfatide	sulfatide (2OH)	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	X+6	2X+11-2Y	1	12	1		sulfatide(d18:0/18:0(2OH))	C42H81NO12S	neg	2	0	0	0	1	0	0	0	0	1	0	0
+Cer	Cer(m	Sphingolipids [SP]	Other Sphingolipids [SP00]		X	2X+1-2Y	1	2			Cer(m18:0/16:0)	C34H69NO2	pos	2	0	0	0	0	0	1	0	0	0	0	0
+Cer	Ceramide	Sphingolipids [SP]	Ceramides [SP02]	N-acylsphingosines (ceramides) [SP0201]	X	2X+1-2Y	1	3			Cer(d18:1/12:0)	C30H59NO3	both	2	0	0	0	1	0	0	0	0	0	0	0
+Cer	Ceramide - (2OH)	Sphingolipids [SP]	Ceramides [SP02]	N-acylsphingosines (ceramides) [SP0201]	X	2X+1-2Y	1	4			Cer(d18:0/20:0(2OH))	C38H77NO4	both	2	0	0	0	1	0	0	0	0	1	0	0
+Cer	Ceramide - phytoceramide	Sphingolipids [SP]	Ceramides [SP02]	N-acyl-4-hydroxysphinganines (phytoceramides) [SP0203]	X	2X+1-2Y	1	4			Cer(t18:0/16:0)	C34H69NO4	both	2	0	0	0	0	1	0	0	0	0	0	0
+Cer	Ceramide - dihydrophytoceramide	Sphingolipids [SP]	Ceramides [SP02]	N-acyl-4-hydroxysphinganines (phytoceramides) [SP0203]	X	2X+1-2Y	1	5			Cer(t18:0/16:0(2OH))	C34H69NO5	both	2	0	0	0	0	1	0	0	0	1	0	0
+CerP	CerP	Sphingolipids [SP]	Ceramides [SP02]	Ceramide 1-phosphates [SP0205]	X	2X+2-2Y	1	6		1	CerP(d18:1/12:0)	C30H60NO6P	pos	2	0	0	0	1	0	0	0	0	0	0	0
+GlcCer	GlcCer	Sphingolipids [SP]	Neutral glycosphingolipids [SP05]	Simple Glc series [SP0501]	X+6	2X+11-2Y	1	8			GlcCer(d18:1/12:0)	C36H69NO8	both	2	0	0	0	1	0	0	0	0	0	0	0
+GlcCer	GlcCer  (2OH)	Sphingolipids [SP]	Neutral glycosphingolipids [SP05]	Simple Glc series [SP0501]	X+6	2X+11-2Y	1	9			GlcCer(d14:1(4E)/20:0(2OH))	C40H77NO9	both	2	0	0	0	1	0	0	0	0	1	0	0
+GalCer	GalCer	Sphingolipids [SP]	Neutral glycosphingolipids [SP05]	Simple Glc series [SP0501]	X+6	2X+11-2Y	1	8			GalCer(d18:1/12:0)	C36H69NO8	both	2	0	0	0	1	0	0	0	0	0	0	0
+GalCer	GalCer (2OH)	Sphingolipids [SP]	Neutral glycosphingolipids [SP05]	Simple Glc series [SP0501]	X+6	2X+11-2Y	1	9			GalCer(d14:1(4E)/20:0(2OH))	C40H77NO9	both	2	0	0	0	1	0	0	0	0	1	0	0
+LacCer	LacCer	Sphingolipids [SP]	Neutral glycosphingolipids [SP05]	Simple Glc series [SP0501]	X+12	2X+23-2Y	1	13			LacCer(d18:1/12:0)	C42H79NO13	neg	2	0	0	0	1	0	0	0	0	0	0	0
+MIP2C	M(IP)2C (2OH)	Sphingolipids [SP]	Phosphosphingolipids [SP03]	Ceramide phosphoinositols [SP0303]	X+18	2X+33-Y	1	26		2	M(IP)2C(t18:0/26:0(2OH))	C62H121NO26P2	neg	2	0	0	0	0	1	0	0	0	1	0	0
+MIPC	MIPC (2OH)	Sphingolipids [SP]	Phosphosphingolipids [SP03]	Ceramide phosphoinositols [SP0303]	X+12	2X+22-Y	1	18		1	MIPC(t18:0/26:0(2OH))	C56H110NO18P	neg	2	0	0	0	0	1	0	0	0	1	0	0
+PE_Cer	PE-Cer	Sphingolipids [SP]	Phosphosphingolipids [SP03]	Ceramide phosphoethanolamines [SP0302]	X+2	2X+7-2Y	2	6		1	PE-Cer(d17:1/12:0)	C31H63N2O6P	pos	2	0	0	0	1	0	0	0	0	0	0	0
+PE_Cer	PE-Cer-Lyso	Sphingolipids [SP]	Phosphosphingolipids [SP03]	Ceramide phosphoethanolamines [SP0302]	X+2	2X+9-2Y	2	5		1	PE-Cer(d18:1/0:0)	C20H43N2O5P	pos	1	0	0	0	1	0	0	0	0	0	0	0
+PI_Cer	PI-Cer	Sphingolipids [SP]	Phosphosphingolipids [SP03]	Ceramide phosphoinositols [SP0303]	X+6	2X+12-Y	1	12		1	PI-Cer(t18:0/26:0)	C50H100NO12P	neg	2	0	0	0	0	1	0	0	0	0	0	0
+PI_Cer	PI-Cer-Lyso	Sphingolipids [SP]	Phosphosphingolipids [SP03]	Ceramide phosphoinositols [SP0303]	X+6	2X+3-2Y	1	10		1	PI-Cer(d18:1/0:0)	C24H48NO10P	neg	1	0	0	0	1	0	0	0	0	0	0	0
+SM	SM	Sphingolipids [SP]	Phosphosphingolipids [SP03]	Ceramide phosphocholines (sphingomyelins) [SP0301]	X+5	2X+13-2Y	2	6		1	SM(d18:1/18:0)	C41H83N2O6P	pos	2	0	0	0	1	0	0	0	0	0	0	0
+Cer	LCer	Sphingolipids [SP]	Sphingoid bases [SP01]	"[SP0101],[SP0102],[SP0104]"	X	2X+3-2Y	1	2			Cer(d18:1/0:0)	C18H37NO2	both	1	0	0	0	1	0	0	0	0	0	0	0
+Cholesterol	cholesterol	Sterol Lipids [ST]	Sterols [ST01]	Cholesterol and derivatives [ST0101]	27	46		1			CHOLESTEROL	C27H46O	pos	0	0	0	0	0	0	0	0	0	0	0	0
+CE	cholesterol ester	Sterol Lipids [ST]	Sterols [ST01]	Steryl esters [ST0102]	X+27	2X+44-2Y		2			CE(18:1(9Z))	C45H78O2	pos 	1	0	0	0	0	0	0	0	0	0	0	0

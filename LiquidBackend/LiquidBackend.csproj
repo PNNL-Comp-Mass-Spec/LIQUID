@@ -86,6 +86,7 @@
     <Compile Include="Domain\AcylChain.cs" />
     <Compile Include="Domain\AcylChainType.cs" />
     <Compile Include="Domain\Adduct.cs" />
+    <Compile Include="Domain\LipidRules.cs" />
     <Compile Include="Domain\CompositionFormula.cs" />
     <Compile Include="Domain\FragmentationMode.cs" />
     <Compile Include="Domain\FragmentationType.cs" />
@@ -127,6 +128,12 @@
     <Compile Include="Domain\ConditionForInteger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DefaultCompositionRules.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DefaultFragmentationRules.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DefaultScoringModel.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

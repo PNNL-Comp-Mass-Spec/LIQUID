@@ -44,7 +44,8 @@ namespace LiquidBackend.Util
 
         public static LipidTarget CreateLipidTarget(string commonName, FragmentationMode fragmentationMode, Adduct adduct)
         {
-            var composition = ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName);
+            //var composition = ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName);
+            var composition = ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, LipidRules.LipidCompositionRules);
             var compositionOfAdduct = GetCompositionOfAdduct(adduct);
             var charge = IonCharge(adduct);
 
@@ -145,10 +146,60 @@ namespace LiquidBackend.Util
             var steroMatch = Regex.Match(name, @"\(\d+(E|Z)(\,[^\)]+\)|\))");
             if (steroMatch.Success) name = stereoChem.Replace(name, "");
             name = Regex.Replace(name, @"\[\w\]", "");
-            var matchCollection = Regex.Matches(name, "([mdtOP]-?)?\\d+:\\d+(\\(((\\d+)?(OH|\\(OH\\))|CHO|COOH)\\))?");
+            var matchCollection = Regex.Matches(name, "\\d?-?(([mdtOP]|F2IsoP)-?)?\\d+:\\d+(\\(((\\d+)?(OH|\\(OH\\))|CHO|COOH|OOH|OOHOH)\\))?");
 
             var acylChains = from object match in matchCollection select new AcylChain(match.ToString());
             return acylChains;
+        }
+
+        public static Composition ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(string commonName, List<LipidCompositionRule> lipidCompositionRules)
+        {
+            var lipidClass = ParseLipidCommonNameIntoClass(commonName);
+            var fattyAcylChains = ParseLipidCommonNameIntoAcylChains(commonName).ToList();
+
+            var numCarbons = fattyAcylChains.Sum(x => x.NumCarbons);
+            var numDoubleBonds = fattyAcylChains.Sum(x => x.NumDoubleBonds);
+            var hydroxyCount = fattyAcylChains.Sum(x => x.HydroxyCount);
+
+            var numChains = fattyAcylChains.Count(x => x.NumCarbons > 0);
+            var containsEther = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) == 1;
+            var containsOOH = fattyAcylChains.Count(x => (x.AcylChainType == AcylChainType.OOH || x.AcylChainType == AcylChainType.OOHOH)) == 1;
+            var containsDiether = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) > 1;
+            var containsPlasmogen = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Plasmalogen) > 0;
+            var numOH = hydroxyCount;
+            var isOxoCHO = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.OxoCHO) > 0;
+            var isOxoCOOH = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.OxoCOOH) > 0;
+            var dihydro = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Dihydro) == 1;
+            var trihydro = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Trihydro) == 1;
+            var monohydro = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Monohydro) == 1;
+            var tri = trihydro ? 1 : 0;
+            var mono = monohydro ? 1 : 0;
+
+            // find a rule for this lipid target
+            foreach (var rule in lipidCompositionRules)
+            {
+                if (rule.LipidClass.Equals(lipidClass.ToString().ToUpper()))
+                {
+                    if (rule.NumChains == numChains)
+                    {
+                        if (
+                            rule.ContainsOOH == containsOOH &&
+                            rule.ContainsDiether == containsDiether &&
+                            rule.ContainsEther == containsEther &&
+                            rule.ContainsLCB == dihydro &&
+                            rule.ContainsLCBPlusOH == trihydro &&
+                            rule.ContainsLCBMinusOH == monohydro &&
+                            rule.NumOH == numOH &&
+                            rule.ContainsPlasmalogen == containsPlasmogen &&
+                            rule.IsOxoCHO == isOxoCHO &&
+                            rule.IsOxoCOOH == isOxoCOOH)
+                        {
+                            return rule.GetComposition(numCarbons, numDoubleBonds);
+                        }
+                    }
+                }
+            }
+            throw new SystemException("No empirical formula calculator found for " + commonName);
         }
 
         public static Composition ParseLipidCommonNameIntoCompositionWithoutAdduct(string commonName)
@@ -1808,6 +1859,120 @@ namespace LiquidBackend.Util
         public static List<MsMsSearchUnit> CreateMsMsSearchUnitsFromFragmentationRules(
             string commonName,
             double precursorMz,
+            LipidClass lipidClass,
+            FragmentationMode fragmentationMode,
+            List<AcylChain> acylChainList,
+            List<LipidFragmentationRule> AllLipidFragmentationRules)
+        {
+            var lipidFragmentationRules = GetFragmentationRulesForLipidClass(lipidClass.ToString(), fragmentationMode, AllLipidFragmentationRules);
+            var msMsSearchUnitList = new List<MsMsSearchUnit>();
+
+            var countOfChains = acylChainList.Count(x => x.NumCarbons > 0);
+            var countOfStandardAcylsChains = acylChainList.Count(x => x.AcylChainType == AcylChainType.Standard && x.NumCarbons > 0);
+            var containsHydroxy = acylChainList.Count(x => x.AcylChainType == AcylChainType.Hydroxy) > 0 ? 1 : 0;
+
+            //var carbons = (from chain in acylChainList select chain.NumCarbons).Sum();
+            //var doubleBonds = (from chain in acylChainList select chain.NumDoubleBonds).Sum();
+            //var acylChains = new AcylChain(string.Format("{0}:{1}", carbons, doubleBonds));
+
+            var sialic = commonName.Split('(')[0][1];
+            var sugar = commonName.Split('(')[0][0];
+
+            foreach (var rule in lipidFragmentationRules)
+            {
+                if (rule.isFromHeader && rule.checkCountOfChains(countOfChains))
+                {
+                    msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz));
+                }
+                else if (rule.checkCountOfChains(countOfChains) && rule.targetAcylChainsIndices != null && rule.targetAcylChainsIndices.Count > 0)
+                {
+                    var carbons = 0;
+                    var doubleBonds = 0;
+
+                    if (rule.targetAcylChainsIndices.Count == 1)
+                    {
+                        var acylChain = acylChainList[rule.targetAcylChainsIndices[0] - 1];  // _idx should be from 1
+                        msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, acylChain.NumCarbons, acylChain.NumDoubleBonds, acylChain));
+                    }
+                    else
+                    {
+                        foreach (var _idx in rule.targetAcylChainsIndices)
+                        {
+                            var idx = _idx - 1;
+                            if (acylChainList.Count > idx)
+                            {
+                                carbons += acylChainList[idx].NumCarbons;
+                                doubleBonds += acylChainList[idx].NumDoubleBonds;
+                            }
+                        }
+                        var combinedChain = new AcylChain(carbons + ":" + doubleBonds);
+                        msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, carbons, doubleBonds, combinedChain));
+                    }
+                }
+
+                if (rule.useCountOfStandardAcylsChains(countOfStandardAcylsChains))
+                {
+                    var carbons = acylChainList.Where(x => x.AcylChainType == AcylChainType.Standard).Sum(x => x.NumCarbons);
+                    var doubleBonds = acylChainList.Where(x => x.AcylChainType == AcylChainType.Standard).Sum(x => x.NumDoubleBonds);
+                    var combinedChain = new AcylChain(carbons + ":" + doubleBonds);
+                    msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, carbons, doubleBonds, combinedChain));
+                }
+                if (rule.sialic != null && rule.sialic.IndexOf(sialic) >= 0)
+                {
+                    msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz));
+                }
+
+            }
+
+            foreach (var acylChain in acylChainList)
+            {
+                var numCarbons = acylChain.NumCarbons;
+                var numDoubleBonds = acylChain.NumDoubleBonds;
+
+                // Ignore any 0:0 chains
+                if (numCarbons == 0 && numDoubleBonds == 0) continue;
+
+                foreach (var rule in lipidFragmentationRules)
+                {
+                    if (rule.checkAcylChainConditions(acylChain.AcylChainType.ToString(),
+                                                      numCarbons,
+                                                      numDoubleBonds,
+                                                      acylChain.HydroxyPosition,
+                                                      countOfChains,
+                                                      containsHydroxy,
+                                                      sialic))
+                    {
+                        msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, numCarbons, numDoubleBonds, acylChain));
+                    }
+                }
+            }
+
+            return msMsSearchUnitList;
+        }
+
+        public static List<LipidFragmentationRule> GetFragmentationRulesForLipidClass(
+            string lipidClass,
+            FragmentationMode fragmentationMode,
+            List<LipidFragmentationRule> lipidFragmentationRules)
+        {
+            var lipidFragmentationRulesList = new List<LipidFragmentationRule>();
+
+            foreach (var rule in lipidFragmentationRules)
+            {
+                if (rule.fragmentationMode.Equals(fragmentationMode) &&
+                    rule.lpidClass.Equals(lipidClass))
+                {
+                    lipidFragmentationRulesList.Add(rule);
+                }
+            }
+
+            return lipidFragmentationRulesList;
+        }
+
+        /**
+        public static List<MsMsSearchUnit> CreateMsMsSearchUnitsFromFragmentationRules(
+            string commonName,
+            double precursorMz,
             string lipidSubClass,
             FragmentationMode fragmentationMode,
             List<AcylChain> acylChainList,
@@ -1832,6 +1997,7 @@ namespace LiquidBackend.Util
             }
             return msMsSearchUnitList;
         }
+        **/
 
         public static List<LipidFragmentationRuleFromTable> GetFragmentationRulesForLipidSubClass(
             string lipidSubClass,

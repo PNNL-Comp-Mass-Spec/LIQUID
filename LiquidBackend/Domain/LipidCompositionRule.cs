@@ -24,17 +24,19 @@ namespace LiquidBackend.Domain
 		public string Formula { get; set; }
 		public string IonizationMode { get; set; }
 		public int NumChains { get; set; }
-		public int ContainsEther { get; set; }
-		public int ContainsDiether { get; set; }
-		public int ContainsPlasmalogen { get; set; }
-		public int ContainsLCB { get; set; }
-		public int ContainsLCBOH { get; set; }
-		public int ContainsOH { get; set; }
-		public int ContainsDeoxy { get; set; }
-		public bool IsOxoCHO { get; set; }
+		public bool ContainsEther { get; set; }
+		public bool ContainsDiether { get; set; }
+		public bool ContainsPlasmalogen { get; set; }
+		public bool ContainsLCB { get; set; }
+        public bool ContainsLCBPlusOH { get; set; }
+        public bool ContainsLCBMinusOH { get; set; }
+        public bool IsOxoCHO { get; set; }
 		public bool IsOxoCOOH { get; set; }
+        public int NumOH { get; set; }
+        public bool ContainsOOH { get; set; }
+        public bool ContainsF2IsoP { get; set; }
 
-		public override string ToString()
+        public override string ToString()
 		{
 			StringBuilder compRule = new StringBuilder();
 			compRule.Append(LipidClass + "\t");

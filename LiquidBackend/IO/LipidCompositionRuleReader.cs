@@ -28,12 +28,14 @@ namespace LiquidBackend.IO
 		private const string CONTAINS_DIETHER = "CONTAINSDIETHER";
 		private const string CONTAINS_PLASMALOGEN = "CONTAINSPLASMALOGEN";
 		private const string CONTAINS_LCB = "CONTAINSLCB";
-		private const string CONTAINS_LCBOH = "CONTAINSLCB+OH";
-		private const string CONTAINS_OH = "CONTAINSOH";
-		private const string CONTAINS_DEOXY = "CONTAINSDEOXY";
-		private const string IS_OXO_CHO = "ISOXOCHO";
-		private const string IS_OXO_COOH = "ISOXOCOOH";
-
+        private const string CONTAINS_LCB_PLUS_OH = "CONTAINSLCB+OH";
+        private const string CONTAINS_LCB_MINUS_OH = "CONTAINSLCB-OH";
+        private const string IS_OXO_CHO = "ISOXOCHO";
+        private const string IS_OXO_COOH = "ISOXOCOOH";
+        private const string NUM_OH = "NUMOH";
+        private const string CONTAINS_OOH = "CONTAINSOOH";
+        private const string CONTAINS_F2ISOP = "CONTAINSF2ISOP";
+        
 		protected override Dictionary<string, int> CreateColumnMapping(string columnString)
 		{
 			var columnMap = new Dictionary<string, int>();
@@ -102,14 +104,11 @@ namespace LiquidBackend.IO
 					case CONTAINS_LCB:
 						columnMap.Add(CONTAINS_LCB, i);
 						break;
-					case CONTAINS_LCBOH:
-						columnMap.Add(CONTAINS_LCBOH, i);
+					case CONTAINS_LCB_PLUS_OH:
+						columnMap.Add(CONTAINS_LCB_PLUS_OH, i);
 						break;
-					case CONTAINS_OH:
-						columnMap.Add(CONTAINS_OH, i);
-						break;
-					case CONTAINS_DEOXY:
-						columnMap.Add(CONTAINS_DEOXY, i);
+					case CONTAINS_LCB_MINUS_OH:
+						columnMap.Add(CONTAINS_LCB_MINUS_OH, i);
 						break;
 					case IS_OXO_CHO:
 						columnMap.Add(IS_OXO_CHO, i);
@@ -117,7 +116,16 @@ namespace LiquidBackend.IO
 					case IS_OXO_COOH:
 						columnMap.Add(IS_OXO_COOH, i);
 						break;
-				}
+                    case NUM_OH:
+                        columnMap.Add(NUM_OH, i);
+                        break;
+                    case CONTAINS_OOH:
+                        columnMap.Add(CONTAINS_OOH, i);
+                        break;
+                    case CONTAINS_F2ISOP:
+                        columnMap.Add(CONTAINS_F2ISOP, i);
+                        break;
+                }
 			}
 
 			return columnMap;
@@ -154,44 +162,38 @@ namespace LiquidBackend.IO
 			{
 				int containsEther = 0;
 				int.TryParse(columns[columnMapping[CONTAINS_ETHER]], out containsEther);
-				lipid.ContainsEther = containsEther;
+				lipid.ContainsEther = (containsEther == 1);
 			}
 			if (columnMapping.ContainsKey(CONTAINS_DIETHER))
 			{
 				int containsDiether = 0;
 				int.TryParse(columns[columnMapping[CONTAINS_DIETHER]], out containsDiether);
-				lipid.ContainsDiether = containsDiether;
-			}
+				lipid.ContainsDiether = (containsDiether == 1);
+            }
 			if (columnMapping.ContainsKey(CONTAINS_PLASMALOGEN))
 			{
 				int containsPlasmalogen = 0;
 				int.TryParse(columns[columnMapping[CONTAINS_PLASMALOGEN]], out containsPlasmalogen);
-				lipid.ContainsPlasmalogen = containsPlasmalogen;
-			}
+				lipid.ContainsPlasmalogen = (containsPlasmalogen == 1);
+            }
 			if (columnMapping.ContainsKey(CONTAINS_LCB))
 			{
 				int containsLcb = 0;
 				int.TryParse(columns[columnMapping[CONTAINS_LCB]], out containsLcb);
-				lipid.ContainsLCB = containsLcb;
-			}
-			if (columnMapping.ContainsKey(CONTAINS_LCBOH))
-			{
-				int containsLcbOh = 0;
-				int.TryParse(columns[columnMapping[CONTAINS_LCBOH]], out containsLcbOh);
-				lipid.ContainsLCBOH = containsLcbOh;
-			}
-			if (columnMapping.ContainsKey(CONTAINS_OH))
-			{
-				int containsOh = 0;
-				int.TryParse(columns[columnMapping[CONTAINS_OH]], out containsOh);
-				lipid.ContainsOH = containsOh;
-			}
-			if (columnMapping.ContainsKey(CONTAINS_DEOXY))
-			{
-				int containsDeoxy = 0;
-				int.TryParse(columns[columnMapping[CONTAINS_DEOXY]], out containsDeoxy);
-				lipid.ContainsDeoxy = containsDeoxy;
-			}
+				lipid.ContainsLCB = (containsLcb == 1);
+            }
+            if (columnMapping.ContainsKey(CONTAINS_LCB_PLUS_OH))
+            {
+                int containsLcbPlusOh = 0;
+                int.TryParse(columns[columnMapping[CONTAINS_LCB_PLUS_OH]], out containsLcbPlusOh);
+                lipid.ContainsLCBPlusOH = (containsLcbPlusOh == 1);
+            }
+            if (columnMapping.ContainsKey(CONTAINS_LCB_MINUS_OH))
+            {
+                int containsLcbMinusOh = 0;
+                int.TryParse(columns[columnMapping[CONTAINS_LCB_MINUS_OH]], out containsLcbMinusOh);
+                lipid.ContainsLCBMinusOH = (containsLcbMinusOh == 1);
+            }
 			if (columnMapping.ContainsKey(IS_OXO_CHO))
 			{
 				int isOxoCho = 0;
@@ -204,8 +206,26 @@ namespace LiquidBackend.IO
 				int.TryParse(columns[columnMapping[IS_OXO_COOH]], out isOxoCooh);
 				lipid.IsOxoCOOH = isOxoCooh == 1 ? true : false;
 			}
+            if (columnMapping.ContainsKey(NUM_OH))
+            {
+                int numOH = 0;
+                int.TryParse(columns[columnMapping[NUM_OH]], out numOH);
+                lipid.NumOH = numOH;
+            }
+            if (columnMapping.ContainsKey(CONTAINS_OOH))
+            {
+                int containsOOH = 0;
+                int.TryParse(columns[columnMapping[CONTAINS_OOH]], out containsOOH);
+                lipid.ContainsOOH = (containsOOH == 1);
+            }
+            if (columnMapping.ContainsKey(CONTAINS_F2ISOP))
+            {
+                int containsF2IsoP = 0;
+                int.TryParse(columns[columnMapping[CONTAINS_F2ISOP]], out containsF2IsoP);
+                lipid.ContainsF2IsoP = (containsF2IsoP == 1);
+            }
 
-			return lipid;
+            return lipid;
 		}
 	}
 }
