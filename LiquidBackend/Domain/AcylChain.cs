@@ -133,9 +133,13 @@ namespace LiquidBackend.Domain
             if (AcylChainType == AcylChainType.Dihydro) return "d" + carbonDoubleBond;
             if (AcylChainType == AcylChainType.Trihydro) return "t" + carbonDoubleBond;
             if (AcylChainType == AcylChainType.F2IsoP) return "F2IsoP" + carbonDoubleBond;
-            if (AcylChainType == AcylChainType.OOH) return "Ox" + carbonDoubleBond;
-            if (AcylChainType == AcylChainType.OOHOH) return "Ox" + carbonDoubleBond;
-            if (AcylChainType == AcylChainType.Hydroxy) return carbonDoubleBond + string.Format("({0}OH)",HydroxyPosition);
+            if (AcylChainType == AcylChainType.OOH) return carbonDoubleBond + "(OOH)";
+            if (AcylChainType == AcylChainType.OOHOH) return carbonDoubleBond + "(OOHOH)";
+            if (AcylChainType == AcylChainType.Hydroxy)
+            {
+                if (HydroxyPosition < 0) return carbonDoubleBond + "(OH)";
+                else return carbonDoubleBond + string.Format("({0}OH)", HydroxyPosition);
+            }
 
             throw new SystemException("Unknown AcylChainType for given AcylChain");
         }
