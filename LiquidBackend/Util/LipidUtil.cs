@@ -146,7 +146,7 @@ namespace LiquidBackend.Util
             var steroMatch = Regex.Match(name, @"\(\d+(E|Z)(\,[^\)]+\)|\))");
             if (steroMatch.Success) name = stereoChem.Replace(name, "");
             name = Regex.Replace(name, @"\[\w\]", "");
-            var matchCollection = Regex.Matches(name, "\\d?-?(([mdtOP]|F2IsoP)-?)?\\d+:\\d+(\\(((\\d+)?(OH|\\(OH\\))|CHO|COOH|OOH|OOHOH)\\))?");
+            var matchCollection = Regex.Matches(name, @"\d?-?(([mdtOP]|F2IsoP)-?)?\d+:\d+(\(((\d+)?(OH|\(OH\))|((\d+(Me|OH)\,?)+)|CHO|COOH|OOH|OOHOH)\))?");
 
             var acylChains = from object match in matchCollection select new AcylChain(match.ToString());
             return acylChains;

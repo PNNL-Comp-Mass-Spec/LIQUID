@@ -218,6 +218,19 @@ namespace LiquidTest
         }
 
         [Test]
+        public void TestGetCompositionRule()
+        {
+            LipidRules.LoadLipidRules(@"C:\Users\leej324\source\repos\liquid\LiquidBackend\DefaultCompositionRules.txt", @"C:\Users\leej324\source\repos\liquid\LiquidBackend\DefaultFragmentationRules.txt");
+            Console.WriteLine("Get Composition Rule");
+
+            //var commonName = "DAT1(16:0/22:0(2Me[S],4Me[S]))";
+            var commonName = "DAT2(18:0/23:0(2Me[S],3OH[S],4Me[S],6Me[S]))";
+
+            string empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, LipidRules.LipidCompositionRules).ToPlainString();
+            Console.WriteLine(commonName + "\t" + empiricalFormula);
+        }
+
+        [Test]
 		public void TestGetCompositionRuleForAllLipids()
 		{
 			Console.WriteLine("COMPOSITION RULES FOR ALL LIPIDS");

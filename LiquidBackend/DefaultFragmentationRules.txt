@@ -648,10 +648,6 @@ Negative	PS		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)
 Negative	PS		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
 Negative	PS		0	0	2				Ether				X+6	2X-2Y+13	1	8	1	0	LPS(O-	
 Negative	PS		0	0	2				Ether				X+6	2X-2Y+11	1	7	1	0	LPS(O- - H2O	
-Negative	PS		0	1					Hydroxy				18	31	0	3	0	0	HODE	
-Negative	PS		0	0					Hydroxy				18	29	0	2	0	0	HODE	
-Negative	PS		0	0					Hydroxy			9	9	15	0	3	0	0	9-HODE	
-Negative	PS		0	0					Hydroxy			13	12	19	0	2	0	0	13-HODE	
 Negative	Cer		1	0									1	2	0	1	0	0	M-CH2O	
 Negative	Cer		1	0									1	4	0	1	0	0	M-CH3OH	
 Negative	Cer		1	0									0	2	0	1	0	0	M-H2O	
@@ -770,3 +766,208 @@ Negative	SQDG		1	0					Standard				X	2X-2Y-2	0	1	0	0	M-Ketene
 Negative	SQDG		1	0					Standard				X	2X-2Y	0	2	0	0	M-FA	
 Negative	SQDG		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
 Negative	SQDG		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	MycolipanolicAcid		1	0									2	5	0	2	0	0	C2H5O2	
+Negative	MycolipenicAcid		1	0									1	2	0	2	0	0	CH2O2	
+Negative	HydroxyphthioceranicAcid		1	0									0	2	0	1	0	0	H2O	
+Negative	HydroxyphthioceranicAcid		1	0									0	4	0	2	0	0	2H2O	
+Negative	HydroxyphthioceranicAcid		1	0									1	2	0	2	0	0	H2-CO2	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X	2X-3+2Y	0	3	0	0	branched	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X-1	2X-3+2Y	0	2	0	0	branched - CO2	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X-1	2X-5+2Y	0	2	0	0	branched - H2-CO2	
+Negative	HydroxyphthioceranicAcid		0	0			1		Standard				X	2X	0	1	0	0	branched + hydroxy	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X	2X-1	0	1	0	0	unbranched	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X	2X-1	0	1	0	0	unbranched + methyl	
+Negative	LPIM1		0	0									12	20	0	13	1	0	PIM1	
+Negative	LPIM1		1	0									6	10	0	5	0	0	sugar (C6H10O5)	
+Negative	LPIM1		1	0									6	12	0	6	0	0	sugar+ H2O  (C6H12O6)	
+Negative	LPIM1		1	0									12	22	0	11	0	0	2sugar	
+Negative	LPIM1		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	LPIM1		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	LPIM1		0	0					Standard				X	2X-1-2Y	0	2	0	0	FA	
+Negative	LPIM1		0	0									6	10	0	8	1	0	C6H10O8P	
+Negative	LPIM1		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	LPIM1		0	0									9	18	0	11	1	0	C9H18O11P	
+Negative	LPIM1		0	0									9	16	0	10	1	0	C9H16O10P	
+Negative	LPIM1		0	0									6	8	0	7	1	0	IP-2H2O-H	
+Negative	PIM1		0	0									6	10	0	8	1	0	C6H10O8P	
+Negative	PIM1		0	0									12	20	0	13	1	0	PIM1	
+Negative	PIM1		0	0									12	22	0	14	1	0	PIM1+H2O	
+Negative	PIM1		1	0									6	10	0	5	0	0	sugar (C6H10O5)	
+Negative	PIM1		1	0									6	12	0	6	0	0	sugar (C6H12O6 )	
+Negative	PIM1		1	0					Standard				X	2X-2Y	0	4	0	0	loss of 2 fatty acids	
+Negative	PIM1		1	0					Standard				X	2X-2-2Y	0	4	0	0	loss of 2 fatty acids +H2O	
+Negative	PIM1		0	0					Standard				x	2X-1-2Y	0	2	0	0	FA 	
+Negative	PIM1		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Negative	PIM1		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Negative	PIM1		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PIM1		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	Ac1PIM1		1	0									6	10	0	5	0	0	sugar (C6H10O5)	
+Negative	Ac1PIM1		1	0									6	12	0	6	0	0	sugar (C6H12O6 )	
+Negative	Ac1PIM1		1	0									12	22	0	11	0	0	2sugar	
+Negative	Ac1PIM1		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	Ac1PIM1		0	0					Standard				X	2X-1-2Y	0	2	0	0	FA	
+Negative	Ac1PIM1		0	0					Standard				X+18	2X+30-2Y	0	20	1	0	head group	
+Negative	Ac1PIM1		0	0					Standard				X+18	2X+28-2Y	0	19	1	0	head group - H2O	
+Negative	Ac1PIM1		0	0					Standard				X+21	2X+34-2Y	0	21	1	0	head group + glycerol	
+Negative	Ac1PIM1		0	0					Standard				X+21	2X+32-2Y	0	20	1	0	head group + glycerol - H2O	
+Negative	Ac1PIM1		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Negative	Ac1PIM1		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Negative	Ac1PIM1		0	0					Standard				X+3	2X+4-2Y	0	6	1	0	FA+PO4	
+Negative	Ac1PIM2		1	0									6	10	0	5	0	0	sugar (C6H10O5)	
+Negative	Ac1PIM2		1	0									6	12	0	6	0	0	sugar (C6H12O6 )	
+Negative	Ac1PIM2		1	0									12	22	0	11	0	0	2sugar	
+Negative	Ac1PIM2		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	Ac1PIM2		0	0					Standard				X	2X-1-2Y	0	2	0	0	FA	
+Negative	Ac1PIM2		0	0					Standard				X+18	2X+28-2Y	0	19	1	0	head group - H2O	
+Negative	Ac1PIM2		0	0					Standard				X+21	2X+34-2Y	0	21	1	0	head group + glycerol	
+Negative	Ac1PIM2		0	0					Standard				X+21	2X+32-2Y	0	20	1	0	head group + glycerol - H2O	
+Negative	Ac1PIM2		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Negative	Ac1PIM2		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Negative	Ac1PIM2		0	0					Standard				X+3	2X+4-2Y	0	6	1	0	FA+PO4	
+Negative	Ac2PIM2		1	0									6	10	0	5	0	0	sugar (C6H10O5)	
+Negative	Ac2PIM2		1	0									6	12	0	6	0	0	sugar (C6H12O6 )	
+Negative	Ac2PIM2		1	0									12	22	0	11	0	0	2sugar	
+Negative	Ac2PIM2		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	Ac2PIM2		0	0	4								X+18	2X+26-2Y	0	20	1	0	head group + PO3	1,2
+Negative	Ac2PIM2		0	0	4								X+21	2X+30-2Y	0	21	1	0	head group + C3H4O	1,2
+Negative	Ac2PIM2		0	0					Standard				X	2X-1-2Y	0	2	0	0	FA	
+Negative	Ac2PIM2		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Negative	Ac2PIM2		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Negative	Ac2PIM2		0	0					Standard				X+3	2X+4-2Y	0	6	1	0	FA+PO4	
+Negative	PIM2		0	0									12	20	0	13	1	0	PIM1	
+Negative	PIM2		0	0									18	30	0	18	1	0	PIM2	
+Negative	PIM2		1	0									6	10	0	5	0	0	sugar (C6H10O5)	
+Negative	PIM2		1	0									6	12	0	6	0	0	sugar (C6H12O6 )	
+Negative	PIM2		1	0					Standard				X	2X-2Y	0	4	0	0	loss of 2 fatty acids	
+Negative	PIM2		1	0					Standard				X	2X-2-2Y	0	4	0	0	loss of 2 fatty acids +H2O	
+Negative	PIM2		0	0					Standard				x	2X-1-2Y	0	2	0	0	FA 	
+Negative	PIM2		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Negative	PIM2		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Negative	PIM2		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PIM2		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	LPIM2		0	0									18	30	0	18	1	0	PIM2	
+Negative	LPIM2		1	0									6	10	0	5	0	0	sugar (C6H10O5)	
+Negative	LPIM2		1	0									6	12	0	6	0	0	sugar (C6H12O6 )	
+Negative	LPIM2		1	0									12	22	0	11	0	0	2sugar	
+Negative	LPIM2		0	0					Standard				X+3	2(X+3)-2Y	0	7	1	0	LPA-H	
+Negative	LPIM2		0	0					Standard				X+3	2(X+3)-2-2Y	0	6	1	0	LPA-H2O-H	
+Negative	LPIM2		0	0					Standard				X	2X-1-2Y	0	2	0	0	FA	
+Negative	LPIM2		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Negative	LPIM2		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Negative	LPIM2		0	0									6	10	0	8	1	0	C6H10O8P	
+Negative	LPIM2		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	LPIM2		0	0									9	18	0	11	1	0	C9H18O11P	
+Negative	LPIM2		0	0									9	16	0	10	1	0	C9H16O10P	
+Negative	LPIM2		0	0									6	8	0	7	1	0	IP-2H2O-H	
+Negative	PIM3		0	0									18	30	0	18	1	0	PIM2	
+Negative	PIM3		1	0									6	10	0	5	0	0	sugar (C6H10O5)	
+Negative	PIM3		1	0									6	12	0	6	0	0	sugar (C6H12O6 )	
+Negative	PIM3		1	0									12	22		11			2 sugars	
+Negative	PIM3		1	0					Standard				X	2X-2Y	0	4	0	0	loss of 2 fatty acids	
+Negative	PIM3		1	0					Standard				X	2X-2-2Y	0	4	0	0	loss of 2 fatty acids +H2O	
+Negative	PIM3		0	0					Standard				x	2X-1-2Y	0	2	0	0	FA 	
+Negative	PIM3		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Negative	PIM3		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Negative	PIM3		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PIM3		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PIM3		1	0					Standard				24	24	0	24	1	0	loss of DAG	
+Negative	PIM3		1	0					Standard				24	23	0	21	1	0	loss of DAG + PO4	
+Negative	PIM4		0	0									18	30	0	18	1	0	PIM2	
+Negative	PIM4		1	0									6	10	0	5	0	0	sugar (C6H10O5)	
+Negative	PIM4		1	0									6	12	0	6	0	0	sugar (C6H12O6 )	
+Negative	PIM4		1	0									12	22	0	11	0	0	2 sugars	
+Negative	PIM4		1	0									18	33	0	16	0	0	3 sugars	
+Negative	PIM4		1	0									X	2X-2Y	0	4	0	0	loss of 2 fatty acids	
+Negative	PIM4		1	0					Standard				X	2X-2-2Y	0	4	0	0	loss of 2 fatty acids +H2O	
+Negative	PIM4		0	0					Standard				x	2X-1-2Y	0	2	0	0	FA 	
+Negative	PIM4		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Negative	PIM4		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Negative	PIM4		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PIM4		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PIM4		1	0									24	24	0	24	1	0	loss of DAG	
+Negative	PIM4		1	0									24	23	0	21	1	0	loss of DAG + PO4	
+Negative	MPM		0	0									6	10	0	8	1	0	C6H10O8P	
+Negative	MPM		0	0					Standard				X	2X+2-2Y	0	4	1	0	phosphomyoketide (no sugar)	
+Negative	MPM		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	MPM		0	0					Standard				X+2	2X+4-2Y	0	5	1	0	phosphomyoketide + C2H4O	
+Negative	MPM		1	0									0	2	0	1	0	0	H2O	
+Positive	MK		0	0									12	11	0	2	0	0	menadione	
+Positive	MK		1	0					Standard				X-3	2X-18-2Y	0		0	0	5-carbon side chain	
+Positive	MK S881		0	0									12	11	0	2	0	0	menadione	
+Positive	MK S881		1	0									0	1	0	4	0	1	HO4S	
+Positive	DAT1		1	0									6	15	1	6	0	0	sugar + NH3	
+Positive	DAT1		1	0									6	17	1	7	0	0	sugar + NH3 + H2O	
+Positive	DAT1		0	0					Standard				X	2x-1-2Y	0	1	0	0	FA + 2Me	
+Positive	DAT1		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Positive	DAT1		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Positive	DAT1		1	0					Standard				X+6	2X+15-2Y	1	8	0	0	sugar + NH3 + H2O + FA	
+Positive	DAT1		1	0										3	1				M-NH3	
+Positive	DAT2		1	0									6	15	1	6	0	0	sugar + NH3	
+Positive	DAT2		1	0									6	17	1	7	0	0	sugar + NH3 + H2O	
+Positive	DAT2		0	0			1						X	2x-1-2Y	0	2	0	0	FA + 2Me +OH	
+Positive	DAT2		0	0			1						X	2x-1-2Y	0	3	0	0	FA + 2Me +OH	
+Positive	DAT2		1	0					Standard				X	2X-2-2Y	0	1	0	0	M-ketene	
+Positive	DAT2		1	0					Standard				X	2X-2Y	0	2	0	0	M-fatty acid	
+Positive	DAT2		1	0					Standard				X+6	2X+15-2Y	1	8	0	0	sugar + NH3 + H2O + FA	
+Positive	DAT2		1	0										3	1				M-NH3	
+Positive	GMMaMA		1	0									6	10		5			sugar	
+Positive	GMMaMA		1	0									6	12		6			sugar+ H2O	
+Positive	GMMaMA		0	0					Standard				X	2X-3-2Y		3			alpha mycolic acid	
+Positive	GMMaMA		0	0					Standard				X	2X-5-2Y		2			alpha mycolic acid - H2O	
+Positive	GMMaMA		0	0					Standard				X	2X-7-2Y		1			alpha mycolic acid - 2H2O	
+Positive	GMMaMA													3	1				M-NH3	
+Positive	GMMmMA		1	0									6	10		5			sugar	
+Positive	GMMmMA		1	0									6	12		6			sugar+ H2O	
+Positive	GMMmMA		0	0					Standard				X	2X-1-2Y		4			methoxy mycolic acid	
+Positive	GMMmMA		0	0					Standard				X	2X-3-2Y		3			methoxy mycolic acid - H2O	
+Positive	GMMmMA		0	0					Standard				X	2X-5-2Y		2			methoxy mycolic acid - 2H2O	
+Positive	GMMmMA		1	0										3	1				M-NH3	
+Positive	GMMkMA		1	0									6	10		5			sugar	
+Positive	GMMkMA		1	0									6	12		6			sugar+ H2O	
+Positive	GMMkMA		0	0					Standard				X	2X-3-2Y		4			keto mycolic acid	
+Positive	GMMkMA		0	0					Standard				X	2X-5-2Y		3			keto mycolic acid - H2O	
+Positive	GMMkMA		0	0					Standard				X	2X-7-2Y		2			keto mycolic acid - 2H2O	
+Positive	GMMkMA		1	0										3	1				M-NH3	
+Positive	TMMaMA		1	0									6	10		5			sugar 	
+Positive	TMMaMA		0	0					Standard				X	2X-3-2Y		3			alpha mycolic acid	
+Positive	TMMaMA		0	0					Standard				X	2X-5-2Y		2			alpha mycolic acid - H2O	
+Positive	TMMaMA		0	0					Standard				X	2X-7-2Y		1			alpha mycolic acid - 2H2O	
+Positive	TMMaMA		0	0									12	21		11			2sugar	
+Positive	TMMaMA		0	0									12	17		10			2sugar-H2O	
+Positive	TMMaMA		1	0									12	22		11			2sugar	
+Positive	TMMaMA		0	0					Standard				X+6	2X+5-2Y		7			alpha mycolic acid + sugar	
+Positive	TMMaMA		0	0					Standard				X+6	2X+3-2Y		6			alpha mycolic acid + sugar + H2O	
+Positive	TMMaMA		0	0										3	1				M-NH3	
+Positive	TMMmMA		1	0									6	10		5			sugar	
+Positive	TMMmMA		1	0									6	12		6			sugar+ H2O	
+Positive	TMMmMA		0	0					Standard				X	2X-1-2Y		4			methoxy mycolic acid	
+Positive	TMMmMA		0	0					Standard				X	2X-3-2Y		3			methoxy mycolic acid - H2O	
+Positive	TMMmMA		0	0					Standard				X	2X-5-2Y		2			methoxy mycolic acid - 2H2O	
+Positive	TMMmMA		0	0									12	21		11			2sugar	
+Positive	TMMmMA		0	0									12	17		10			2sugar-H2O	
+Positive	TMMmMA		1	0									12	22		11			2sugar	
+Positive	TMMmMA		0	0					Standard				X+6	2X+7-2Y		8			methoxy mycolic acid + sugar	
+Positive	TMMmMA		0	0					Standard				X+6	2X+5-2Y		7			methoxy mycolic acid + sugar + H2O	
+Positive	TMMmMA		0	0										3	1				M-NH3	
+Positive	TMMkMA		1	0									6	10		5			sugar	
+Positive	TMMkMA		1	0									6	12		6			sugar+ H2O	
+Positive	TMMkMA		0	0					Standard				X	2X-3-2Y		4			keto mycolic acid	
+Positive	TMMkMA		0	0					Standard				X	2X-5-2Y		3			keto mycolic acid - H2O	
+Positive	TMMkMA		0	0					Standard				X	2X-7-2Y		2			keto mycolic acid - 2H2O	
+Positive	TMMkMA		0	0									12	21		11			2sugar	
+Positive	TMMkMA		0	0									12	17		10			2sugar-H2O	
+Positive	TMMkMA		1	0									12	22		11			2sugar	
+Positive	TMMkMA		0	0					Standard				X+6	2X+5-2Y		8			keto mycolic acid + sugar	
+Positive	TMMkMA		0	0					Standard				X+6	2X+3-2Y		7			keto mycolic acid + sugar + H2O	
+Positive	TMMkMA		0	0										3	1				M-NH3	
+Negative	HydroxyphthioceranicAcid		1	0										2		1			H2O	
+Negative	HydroxyphthioceranicAcid		1	0										4		2			2H2O	
+Negative	HydroxyphthioceranicAcid		1	0									1	2		2			H2-CO2	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X	2X-3+2Y		3			branched	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X-1	2X-3+2Y		2			branched - CO2	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X-1	2X-5+2Y		2			branched - H2-CO2	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X	2X		1			branched + hydroxy	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X	2X-1		1			unbranched	
+Negative	HydroxyphthioceranicAcid		0	0					Standard				X	2X-1		1			unbranched + methyl	
+Negative	MycolipanolicAcid		1	0									2	4		2			C2H4O2	
+Negative	MycolipenicAcid		1	0									1	2		2			CH2O2	
