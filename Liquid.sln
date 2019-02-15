@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liquid", "Liquid\Liquid.csproj", "{2A5C6782-CA51-4008-992F-6AB299DB8CAE}"
 EndProject
@@ -12,37 +12,26 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Debug|x64.ActiveCfg = Debug|x64
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Debug|x64.Build.0 = Debug|x64
-		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Debug|x86.ActiveCfg = Debug|x86
-		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Debug|x86.Build.0 = Debug|x86
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Release|x64.ActiveCfg = Release|x64
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Release|x64.Build.0 = Release|x64
-		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Release|x86.ActiveCfg = Release|x86
-		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Release|x86.Build.0 = Release|x86
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Debug|x64.ActiveCfg = Debug|x64
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Debug|x64.Build.0 = Debug|x64
-		{2B7130B1-63BF-4348-B959-F01623F16844}.Debug|x86.ActiveCfg = Debug|x86
-		{2B7130B1-63BF-4348-B959-F01623F16844}.Debug|x86.Build.0 = Debug|x86
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Release|x64.ActiveCfg = Release|x64
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Release|x64.Build.0 = Release|x64
-		{2B7130B1-63BF-4348-B959-F01623F16844}.Release|x86.ActiveCfg = Release|x86
-		{2B7130B1-63BF-4348-B959-F01623F16844}.Release|x86.Build.0 = Release|x86
 		{54581833-2409-45DF-B80B-D0148260B096}.Debug|x64.ActiveCfg = Debug|x64
 		{54581833-2409-45DF-B80B-D0148260B096}.Debug|x64.Build.0 = Debug|x64
-		{54581833-2409-45DF-B80B-D0148260B096}.Debug|x86.ActiveCfg = Debug|x86
-		{54581833-2409-45DF-B80B-D0148260B096}.Debug|x86.Build.0 = Debug|x86
 		{54581833-2409-45DF-B80B-D0148260B096}.Release|x64.ActiveCfg = Release|x64
 		{54581833-2409-45DF-B80B-D0148260B096}.Release|x64.Build.0 = Release|x64
-		{54581833-2409-45DF-B80B-D0148260B096}.Release|x86.ActiveCfg = Release|x86
-		{54581833-2409-45DF-B80B-D0148260B096}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EDAF4B44-E91B-4ADC-8774-B3FB26551FF3}
 	EndGlobalSection
 EndGlobal
