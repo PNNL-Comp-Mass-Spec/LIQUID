@@ -1,0 +1,772 @@
+fragmentationMode	lipidClass	additional_element	neutral_loss	diagnostic	countOfChains	countOfStandardAcylsChains	containsHydroxy	sialic	acylChain.AcylChainType	acylChain.NumCarbons	acylChain.NumDoubleBonds	acylChain.HydroxyPosition	C	H	N	O	P	S	desc	target_acylChains
+Positive	PC		0	1									5	15	1	4	1	0	C5H15O4NP	
+Positive	PC		0	0									5	13	1	3	1	0	C5H15O4NP-H2O	
+Positive	PC		1	0									5	15	1	4	1	0	M-C5H15O4NP	
+Positive	PC		1	0									5	14	1	4	1	0	M-C5H14O4NP	
+Positive	PC		1	0									3	9	1	0	0	0	M-(CH2)3NH3	
+Positive	PC		0	0									5	14	1	1	0	0	C5H14ON	
+Positive	PC		0	0									2	6	0	4	1	0	C2H6O4P	
+Positive	PC		1	0									0	2	0	1	0	0	M-H2O	
+Positive	PC		0	0									8	19	1	5	1	0	C8H19O5NP	
+Positive	PC		0	0									8	21	1	6	1	0	C8H21O6NP	
+Positive	PC		0	0									5	12	1	0	0	0	C5H12N	
+Positive	PC	Na	0	0									2	5	0	4	1	0	C2H5O4P+Na	
+Positive	PC	K	0	0									2	5	0	4	1	0	C2H5O4P+K	
+Positive	PC		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	PC		0	0					Standard				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	PC		0	0					Standard				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	PC		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Positive	PC		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Positive	PC		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Positive	PC		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Positive	PC		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Positive	PC		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Positive	PC		0	0	2				Plasmalogen				X+5	2X-2Y+13	1	4	1	0	plasmalogen (rearranged)	
+Positive	PC		0	0	2				Plasmalogen				X+5	2X-2Y+11	1	3	1	0	plasmalogen (rearranged)-H2O	
+Positive	PC		0	0	2				Plasmalogen				X+8	2X-2Y+18	1	6	1	0	LPC(P-)	
+Positive	PC		0	0	2				Plasmalogen				X+8	2X-2Y+16	1	5	1	0	LPC(P-)-H2O	
+Positive	PC		1	0	2				Plasmalogen				X	2X-2Y	0	1	0	0	M-Ether	
+Positive	PC		1	0	2				Plasmalogen				X+3	2X-2Y+9	1	1	0	0	M-Ether-C3H9N	
+Positive	PC		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Positive	PC		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Positive	PC		0	0					Ether				X+3	2X-2Y+7	0	2	0	0	[RCO+58]	
+Positive	PC		0	0					Ether				X+3	2X-2Y+5	0	1	0	0	[RCO+58]-H2O	
+Positive	PC		0	0	2				Ether				X+8	2X-2Y+21	1	6	1	0	LPC(O-)	
+Positive	PC		0	0	2				Ether				X+8	2X-2Y+19	1	5	1	0	LPC(O-)-H2O	
+Positive	PC		0	0	2				Ether				X+3	2X-2Y+7	0	1	0	0	[RCO+58]-O	
+Positive	PC		0	0	2				Ether				X	2X-2Y+1	0	1	0	0	[RCO]-2H	
+Positive	PC		0	0	2				Ether				X	2X-2Y+1	0	0	0	0	[RCO-H2O]	
+Positive	PC		0	0	2				Ether				X+5	2X-2Y+12	0	6	1	0	loss of ketene-59	
+Positive	PC		0	0	2				Ether				X+5	2X-2Y+10	0	5	1	0	loss of ether chain-59	
+Positive	PC		1	0					OxoCHO				5	14	1	4	1	0	M-C5H14O4NP	
+Positive	PC		1	0					OxoCHO				3	9	1	0	0	0	M-(CH2)3NH3	
+Positive	PC		0	0					OxoCHO				X+8	2X-2Y+15	1	7	1	0	loss of oxidized FA	
+Positive	PC		1	0					OxoCOOH				5	14	1	4	1	0	M-C5H14O4NP	
+Positive	PC		1	0					OxoCOOH				3	9	1	0	0	0	M-(CH2)3NH3	
+Positive	PC		0	0					OxoCOOH				X+8	2X-2Y+15	1	8	1	0	loss of oxidized FA	
+Positive	PC		0	0		2							X+3	2X-2Y+3	0	4	0	0	DAG	
+Positive	PE		1	1	>1								2	8	1	4	1	0	M-C2H8NO4P / DAG	
+Positive	PE		1	1	1								2	8	1	4	1	0	M-C2H8NO4P	
+Positive	PE		1	0									0	2	0	1	0	0	M-H2O	
+Positive	PE_NMe		1	1									3	10	1	4	1	0	C3H10O4NP	
+Positive	PE_NMe		1	0									3	11	1	4	1	0	C3H10O4NP	
+Positive	PE_NMe2		1	1									4	12	1	4	1	0	C3H10O4NP	
+Positive	PE_NMe2		1	0									4	13	1	4	1	0	C3H10O4NP	
+Positive	PE		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	PE_NMe		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	PE_NMe2		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	PE		0	0					Standard				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	PE_NMe		0	0					Standard				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	PE_NMe2		0	0					Standard				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	PE		0	0					Standard				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	PE_NMe		0	0					Standard				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	PE_NMe2		0	0					Standard				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	PE		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Positive	PE_NMe		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Positive	PE_NMe2		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Positive	PE		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Positive	PE_NMe		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Positive	PE_NMe2		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Positive	PE		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Positive	PE_NMe		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Positive	PE_NMe2		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Positive	PE		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Positive	PE_NMe		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Positive	PE_NMe2		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Positive	PE		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Positive	PE_NMe		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Positive	PE_NMe2		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Positive	PE		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Positive	PE_NMe		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Positive	PE_NMe2		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Positive	PE		0	0	2				Plasmalogen				X+2	2X-2Y+7	1	4	1	0	plasmalogen (rearranged)	
+Positive	PE_NMe		0	0	2				Plasmalogen				X+2	2X-2Y+7	1	4	1	0	plasmalogen (rearranged)	
+Positive	PE_NMe2		0	0	2				Plasmalogen				X+2	2X-2Y+7	1	4	1	0	plasmalogen (rearranged)	
+Positive	PE		0	0	2				Plasmalogen				X+2	2X-2Y+5	1	3	1	0	plasmalogen (rearranged)-H2O	
+Positive	PE_NMe		0	0	2				Plasmalogen				X+2	2X-2Y+5	1	3	1	0	plasmalogen (rearranged)-H2O	
+Positive	PE_NMe2		0	0	2				Plasmalogen				X+2	2X-2Y+5	1	3	1	0	plasmalogen (rearranged)-H2O	
+Positive	PE		0	0	2				Plasmalogen				X+5	2X-2Y+9	1	6	1	0	LPE(P-)	
+Positive	PE_NMe		0	0	2				Plasmalogen				X+5	2X-2Y+9	1	6	1	0	LPE(P-)	
+Positive	PE_NMe2		0	0	2				Plasmalogen				X+5	2X-2Y+9	1	6	1	0	LPE(P-)	
+Positive	PE		0	0	2				Plasmalogen				X+5	2X-2Y+7	1	5	1	0	LPE(P-)-H2O	
+Positive	PE_NMe		0	0	2				Plasmalogen				X+5	2X-2Y+7	1	5	1	0	LPE(P-)-H2O	
+Positive	PE_NMe2		0	0	2				Plasmalogen				X+5	2X-2Y+7	1	5	1	0	LPE(P-)-H2O	
+Positive	PE		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Positive	PE_NMe		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Positive	PE_NMe2		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Positive	PE		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Positive	PE_NMe		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Positive	PE_NMe2		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Positive	PE		0	0	2				Ether				X+2	2X-2Y+9	1	4	1	0	ether	
+Positive	PE_NMe		0	0	2				Ether				X+2	2X-2Y+9	1	4	1	0	ether	
+Positive	PE_NMe2		0	0	2				Ether				X+2	2X-2Y+9	1	4	1	0	ether	
+Positive	PE		0	0	2				Ether				X+2	2X-2Y+7	1	3	1	0	ether-H2O	
+Positive	PE_NMe		0	0	2				Ether				X+2	2X-2Y+7	1	3	1	0	ether-H2O	
+Positive	PE_NMe2		0	0	2				Ether				X+2	2X-2Y+7	1	3	1	0	ether-H2O	
+Positive	PS		1	1	>1								3	8	1	6	1	0	M-C3H8NO6P / DAG	
+Positive	PS		1	1	1								3	8	1	6	1	0	M-C3H8NO6P	
+Positive	PS		1	0									0	2	0	1	0	0	M-H2O	
+Positive	PS		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	PS		0	0					Standard				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	PS		0	0					Standard				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	PS		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Positive	PS		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Positive	PS		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Positive	PS		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Positive	PS		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Positive	PS		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Positive	PS		0	0	2				Plasmalogen				X+3	2X-2Y+6	1	6	1	0	plasmalogen (rearranged)	
+Positive	PS		0	0	2				Plasmalogen				X+3	2X-2Y+4	1	5	1	0	plasmalogen (rearranged)-H2O	
+Positive	PS		0	0	2				Plasmalogen				X+6	2X-2Y+9	1	8	1	0	LPS(P-)	
+Positive	PS		0	0	2				Plasmalogen				X+6	2X-2Y+7	1	7	1	0	LPS(P-)-H2O	
+Positive	PS		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Positive	PS		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Positive	PS		0	0	2				Ether				X+6	2X-2Y+13	1	8	1	0	ether	
+Positive	PS		0	0	2				Ether				X+6	2X-2Y+11	1	7	1	0	ether-H2O	
+Positive	PG		1	1									3	12	1	6	1	0	M-C3H12O6NP	
+Positive	PG		1	0									0	4	1	0	0	0	M+NH4	
+Positive	PG		1	0									0	2	0	1	0	0	M-H2O	
+Positive	PG		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	PG		0	0					Standard				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	PG		0	0					Standard				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	PG		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPG-H	
+Positive	PG		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPG-H2O-H	
+Positive	PG		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Positive	PG		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Positive	PG		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Positive	PG		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Positive	PG		0	0	2				Plasmalogen				X+3	2X-2Y+6	1	6	1	0	plasmalogen (rearranged)	
+Positive	PG		0	0	2				Plasmalogen				X+3	2X-2Y+4	1	5	1	0	plasmalogen (rearranged)-H2O	
+Positive	PG		0	0	2				Plasmalogen				X+6	2X-2Y+9	1	8	1	0	LPG(P-)	
+Positive	PG		0	0	2				Plasmalogen				X+6	2X-2Y+7	1	7	1	0	LPG(P-)-H2O	
+Positive	PG		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Positive	PG		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Positive	PG		0	0	2				Ether				X+2	2X-2Y+9	1	4	1	0	ether	
+Positive	PG		0	0	2				Ether				X+2	2X-2Y+7	1	3	1	0	ether-H2O	
+Positive	PG		0	0		2							X+3	2X-2Y+3	0	4	0	0	DAG	
+Positive	GlcCer		1	0									6	10	0	5	0	0	M-sugar	
+Positive	GalCer		1	0									6	10	0	5	0	0	M-sugar	
+Positive	LacCer		1	0									6	10	0	5	0	0	M-sugar	
+Positive	GlcCer		1	0									6	12	0	6	0	0	M-sugar-H2O	
+Positive	GalCer		1	0									6	12	0	6	0	0	M-sugar-H2O	
+Positive	LacCer		1	0									6	12	0	6	0	0	M-sugar-H2O	
+Positive	LacCer		1	0									12	22	0	11	0	0	M-2(sugar)	
+Positive	CerP		1	0									0	3	0	4	1	0	M-H3PO4	
+Positive	CerP		1	0									0	5	0	5	1	0	M-H3PO4-H2O	
+Positive	CerP		1	0									0	1	0	3	1	0	M-HPO3	
+Positive	SM		0	1									5	15	1	4	1	0	C5H15O4NP	
+Positive	SM		1	0									3	9	1	0	0	0	M-(CH2)3NH3	
+Positive	SM		0	0									5	14	1	1	0	0	C5H14ON	
+Positive	SM		0	0									2	6	0	4	1	0	C2H6O4P	
+Positive	PE_Cer		1	0									2	7	1	1	0	0	M-C2H7NO	
+Positive	PE_Cer		1	1									2	8	1	4	1	0	M-C2H8NO4P	
+Positive	PE_Cer		1	0									2	10	1	5	1	0	M-(C2H8NO4P + H2O)	
+Positive	PI_Cer		0	0									6	10	0	8	1	0	C6H10O8P	
+Positive	Cer		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	CerH2O		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	Cer2H2O		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	GlcCer		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	GalCer		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	LacCer		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	CerP		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	SM		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	PE_Cer		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	PI_Cer		1	0	>1								0	2	0	1	0	0	M-H2O	
+Positive	Cer		1	0	>1								0	4	0	2	0	0	M-2(H2O)	
+Positive	GlcCer		1	0	>1								0	4	0	2	0	0	M-2(H2O)	
+Positive	GalCer		1	0	>1								0	4	0	2	0	0	M-2(H2O)	
+Positive	LacCer		1	0	>1								0	4	0	2	0	0	M-2(H2O)	
+Positive	CerP		1	0	>1								0	4	0	2	0	0	M-2(H2O)	
+Positive	SM		1	0	>1								0	4	0	2	0	0	M-2(H2O)	
+Positive	PE_Cer		1	0	>1								0	4	0	2	0	0	M-2(H2O)	
+Positive	PI_Cer		1	0	>1								0	4	0	2	0	0	M-2(H2O)	
+Positive	PE_Cer		1	0	1								0	2	0	1	0	0	M-H2O	
+Positive	PI_Cer		1	0	1								0	2	0	1	0	0	M-H2O	
+Positive	PE_Cer		1	0	1								0	4	0	2	0	0	M-2(H2O)	
+Positive	PI_Cer		1	0	1								0	4	0	2	0	0	M-2(H2O)	
+Positive	Cer		1	0	1				Monohydro				0	2	0	1	0	0	M-H2O	
+Positive	CerH2O		1	0	1				Monohydro				0	2	0	1	0	0	M-H2O	
+Positive	Cer2H2O		1	0	1				Monohydro				0	2	0	1	0	0	M-H2O	
+Positive	GlcCer		1	0	1				Monohydro				0	2	0	1	0	0	M-H2O	
+Positive	GalCer		1	0	1				Monohydro				0	2	0	1	0	0	M-H2O	
+Positive	LacCer		1	0	1				Monohydro				0	2	0	1	0	0	M-H2O	
+Positive	CerP		1	0	1				Monohydro				0	2	0	1	0	0	M-H2O	
+Positive	SM		1	0	1				Monohydro				0	2	0	1	0	0	M-H2O	
+Positive	Cer		1	0	1				Monohydro				0	4	0	2	0	0	M-2(H2O)	
+Positive	GlcCer		1	0	1				Monohydro				0	4	0	2	0	0	M-2(H2O)	
+Positive	GalCer		1	0	1				Monohydro				0	4	0	2	0	0	M-2(H2O)	
+Positive	LacCer		1	0	1				Monohydro				0	4	0	2	0	0	M-2(H2O)	
+Positive	CerP		1	0	1				Monohydro				0	4	0	2	0	0	M-2(H2O)	
+Positive	SM		1	0	1				Monohydro				0	4	0	2	0	0	M-2(H2O)	
+Positive	Cer		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	CerH2O		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	Cer2H2O		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	GlcCer		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	GalCer		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	LacCer		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	CerP		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	SM		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	PE_Cer		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	PI_Cer		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	Cer		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	CerH2O		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	Cer2H2O		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	GlcCer		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	GalCer		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	LacCer		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	CerP		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	SM		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	PE_Cer		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	PI_Cer		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA long	
+Positive	Cer		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	CerH2O		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	Cer2H2O		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	GlcCer		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	GalCer		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	LacCer		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	CerP		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	SM		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	PE_Cer		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	PI_Cer		0	0					Standard				X	2X-2Y+2	1	1	0	0	FA short	
+Positive	Cer		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	CerH2O		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	Cer2H2O		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	GlcCer		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	GalCer		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	LacCer		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	CerP		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	SM		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	PE_Cer		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	PI_Cer		0	1					Monohydro				X	2X-2Y+2	1	0	0	0	LCB	
+Positive	Cer		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	CerH2O		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	Cer2H2O		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	GlcCer		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	GalCer		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	LacCer		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	CerP		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	SM		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	PE_Cer		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	PI_Cer		0	0					Monohydro				X	2X-2Y+4	1	1	0	0	LCB+H2O	
+Positive	SM		0	0					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	Cer		0	1					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	CerH2O		0	1					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	Cer2H2O		0	1					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	GlcCer		0	1					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	GalCer		0	1					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	LacCer		0	1					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	CerP		0	1					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	PE_Cer		0	1					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	PI_Cer		0	1					Dihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	Cer		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	CerH2O		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	Cer2H2O		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	GlcCer		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	GalCer		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	LacCer		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	CerP		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	SM		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	PE_Cer		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	PI_Cer		0	0					Dihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	Cer		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	CerH2O		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	Cer2H2O		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	GlcCer		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	GalCer		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	LacCer		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	CerP		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	SM		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	PE_Cer		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	PI_Cer		0	0					Dihydro				X-1	2X-2Y	1	0	0	0	LCB-CH2	
+Positive	Cer		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	CerH2O		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	Cer2H2O		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	GlcCer		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	GalCer		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	LacCer		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	CerP		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	SM		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	PE_Cer		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	PI_Cer		0	0					Hydroxy				X	2X-2Y-1	0	2	0	0	FA+OH	
+Positive	Cer		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	CerH2O		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	Cer2H2O		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	GlcCer		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	GalCer		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	LacCer		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	CerP		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	SM		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	PE_Cer		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	PI_Cer		0	0					Hydroxy				X	2X-2Y-2	1	1	0	0	FA+NH2	
+Positive	Cer		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	CerH2O		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	Cer2H2O		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	GlcCer		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	GalCer		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	LacCer		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	CerP		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	SM		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	PE_Cer		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	PI_Cer		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA long	
+Positive	Cer		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	CerH2O		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	Cer2H2O		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	GlcCer		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	GalCer		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	LacCer		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	CerP		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	SM		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	PE_Cer		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	PI_Cer		0	0					Hydroxy				X	2X-2Y+2	1	2	0	0	FA short	
+Positive	Cer		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	CerH2O		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	Cer2H2O		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	GlcCer		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	GalCer		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	LacCer		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	CerP		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	SM		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	PE_Cer		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	PI_Cer		0	0					Trihydro				X	2X-2Y	1	0	0	0	LCB	
+Positive	Cer		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	CerH2O		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	Cer2H2O		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	GlcCer		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	GalCer		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	LacCer		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	CerP		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	SM		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	PE_Cer		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	PI_Cer		0	0					Trihydro				X	2X-2Y+2	1	1	0	0	LCB+H2O	
+Positive	Cer		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	CerH2O		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	Cer2H2O		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	GlcCer		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	GalCer		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	LacCer		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	CerP		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	SM		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	PE_Cer		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	PI_Cer		0	0					Trihydro				X	2X-2Y+4	1	2	0	0	LCB+2(H2O)	
+Positive	SM		0	0	2								X	2X-2Y	1	2	0	0	both chains	1,2
+Positive	SM		0	0	2								X	2X-2Y-2	1	1	0	0	both chains - H2O	1,2
+Positive	GlcCer		0	0	2								X	2X-2Y-2	1	1	0	0	both chains - H2O	1,2
+Positive	GalCer		0	0	2								X	2X-2Y-2	1	1	0	0	both chains - H2O	1,2
+Positive	LacCer		0	0	2								X	2X-2Y-2	1	1	0	0	both chains - H2O	1,2
+Positive	CerP		0	0	2								X	2X-2Y-2	1	1	0	0	both chains - H2O	1,2
+Positive	PE_Cer		0	0	2								X	2X-2Y-2	1	1	0	0	both chains - H2O	1,2
+Positive	PI_Cer		0	0	2								X	2X-2Y-2	1	1	0	0	both chains - H2O	1,2
+Positive	PE_Cer		0	0	1								18	39	1	5	1	0	S-1-P (C18H39NO5P)	
+Positive	PI_Cer		0	0	1								18	39	1	5	1	0	S-1-P (C18H39NO5P)	
+Positive	PE_Cer		0	0	1								18	37	1	4	1	0	S-1-P (-H2O)	
+Positive	PI_Cer		0	0	1								18	37	1	4	1	0	S-1-P (-H2O)	
+Positive	PE_Cer		0	0	1								X	2X-2Y-3	0	0	0	0	LCB-NH3	1
+Positive	PI_Cer		0	0	1								X	2X-2Y-3	0	0	0	0	LCB-NH3	1
+Positive	PE_Cer		0	0	1								2	9	1	4	1	0	C2H9NO4P	
+Positive	Cer		1	0	1				Monohydro				0	0	0	0	0	0	M+H	
+Positive	CerH2O		1	0	1				Monohydro				0	0	0	0	0	0	M+H	
+Positive	Cer2H2O		1	0	1				Monohydro				0	0	0	0	0	0	M+H	
+Positive	GlcCer		1	0	1				Monohydro				0	0	0	0	0	0	M+H	
+Positive	GalCer		1	0	1				Monohydro				0	0	0	0	0	0	M+H	
+Positive	LacCer		1	0	1				Monohydro				0	0	0	0	0	0	M+H	
+Positive	CerP		1	0	1				Monohydro				0	0	0	0	0	0	M+H	
+Positive	SM		1	0	1				Monohydro				0	0	0	0	0	0	M+H	
+Positive	Cer		1	0	1								0	0	0	0	0	0	M+H	
+Positive	CerH2O		1	0	1								0	0	0	0	0	0	M+H	
+Positive	Cer2H2O		1	0	1								0	0	0	0	0	0	M+H	
+Positive	GlcCer		1	0	1								0	0	0	0	0	0	M+H	
+Positive	GalCer		1	0	1								0	0	0	0	0	0	M+H	
+Positive	LacCer		1	0	1								0	0	0	0	0	0	M+H	
+Positive	CerP		1	0	1								0	0	0	0	0	0	M+H	
+Positive	SM		1	0	1								0	0	0	0	0	0	M+H	
+Positive	Cer		1	0	1								2	6	0	2	0	0	M-H2O-H2CO-CH2	
+Positive	CerH2O		1	0	1								2	6	0	2	0	0	M-H2O-H2CO-CH2	
+Positive	Cer2H2O		1	0	1								2	6	0	2	0	0	M-H2O-H2CO-CH2	
+Positive	GlcCer		1	0	1								2	6	0	2	0	0	M-H2O-H2CO-CH2	
+Positive	GalCer		1	0	1								2	6	0	2	0	0	M-H2O-H2CO-CH2	
+Positive	LacCer		1	0	1								2	6	0	2	0	0	M-H2O-H2CO-CH2	
+Positive	CerP		1	0	1								2	6	0	2	0	0	M-H2O-H2CO-CH2	
+Positive	SM		1	0	1								2	6	0	2	0	0	M-H2O-H2CO-CH2	
+Positive	Cer		1	0	1								1	4	0	1	0	0	M-H2O-CH2	
+Positive	CerH2O		1	0	1								1	4	0	1	0	0	M-H2O-CH2	
+Positive	Cer2H2O		1	0	1								1	4	0	1	0	0	M-H2O-CH2	
+Positive	GlcCer		1	0	1								1	4	0	1	0	0	M-H2O-CH2	
+Positive	GalCer		1	0	1								1	4	0	1	0	0	M-H2O-CH2	
+Positive	LacCer		1	0	1								1	4	0	1	0	0	M-H2O-CH2	
+Positive	CerP		1	0	1								1	4	0	1	0	0	M-H2O-CH2	
+Positive	SM		1	0	1								1	4	0	1	0	0	M-H2O-CH2	
+Positive	Cholesterol		0	1									27	45	0	0	0	0	C27H45	
+Positive	CE		0	1									27	45	0	0	0	0	C27H45	
+Positive	CE		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	WE		1	0									0	2	0	1	0	0	M-H2O	
+Positive	WE		0	0									X	2X-2Y+1	0	2	0	0	FA+H2O / Fatty alcohol	2
+Positive	WE		0	0									X	2X-2Y-1	0	1	0	0	FA	2
+Positive	Ubiquinone		0	0									10	13	0	4	0	0	C10H13O4	
+Positive	MG		1	0									0	3	1	0	0	0	M-NH3	
+Positive	DG		1	0									0	3	1	0	0	0	M-NH3	
+Positive	TG		1	0									0	3	1	0	0	0	M-NH3	
+Positive	MG		1	0									0	5	1	1	0	0	M-NH3-H2O	
+Positive	DG		1	0									0	5	1	1	0	0	M-NH3-H2O	
+Positive	TG		1	0									0	5	1	1	0	0	M-NH3-H2O	
+Positive	MG		0	0					All				X	2X-2Y-1	0	1	0	0	FA	
+Positive	DG		0	0					All				X	2X-2Y-1	0	1	0	0	FA	
+Positive	TG		0	0					All				X	2X-2Y-1	0	1	0	0	FA	
+Positive	MG		0	0					All				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	DG		0	0					All				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	TG		0	0					All				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	DG		1	0					All				X	2X-2Y+3	1	2	0	0	M-RCOOH-NH3	
+Positive	MG		0	0					All				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	TG		0	0					All				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	MG		1	0					All				X	2X-2Y+3	1	2	0	0	M-RCOOH-NH3	
+Positive	TG		1	0					All				X	2X-2Y+3	1	2	0	0	M-RCOOH-NH3	
+Positive	MGDG		1	1									6	11	0	6	0	0	M-C6H11O6	
+Positive	MGDG		1	0									6	13	0	7	0	0	M-C6H13O7 / DAG	
+Positive	SQDG		1	1									6	15	1	8	0	1	M-C6H11O8SNH4 / DAG	
+Positive	SQDG		1	0									6	11	0	8	0	1	M-C6H11O8S	
+Positive	DGDG		1	1									12	21	0	11	0	0	M-C12H21O11	
+Positive	DGDG		1	0									12	25	1	11	0	0	M-C12H21O11NH4 / DAG	
+Positive	DGDG		1	0									6	10	0	5	0	0	M-sugar	
+Positive	DGDG		1	0									6	12	0	6	0	0	M-sugar-H2O	
+Positive	MGDG		0	0					All				X	2X-2Y-1	0	1	0	0	FA	
+Positive	SQDG		0	0					All				X	2X-2Y-1	0	1	0	0	FA	
+Positive	DGDG		0	0					All				X	2X-2Y-1	0	1	0	0	FA	
+Positive	MGDG		0	0					All				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	SQDG		0	0					All				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	DGDG		0	0					All				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	MGDG		0	0					All				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	SQDG		0	0					All				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	DGDG		0	0					All				X+3	2X-2Y+3	0	2	0	0	[RCOO+58]-H2O	
+Positive	DGTSA		0	0									7	14	1	2	0	0	C7H14O2N	
+Positive	DGTSA		0	0									7	14	1	3	0	0	C7H16O3N	
+Positive	DGTSA		0	0									10	18	1	3	0	0	C10H18O3N	
+Positive	DGTSA		0	1									10	22	1	5	0	0	C10H22O5N	
+Positive	DGTSA		0	0					All				X	2X-2Y-1	0	1	0	0	FA	
+Positive	DGTSA		0	0					All				X+3	2X-2Y+5	0	3	0	0	[RCOO+58]	
+Positive	DGTSA		1	0					All				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Positive	DGTSA		1	0					All				X	2X-2Y	0	2	0	0	M-FA	
+Positive	DGTSA		1	0					All				X+1	2X-2Y	0	4	0	0	M-FA-CO2	
+Positive	DGTSA		1	0					All				X+5	2X-2Y+13	1	2	0	0	M-FA-C5H13N	
+Positive	DGTSA		0	0		2							X+3	2X-2Y+3	0	4	0	0	DAG	
+Positive	anandamide		1	0									0	1	0	1	0	0	M-OH	
+Positive	anandamide		1	0									0	2	0	1	0	0	M-H2O	
+Positive	anandamide		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	anandamide		0	0					Standard				X	2X-2Y-3	0	0	0	0	FA-H2O	
+Positive	carnitine		0	1									4	5	0	2	0	0	C4H5O2	
+Positive	carnitine		1	0									3	9	1	0	0	0	M-C3H9N	
+Positive	carnitine		0	0					Standard				X	2X-2Y-1	0	1	0	0	FA	
+Positive	FAHFA		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Positive	FAHFA		0	0					Standard				X	2X-2Y+3	1	2	0	0	FA+NH3	
+Positive	FAHFA		0	0					Ether				X	2X-2Y-1	0	2	0	0	FA	
+Positive	FAHFA		0	0					Ether				X	2X-2Y+3	1	2	0	0	FA+NH3	
+Negative	PC		1	1									3	6	0	2	0	0	M-(acetate + methyl)	
+Negative	PC		1	0									7	16	1	5	1	0	M-C7H16O5NP	
+Negative	PC		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PC		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PC		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PC		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Negative	PC		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Negative	PC		0	1					Hydroxy	20	4		20	31	0	3	0	0	HETE	
+Negative	PC		0	0					Hydroxy	20	4		X+7	2X-2Y+15	1	7	1	0	loss of HETE	
+Negative	PC		0	0					Hydroxy	20	4	5	5	7	0	3	0	0	5-HETE	
+Negative	PC		0	0					Hydroxy	20	4	8	8	11	0	3	0	0	8-HETE	
+Negative	PC		0	0					Hydroxy	20	4	9	9	11	0	3	0	0	9-HETE	
+Negative	PC		0	0					Hydroxy	20	4	11	10	15	0	3	0	0	11-HETE	
+Negative	PC		0	0					Hydroxy	20	4	12	11	15	0	3	0	0	12-HETE	
+Negative	PC		0	0					Hydroxy	20	4	15	14	19	0	3	0	0	15-HETE	
+Negative	PE		0	1									5	11	1	5	1	0	C5H11O5NP	
+Negative	PE		0	0									5	13	1	6	1	0	C5H13O6NP	
+Negative	PE		1	0									2	6	1	0	0	0	M-C2H6N	
+Negative	PE		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	PE		1	0									5	12	1	5	1	0	M-C5H12O5NP	
+Negative	PE		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PE		0	0					Standard				X-1	2X-2Y-1	0	0	0	0	FA-CO2	
+Negative	PE		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PE		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PE		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Negative	PE		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Negative	PE		0	0					Plasmalogen				X+3	2X-2Y+10	0	6	1	0	LPA(P-)	
+Negative	PE		0	0					Plasmalogen				X+3	2X-2Y+8	0	5	1	0	LPA(P-)-H2O	
+Negative	PE		0	0	2				Plasmalogen				X+5	2X-2Y+11	1	6	1	0	LPE(P-)	
+Negative	PE		0	0	2				Plasmalogen				X+5	2X-2Y+9	1	5	1	0	LPE(P-)-H2O	
+Negative	PE		0	0					Ether				X+3	2X-2Y+8	1	6	1	0	LPA(O-)	
+Negative	PE		0	0					Ether				X+3	2X-2Y+6	1	5	1	0	LPA(O-)-H2O	
+Negative	PE		0	0	2				Ether				X+5	2X-2Y+13	1	6	1	0	LPE(O-)	
+Negative	PE		0	0	2				Ether				X+5	2X-2Y+11	1	5	1	0	LPE(O-)-H2O	
+Negative	PE		0	1					Hydroxy	20	4		20	31	0	3	0	0	HETE	
+Negative	PE		0	0					Hydroxy	20	4		X+5	2X-2Y+11	1	7	1	0	loss of HETE	
+Negative	PE		0	0					Hydroxy	20	4	5	5	7	0	3	0	0	5-HETE	
+Negative	PE		0	0					Hydroxy	20	4	8	8	11	0	3	0	0	8-HETE	
+Negative	PE		0	0					Hydroxy	20	4	9	9	11	0	3	0	0	9-HETE	
+Negative	PE		0	0					Hydroxy	20	4	11	10	15	0	3	0	0	11-HETE	
+Negative	PE		0	0					Hydroxy	20	4	12	11	15	0	3	0	0	12-HETE	
+Negative	PE		0	0					Hydroxy	20	4	15	14	19	0	3	0	0	15-HETE	
+Negative	PI		0	1									6	10	0	8	1	0	C6H10O8P	
+Negative	PI		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	PI		0	0									9	18	0	11	1	0	C9H18O11P	
+Negative	PI		0	0									9	16	0	10	1	0	C9H16O10P	
+Negative	PI		0	0									6	8	0	7	1	0	IP-2H2O-H	
+Negative	PI		0	0									0	0	0	3	1	0	PO3	
+Negative	PI		1	0	> 1								6	12	0	6	0	0	M-sugar	
+Negative	PI		1	0	> 1								9	17	0	10	1	0	M-C9H17O10P	
+Negative	PI		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PI		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PI		0	0	1				Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H / M-sugar	
+Negative	PI		0	0	> 1				Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PI		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Negative	PI		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Negative	PI		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Negative	PI		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Negative	PI		0	0	2				Plasmalogen				X+9	2X-2Y+16	0	11	1	0	LPI(P-)	
+Negative	PI		0	0	2				Plasmalogen				X+9	2X-2Y+14	0	10	1	0	LPI(P-)-H2O	
+Negative	PI		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Negative	PI		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Negative	PI		0	0	2				Ether				X+9	2X-2Y+18	0	11	1	0	LPI(O-)	
+Negative	PI		0	0	2				Ether				X+9	2X-2Y+16	0	10	1	0	LPI(O-)-H2O	
+Negative	PIP		0	1									6	11	0	11	2	0	C6H11O11P2	
+Negative	PIP2		0	1									6	12	0	14	3	0	C6H12O14P3	
+Negative	PIP3		0	1									6	14	0	17	4	0	C6H14O17P4	
+Negative	PIP		1	0									0	2	0	1	0	0	M-H2O	
+Negative	PIP2		1	0									0	2	0	1	0	0	M-H2O	
+Negative	PIP3		1	0									0	2	0	1	0	0	M-H2O	
+Negative	PIP		1	0									0	4	0	2	0	0	M-2(H2O)	
+Negative	PIP2		1	0									0	4	0	2	0	0	M-2(H2O)	
+Negative	PIP3		1	0									0	4	0	2	0	0	M-2(H2O)	
+Negative	PIP		1	0									0	3	0	4	1	0	M-H3O4P	
+Negative	PIP2		1	0									0	3	0	4	1	0	M-H3O4P	
+Negative	PIP3		1	0									0	3	0	4	1	0	M-H3O4P	
+Negative	PIP		1	0									0	1	0	3	1	0	M-HPO3	
+Negative	PIP2		1	0									0	1	0	3	1	0	M-HPO3	
+Negative	PIP3		1	0									0	1	0	3	1	0	M-HPO3	
+Negative	PIP		0	0									6	13	0	12	2	0	IP2-H	
+Negative	PIP2		0	0									6	13	0	12	2	0	IP2-H	
+Negative	PIP3		0	0									6	13	0	12	2	0	IP2-H	
+Negative	PIP		0	0									6	11	0	11	2	0	IP2-H2O-H	
+Negative	PIP2		0	0									6	11	0	11	2	0	IP2-H2O-H	
+Negative	PIP3		0	0									6	11	0	11	2	0	IP2-H2O-H	
+Negative	PIP		0	0									6	9	0	10	2	0	IP2-2(H2O)-H	
+Negative	PIP2		0	0									6	9	0	10	2	0	IP2-2(H2O)-H	
+Negative	PIP3		0	0									6	9	0	10	2	0	IP2-2(H2O)-H	
+Negative	PIP		0	0									6	10	0	8	1	0	IP-H2O-H	
+Negative	PIP2		0	0									6	10	0	8	1	0	IP-H2O-H	
+Negative	PIP3		0	0									6	10	0	8	1	0	IP-H2O-H	
+Negative	PIP		0	0									6	8	0	7	1	0	IP-2(H2O)-H	
+Negative	PIP2		0	0									6	8	0	7	1	0	IP-2(H2O)-H	
+Negative	PIP3		0	0									6	8	0	7	1	0	IP-2(H2O)-H	
+Negative	PIP		0	0									0	3	0	7	2	0	H3P2O7	
+Negative	PIP2		0	0									0	3	0	7	2	0	H3P2O7	
+Negative	PIP3		0	0									0	3	0	7	2	0	H3P2O7	
+Negative	PIP		0	0									0	1	0	6	2	0	HP2O6	
+Negative	PIP2		0	0									0	1	0	6	2	0	HP2O6	
+Negative	PIP3		0	0									0	1	0	6	2	0	HP2O6	
+Negative	PIP		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	PIP2		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	PIP3		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	PIP2		0	0									6	14	0	15	3	0	IP3-H	
+Negative	PIP3		0	0									6	14	0	15	3	0	IP3-H	
+Negative	PIP2		0	0									6	12	0	14	3	0	IP3-H2O-H	
+Negative	PIP3		0	0									6	12	0	14	3	0	IP3-H2O-H	
+Negative	PIP2		0	0									6	10	0	13	3	0	IP3-2(H2O)-H	
+Negative	PIP3		0	0									6	10	0	13	3	0	IP3-2(H2O)-H	
+Negative	PIP2		0	0									6	6	0	6	1	0	IP-3(H2O)-H	
+Negative	PIP3		0	0									6	6	0	6	1	0	IP-3(H2O)-H	
+Negative	PIP3		0	0									6	16	0	18	4	0	IP4-H	
+Negative	PIP3		0	0									6	14	0	17	4	0	IP4-H2O-H	
+Negative	PIP3		0	0									6	12	0	16	4	0	IP4-2(H2O)-H	
+Negative	PIP		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PIP2		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PIP3		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PIP		0	0					Standard				X-1	2X-2Y-1	0	0	0	0	FA-CO2	
+Negative	PIP2		0	0					Standard				X-1	2X-2Y-1	0	0	0	0	FA-CO2	
+Negative	PIP3		0	0					Standard				X-1	2X-2Y-1	0	0	0	0	FA-CO2	
+Negative	PIP		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PIP2		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PIP3		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PIP		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PIP2		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PIP3		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PIP		0	0					Standard				X+9	2X-2Y+15	0	14	2	0	LPIP-H2O-H	
+Negative	PIP2		0	0					Standard				X+9	2X-2Y+15	0	14	2	0	LPIP-H2O-H	
+Negative	PIP3		0	0					Standard				X+9	2X-2Y+15	0	14	2	0	LPIP-H2O-H	
+Negative	PIP		0	0					Standard				X+9	2X-2Y+13	0	13	2	0	LPIP-2H2O-H	
+Negative	PIP2		0	0					Standard				X+9	2X-2Y+13	0	13	2	0	LPIP-2H2O-H	
+Negative	PIP3		0	0					Standard				X+9	2X-2Y+13	0	13	2	0	LPIP-2H2O-H	
+Negative	PIP		1	0					Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Negative	PIP2		1	0					Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Negative	PIP3		1	0					Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Negative	PIP		1	0					Standard				X	2X-2Y	0	2	0	0	M-FA	
+Negative	PIP2		1	0					Standard				X	2X-2Y	0	2	0	0	M-FA	
+Negative	PIP3		1	0					Standard				X	2X-2Y	0	2	0	0	M-FA	
+Negative	PIP		0	0					Standard				X+9	2X-2Y+17	0	15	2	0	LPI-H	
+Negative	PIP3		0	0					Standard				X+9	2X-2Y+16	0	17	3	0	LPIP2-H2O-H	
+Negative	PIP3		0	0					Standard				X+9	2X-2Y+14	0	16	3	0	LPIP2-2H2O-H	
+Negative	PIP		0	0	2								X+3	2X-2Y+4	0	8	1	0	PA	1,2
+Negative	PIP2		0	0	2								X+3	2X-2Y+4	0	8	1	0	PA	1,2
+Negative	PIP3		0	0	2								X+3	2X-2Y+4	0	8	1	0	PA	1,2
+Negative	PG		0	0									6	10	0	6	1	0	C6H10O6P	
+Negative	PG		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	PG		1	0									3	6	0	2	0	0	M-C3H6O2	
+Negative	PG		0	0									6	12	0	7	1	0	C6H12O7P	
+Negative	PG		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PG		0	0					Standard				X-1	2X-2Y-1	0	0	0	0	FA-CO2	
+Negative	PG		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PG		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PG		1	0	2				Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Negative	PG		1	0	2				Standard				X	2X-2Y	0	2	0	0	M-FA	
+Negative	PG		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Negative	PG		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Negative	PG		0	0	2				Ether				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PG		0	0	2				Ether				X-1	2X-2Y-1	0	0	0	0	FA-CO2	
+Negative	PG		0	0	2				Ether				X+6	2X-2Y+14	0	8	1	0	LPG(O-)	
+Negative	PG		0	0	2				Ether				X+6	2X-2Y+12	0	7	1	0	LPG(O-)-H2O	
+Negative	PG		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Negative	PG		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Negative	PG		0	0	2				Plasmalogen				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PG		0	0	2				Plasmalogen				X-1	2X-2Y-1	0	0	0	0	FA-CO2	
+Negative	PG		0	0	2				Plasmalogen				X+6	2X-2Y+12	0	8	1	0	LPG(P-)	
+Negative	PG		0	0	2				Plasmalogen				X+6	2X-2Y+10	0	7	1	0	LPG(P-)-H2O	
+Negative	PA		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	PA		0	0									0	2	0	4	1	0	PO4H2	
+Negative	PA		0	0									0	0	0	3	1	0	PO3	
+Negative	PA		0	0									3	8	0	6	1	0	C3H8O6P	
+Negative	PA		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PA		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	PA		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PA		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Negative	PA		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Negative	PA		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Negative	PA		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Negative	PS		1	1									3	5	1	2	0	0	M-C3H5O2N	
+Negative	PS		0	0									3	6	0	5	1	0	C3H6O5P	
+Negative	PS		0	0									3	8	0	6	1	0	C3H8O6P	
+Negative	PS		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PS		0	0	1				Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	PS		1	0	2				Standard				X+3	2X-2Y+3	1	3	0	0	M-Ketene	
+Negative	PS		1	0	2				Standard				X+3	2X-2Y+5	1	4	0	0	M-FA	
+Negative	PS		0	0					Plasmalogen				X+3	2X-2Y+6	0	6	1	0	LPA(P-)	
+Negative	PS		0	0					Plasmalogen				X+3	2X-2Y+4	0	5	1	0	LPA(P-)-H2O	
+Negative	PS		0	0					Ether				X+3	2X-2Y+8	0	6	1	0	LPA(O-)	
+Negative	PS		0	0					Ether				X+3	2X-2Y+6	0	5	1	0	LPA(O-)-H2O	
+Negative	PS		0	0	2				Ether				X+6	2X-2Y+13	1	8	1	0	LPS(O-	
+Negative	PS		0	0	2				Ether				X+6	2X-2Y+11	1	7	1	0	LPS(O- - H2O	
+Negative	PS		0	1					Hydroxy				18	31	0	3	0	0	HODE	
+Negative	PS		0	0					Hydroxy				18	29	0	2	0	0	HODE	
+Negative	PS		0	0					Hydroxy			9	9	15	0	3	0	0	9-HODE	
+Negative	PS		0	0					Hydroxy			13	12	19	0	2	0	0	13-HODE	
+Negative	Cer		1	0									1	2	0	1	0	0	M-CH2O	
+Negative	Cer		1	0									1	4	0	1	0	0	M-CH3OH	
+Negative	Cer		1	0									0	2	0	1	0	0	M-H2O	
+Negative	Cer		1	0			1		Dihydro				X-2	2X-2Y-2	0	2	0	0	M-LBC (256)	
+Negative	Cer		0	0			1		Dihydro				X-2	2X-2Y-5	0	1	0	0	LBC (237)	
+Negative	Cer		0	0			1		Dihydro				X	2X-2Y-3	0	1	0	0	LBC (263)	
+Negative	Cer		0	0			1		Dihydro				X-1	2X-2Y	1	1	0	0	LBC+amine	
+Negative	Cer		1	0			1		Dihydro				X-2	2X-2Y-2	0	1	0	0	M-LBC (240)	
+Negative	Cer		0	0			1		Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	Cer		0	0			1		Hydroxy				X	2X-2Y-1	0	3	0	0	FA with OH	
+Negative	Cer		1	0			1		Trihydro				X-2	2X-2Y	0	3	0	0	M-(LBC+H2O) (274)	
+Negative	Cer		1	0			1		Trihydro				X-2	2X-2Y	0	2	0	0	M-(LBC+H2O) (258)	
+Negative	Cer		0	0			1		Trihydro				X-2	2X-2Y-3	0	2	0	0	LBC-(LBC+H2O) (255)	
+Negative	Cer		0	0			1		Trihydro				X	2X-2Y-1	0	2	0	0	LBC-(LBC+H2O) (281)	
+Negative	Cer		0	0			1		Trihydro				X-1	2X-2Y+2	1	2	0	0	LBC+amine+H2O	
+Negative	Cer		1	0			0		Dihydro				X+1	2X-2Y+3	1	3	0	0	M-LBC (327)	
+Negative	Cer		1	0			0		Dihydro				X-2	2X-2Y-2	0	2	0	0	M-LBC (256)	
+Negative	Cer		1	0			0		Dihydro				X-2	2X-2Y-2	0	1	0	0	M-LBC (240)	
+Negative	Cer		0	0			0		Dihydro				X-2	2X-2Y-3	0	1	0	0	LBC (239)	
+Negative	Cer		0	0			0		Dihydro				X-2	2X-2Y-5	0	1	0	0	LBC (237)	
+Negative	Cer		0	0			0		Dihydro				X	2X-2Y-3	0	1	0	0	LBC (263)	
+Negative	Cer		0	0			0		Dihydro				X-1	2X-2Y	1	1	0	0	LBC+amine	
+Negative	Cer		0	0			0		Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	Cer		1	0			0		Trihydro				X+1	2X-2Y+3	1	3	0	0	M-LBC (327)	
+Negative	Cer		1	0			0		Trihydro				X-2	2X-2Y	0	3	0	0	M-(LBC+H2O) (274)	
+Negative	Cer		1	0			0		Trihydro				X-2	2X-2Y	0	2	0	0	M-(LBC+H2O) (258)	
+Negative	Cer		0	0			0		Trihydro				X-2	2X-2Y-1	0	2	0	0	LBC+H2O (257)	
+Negative	Cer		0	0			0		Trihydro				X-2	2X-2Y-3	0	2	0	0	LBC-(LBC+H2O) (255)	
+Negative	Cer		0	0			0		Trihydro				X	2X-2Y-1	0	2	0	0	LBC-(LBC+H2O) (281)	
+Negative	PI_Cer		0	0									6	10	0	8	1	0	C6H10O8P	
+Negative	MIPC		0	0									6	10	0	8	1	0	C6H10O8P	
+Negative	MIP2C		0	0									6	10	0	8	1	0	C6H10O8P	
+Negative	PI_Cer		0	0									6	12	0	9	1	0	IP	
+Negative	MIPC		0	0									6	12	0	9	1	0	IP	
+Negative	MIP2C		0	0									6	12	0	9	1	0	IP	
+Negative	PI_Cer		0	0									6	8	0	7	1	0	IP-2(H2O)-H	
+Negative	MIPC		0	0									6	8	0	7	1	0	IP-2(H2O)-H	
+Negative	MIP2C		0	0									6	8	0	7	1	0	IP-2(H2O)-H	
+Negative	PI_Cer		1	0									6	12	0	5	0	0	CerP	
+Negative	MIPC		1	0									6	12	0	5	0	0	CerP	
+Negative	MIP2C		1	0									6	12	0	5	0	0	CerP	
+Negative	PI_Cer		1	0									6	14	0	6	0	0	Cerp-H2O	
+Negative	MIPC		1	0									6	14	0	6	0	0	Cerp-H2O	
+Negative	MIP2C		1	0									6	14	0	6	0	0	Cerp-H2O	
+Negative	MIPC		0	0									12	22	0	14	1	0	MIP	
+Negative	MIP2C		0	0									12	22	0	14	1	0	MIP	
+Negative	MIPC		0	0									12	20	0	13	1	0	MIP-H2O	
+Negative	MIP2C		0	0									12	20	0	13	1	0	MIP-H2O	
+Negative	MIP2C		1	0									18	33	0	21	2	0	Cer	
+Negative	MIP2C		0	0									18	32	0	19	1	0	MIP(2)-P	
+Negative	MIP2C		0	0									18	32	0	18	2	0	[M(IP)2]2-	
+Negative	MIP2C		0	0									X+18	2X-Y+33	1	26	2	0	[M-2H]2- - M(IP)2C	
+Negative	PI_Cer		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	MIPC		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	MIP2C		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	PI_Cer		0	0					Trihydro				X	2X-Y+1	1	5	1	0	LBCP-H2O	
+Negative	MIPC		0	0					Trihydro				X	2X-Y+1	1	5	1	0	LBCP-H2O	
+Negative	MIP2C		0	0					Trihydro				X	2X-Y+1	1	5	1	0	LBCP-H2O	
+Negative	PI_Cer		0	0					Trihydro				X	2X-Y-1	1	4	1	0	LBCP-2(H2O)	
+Negative	MIPC		0	0					Trihydro				X	2X-Y-1	1	4	1	0	LBCP-2(H2O)	
+Negative	MIP2C		0	0					Trihydro				X	2X-Y-1	1	4	1	0	LBCP-2(H2O)	
+Negative	PI_Cer		0	0					Hydroxy				X	2X-2Y-1	0	3	0	0	FA with OH	
+Negative	MIPC		0	0					Hydroxy				X	2X-2Y-1	0	3	0	0	FA with OH	
+Negative	MIP2C		0	0					Hydroxy				X	2X-2Y-1	0	3	0	0	FA with OH	
+Negative	GlcCer		1	0									6	10	0	5	0	0	M-sugar	
+Negative	GalCer		1	0									6	10	0	5	0	0	M-sugar	
+Negative	GlcCer		1	0									6	12	0	6	0	0	M-sugar-H2O	
+Negative	GalCer		1	0									6	12	0	6	0	0	M-sugar-H2O	
+Negative	GlcCer		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	GalCer		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	GlcCer		0	0					Hydroxy				X	2X-2Y-1	0	3	0	0	FA with OH	
+Negative	GalCer		0	0					Hydroxy				X	2X-2Y-1	0	3	0	0	FA with OH	
+Negative	Ganglioside		0	0	>=1								X	2X-2Y	1	3	0	0	Cer	All
+Negative	Ganglioside		0	0	>=1								X	2X-2Y-2	1	2	0	0	Cer-H2O	All
+Negative	Ganglioside		0	0	>=1								X+6	2X-2Y+10	1	8	0	0	HexCer	All
+Negative	Ganglioside		0	0	>=1								X+12	2X-2Y+20	1	13	0	0	2(Hex)Cer	All
+Negative	Ganglioside		0	0	>=1								X+6	2X-2Y+8	1	7	0	0	HexCer-H2O	All
+Negative	Ganglioside		1	0									2	4	0	2	0	0	M-C2H4O2 (cross ring cleavage)	
+Negative	Ganglioside		0	0									11	16	1	8	0	0	NAc-H	
+Negative	Ganglioside		1	0									11	17	1	8	0	0	M-NAc-H	
+Negative	Ganglioside		1	0									11	16	1	8	0	0	M-NAc-H	
+Negative	Ganglioside		1	0				D,T,Q					22	33	2	16	0	0	M-2NAc-H	
+Negative	Ganglioside		0	0				D,T,Q					22	33	2	16	0	0	2NAc-H	
+Negative	Ganglioside		1	0				T,Q					33	50	3	24	0	0	M-3NAc-H	
+Negative	Ganglioside		1	0				Q					44	67	4	32	0	0	M-4NAc-H	
+Negative	Sulfatide		0	1									0	1	0	4	0	1	HO4S	
+Negative	Sulfatide		0	0									6	11	0	9	0	1	sulfogalactosyl	
+Negative	Sulfatide		0	0									6	9	0	9	0	1	sulfogalactosyl-H2	
+Negative	Sulfatide		0	0									6	9	0	8	0	1	sulfogalactosyl-H20	
+Negative	Sulfatide		0	0									8	14	1	9	0	1	sulfogalactosyl+amine	
+Negative	Sulfatide		0	0					Standard				X+2	2X-2Y+2	1	1	0	0	FA with amide	
+Negative	Sulfatide		0	0					Standard				X+8	2X-2Y+14	1	10	0	1	lysoSulfogalactosyl with FA	
+Negative	Sulfatide		0	0					Dihydro				X+6	2X-2Y+12	1	10	0	1	lysoSulfogalactosyl with LBC	
+Negative	Sulfatide		0	0					Dihydro				X+6	2X-2Y+10	1	9	0	1	lysoSulfogalactosyl with LBC - H20	
+Negative	Sulfatide		0	0					Hydroxy				X+2	2X-2Y+2	1	2	0	0	FA with OH	
+Negative	Sulfatide		0	0					Hydroxy				X+8	2X-2Y+14	1	11	0	1	lysoSulfogalactosyl with OH	
+Negative	CL		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	CL		0	0					Standard				X+3	2X-2Y+5	0	6	1	0	FA+C3H6PO4	
+Negative	CL		0	0					Standard				X+3	2X-2Y+7	0	7	1	0	FA+C3H6PO4+H2O	
+Negative	CL		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	CL		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	
+Negative	CL		1	0					Standard				X	2X-2Y	0	2	0	0	M-FA	
+Negative	CL		0	0	4								X+3	2X-2Y+4	0	8	1	0	PA	1,2
+Negative	CL		0	0	4								X+3	2X-2Y+4	0	8	1	0	PA	3,4
+Negative	CL		0	0	4								X+6	2X-2Y+10	0	10	1	0	PG	1,2
+Negative	CL		0	0	4								X+6	2X-2Y+10	0	10	1	0	PG	3,4
+Negative	CL		0	0	4								X+6	2X-2Y+8	0	9	1	0	PG-H2O	1,2
+Negative	CL		0	0	4								X+6	2X-2Y+8	0	9	1	0	PG-H2O	3,4
+Negative	CL		0	0	4								X+6	2X-2Y+11	0	13	2	0	PG+PO3	1,2
+Negative	CL		0	0	4								X+6	2X-2Y+11	0	13	2	0	PG+PO3	3,4
+Negative	CL		0	0	4								X+6	2X-2Y+11	0	12	2	0	PG+PO2	1,2
+Negative	CL		0	0	4								X+6	2X-2Y+11	0	12	2	0	PG+PO2	3,4
+Negative	SQDG		0	1									6	9	0	7	0	1	C6H9O7S	
+Negative	SQDG		0	0					Standard				X	2X-2Y-1	0	2	0	0	FA	
+Negative	SQDG		1	0					Standard				X	2X-2Y-2	0	1	0	0	M-Ketene	
+Negative	SQDG		1	0					Standard				X	2X-2Y	0	2	0	0	M-FA	
+Negative	SQDG		0	0					Standard				X+3	2X-2Y+6	0	7	1	0	LPA-H	
+Negative	SQDG		0	0					Standard				X+3	2X-2Y+4	0	6	1	0	LPA-H2O-H	

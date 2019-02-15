@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace LiquidBackend.Domain
@@ -8,17 +9,30 @@ namespace LiquidBackend.Domain
         public int NumCarbons { get; }
         public int NumDoubleBonds { get; }
         public int HydroxyPosition { get; }
+        public List<int> MethylPositions { get; }
         public int HydroxyCount { get; }
+        public int MethylCount { get; }
+        public int HydroPeroxideCount { get; }
         public AcylChainType AcylChainType { get; }
 
         public AcylChain(string acylChainString)
         {
             AcylChainType = AcylChainType.Standard;
             HydroxyPosition = -1;
+            MethylPositions = new List<int>();
             HydroxyCount = 0;
+            MethylCount = 0;
             var hydroxyMatch = Regex.Match(acylChainString, @"\((\d+)?(OH|\(OH\))\)");
+            var hydroPeroxideMatch = Regex.Match(acylChainString, @"\((\d+)?(OOH|OOHOH)\)");
+            var methylMatch = Regex.Match(acylChainString, @"\(((\d+(Me|OH)\,?)+)\)");
 
-            if (acylChainString.Contains("m"))
+            if (acylChainString.Contains("F2IsoP-"))
+            {
+                AcylChainType = AcylChainType.F2IsoP;
+                acylChainString = acylChainString.Substring(7);
+                HydroxyCount = 3;
+            }
+            else if(acylChainString.Contains("m"))
             {
                 AcylChainType = AcylChainType.Monohydro;
                 acylChainString = acylChainString.Substring(1);
@@ -45,7 +59,24 @@ namespace LiquidBackend.Domain
                 acylChainString = acylChainString.Substring(2);
             }
 
-            if (hydroxyMatch.Success)
+            if (hydroPeroxideMatch.Success)
+            {
+                
+                if (Regex.IsMatch(hydroPeroxideMatch.Value, @"\(OOH\)"))
+                {
+                    AcylChainType = AcylChainType.OOH;
+                    HydroPeroxideCount = 1;
+                }
+                else if (Regex.IsMatch(hydroPeroxideMatch.Value, @"\(OOHOH\)"))
+                {
+                    AcylChainType = AcylChainType.OOHOH;
+                    HydroxyCount = 1;
+                    HydroPeroxideCount = 1;
+                }
+                var regexp = new Regex(@"\((OOH|OOHOH)\)");
+                acylChainString = regexp.Replace(acylChainString, "");
+            }
+            else if (hydroxyMatch.Success)
             {
                 AcylChainType = AcylChainType.Hydroxy;
                 if (Regex.IsMatch(hydroxyMatch.Value, @"\d+\(OH\)"))
@@ -57,7 +88,7 @@ namespace LiquidBackend.Domain
                     if (successfulParse) HydroxyCount = hydroxyCount;
                     acylChainString = hydroxy.Replace(acylChainString, "");
                 }
-                else
+                else if(Regex.IsMatch(hydroxyMatch.Value, @"\d+OH"))
                 {
                     var hydroxy = new Regex(@"\(\d+OH\)");
                     var x = Regex.Match(hydroxyMatch.Value, @"\d+");
@@ -70,7 +101,37 @@ namespace LiquidBackend.Domain
                     }
                     acylChainString = hydroxy.Replace(acylChainString, "");
                 }
+                else
+                {
+                    var hydroxy = new Regex(@"\(OH\)");
+                    HydroxyCount = 1;
+                    acylChainString = hydroxy.Replace(acylChainString, "");
+                }
+            }
 
+            else if (methylMatch.Success)
+            {
+                string[] methylGroups = methylMatch.Groups[1].Value.Split(',');
+                foreach (var m in methylGroups)
+                {
+                    int pos;
+                    var x = Regex.Match(m, @"\d+");
+                    var successfulParse = Int32.TryParse(x.Value, out pos);
+                    if (successfulParse)
+                    {
+                        if (Regex.IsMatch(m, @"\d+Me"))
+                        {
+                            MethylPositions.Add(pos);
+                            MethylCount += 1;
+                        }
+                        else if (Regex.IsMatch(m, @"\d+OH"))
+                        {
+                            HydroxyPosition = pos;
+                            HydroxyCount += 1;
+                        }
+                    }
+                }
+                acylChainString = acylChainString.Replace(methylMatch.Groups[0].Value, "");
             }
 
             else if (acylChainString.Contains("(CHO)"))
@@ -86,7 +147,7 @@ namespace LiquidBackend.Domain
 
             var splitString = acylChainString.Split(':');
 
-            NumCarbons = int.Parse(splitString[0]);
+            NumCarbons = int.Parse(splitString[0]) + MethylCount;
             NumDoubleBonds = int.Parse(splitString[1]);
         }
 
@@ -94,7 +155,6 @@ namespace LiquidBackend.Domain
         {
             var carbonDoubleBond = NumCarbons + ":" + NumDoubleBonds;
 
-            if (AcylChainType == AcylChainType.Standard) return carbonDoubleBond;
             if (AcylChainType == AcylChainType.Plasmalogen) return "P-" + carbonDoubleBond;
             if (AcylChainType == AcylChainType.Ether) return "O-" + carbonDoubleBond;
             if (AcylChainType == AcylChainType.OxoCHO) return carbonDoubleBond + "(CHO)";
@@ -102,8 +162,29 @@ namespace LiquidBackend.Domain
             if (AcylChainType == AcylChainType.Monohydro) return "m" + carbonDoubleBond;
             if (AcylChainType == AcylChainType.Dihydro) return "d" + carbonDoubleBond;
             if (AcylChainType == AcylChainType.Trihydro) return "t" + carbonDoubleBond;
-            if (AcylChainType == AcylChainType.Hydroxy) return carbonDoubleBond + string.Format("({0}OH)",HydroxyPosition);
-
+            if (AcylChainType == AcylChainType.F2IsoP) return "F2IsoP" + carbonDoubleBond;
+            if (AcylChainType == AcylChainType.OOH) return carbonDoubleBond + "(OOH)";
+            if (AcylChainType == AcylChainType.OOHOH) return carbonDoubleBond + "(OOHOH)";
+            if (AcylChainType == AcylChainType.Hydroxy)
+            {
+                if (HydroxyPosition < 0) return carbonDoubleBond + "(OH)";
+                else return carbonDoubleBond + string.Format("({0}OH)", HydroxyPosition);
+            }
+            if (MethylCount > 0)
+            {
+                string end = "(";
+                foreach (int pos in MethylPositions)
+                {
+                    end += string.Format("{0}Me,", pos);
+                }
+                if (HydroxyPosition > 0)
+                {
+                    end += string.Format("{0}OH,", HydroxyPosition);
+                }
+                end += ")";
+                return carbonDoubleBond + end;
+            }
+            if (AcylChainType == AcylChainType.Standard) return carbonDoubleBond;
             throw new SystemException("Unknown AcylChainType for given AcylChain");
         }
 

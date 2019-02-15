@@ -113,7 +113,8 @@ namespace LiquidBackend.Domain
 
         public List<MsMsSearchUnit> GetMsMsSearchUnits()
         {
-            return LipidUtil.CreateMsMsSearchUnits(CommonName, Composition.Mass/Charge, LipidClass, FragmentationMode, AcylChainList);
+            // return LipidUtil.CreateMsMsSearchUnits(CommonName, Composition.Mass / Charge, LipidClass, FragmentationMode, AcylChainList);
+            return LipidUtil.CreateMsMsSearchUnitsFromFragmentationRules(CommonName, Composition.Mass / Charge, LipidClass, FragmentationMode, AcylChainList, LipidRules.LipidFragmentationRules);
         }
 
         protected bool Equals(LipidTarget other)
@@ -163,6 +164,8 @@ namespace LiquidBackend.Domain
             var standardChainCount = 0;
             var plasmogenChainCount = 0;
             var etherChainCount = 0;
+            var OOHChainCount = 0;
+            var F2IsoPChainCount = 0;
             var oxoCHOChainCount = 0;
             var oxoCOOHChainCount = 0;
             var dihydroxyChainCount = 0;
@@ -182,6 +185,8 @@ namespace LiquidBackend.Domain
                 else if (chainType == AcylChainType.Monohydro) monohydroxyChainCount++;
                 else if (chainType == AcylChainType.Dihydro || chainType == AcylChainType.Hydroxy) dihydroxyChainCount++;
                 else if (chainType == AcylChainType.Trihydro) trihydroChainCount++;
+                else if (chainType == AcylChainType.OOH || chainType == AcylChainType.OOHOH) OOHChainCount++;
+                else if (chainType == AcylChainType.F2IsoP) F2IsoPChainCount++;
 
                 chainCount++;
             }
@@ -201,6 +206,8 @@ namespace LiquidBackend.Domain
                 if (etherChainCount >= 1) return LipidType.TwoChainsEther; //etherChainCount == 1
                 if (oxoCHOChainCount == 1) return LipidType.TwoChainsOxoCHO;
                 if (oxoCOOHChainCount == 1) return LipidType.TwoChainsOxoCOOH;
+                if (OOHChainCount == 1) return LipidType.TwoChainsOOH;
+                if (F2IsoPChainCount == 1) return LipidType.TwoChainsF2IsoP;
                 if (trihydroChainCount == 1)
                 {
                     if (dihydroxyChainCount == 1)

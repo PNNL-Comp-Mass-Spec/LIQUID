@@ -1330,6 +1330,7 @@ LMGP02030030	PE(P-16:0/22:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoetha
 LMGP02030031	PE(P-16:0/22:1(11Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	757.598543	C43H84NO7P	123062618	52925064	WRBQEXBBOFVLFN-OYDUFMLBSA-N					
 LMGP02030032	PE(P-16:0/22:2(13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	755.582893	C43H82NO7P	123062619	52925065	LYFMZJCIGLZMJF-IRSYNFPBSA-N					
 LMGP02030033	PE(P-16:0/22:4(7Z,10Z,13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	751.551593	C43H78NO7P	123062620	52925066	KHJSJYFSBVDACH-LNCIMUPZSA-N					
+	PE(P-16:0/22:5)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
 LMGP02030001	PE(P-16:0/22:6(4Z,7Z,10Z,13Z,16Z,19Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	747.520293	C43H74NO7P	4266279	5283497	WVGALBKSWOUIEZ-XNHMFJFDSA-N		HMDB05780			
 LMGP02030034	PE(P-18:0/12:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	647.488992	C35H70NO7P	123062621	52925067	ZUNBNXSBMHBNCF-CLCWMZMISA-N					
 LMGP02030035	PE(P-18:0/13:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	661.504642	C36H72NO7P	123062622	52925068	BETUQIMDJYLVJE-HWZZGRHZSA-N					
@@ -1363,6 +1364,37 @@ LMGP02030060	PE(P-18:0/22:2(13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glyceroph
 LMGP02030061	PE(P-18:0/22:4(7Z,10Z,13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	779.582893	C45H82NO7P	123062648	52925094	TVTRPEJBOGUHBJ-IKHSQHJKSA-N					
 	PE(P-18:0/22:5)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]											
 LMGP02030005	PE(P-18:0/22:6(4Z,7Z,10Z,13Z,16Z,19Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	775.551593	C45H78NO7P	74380429	42607458	FIJFPUAJUDAZEY-MNDXXDKYSA-N		HMDB11394			
+	PE(P-18:1/12:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/13:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/14:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/14:1(9Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/15:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/15:1(9Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/16:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/16:1(9Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/17:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/17:1(9Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/17:2(9Z,12Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/18:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/18:1(9Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/18:2(9Z,12Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/18:3(6Z,9Z,12Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/18:3(9Z,12Z,15Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/18:4(6Z,9Z,12Z,15Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/19:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/19:1(9Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/20:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/20:1(11Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/20:2(11Z,14Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/20:3(8Z,11Z,14Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/20:4(5Z,8Z,11Z,14Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/20:5(5Z,8Z,11Z,14Z,17Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/21:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/22:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/22:1(11Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/22:2(13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/22:4(7Z,10Z,13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
+	PE(P-18:1/22:5)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
 LMGP02030006	PE(P-18:1(9Z)/22:6(4Z,7Z,10Z,13Z,16Z,19Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	773.535943	C45H76NO7P	123062593	52925039	UKPNUUDYLNCIOE-IZHHWLPXSA-N					
 LMGP02030062	PE(P-20:0/12:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	675.520293	C37H74NO7P	123062649	52925095	OERNJNSNBQQRMS-PXOIRPRXSA-N					
 LMGP02030063	PE(P-20:0/13:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	689.535943	C38H76NO7P	123062650	52925096	ZEANAEAKLIXUMF-APMJBGCSSA-N					
@@ -1395,6 +1427,7 @@ LMGP02030089	PE(P-20:0/22:1(11Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosph
 LMGP02030090	PE(P-20:0/22:2(13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	811.645493	C47H90NO7P	123062677	52925123	PJOSVTCVRHOYTB-BCTINRSXSA-N					
 LMGP02030091	PE(P-20:0/22:4(7Z,10Z,13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	807.614193	C47H86NO7P	123062678	52925124	BAZJUBJVELGOGH-TXQAUWGCSA-N					
 LMGP02030092	PE(P-20:0/22:6(4Z,7Z,10Z,13Z,16Z,19Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  	803.582893	C47H82NO7P	123062679	52925125	GWWKPJFGKBNJDJ-BMMRUKFOSA-N					
+	PE(P-20:1/20:4)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-(1Z-alkenyl),2-acylglycerophosphoethanolamines [GP0203]  										
 LMGP01020175	PE(O-18:0/22:6(4Z,7Z,10Z,13Z,16Z,19Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-alkyl,2-acylglycerophosphoethanolamines [GP0202]  	777.567243	C45H80NO7P	123061414	52923729	CFLIAMAPAOTPGM-AOXDHDBISA-N					
 LMGP02020021	PE(O-16:0/12:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-alkyl,2-acylglycerophosphoethanolamines [GP0202]  	621.473342	C33H68NO7P	123062510	52924956	TXHQKPCKZVOXPK-JGCGQSQUSA-N					
 LMGP02020022	PE(O-16:0/13:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	  1-alkyl,2-acylglycerophosphoethanolamines [GP0202]  	635.488992	C34H70NO7P	123062511	52924957	NDIULWDDKANRGE-MGBGTMOVSA-N					
@@ -1718,6 +1751,8 @@ LMGP02010513	PE(16:0/22:2(13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophos
 LMGP02010116	PE(16:0/22:4(7Z,10Z,13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	767.546508	C43H78NO8P	14714077	9546817	SQGZFCFLUVPOSZ-IVQYLSTHSA-N		HMDB08943		9467	
 	PE(16:0/22:5)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
 LMGP02010095	PE(16:0/22:6(4Z,7Z,10Z,13Z,16Z,19Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	763.515208	C43H74NO8P	14714056	9546799	MPWUZHVZZKSTPV-MADBQMNMSA-N		HMDB08946		7233	
+	PE(16:0/26:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
+	PE(16:0/26:1)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
 LMGP02010353	PE(16:1(11Z)/15:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	675.483907	C36H70NO8P	74380422	42607451	CXDXDDHWBHPLKU-VCRWGMHCSA-N					
 LMGP02010354	PE(16:1(11Z)/16:1(11Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	687.483907	C37H70NO8P	74380423	42607452	COCOQZWETUGUQW-CHRMJTSKSA-N					
 LMGP02010355	PE(16:1(5Z)/15:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	675.483907	C36H70NO8P	74380424	42607453	BDBWTXAMHDRPJP-QZXZDNAPSA-N					
@@ -1985,9 +2020,14 @@ LMGP02010146	PE(18:0/22:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethano
 LMGP02010633	PE(18:0/22:1(11Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	801.624758	C45H88NO8P	123061879	52924334	MSKYQIIXNNIUSC-MHBLLLATSA-N					
 LMGP02010151	PE(18:0/22:1(13Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	801.624758	C45H88NO8P	14714112	9546850	KVCSFWAPYZJNRB-RPBJOJELSA-N		HMDB09007		9944	
 LMGP02010634	PE(18:0/22:2(13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	799.609108	C45H86NO8P	123061880	52924335	JQVOEQRCENYJCX-MTFJKWJPSA-N					
+	PE(18:0/22:3)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
 LMGP02011200	PE(18:0/22:4(7Z,10Z,13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	795.577808	C45H82NO8P	123062446	52924901	HNFSZKRUPTYBOQ-ZDYOIFAYSA-N					
+	PE(18:0/22:5)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
 LMGP02010094	PE(18:0/22:6(4Z,7Z,10Z,13Z,16Z,19Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	791.546508	C45H78NO8P	14714055	9546798	XYYHNDVKALDFHQ-OXHZBIAZSA-N		HMDB09012		7232	
+	PE(18:0/24:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
 LMGP02010293	PE(18:0/24:1(15Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	829.656058	C47H92NO8P	14714254	9546992	UQKVVLICVTWZST-XMGJQEBSSA-N		HMDB09014		13141	
+	PE(18:0/26:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
+	PE(18:0/26:1)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
 LMGP02010158	PE(18:1(11E)/22:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	801.624758	C45H88NO8P	14714119	9546857	JGMWJJBIUSDLBE-WZQKQYGWSA-N				9951	
 LMGP02010160	PE(18:1(11Z)/22:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	801.624758	C45H88NO8P	14714121	9546859	JGMWJJBIUSDLBE-LKEIBTGGSA-N		HMDB09039		9953	
 LMGP02010109	PE(18:1(6Z)/18:1(6Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	743.546508	C41H78NO8P	14714070	9546810	PFJVXUYPMJAMEJ-MLEXSCAZSA-N				9123	
@@ -2022,7 +2062,11 @@ LMGP02010649	PE(18:1(9Z)/21:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoet
 LMGP02010161	PE(18:1(9Z)/22:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	801.624758	C45H88NO8P	14714122	9546860	JEOYLNIOWTUTAE-UPLWMSSDSA-N		HMDB09072		9954	
 LMGP02010650	PE(18:1(9Z)/22:1(11Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	799.609108	C45H86NO8P	123061896	52924351	QQSMTXDYARGLSR-QDYSQKQESA-N					
 LMGP02010651	PE(18:1(9Z)/22:2(13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	797.593458	C45H84NO8P	123061897	52924352	JCOVYOJDJNKLNY-NSEUMGHWSA-N					
+	PE(18:1/22:3)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
 LMGP02010652	PE(18:1(9Z)/22:4(7Z,10Z,13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	793.562158	C45H80NO8P	123061898	52924353	IIWMKSHLSCQARO-DFVLQBLZSA-N					
+	PE(18:1/22:5)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
+	PE(18:1/26:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
+	PE(18:1/26:1)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]										
 LMGP02010112	PE(18:2(6Z,9Z)/18:2(6Z,9Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	739.515208	C41H74NO8P	14714073	9546813	UCFUYIHIAGCQOA-JINOUWTBSA-N				9126	
 LMGP02010653	PE(18:2(9Z,12Z)/12:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	659.452607	C35H66NO8P	123061899	52924354	ZBXMPECKIUYWLS-FLUNPBKGSA-N					
 LMGP02010654	PE(18:2(9Z,12Z)/13:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoethanolamines [GP02]	Diacylglycerophosphoethanolamines [GP0201]	673.468257	C36H68NO8P	123061900	52924355	HKVWURVNSCAVRR-VSSIUQMHSA-N					
@@ -6263,6 +6307,7 @@ LMGP06010287	PI(18:0/21:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinosit
 LMGP06010955	PI(18:0/22:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	922.651034	C49H95O13P	123065974	52928408	NIAJJVKCWZRHFB-VEAHQXLZSA-N					
 LMGP06010288	PI(18:0/22:1(11Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	920.635384	C49H93O13P	123065307	52927741	PUAXLUSFGJQSPI-PVCRSBKYSA-N					
 LMGP06010289	PI(18:0/22:2(13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	918.619734	C49H91O13P	123065308	52927742	VIFLBOZTTASJKF-VAPCJTGLSA-N					
+	PI(18:0/22:3)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]										
 LMGP06010853	PI(18:0/22:4(7Z,10Z,13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	914.588434	C49H87O13P	123065872	52928306	YHRFCKNOQBDBPJ-QPGCQHQDSA-N					
 LMGP06010012	PI(18:0/22:6(4Z,7Z,10Z,13Z,16Z,19Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	910.557134	C49H83O13P	123065031	52927465	DJVOKHFQPGWUPK-CZUMARSRSA-N					
 LMGP06010290	PI(18:1(9Z)/12:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	780.478884	C39H73O13P	123065309	52927743	RSFYJLHUAWAPES-KXURGBPWSA-N					
@@ -6292,8 +6337,10 @@ LMGP06010849	PI(18:1(9Z)/20:4(5Z,8Z,11Z,14Z))	[M-H]-	Glycerophospholipids [GP]	G
 LMGP06010848	PI(18:1(9Z)/20:5(5Z,8Z,11Z,14Z,17Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	882.525834	C47H79O13P	123065867	52928301	ZHEIBMBVWLKKJS-ZWRKJHEZSA-N					
 LMGP06010304	PI(18:1(9Z)/21:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	906.619734	C48H91O13P	123065323	52927757	XSZZSWUAFPHQBE-LVALTKTBSA-N					
 LMGP06010928	PI(18:1(9Z)/22:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	920.635384	C49H93O13P	123065947	52928381	FYPBYKGKWILHCB-YCXLTFNJSA-N					
+	PI(18:1/22:3)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]										
 LMGP06010305	PI(18:1(9Z)/22:1(11Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	918.619734	C49H91O13P	123065324	52927758	OECPCBUIHMPEDR-KICIPMCBSA-N					
 LMGP06010306	PI(18:1(9Z)/22:2(13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	916.604084	C49H89O13P	123065325	52927759	IWPRKEUZMKOLQC-KTKXQPAFSA-N					
+	PI(18:1/22:3)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]										
 LMGP06010307	PI(18:1(9Z)/22:4(7Z,10Z,13Z,16Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	912.572784	C49H85O13P	123065326	52927760	ICWMPBXGZXZGJR-IFNKYRFISA-N					
 LMGP06010013	PI(18:1(9Z)/22:6(4Z,7Z,10Z,13Z,16Z,19Z))	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	908.541484	C49H81O13P	123065032	52927466	QHPDGSFYNQHVMI-DRTUOQCGSA-N					
 LMGP06010308	PI(18:2(9Z,12Z)/12:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoinositols [GP06]	Diacylglycerophosphoinositols [GP0601]	778.463234	C39H71O13P	123065327	52927761	MDBDWDFGUOSZIC-OTXIYSAJSA-N					
@@ -8390,27 +8437,6 @@ LMGP03060001	PS(O-20:0/0:0)	[M-H]-	Glycerophospholipids [GP]	Glycerophosphoserin
 	GM3(t20:0/22:0)	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Gangliosides [SP0601]										
 	GM3(t20:0/24:0)	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Gangliosides [SP0601]										
 	GM3(t20:0/26:0)	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Gangliosides [SP0601]										
-LMSP06020004	(3'-sulfo)Galbeta-Cer(d18:0/18:0(2OH))	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	823.547953	C42H81NO12S	49703641	24779580	QAXLTFVHNINRAJ-MDNLEJKJSA-N					
-LMSP06020005	(3'-sulfo)Galbeta-Cer(d18:0/20:0(2OH))	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	851.579253	C44H85NO12S	49703642	24779581	BSPHGAPKLMNQGB-PIWARLTLSA-N					
-LMSP06020011	(3'-sulfo)Galbeta-Cer(d18:0/22:0(2OH))	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	879.610553	C46H89NO12S	49703645	24779584	SONRUZAYRBQUDC-HOFFQUQKSA-N	C00319	HMDB00252	16393		
-LMSP06020014	(3'-sulfo)Galbeta-Cer(d18:0/24:0(2OH))	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	907.641853	C48H93NO12S	49703647	24779586	QTTLKKFUOJQIRB-KVVYEFBTSA-N					
-LMSP06020016	(3'-sulfo)Galbeta-Cer(d18:0/24:1(15Z)(2OH))	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	905.626203	C48H91NO12S	49703649	24779588	YKQKWZCXBGRDPT-CSTHVWECSA-N	C00836	HMDB00269	16566		
-LMSP06020003	(3'-sulfo)Galbeta-Cer(d18:1/16:0(2OH))	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	795.516653	C40H77NO12S	49703640	24779579	RJBWNINOBUDIFT-XTEWRJPMSA-N	C02934	HMDB01480	17862		
-	(3'-sulfo)Galbeta-Cer(d18:1/25:0(2OH))	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]										
-	(3'-sulfo)Galbeta-Cer(d18:1/26:0(2OH))	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]										
-	(3'-sulfo)Galbeta-Cer(d18:1/26:1(2OH))	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]										
-	C12Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]										
-	C14Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]										
-LMSP06020002	C16Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	779.521738	C40H77NO11S	49703639	24779578	CJGVDSGIQZDLDO-BMYWYRRPSA-N					
-	C17Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]										
-LMSP06020001	C18Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	807.553038	C42H81NO11S	4266360	5771775	GQQZXRPXBDJABR-XMDONHODSA-N					
-LMSP06020010	C20Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	835.584338	C44H85NO11S	49703644	24779583	AURCBSWGPREGRQ-VGNRXBDKSA-N			38221		
-LMSP06020009	C22Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	863.615638	C46H89NO11S	49703643	24779582	UAKYQMHTPLVMJD-GJOJTGTQSA-N			38225		
-LMSP06020013	C24Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	891.646938	C48H93NO11S	49703646	24779585	MEAZTWJVOWHKJM-YQTIZROBSA-N					
-LMSP06020015	C24:1Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]	889.631288	C48H91NO11S	49703648	24779587	ZZQWQNAZXFNSEP-YEWIENRVSA-N					
-	C25:0Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]										
-	C26:0Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]										
-	C26:1Sulfatide	[M-H]-	Sphingolipids [SP]	Acidic glycosphingolipids [SP06]	Sulfoglycosphingolipids (sulfatides) [SP0602]										
 LMSP02030015	Cer(t18:0/16:0(2OH))	[M-H]-	Sphingolipids [SP]	Ceramides [SP02]	N-acyl-4-hydroxysphinganines (phytoceramides) [SP0203]	571.517575	C34H69NO5	160780178	70678878	RHIXBFQKTNYVCX-KHDKDNTOSA-N					
 LMSP02030001	Cer(t18:0/16:0)	[M-H]-	Sphingolipids [SP]	Ceramides [SP02]	N-acyl-4-hydroxysphinganines (phytoceramides) [SP0203]	555.52266	C34H69NO4	49703628	10506988	IVBULNXGVIHEKN-MVIDNBQJSA-N					
 LMSP02030016	Cer(t18:0/18:0(2OH))	[M-H]-	Sphingolipids [SP]	Ceramides [SP02]	N-acyl-4-hydroxysphinganines (phytoceramides) [SP0203]	599.548875	C36H73NO5	160780179	44625889	BBAFBDLICMHBNU-MFZOPHKMSA-N					
@@ -9843,13 +9869,226 @@ LMSP0501AA38	GlcCer(d18:2/23:0)	[M-H]-	Sphingolipids [SP]	Neutral glycosphingoli
 	GT3(t20:0/24:0)	[M-2H]--													
 	GT3(t20:0/26:0)	[M-H]-													
 	GT3(t20:0/26:0)	[M-2H]--													
-LMGP20020001	PE(18:0/20:4(5Z,8Z,10E,14Z)(12OH[S]))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]	783.5414	C43H78NO9P								
-LMGP20020002	PE(18:0/20:4(5Z,8Z,11Z,13E)(15OH[S]))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]	783.5414	C43H78NO9P								
-LMGP20020003	PE(16:0/22:6(54Z,7Z,10Z,12E,16Z,19Z)(14OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]	779.5101	C43H74NO9P								
-LMGP20020004	PE(18:0/22:6(4Z,7Z,10Z,12E,16Z,19Z)(14OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]	807.5414	C45H78NO9P								
-LMGP20010001	PC(18:0/20:4(5Z,8Z,10E,14Z)(12OH[S]))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]	825.5884	C46H84NO9P								
-LMGP20010002	PC(16:0/20:4(5Z,8Z,10E,14Z)(12OH[S]))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]	797.5571	C44H80NO9P								
-LMGP20010003	PC(16:0/20:4(6E,8Z,11Z,14Z)(5OH[S]))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]	797.5571	C44H80NO9P								
+	PC(16:0/18:2(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/18:2(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/18:2(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/18:3(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/18:3(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/18:3(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/20:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/20:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/20:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/20:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/20:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/20:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/22:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/22:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/22:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/22:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/22:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/22:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/22:6(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/22:6(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/22:6(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/F2IsoP-18:2)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/F2IsoP-18:3)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/F2IsoP-20:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/F2IsoP-20:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/F2IsoP-22:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/F2IsoP-22:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(16:0/F2IsoP-22:6)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/18:2(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/18:2(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/18:2(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/18:3(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/18:3(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/18:3(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/20:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/20:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/20:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/20:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/20:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/20:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/22:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/22:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/22:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/22:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/22:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/22:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/22:6(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/22:6(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/22:6(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/F2IsoP-18:2)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/F2IsoP-18:3)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/F2IsoP-20:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/F2IsoP-22:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/F2IsoP-22:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PC(18:0/F2IsoP-22:6)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphocholines [GP2001]										
+	PE(16:0/18:2(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/18:2(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/18:2(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/18:3(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/18:3(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/18:3(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/20:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/20:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/20:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/20:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/20:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/20:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/22:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/22:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/22:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/22:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/22:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/22:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/22:6(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/22:6(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/22:6(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/F2IsoP-18:2)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/F2IsoP-18:3)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/F2IsoP-20:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/F2IsoP-20:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/F2IsoP-22:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/F2IsoP-22:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(16:0/F2IsoP-22:6)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/18:2(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/18:2(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/18:2(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/18:3(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/18:3(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/18:3(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/20:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/20:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/20:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/20:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/20:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/20:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/22:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/22:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/22:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/22:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/22:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/22:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/22:6(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/22:6(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/22:6(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/F2IsoP-18:2)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/F2IsoP-18:3)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/F2IsoP-20:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/F2IsoP-22:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/F2IsoP-22:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PE(18:0/F2IsoP-22:6)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoethanolamines [GP2002]										
+	PI(16:0/18:2(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/18:2(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/18:2(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/18:3(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/18:3(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/18:3(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/20:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/20:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/20:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/20:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/20:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/20:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/22:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/22:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/22:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/22:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/22:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/22:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/22:6(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/22:6(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/22:6(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/F2IsoP-18:2)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/F2IsoP-18:3)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/F2IsoP-20:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/F2IsoP-20:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/F2IsoP-22:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/F2IsoP-22:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(16:0/F2IsoP-22:6)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/18:2(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/18:2(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/18:2(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/18:3(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/18:3(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/18:3(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/20:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/20:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/20:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/20:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/20:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/20:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/22:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/22:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/22:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/22:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/22:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/22:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/22:6(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/22:6(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/22:6(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/F2IsoP-18:2)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/F2IsoP-18:3)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/F2IsoP-20:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/F2IsoP-22:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/F2IsoP-22:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PI(18:0/F2IsoP-22:6)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoinositols [GP2005]										
+	PS(16:0/18:2(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/18:2(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/18:2(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/18:3(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/18:3(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/18:3(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/20:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/20:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/20:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/20:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/20:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/20:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/22:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/22:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/22:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/22:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/22:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/22:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/22:6(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/22:6(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/22:6(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/F2IsoP-18:2)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/F2IsoP-18:3)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/F2IsoP-20:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/F2IsoP-20:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/F2IsoP-22:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/F2IsoP-22:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(16:0/F2IsoP-22:6)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/18:2(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/18:2(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/18:2(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/18:3(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/18:3(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/18:3(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/20:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/20:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/20:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/20:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/20:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/20:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/22:4(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/22:4(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/22:4(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/22:5(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/22:5(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/22:5(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/22:6(OH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/22:6(OOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/22:6(OOHOH))	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/F2IsoP-18:2)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/F2IsoP-18:3)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/F2IsoP-20:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/F2IsoP-22:4)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/F2IsoP-22:5)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
+	PS(18:0/F2IsoP-22:6)	[M-H]-	Glycerophospholipids [GP]	Oxidized glycerophospholipids [GP20]	Oxidized glycerophosphoserines [GP2004]										
 LMFA07011034	FAHFA(16:0/5-O-18:0)	[M-H]-	Fatty Acyls [FA]	Fatty esters [FA07]	Wax monoesters [FA0701]	538.4961	C34H66O4								
 LMFA07011035	FAHFA(16:0/7-O-18:0)	[M-H]-	Fatty Acyls [FA]	Fatty esters [FA07]	Wax monoesters [FA0701]	538.4961	C34H66O4								
 LMFA07011036	FAHFA(16:0/8-O-18:0)	[M-H]-	Fatty Acyls [FA]	Fatty esters [FA07]	Wax monoesters [FA0701]	538.4961	C34H66O4								

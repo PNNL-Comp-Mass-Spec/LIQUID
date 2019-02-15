@@ -19,6 +19,8 @@ namespace LiquidBackend.Domain
         TwoChainsMonohydroxy,
         TwoChainsTwoDihidroxy,
         TwoChainsPhyto,
-        TwoChainsDihidroxyPhyto
+        TwoChainsDihidroxyPhyto,
+        TwoChainsOOH,
+        TwoChainsF2IsoP
     }
 }
