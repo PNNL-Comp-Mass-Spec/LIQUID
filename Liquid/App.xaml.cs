@@ -68,16 +68,15 @@ namespace Liquid
             }
             else
             {
-                var cb = cell.Content as ComboBox;
-                if (cb != null)
-                {
-                    //DataGrid dataGrid = FindVisualParent<DataGrid>(cell);
-                    dataGrid.BeginEdit(e);
-                    cell.Dispatcher.Invoke(
-                     DispatcherPriority.Background,
-                     new Action(delegate { }));
-                    cb.IsDropDownOpen = true;
-                }
+                if (!(cell.Content is ComboBox cb))
+                    return;
+
+                //DataGrid dataGrid = FindVisualParent<DataGrid>(cell);
+                dataGrid.BeginEdit(e);
+                cell.Dispatcher.Invoke(
+                    DispatcherPriority.Background,
+                    new Action(delegate { }));
+                cb.IsDropDownOpen = true;
             }
         }
 
@@ -87,8 +86,7 @@ namespace Liquid
             var parent = element;
             while (parent != null)
             {
-                var correctlyTyped = parent as T;
-                if (correctlyTyped != null)
+                if (parent is T correctlyTyped)
                 {
                     return correctlyTyped;
                 }

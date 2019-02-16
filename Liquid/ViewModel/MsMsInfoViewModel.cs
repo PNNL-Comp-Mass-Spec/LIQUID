@@ -47,8 +47,11 @@ namespace Liquid.ViewModel
             var hcdPlot = new PlotModel();
             var cidPlot = new PlotModel();
 
-            if (CurrentSpectrumSearchResult.HcdSpectrum != null) hcdPlot = CreateMsMsPlot(hcdSearchResultList, CurrentSpectrumSearchResult.HcdSpectrum);
-            if (CurrentSpectrumSearchResult.CidSpectrum != null) cidPlot = CreateMsMsPlot(cidSearchResultList, CurrentSpectrumSearchResult.CidSpectrum);
+            if (CurrentSpectrumSearchResult.HcdSpectrum != null)
+                hcdPlot = CreateMsMsPlot(hcdSearchResultList, CurrentSpectrumSearchResult.HcdSpectrum);
+
+            if (CurrentSpectrumSearchResult.CidSpectrum != null)
+                cidPlot = CreateMsMsPlot(cidSearchResultList, CurrentSpectrumSearchResult.CidSpectrum);
 
             MsMsHcdPlot = hcdPlot;
             MsMsCidPlot = cidPlot;
@@ -59,7 +62,7 @@ namespace Liquid.ViewModel
             OnPropertyChanged("MsMsAnnotationList");
         }
 
-        private PlotModel CreateMsMsPlot(List<MsMsSearchResult> searchResultList, ProductSpectrum productSpectrum)
+        private PlotModel CreateMsMsPlot(IReadOnlyCollection<MsMsSearchResult> searchResultList, ProductSpectrum productSpectrum)
         {
             var spectrumSearchResult = CurrentSpectrumSearchResult;
             var lipidTarget = CurrentLipidTarget;
