@@ -31,7 +31,7 @@ namespace LiquidBackend.Domain
 
         public List<Int32> targetAcylChainsIndices { get; set; }
 
-        public bool diagnastic { get; set; }
+        public bool diagnostic { get; set; }
 
         public Composition GetComposition(int numCarbons, int numDoubleBonds)
         {
@@ -120,13 +120,11 @@ namespace LiquidBackend.Domain
         {
             if (this.isNeutralLoss)
             {
-                return new MsMsSearchUnit(precursorMz - this.GetComposition(numCarbons, numDoubleBonds).Mass, this.description, acylChain, this.diagnastic);
+                return new MsMsSearchUnit(precursorMz - GetComposition(numCarbons, numDoubleBonds).Mass, description, acylChain, diagnostic);
 
             }
-            else
-            {
-                return new MsMsSearchUnit(this.GetComposition(numCarbons, numDoubleBonds).Mass, this.description, acylChain, this.diagnastic);
-            }
+
+            return new MsMsSearchUnit(GetComposition(numCarbons, numDoubleBonds).Mass, description, acylChain, diagnostic);
         }
 
         public override string ToString()
@@ -134,9 +132,9 @@ namespace LiquidBackend.Domain
             return "lpidClass:" + this.lpidClass + "\t"
                                       + "isNeutralLoss:" + this.isNeutralLoss + "\t"
                                       + "fragmentationMode:" + this.fragmentationMode + "\t"
-                                      + "diagnastic:" + this.diagnastic + "\t"
                                       + "isFromHeader:" + this.isFromHeader + "\t"
                                       + "acylChainType:" + this.acylChainType;
+                                      + "diagnostic:" + diagnostic + "\t"
         }
 
         //Composition ILipidFragmentationRule.GetComposition(int numCarbons, int numDoubleBonds)

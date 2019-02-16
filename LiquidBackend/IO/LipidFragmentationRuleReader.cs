@@ -133,7 +133,7 @@ namespace LiquidBackend.IO
                 else throw new SystemException("NEUTRAL_LOSS is required for importing fragmentation rules: " + line);
 
                 if (columnMapping.ContainsKey(DESCRIPTION)) fragmentationRule.description = columns[columnMapping[DESCRIPTION]];
-                if (columnMapping.ContainsKey(DIAGNOSTIC)) fragmentationRule.diagnastic = columns[columnMapping[DIAGNOSTIC]] == "1";
+                if (columnMapping.ContainsKey(DIAGNOSTIC)) fragmentationRule.diagnostic = columns[columnMapping[DIAGNOSTIC]] == "1";
 
                 if (columnMapping.ContainsKey(CARBON)) fragmentationRule.C = new CompositionFormula(columns[columnMapping[CARBON]]);
                 if (columnMapping.ContainsKey(HYDROGEN)) fragmentationRule.H = new CompositionFormula(columns[columnMapping[HYDROGEN]]);

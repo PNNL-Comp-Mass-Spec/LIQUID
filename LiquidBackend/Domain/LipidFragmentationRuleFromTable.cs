@@ -17,7 +17,7 @@ namespace LiquidBackend.Domain
         public CompositionFormula S { get; set; }
         public CompositionFormula P { get; set; }
         public string other { get; set; }
-        public bool diagnastic { get; set; }
+        public bool diagnostic { get; set; }
         public bool headerGroup { get; set; }
         public Composition GetComposition(int numCarbons, int numDoubleBonds)
         {
@@ -33,11 +33,11 @@ namespace LiquidBackend.Domain
         {
             if (this.lossType.Equals("PI"))
             {
-                return new MsMsSearchUnit(this.GetComposition(numCarbons, numDoubleBonds).Mass, this.description1, acylChain, this.diagnastic);
+                return new MsMsSearchUnit(this.GetComposition(numCarbons, numDoubleBonds).Mass, this.description1, acylChain, this.diagnostic);
             }
             else if (this.lossType.Equals("NL"))
             {
-                return new MsMsSearchUnit(precursorMz - this.GetComposition(numCarbons, numDoubleBonds).Mass, "M-" + this.description1, acylChain, this.diagnastic);
+                return new MsMsSearchUnit(precursorMz - this.GetComposition(numCarbons, numDoubleBonds).Mass, "M-" + this.description1, acylChain, this.diagnostic);
             }
             else
             {
@@ -51,7 +51,7 @@ namespace LiquidBackend.Domain
             return this.lpidSubClass + "\t" 
                        + this.lossType + "\t" 
                        + this.fragmentationMode + "\t"
-                       + this.diagnastic + "\t"
+                       + this.diagnostic + "\t"
                        + this.headerGroup;
         }
     }

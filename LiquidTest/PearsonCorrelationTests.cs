@@ -315,7 +315,7 @@ namespace LiquidTest
             }
 
             Console.WriteLine("The theoretical y values are: ");
-            foreach (var value in isotopomerEnvelope.Envolope)
+            foreach (var value in isotopomerEnvelope.Envelope)
             {
                 Console.WriteLine(value + ", ");
             }
@@ -378,7 +378,7 @@ namespace LiquidTest
             }
 
             Console.WriteLine("The theoretical y values are: ");
-            foreach (var value in isotopomerEnvelope.Envolope)
+            foreach (var value in isotopomerEnvelope.Envelope)
             {
                 Console.WriteLine(value + ", ");
             }

@@ -116,7 +116,7 @@ namespace LiquidBackend.IO
             if (columnMapping.ContainsKey(SULFUR)) fragmentationRule.S = new CompositionFormula(columns[columnMapping[SULFUR]]);
             if (columnMapping.ContainsKey(PHOSPHORUS)) fragmentationRule.P = new CompositionFormula(columns[columnMapping[PHOSPHORUS]]);
             if (columnMapping.ContainsKey(OTHER)) fragmentationRule.other = columns[columnMapping[OTHER]];
-            if (columnMapping.ContainsKey(DIAGNOSTIC)) fragmentationRule.diagnastic = columns[columnMapping[DIAGNOSTIC]] == "1";
+            if (columnMapping.ContainsKey(DIAGNOSTIC)) fragmentationRule.diagnostic = columns[columnMapping[DIAGNOSTIC]] == "1";
             if (columnMapping.ContainsKey(HEADER_GROUP)) fragmentationRule.headerGroup = columns[columnMapping[HEADER_GROUP]] == "1";
 
             return fragmentationRule;
