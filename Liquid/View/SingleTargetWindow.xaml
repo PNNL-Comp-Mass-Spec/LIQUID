@@ -662,7 +662,7 @@
                         </StackPanel>
                     </StackPanel>
                     <controls:MsMsInfoUserControl x:Name="MsMsInfoUserControl" />
-                    <controls:MsOneInfoUserControl x:Name="MsOneInfoUserControl"/>
+                    <controls:MsOneInfoUserControl x:Name="MsOneInfoUserControl" />
                 </DockPanel>
             </StackPanel>
         </StackPanel>
