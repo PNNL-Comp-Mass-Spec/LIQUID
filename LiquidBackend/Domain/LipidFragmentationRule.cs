@@ -70,23 +70,23 @@ namespace LiquidBackend.Domain
         //    return (!this.isFromHeader && this.acylChainType == null);
         //}
 
-        public bool checkAcylChainConditions(string acylChainType,
-                                             int acylChainNumCarbons,
-                                             int acylChainNumDoubleBonds,
-                                             int acylChainHydroxyPosition,
+        public bool checkAcylChainConditions(string acylChainTypeCompare,
+                                             int acylChainNumCarbonsCompare,
+                                             int acylChainNumDoubleBondsCompare,
+                                             int acylChainHydroxyPositionCompare,
                                              int countOfChains,
                                              int containsHydroxy,
-                                             char sialic)
+                                             char sialicCompare)
         {
-            if (this.acylChainType == null) return false;
-            if (this.acylChainType != null) { if (!this.acylChainType.Equals("All") && !this.acylChainType.Equals(acylChainType)) return false; }
-            if (this.acylChainNumCarbons != 0) { if (this.acylChainNumCarbons != acylChainNumCarbons) return false; }
-            if (this.acylChainNumDoubleBonds != 0) { if (this.acylChainNumDoubleBonds != acylChainNumDoubleBonds) return false; }
-            if (this.acylChainHydroxyPosition != 0) { if (this.acylChainHydroxyPosition != acylChainHydroxyPosition) return false; }
-            if (this.conditionForCountOfChains != null) { if (!this.conditionForCountOfChains.meet(countOfChains)) return false; }
+            if (acylChainType == null) return false;
+            if (acylChainType != null) { if (!acylChainType.Equals("All") && !acylChainType.Equals(acylChainTypeCompare)) return false; }
+            if (acylChainNumCarbons != 0) { if (acylChainNumCarbons != acylChainNumCarbonsCompare) return false; }
+            if (acylChainNumDoubleBonds != 0) { if (acylChainNumDoubleBonds != acylChainNumDoubleBondsCompare) return false; }
+            if (acylChainHydroxyPosition != 0) { if (acylChainHydroxyPosition != acylChainHydroxyPositionCompare) return false; }
+            if (conditionForCountOfChains != null) { if (!conditionForCountOfChains.meet(countOfChains)) return false; }
             //if (this.conditionForCountOfStandardAcylsChains != null) { if (!this.conditionForCountOfStandardAcylsChains.meet(countOfStandardAcylsChains)) return false; }
-            if (this.conditionForContainsHydroxy != null) { if (!this.conditionForContainsHydroxy.meet(containsHydroxy)) return false; }
-            if (this.sialic != null) { if (this.sialic.IndexOf(sialic) == -1) return false; }
+            if (conditionForContainsHydroxy != null) { if (!conditionForContainsHydroxy.meet(containsHydroxy)) return false; }
+            if (sialic != null) { if (sialic.IndexOf(sialicCompare) == -1) return false; }
 
             return true;
         }
