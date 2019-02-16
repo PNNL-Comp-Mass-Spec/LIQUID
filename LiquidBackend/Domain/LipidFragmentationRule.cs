@@ -35,35 +35,32 @@ namespace LiquidBackend.Domain
 
         public Composition GetComposition(int numCarbons, int numDoubleBonds)
         {
-            if (this.additionalElement == null)
+            if (additionalElement == null)
             {
-                return new Composition(this.C.Evaluate(numCarbons, numDoubleBonds),
-                                       this.H.Evaluate(numCarbons, numDoubleBonds),
-                                       this.N.Evaluate(numCarbons, numDoubleBonds),
-                                       this.O.Evaluate(numCarbons, numDoubleBonds),
-                                       this.S.Evaluate(numCarbons, numDoubleBonds),
-                                       this.P.Evaluate(numCarbons, numDoubleBonds));
+                return new Composition(C.Evaluate(numCarbons, numDoubleBonds),
+                                       H.Evaluate(numCarbons, numDoubleBonds),
+                                       N.Evaluate(numCarbons, numDoubleBonds),
+                                       O.Evaluate(numCarbons, numDoubleBonds),
+                                       S.Evaluate(numCarbons, numDoubleBonds),
+                                       P.Evaluate(numCarbons, numDoubleBonds));
             }
-            else
-            {
-                return new Composition(this.C.Evaluate(numCarbons, numDoubleBonds),
-                                       this.H.Evaluate(numCarbons, numDoubleBonds),
-                                       this.N.Evaluate(numCarbons, numDoubleBonds),
-                                       this.O.Evaluate(numCarbons, numDoubleBonds),
-                                       this.S.Evaluate(numCarbons, numDoubleBonds),
-                                       this.P.Evaluate(numCarbons, numDoubleBonds),
-                                       new Tuple<Atom, short>(Atom.Get(this.additionalElement), 1));
-            }
+
+            return new Composition(C.Evaluate(numCarbons, numDoubleBonds),
+                                   H.Evaluate(numCarbons, numDoubleBonds),
+                                   N.Evaluate(numCarbons, numDoubleBonds),
+                                   O.Evaluate(numCarbons, numDoubleBonds),
+                                   S.Evaluate(numCarbons, numDoubleBonds),
+                                   P.Evaluate(numCarbons, numDoubleBonds),
+                                   new Tuple<Atom, short>(Atom.Get(additionalElement), 1));
         }
 
         public bool isFromHeader { get; set; }
-        public bool isSpecialCase { get; set; }
         public bool checkFromHeader()
         {
-            return (this.acylChainType == null)
-                && (this.sialic == null) 
-                && (this.targetAcylChainsIndices == null) 
-                && (this.conditionForCountOfStandardAcylsChains == null);
+            return (acylChainType == null)
+                && (sialic == null)
+                && (targetAcylChainsIndices == null)
+                && (conditionForCountOfStandardAcylsChains == null);
         }
         //public bool checkSpecialCase()
         //{
@@ -98,27 +95,27 @@ namespace LiquidBackend.Domain
             //if (this.targetAcylChainsIndices != null) return false;
             //if (this.conditionForCountOfStandardAcylsChains != null) { if (!this.conditionForCountOfStandardAcylsChains.meet(countOfStandardAcylsChains)) return false; }
             //return true;
-            if (this.conditionForCountOfStandardAcylsChains == null) return false;
-            else if (this.conditionForCountOfStandardAcylsChains.meet(countOfStandardAcylsChains)) return true;
+            if (conditionForCountOfStandardAcylsChains == null) return false;
+            if (conditionForCountOfStandardAcylsChains.meet(countOfStandardAcylsChains)) return true;
             return false;
         }
 
         public bool checkCountOfChains(int countOfChains)
         {
-            if (this.conditionForCountOfChains == null) return true;
-            else if (this.conditionForCountOfChains.meet(countOfChains)) return true; 
+            if (conditionForCountOfChains == null) return true;
+            if (conditionForCountOfChains.meet(countOfChains)) return true;
             return false;
         }
 
         public bool checkTargetAcylsChains()
         {
-            if (this.targetAcylChainsIndices.Count > 0) return true;
+            if (targetAcylChainsIndices.Count > 0) return true;
             return false;
         }
 
         public MsMsSearchUnit GetMsMsSearchUnit(double precursorMz, int numCarbons = 0, int numDoubleBonds = 0, AcylChain acylChain = null)
         {
-            if (this.isNeutralLoss)
+            if (isNeutralLoss)
             {
                 return new MsMsSearchUnit(precursorMz - GetComposition(numCarbons, numDoubleBonds).Mass, description, acylChain, diagnostic);
 
