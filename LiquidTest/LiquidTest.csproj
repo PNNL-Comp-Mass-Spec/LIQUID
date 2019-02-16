@@ -36,6 +36,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\InformedProteomics.Backend.dll</HintPath>
     </Reference>
+    <Reference Include="InformedProteomics.Backend.MassSpecData">
+      <HintPath>..\lib\InformedProteomics.Backend.MassSpecData.dll</HintPath>
+    </Reference>
     <Reference Include="MyEMSLReader">
       <HintPath>..\lib\MyEMSLReader.dll</HintPath>
     </Reference>

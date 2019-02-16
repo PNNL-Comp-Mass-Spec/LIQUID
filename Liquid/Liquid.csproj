@@ -42,6 +42,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\InformedProteomics.Backend.dll</HintPath>
     </Reference>
+    <Reference Include="InformedProteomics.Backend.MassSpecData">
+      <HintPath>..\lib\InformedProteomics.Backend.MassSpecData.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
