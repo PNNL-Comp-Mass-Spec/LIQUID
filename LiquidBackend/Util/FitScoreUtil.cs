@@ -179,7 +179,7 @@ namespace LiquidBackend.Util
                                                             composition.O,
                                                             composition.S);
 
-            return isotopomerEnvelope.Envolope.TakeWhile(isotope => !(isotope < relativeIntensityThreshold)).ToArray();
+            return isotopomerEnvelope.Envelope.TakeWhile(isotope => !(isotope < relativeIntensityThreshold)).ToArray();
         }
 
         /// <summary>

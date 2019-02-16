@@ -2035,7 +2035,7 @@ namespace LiquidBackend.Util
                                                             composition.H,
                                                             composition.N,
                                                             composition.O,
-                                                            composition.S).Envolope;
+                                                            composition.S).Envelope;
             var mostAbundantIsotopeMz = composition.Mass;
             var mostAbundantIsotopeMatchedPeakIndex = spectrum.FindPeakIndex(mostAbundantIsotopeMz, tolerance);
             if (mostAbundantIsotopeMatchedPeakIndex < 0) return null;
