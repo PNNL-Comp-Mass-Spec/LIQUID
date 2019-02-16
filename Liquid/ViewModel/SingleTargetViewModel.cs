@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using InformedProteomics.Backend.MassSpecData;
-using InformedProteomics.Backend.Utils;
 using LiquidBackend.Domain;
 using LiquidBackend.IO;
 using LiquidBackend.Scoring;
 using LiquidBackend.Util;
+using PRISM;
 
 namespace Liquid.ViewModel
 {

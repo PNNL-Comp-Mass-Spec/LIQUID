@@ -1,6 +1,6 @@
 ﻿using System;
 using InformedProteomics.Backend.MassSpecData;
-using InformedProteomics.Backend.Utils;
+using PRISM;
 
 namespace LiquidBackend.Util
 {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using InformedProteomics.Backend.MathAndStats;
 
 namespace LiquidBackend.Util
 {
@@ -7,7 +8,6 @@ namespace LiquidBackend.Util
     using InformedProteomics.Backend.Data.Biology;
     using InformedProteomics.Backend.Data.Composition;
     using InformedProteomics.Backend.Data.Spectrometry;
-    using InformedProteomics.Backend.Utils;
 
     using Domain;
 
@@ -113,7 +113,7 @@ namespace LiquidBackend.Util
             for (var isotopeIndex = mostAbundantIsotopeIndex + 1; isotopeIndex < isotopomerEnvelope.Count; isotopeIndex++)
             {
                 var isotopeMz = mostAbundantIsotopeMz + isotopeIndex * Constants.C13MinusC12;
-                var tolTh = tolerance.GetToleranceAsTh(isotopeMz);
+                var tolTh = tolerance.GetToleranceAsMz(isotopeMz);
                 var minMz = isotopeMz - tolTh;
                 var maxMz = isotopeMz + tolTh;
                 for (var i = peakIndex; i < peaks.Length; i++)

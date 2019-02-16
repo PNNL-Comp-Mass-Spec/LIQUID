@@ -1990,10 +1990,10 @@ namespace LiquidBackend.Util
                 // Ignore any 0:0 chains
                 if (numCarbons == 0 && numDoubleBonds == 0) continue;
 
-				foreach (var rule in fragmentationRules)
-				{
-					msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, numCarbons, numDoubleBonds, acylChain));
-				}          
+                foreach (var rule in fragmentationRules)
+                {
+                    msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, numCarbons, numDoubleBonds, acylChain));
+                }
             }
             return msMsSearchUnitList;
         }
@@ -2049,7 +2049,7 @@ namespace LiquidBackend.Util
             {
                 if (isotopomerEnvelope[isotopeIndex] < relativeIntensityThreshold) break;
                 var isotopeMz = mostAbundantIsotopeMz - isotopeIndex * Constants.C13MinusC12;
-                var tolTh = tolerance.GetToleranceAsTh(isotopeMz);
+                var tolTh = tolerance.GetToleranceAsMz(isotopeMz);
                 var minMz = isotopeMz - tolTh;
                 var maxMz = isotopeMz + tolTh;
                 for (var i = peakIndex; i >= 0; i--)
@@ -2078,7 +2078,7 @@ namespace LiquidBackend.Util
             {
                 if (isotopomerEnvelope[isotopeIndex] < relativeIntensityThreshold) break;
                 var isotopeMz = mostAbundantIsotopeMz + isotopeIndex * Constants.C13MinusC12;
-                var tolTh = tolerance.GetToleranceAsTh(isotopeMz);
+                var tolTh = tolerance.GetToleranceAsMz(isotopeMz);
                 var minMz = isotopeMz - tolTh;
                 var maxMz = isotopeMz + tolTh;
                 for (var i = peakIndex; i < peaks.Length; i++)
