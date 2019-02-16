@@ -1960,7 +1960,7 @@ namespace LiquidBackend.Util
             foreach (var rule in lipidFragmentationRules)
             {
                 if (rule.fragmentationMode.Equals(fragmentationMode) &&
-                    rule.lpidClass.Equals(lipidClass))
+                    rule.lipidClass.Equals(lipidClass))
                 {
                     lipidFragmentationRulesList.Add(rule);
                 }

@@ -117,7 +117,7 @@ namespace LiquidBackend.IO
 
             try
             {
-                if (columnMapping.ContainsKey(LIPID_CLASS)) fragmentationRule.lpidClass = columns[columnMapping[LIPID_CLASS]];
+                if (columnMapping.ContainsKey(LIPID_CLASS)) fragmentationRule.lipidClass = columns[columnMapping[LIPID_CLASS]];
                 else throw new SystemException("LipidClass is required for importing fragmentation rules: " + line);
 
                 if (columnMapping.ContainsKey(FRAGMENTATION_MODE))

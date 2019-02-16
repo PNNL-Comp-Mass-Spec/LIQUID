@@ -7,7 +7,7 @@ namespace LiquidBackend.Domain
 {
     public class LipidFragmentationRule
     {
-        public string lpidClass { get; set; }
+        public string lipidClass { get; set; }
         public FragmentationMode fragmentationMode { get; set; }
         public bool isNeutralLoss { get; set; }
         public string description { get; set; }
@@ -129,12 +129,12 @@ namespace LiquidBackend.Domain
 
         public override string ToString()
         {
-            return "lpidClass:" + this.lpidClass + "\t"
-                                      + "isNeutralLoss:" + this.isNeutralLoss + "\t"
-                                      + "fragmentationMode:" + this.fragmentationMode + "\t"
-                                      + "isFromHeader:" + this.isFromHeader + "\t"
-                                      + "acylChainType:" + this.acylChainType;
+            return "lipidClass: " + lipidClass + "\t"
+                                      + "isNeutralLoss:" + isNeutralLoss + "\t"
+                                      + "fragmentationMode:" + fragmentationMode + "\t"
                                       + "diagnostic:" + diagnostic + "\t"
+                                      + "isFromHeader:" + isFromHeader + "\t"
+                                      + "acylChainType:" + acylChainType;
         }
 
         //Composition ILipidFragmentationRule.GetComposition(int numCarbons, int numDoubleBonds)
