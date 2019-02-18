@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using InformedProteomics.Backend.Data.Composition;
@@ -64,9 +65,8 @@ namespace LiquidBackend.Util
             var compositionOfAdduct = GetCompositionOfAdduct(adduct);
             var charge = IonCharge(adduct);
 
-            return new LipidTarget(mz.ToString(), LipidClass.Unknown, fragmentationMode, null, null, adduct, charge);
+            return new LipidTarget(mz.ToString(CultureInfo.InvariantCulture), LipidClass.Unknown, fragmentationMode, null, null, adduct, charge);
         }
-
 
         public static Composition GetCompositionOfAdduct(Adduct adduct)
         {

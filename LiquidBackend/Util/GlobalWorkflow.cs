@@ -428,6 +428,7 @@ namespace LiquidBackend.Util
                 var indexToGrab = (int)Math.Floor(Ms2ScanNumbers.Count / 3.0);
                 var ms2ScanNumberInMiddleOfRun = Ms2ScanNumbers[indexToGrab];
                 firstMsMsSpectrum = lcmsRun.GetSpectrum(ms2ScanNumberInMiddleOfRun) as ProductSpectrum;
+                if (firstMsMsSpectrum == null) return ActivationMethodCombination.Unsupported;
                 firstMsMsScanNumber = firstMsMsSpectrum.ScanNum;
             }
 
@@ -439,7 +440,7 @@ namespace LiquidBackend.Util
 
             // Treat PQD scans as if they were CID
             if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) firstMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
-            if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) nextMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
+            if (nextMsMsSpectrum != null && nextMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) nextMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
 
             if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
             {
