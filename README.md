@@ -6,6 +6,7 @@ It is described in publication
 (doi: 10.1093/bioinformatics/btx046)
 
 ## Overview
+
 LIQUID provides users with the capability to process high throughput data 
 and contains a customizable target library and scoring model per project needs. 
 The graphical user interface provides visualization of multiple lines of spectral evidence 
@@ -14,18 +15,15 @@ confident identifications of lipid molecular species.
 
 ## Requirements
 
-* .NET 4.5.1 (or newer)
-  * http://www.microsoft.com/en-us/download/details.aspx?id=40773
-* Thermo's MSFileReader library. Download MSFileReader v3.x via these steps:
-  1) Create an account at [Flexnetoperations.com](https://thermo.flexnetoperations.com/control/thmo/login)
-  2) Login 
-  3) Choose "Utility Software". 
-  4) Look for MSFileReader 3.1 SP4 or similar.
-  5) Run the installer and install both the 32-bit and 64-bit versions.
+* .NET 4.6.2 (or newer)
+  * https://www.microsoft.com/en-us/download/details.aspx?id=53344
 
 ## Usage
 
 Instructions for use are described in [LIQUID_installation_operation.pdf](https://github.com/PNNL-Comp-Mass-Spec/LIQUID/blob/master/LIQUID_installation_operation.pdf)
+
+Target libraries are available at https://github.com/PNNL-Comp-Mass-Spec/LIQUID/tree/master/TargetDatabase \
+(and are also included in the .zip file attached to each [Release](https://github.com/PNNL-Comp-Mass-Spec/LIQUID/releases))
 
 ## Contacts
 
@@ -38,3 +36,5 @@ Website: https://panomics.pnl.gov/ or https://omics.pnl.gov
 LIQUID is licensed under the Apache License, Version 2.0; 
 you may not use this file except in compliance with the License.  You may obtain 
 a copy of the License at https://opensource.org/licenses/Apache-2.0
+
+RawFileReader reading tool. Copyright © 2016 by Thermo Fisher Scientific, Inc. All rights reserved.
