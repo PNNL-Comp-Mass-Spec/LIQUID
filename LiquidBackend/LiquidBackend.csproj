@@ -53,9 +53,6 @@
     <Reference Include="MyEMSLReader">
       <HintPath>..\lib\MyEMSLReader.dll</HintPath>
     </Reference>
-    <Reference Include="PNNLOmics">
-      <HintPath>..\lib\PNNLOmics.dll</HintPath>
-    </Reference>
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.97</Version>
     </PackageReference>
