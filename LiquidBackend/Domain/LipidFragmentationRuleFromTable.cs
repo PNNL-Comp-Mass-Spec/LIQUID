@@ -5,7 +5,7 @@ namespace LiquidBackend.Domain
 {
     public class LipidFragmentationRuleFromTable
     {
-        public string lpidSubClass { get; set; }
+        public string lipidSubClass { get; set; }
         public FragmentationMode fragmentationMode { get; set; }
         public string lossType { get; set; }
         public string description1 { get; set; }
@@ -48,11 +48,11 @@ namespace LiquidBackend.Domain
 
         public override string ToString()
         {
-            return this.lpidSubClass + "\t" 
-                       + this.lossType + "\t" 
-                       + this.fragmentationMode + "\t"
-                       + this.diagnostic + "\t"
-                       + this.headerGroup;
+            return lipidSubClass + "\t" +
+                   lossType + "\t" +
+                   fragmentationMode + "\t" +
+                   diagnostic + "\t" +
+                   headerGroup;
         }
     }
 }

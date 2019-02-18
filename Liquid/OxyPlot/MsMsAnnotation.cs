@@ -5,11 +5,11 @@ namespace Liquid.OxyPlot
 {
     public class MsMsAnnotation : TextAnnotation
     {
-        public FragmentationType FragmentionType { get; set; }
+        public FragmentationType FragmentationType { get; set; }
 
         public MsMsAnnotation(FragmentationType fragmentationType)
         {
-            FragmentionType = fragmentationType;
+            FragmentationType = fragmentationType;
         }
     }
 }

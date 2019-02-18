@@ -259,7 +259,7 @@ namespace LiquidBackend.Util
                     secondMsMsSpectrum = lcmsRun.GetSpectrum(i + 1) as ProductSpectrum;
                     if (secondMsMsSpectrum == null) continue;
 
-                    // If m/z values of the MS/MS spectrums do not match, just move on
+                    // If m/z values of the MS/MS spectra do not match, just move on
                     var deltaMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz -
                                   secondMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
                     if (Math.Abs(deltaMz) > 0.01) continue;
@@ -414,7 +414,7 @@ namespace LiquidBackend.Util
             int firstMsMsScanNumber;
             if (Ms1ScanNumbers.Count > 0)
             {
-                // Grab an MS1 Scan thats about 33% through the file so that we get accurate MS2 data
+                // Grab an MS1 Scan that's about 33% through the file so that we get accurate MS2 data
                 var indexToGrab = (int)Math.Floor(Ms1ScanNumbers.Count / 3.0);
                 var ms1ScanNumberInMiddleOfRun = Ms1ScanNumbers[indexToGrab];
 

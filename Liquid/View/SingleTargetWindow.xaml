@@ -65,7 +65,7 @@
                     Header="Single Target"
                     KeyTip="S" />
                 <RibbonTab
-                    x:Name="GloblWorkflowRibbonTab"
+                    x:Name="GlobalWorkflowRibbonTab"
                     Header="Global Analysis"
                     KeyTip="G" />
                 <RibbonTab
@@ -325,7 +325,7 @@
                             Width="Auto"
                             Height="Auto"
                             HorizontalAlignment="Left"
-                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=GloblWorkflowRibbonTab}">
+                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=GlobalWorkflowRibbonTab}">
                             <DockPanel
                                 Width="Auto"
                                 Height="Auto"

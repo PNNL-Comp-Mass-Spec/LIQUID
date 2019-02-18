@@ -37,7 +37,7 @@ namespace LiquidBackend.Util
         {
             IEnumerable<MsMsSearchUnit> msMsSearchUnits = target.GetMsMsSearchUnits();
 
-            // I have to subtract an H for the target Ion since InformedProteomics will assume protenated
+            // I have to subtract an H for the target Ion since InformedProteomics will assume protonated
             var targetIon = new Ion(target.Composition - Composition.Hydrogen, 1);
             var targetMz = target.MzRounded;
             var hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
@@ -154,11 +154,11 @@ namespace LiquidBackend.Util
             var scanTracker = new List<int>(); //track what scans have been included in spectrumSearchResultsList so we don't make duplicate entries for matched CID and HCD
 
             // Find all MS/MS scans
-            var msmsScanNumers = lcmsRun.GetScanNumbers(2);
+            var msmsScanNumbers = lcmsRun.GetScanNumbers(2);
             var spectrumSearchResultList = new List<SpectrumSearchResult>();
-            var maxScans = msmsScanNumers.Count;
+            var maxScans = msmsScanNumbers.Count;
 
-            foreach(var scan in msmsScanNumers)
+            foreach(var scan in msmsScanNumbers)
             {
                 // Lookup the MS/MS Spectrum
                 var MsMsSpectrum = lcmsRun.GetSpectrum(scan) as ProductSpectrum;

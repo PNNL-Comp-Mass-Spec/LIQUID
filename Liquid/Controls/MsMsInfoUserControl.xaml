@@ -71,7 +71,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn
                                     Width="75"
-                                    Binding="{Binding Path=FragmentionType, Mode=OneWay}"
+                                    Binding="{Binding Path=FragmentationType, Mode=OneWay}"
                                     Header="Type" />
                                 <DataGridTextColumn
                                     Width="75"

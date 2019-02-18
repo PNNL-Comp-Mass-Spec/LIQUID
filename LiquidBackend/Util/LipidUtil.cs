@@ -100,7 +100,7 @@ namespace LiquidBackend.Util
 
         public static LipidClass ParseLipidCommonNameIntoClass(string commonName)
         {
-            //Special Cases with paretheses in name go at top
+            //Special Cases with parentheses in name go at top
             if (commonName.Contains("M(IP)2C")) return LipidClass.MIP2C;
 
 
@@ -2009,7 +2009,7 @@ namespace LiquidBackend.Util
             foreach (var rule in lipidFragmentationRules)
             {
                 if (rule.fragmentationMode.Equals(fragmentationMode) &&
-                    rule.lpidSubClass.Equals(lipidSubClass))
+                    rule.lipidSubClass.Equals(lipidSubClass))
                 {
                     lipidFragmentationRulesList.Add(rule);
                 }
