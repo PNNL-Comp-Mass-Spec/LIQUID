@@ -170,8 +170,12 @@ namespace LiquidBackend.IO
 
                     textWriter.WriteLine("Name: {0}; {1}", name, adduct);
                     textWriter.WriteLine("MW: {0}", MW);
+
+                    // ReSharper disable StringLiteralTypo
                     textWriter.WriteLine("PRECURSORMZ: {0}", observedMz);
                     textWriter.WriteLine("RETENTIONTIME: {0}", RT);
+                    // ReSharper restore StringLiteralTypo
+
                     textWriter.WriteLine("FORMULA: {0}", formula);
                     textWriter.WriteLine("Comment: CID");
                     textWriter.WriteLine("Num Peaks: {0}", cidCount);
@@ -195,8 +199,12 @@ namespace LiquidBackend.IO
 
                     textWriter.WriteLine("Name: {0}; {1}", name, adduct);
                     textWriter.WriteLine("MW: {0}", MW);
+
+                    // ReSharper disable StringLiteralTypo
                     textWriter.WriteLine("PRECURSORMZ: {0}", observedMz);
                     textWriter.WriteLine("RETENTIONTIME: {0}", RT);
+                    // ReSharper restore StringLiteralTypo
+
                     textWriter.WriteLine("FORMULA: {0}", formula);
                     textWriter.WriteLine("Comment: HCD");
                     textWriter.WriteLine("Num Peaks: {0}", hcdCount);
@@ -239,12 +247,15 @@ namespace LiquidBackend.IO
                     }
                 }
 
-                //Write meta-data
+                // Write meta-data
                 textWriter.WriteLine("MTD\tmzTabVersion\t1.0 rc5");
                 textWriter.WriteLine("MTD\tmzTab-mode\tComplete");
                 textWriter.WriteLine("MTD\tmzTab-type\tQuantification");
                 textWriter.WriteLine("MTD\tsoftware[1]\t[, , LIQUID, ]");
+
+                // ReSharper disable once StringLiteralTypo
                 textWriter.WriteLine("MTD\tsmallmolecule_search_engine_score[1]\t[, , LIQUID_Score_Analyzer, ]");
+
                 textWriter.WriteLine("MTD\tfixed_mod[1]\t[MS, MS:1002038, unlabeled sample, ]");
                 foreach (var variableMod in mods)
                 {
@@ -252,20 +263,25 @@ namespace LiquidBackend.IO
                 }
                 textWriter.WriteLine("MTD\tquantification_method\t[, , LIQUID_Analysis, ]");
                 textWriter.WriteLine("MTD\tsmall_molecule-quantification_unit\t[PRIDE, PRIDE:0000330, Arbitrary quantification unit, ]");
-                //Get the raw/mzml location
 
+                // Get the raw/mzml location
                 textWriter.WriteLine("MTD\tms_run[1]-location\t{0}", rawFileName); //TODO:
                 textWriter.WriteLine("MTD\tassay[1]-quantification_reagent\t[MS, MS:1002038, unlabeled sample, ]");
                 textWriter.WriteLine("MTD\tassay[1]-ms_run_ref\tms_run[1]");
                 textWriter.WriteLine("MTD\tstudy_variable[1]-assay_refs\tassay[1]");
                 textWriter.WriteLine("MTD\tstudy_variable[1]-description\tLIQUID Quantification");
+
+                // ReSharper disable once StringLiteralTypo
                 textWriter.WriteLine("MTD\tcolunit-small_molecule\tretention_time=[UO, UO:0000031, minute, ]");
                 textWriter.WriteLine("");
 
-                //Write small molecule section headers
-                textWriter.WriteLine("SMH\tidentifier\tchemical_formula\tsmiles\tinchi_key\tdescription\texp_mass_to_charge\tcalc_mass_to_charge\tcharge\tretention_time\ttaxid\tspecies\tdatabase\tdatabase_version\tspectra_ref\tsearch_engine\tbest_search_engine_score[1]\tsearch_engine_score[1]_ms_run[1]\tmodification\tsmallmolecule_abundance_assay[1]\tsmallmolecule_abundance_study_variable[1]\tsmallmolecule_abundance_stdev_study_variable[1]\tsmallmolecule_abundance_std_error_study_variable[1]");
 
-                //Write small molecule section datas
+                // Write small molecule section headers
+                // ReSharper disable StringLiteralTypo
+                textWriter.WriteLine("SMH\tidentifier\tchemical_formula\tsmiles\tinchi_key\tdescription\texp_mass_to_charge\tcalc_mass_to_charge\tcharge\tretention_time\ttaxid\tspecies\tdatabase\tdatabase_version\tspectra_ref\tsearch_engine\tbest_search_engine_score[1]\tsearch_engine_score[1]_ms_run[1]\tmodification\tsmallmolecule_abundance_assay[1]\tsmallmolecule_abundance_study_variable[1]\tsmallmolecule_abundance_stdev_study_variable[1]\tsmallmolecule_abundance_std_error_study_variable[1]");
+                // ReSharper restore StringLiteralTypo
+
+                // Write small molecule section data
                 foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
                 {
 

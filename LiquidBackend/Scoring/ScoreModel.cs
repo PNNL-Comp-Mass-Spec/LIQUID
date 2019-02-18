@@ -78,6 +78,7 @@ namespace LiquidBackend.Scoring
             return lipidScore;
         }
 
+        // ReSharper disable once UnusedMember.Global
         public double ScoreLipidDissimilarity(LipidGroupSearchResult lipidGroupSearchResult)
         {
             var relatedScoreModelUnits = GetRelatedScoreModelUnits(lipidGroupSearchResult);

@@ -120,6 +120,7 @@ namespace LiquidBackend.Scoring
             return liquidScoreModel;
         }
 
+        // ReSharper disable once UnusedMember.Global
         public void AddDatasets(IEnumerable<string> datasetLocations)
         {
             foreach (var datasetLocation in datasetLocations)

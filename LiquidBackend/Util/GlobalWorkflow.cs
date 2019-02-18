@@ -157,6 +157,8 @@ namespace LiquidBackend.Util
 
                 var hcdSpectrum = summedHcdSpec;
                 var cidSpectrum = summedCidSpec;
+
+                // Note: this is unused
                 Spectrum precursorSpectrum = null;
 
                 foreach (var grouping in lipidsGroupedByTarget)
