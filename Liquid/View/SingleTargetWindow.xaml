@@ -57,6 +57,14 @@
                             Click="ExportTargetInfoButtonClick"
                             Header="Export Target Info"
                             ImageSource="..\Images\open-file-icon_32x32.png" />
+                        <RibbonApplicationMenuItem
+                            Click="ExportGlobalResultsButtonClick"
+                            Header="Export Selected Results"
+                            ImageSource="..\Images\open-file-icon_32x32.png" />
+                        <RibbonApplicationMenuItem
+                            Click="ExportAllGlobalResultsButtonClick"
+                            Header="Export All Results"
+                            ImageSource="..\Images\open-file-icon_32x32.png" />
                         <!--<RibbonApplicationMenuItem Header="Build Library" Click="BuildLibraryButtonClick" ImageSource="..\Images\open-file-icon_32x32.png"/> -->
                     </RibbonApplicationMenu>
                 </Ribbon.ApplicationMenu>
