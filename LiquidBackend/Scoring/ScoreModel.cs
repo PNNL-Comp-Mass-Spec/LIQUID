@@ -123,7 +123,7 @@ namespace LiquidBackend.Scoring
 
         private double ScoreSingleFragmentationType(
             IEnumerable<MsMsSearchResult> searchResultList,
-            List<ScoreModelUnit> relatedScoreModelUnits,
+            IReadOnlyCollection<ScoreModelUnit> relatedScoreModelUnits,
             FragmentationType fragmentationType, double maxIntensity)
         {
             double fragmentationTypeScore = 0;
@@ -166,7 +166,7 @@ namespace LiquidBackend.Scoring
 
         private double ScoreSingleFragmentationTypeDissimilarity(
             IEnumerable<MsMsSearchResult> searchResultList,
-            List<ScoreModelUnit> relatedScoreModelUnits,
+            IReadOnlyCollection<ScoreModelUnit> relatedScoreModelUnits,
             FragmentationType fragmentationType,
             double maxIntensity)
         {

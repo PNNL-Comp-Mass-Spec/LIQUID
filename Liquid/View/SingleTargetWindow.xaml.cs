@@ -156,7 +156,7 @@ namespace Liquid.View
                 var run = new Run(empiricalCharacter.ToString());
 
                 // Subscript any numbers
-                if (Char.IsNumber(empiricalCharacter)) run.Typography.Variants = FontVariants.Subscript;
+                if (char.IsNumber(empiricalCharacter)) run.Typography.Variants = FontVariants.Subscript;
 
                 paragraph.Inlines.Add(run);
             }
@@ -267,11 +267,11 @@ namespace Liquid.View
             // Select the best spectrum search result
             if (SingleTargetViewModel.LipidGroupSearchResultList.Count > 0)
             {
-                double currentMz = 0;
-                List<LipidGroupSearchResult> removeList = new List<LipidGroupSearchResult>();
-                foreach (LipidGroupSearchResult entry in SingleTargetViewModel.LipidGroupSearchResultList)
+                var removeList = new List<LipidGroupSearchResult>();
+                foreach (var entry in SingleTargetViewModel.LipidGroupSearchResultList)
                 {
                     var targetMz = entry.LipidTarget.MzRounded;
+                    double currentMz;
                     if (entry.SpectrumSearchResult.PrecursorSpectrum != null)
                     {
                         var massSpectrum = entry.SpectrumSearchResult.PrecursorSpectrum.Peaks;
@@ -285,13 +285,13 @@ namespace Liquid.View
 
                         currentMz = isolationMz;
                     }
-                    double currentPpmError = LipidUtil.PpmError(targetMz, currentMz);
+                    var currentPpmError = LipidUtil.PpmError(targetMz, currentMz);
                     if (Math.Abs(currentPpmError) > Math.Abs(precursorError))
                     {
                         removeList.Add(entry);
                     }
                 }
-                foreach(LipidGroupSearchResult remove in removeList)
+                foreach(var remove in removeList)
                 {
                     SingleTargetViewModel.LipidGroupSearchResultList.Remove(remove);
                 }
@@ -399,8 +399,7 @@ namespace Liquid.View
 
         private void AddFragmentButton_OnClick(object sender, RoutedEventArgs e)
         {
-            double fragmentMz;
-            var validFragment = double.TryParse(FragmentMassTextBox.Text, out fragmentMz);
+            var validFragment = double.TryParse(FragmentMassTextBox.Text, out var fragmentMz);
             var ionType = (string)IonTypeComboBox.SelectedItem;
             if (validFragment)
             {

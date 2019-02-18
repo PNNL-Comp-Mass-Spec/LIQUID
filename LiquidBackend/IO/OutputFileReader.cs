@@ -13,7 +13,7 @@ namespace LiquidBackend.IO
         /// </summary>
         /// <param name="columnString">The line containing the headers.</param>
         /// <returns>A Dictionary mapping column titles to their indices.</returns>
-        protected override Dictionary<string, int> CreateColumnMapping(String columnString)
+        protected override Dictionary<string, int> CreateColumnMapping(string columnString)
         {
             var columnMap = new Dictionary<string, int>();
             var columnTitles = columnString.Split('\t', '\n');
@@ -41,14 +41,14 @@ namespace LiquidBackend.IO
         /// <param name="line">A line containing data representing a Lipid Identification.</param>
         /// <param name="columnMapping">The mapping of column titles to their indices.</param>
         /// <returns>A dictionary pairing common name with the scan the lipid was detected in.</returns>
-        protected override T ParseLine(String line, IDictionary<string, int> columnMapping)
+        protected override T ParseLine(string line, IDictionary<string, int> columnMapping)
         {
             var columns = line.Split('\t', '\n');
 
             if (!columnMapping.ContainsKey(COMMON_NAME)) throw new SystemException("Common Name is required for lipid import.");
             if (!columnMapping.ContainsKey(MSMS_SCAN)) throw new SystemException("MS/MS Scan is required for lipid import.");
             var name = columns[columnMapping[COMMON_NAME]];
-            var scan = Int32.Parse(columns[columnMapping[MSMS_SCAN]]);
+            var scan = int.Parse(columns[columnMapping[MSMS_SCAN]]);
             //var Id = new T();
             var ID = new Tuple<string, int>(name, scan);
             //Id.Add(name,scan);

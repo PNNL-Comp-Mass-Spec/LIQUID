@@ -93,7 +93,7 @@ namespace LiquidBackend.IO
 
             if (columnMapping.ContainsKey(FRAGMENTATION_MODE))
             {
-                string fragmentationMode = columns[columnMapping[FRAGMENTATION_MODE]];
+                var fragmentationMode = columns[columnMapping[FRAGMENTATION_MODE]];
                 if (fragmentationMode.Equals("Positive")) fragmentationRule.fragmentationMode = FragmentationMode.Positive;
                 else if (fragmentationMode.Equals("Negative")) fragmentationRule.fragmentationMode = FragmentationMode.Negative;
                 else throw new SystemException("FragmentationMode is required to be Positive or Negative: " + line);

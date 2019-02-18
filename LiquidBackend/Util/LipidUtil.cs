@@ -112,8 +112,7 @@ namespace LiquidBackend.Util
                 if (commonNameSplit[1].Contains("sulf")) return LipidClass.Sulfatide;
             }
 
-            LipidClass lipidClass;
-            var classFound = Enum.TryParse(classAbbrev, true, out lipidClass);
+            var classFound = Enum.TryParse(classAbbrev, true, out LipidClass lipidClass);
 
             if (!classFound)
             {

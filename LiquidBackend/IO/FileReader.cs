@@ -57,7 +57,7 @@ namespace LiquidBackend.IO
             return list;
         }
 
-        protected abstract Dictionary<string, int> CreateColumnMapping(String columnString);
-        protected abstract T ParseLine(String line, IDictionary<string, int> columnMapping);
+        protected abstract Dictionary<string, int> CreateColumnMapping(string columnString);
+        protected abstract T ParseLine(string line, IDictionary<string, int> columnMapping);
     }
 }

@@ -72,8 +72,7 @@ namespace LiquidBackend.Scoring
                             var specificFragment = new SpecificFragment(lipidClass, lipidType, fragment, fragmentationMode, FragmentationType.CID);
 
                             // Either update the observation list or create a new one
-                            List<double> observationList;
-                            if (observationDictionary.TryGetValue(specificFragment, out observationList))
+                            if (observationDictionary.TryGetValue(specificFragment, out var observationList))
                             {
                                 observationList.Add(intensity);
                             }
@@ -98,8 +97,7 @@ namespace LiquidBackend.Scoring
                             var specificFragment = new SpecificFragment(lipidClass, lipidType, fragment, fragmentationMode, FragmentationType.HCD);
 
                             // Either update the observation list or create a new one
-                            List<double> observationList;
-                            if (observationDictionary.TryGetValue(specificFragment, out observationList))
+                            if (observationDictionary.TryGetValue(specificFragment, out var observationList))
                             {
                                 observationList.Add(intensity);
                             }

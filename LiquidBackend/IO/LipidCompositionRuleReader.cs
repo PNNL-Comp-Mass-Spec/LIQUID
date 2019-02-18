@@ -1,9 +1,5 @@
 ﻿using LiquidBackend.Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LiquidBackend.IO
 {
@@ -154,74 +150,62 @@ namespace LiquidBackend.IO
             if (columnMapping.ContainsKey(IONIZATION_MODE)) lipid.IonizationMode = columns[columnMapping[IONIZATION_MODE]];
             if (columnMapping.ContainsKey(NUM_CHAINS))
             {
-                int numChains = 0;
-                int.TryParse(columns[columnMapping[NUM_CHAINS]], out numChains);
+                int.TryParse(columns[columnMapping[NUM_CHAINS]], out var numChains);
                 lipid.NumChains = numChains;
             }
             if (columnMapping.ContainsKey(CONTAINS_ETHER))
             {
-                int containsEther = 0;
-                int.TryParse(columns[columnMapping[CONTAINS_ETHER]], out containsEther);
+                int.TryParse(columns[columnMapping[CONTAINS_ETHER]], out var containsEther);
                 lipid.ContainsEther = (containsEther == 1);
             }
             if (columnMapping.ContainsKey(CONTAINS_DIETHER))
             {
-                int containsDiether = 0;
-                int.TryParse(columns[columnMapping[CONTAINS_DIETHER]], out containsDiether);
+                int.TryParse(columns[columnMapping[CONTAINS_DIETHER]], out var containsDiether);
                 lipid.ContainsDiether = (containsDiether == 1);
             }
             if (columnMapping.ContainsKey(CONTAINS_PLASMALOGEN))
             {
-                int containsPlasmalogen = 0;
-                int.TryParse(columns[columnMapping[CONTAINS_PLASMALOGEN]], out containsPlasmalogen);
+                int.TryParse(columns[columnMapping[CONTAINS_PLASMALOGEN]], out var containsPlasmalogen);
                 lipid.ContainsPlasmalogen = (containsPlasmalogen == 1);
             }
             if (columnMapping.ContainsKey(CONTAINS_LCB))
             {
-                int containsLcb = 0;
-                int.TryParse(columns[columnMapping[CONTAINS_LCB]], out containsLcb);
+                int.TryParse(columns[columnMapping[CONTAINS_LCB]], out var containsLcb);
                 lipid.ContainsLCB = (containsLcb == 1);
             }
             if (columnMapping.ContainsKey(CONTAINS_LCB_PLUS_OH))
             {
-                int containsLcbPlusOh = 0;
-                int.TryParse(columns[columnMapping[CONTAINS_LCB_PLUS_OH]], out containsLcbPlusOh);
+                int.TryParse(columns[columnMapping[CONTAINS_LCB_PLUS_OH]], out var containsLcbPlusOh);
                 lipid.ContainsLCBPlusOH = (containsLcbPlusOh == 1);
             }
             if (columnMapping.ContainsKey(CONTAINS_LCB_MINUS_OH))
             {
-                int containsLcbMinusOh = 0;
-                int.TryParse(columns[columnMapping[CONTAINS_LCB_MINUS_OH]], out containsLcbMinusOh);
+                int.TryParse(columns[columnMapping[CONTAINS_LCB_MINUS_OH]], out var containsLcbMinusOh);
                 lipid.ContainsLCBMinusOH = (containsLcbMinusOh == 1);
             }
             if (columnMapping.ContainsKey(IS_OXO_CHO))
             {
-                int isOxoCho = 0;
-                int.TryParse(columns[columnMapping[IS_OXO_CHO]], out isOxoCho);
-                lipid.IsOxoCHO = isOxoCho == 1 ? true : false;
+                int.TryParse(columns[columnMapping[IS_OXO_CHO]], out var isOxoCho);
+                lipid.IsOxoCHO = isOxoCho == 1;
             }
             if (columnMapping.ContainsKey(IS_OXO_COOH))
             {
-                int isOxoCooh = 0;
-                int.TryParse(columns[columnMapping[IS_OXO_COOH]], out isOxoCooh);
-                lipid.IsOxoCOOH = isOxoCooh == 1 ? true : false;
+                int.TryParse(columns[columnMapping[IS_OXO_COOH]], out var isOxoCooh);
+                lipid.IsOxoCOOH = isOxoCooh == 1;
             }
             if (columnMapping.ContainsKey(NUM_OH))
             {
-                int numOH = 0;
-                int.TryParse(columns[columnMapping[NUM_OH]], out numOH);
+                int.TryParse(columns[columnMapping[NUM_OH]], out var numOH);
                 lipid.NumOH = numOH;
             }
             if (columnMapping.ContainsKey(CONTAINS_OOH))
             {
-                int containsOOH = 0;
-                int.TryParse(columns[columnMapping[CONTAINS_OOH]], out containsOOH);
+                int.TryParse(columns[columnMapping[CONTAINS_OOH]], out var containsOOH);
                 lipid.ContainsOOH = (containsOOH == 1);
             }
             if (columnMapping.ContainsKey(CONTAINS_F2ISOP))
             {
-                int containsF2IsoP = 0;
-                int.TryParse(columns[columnMapping[CONTAINS_F2ISOP]], out containsF2IsoP);
+                int.TryParse(columns[columnMapping[CONTAINS_F2ISOP]], out var containsF2IsoP);
                 lipid.ContainsF2IsoP = (containsF2IsoP == 1);
             }
 

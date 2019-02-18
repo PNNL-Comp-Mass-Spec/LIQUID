@@ -1,9 +1,5 @@
 ﻿using InformedProteomics.Backend.Data.Composition;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LiquidBackend.Domain
 {
@@ -38,7 +34,7 @@ namespace LiquidBackend.Domain
 
         public override string ToString()
         {
-            StringBuilder compRule = new StringBuilder();
+            var compRule = new StringBuilder();
             compRule.Append(LipidClass + "\t");
             compRule.Append(LipidSubClass + "\t");
             compRule.Append(Category + "\t");

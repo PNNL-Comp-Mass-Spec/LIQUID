@@ -6,7 +6,7 @@ namespace Liquid.Controls
     /// <summary>
     /// Interaction logic for MsOneInfoUserControl.xaml
     /// </summary>
-    public partial class MsOneInfoUserControl : UserControl
+    public partial class MsOneInfoUserControl
     {
         public MsOneInfoViewModel MsOneInfoViewModel { get; }
 

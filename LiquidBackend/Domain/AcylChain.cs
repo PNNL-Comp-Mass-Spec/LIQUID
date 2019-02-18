@@ -61,7 +61,7 @@ namespace LiquidBackend.Domain
 
             if (hydroPeroxideMatch.Success)
             {
-                
+
                 if (Regex.IsMatch(hydroPeroxideMatch.Value, @"\(OOH\)"))
                 {
                     AcylChainType = AcylChainType.OOH;
@@ -83,8 +83,7 @@ namespace LiquidBackend.Domain
                 {
                     var hydroxy = new Regex(@"\(\d+\(OH\)\)");
                     var x = Regex.Match(hydroxyMatch.Value, @"\d+");
-                    int hydroxyCount;
-                    var successfulParse = Int32.TryParse(x.Value, out hydroxyCount);
+                    var successfulParse = int.TryParse(x.Value, out var hydroxyCount);
                     if (successfulParse) HydroxyCount = hydroxyCount;
                     acylChainString = hydroxy.Replace(acylChainString, "");
                 }
@@ -92,8 +91,7 @@ namespace LiquidBackend.Domain
                 {
                     var hydroxy = new Regex(@"\(\d+OH\)");
                     var x = Regex.Match(hydroxyMatch.Value, @"\d+");
-                    int hydroxyPos;
-                    var successfulParse = Int32.TryParse(x.Value, out hydroxyPos);
+                    var successfulParse = int.TryParse(x.Value, out var hydroxyPos);
                     if (successfulParse)
                     {
                         HydroxyPosition = hydroxyPos;
@@ -111,12 +109,11 @@ namespace LiquidBackend.Domain
 
             else if (methylMatch.Success)
             {
-                string[] methylGroups = methylMatch.Groups[1].Value.Split(',');
+                var methylGroups = methylMatch.Groups[1].Value.Split(',');
                 foreach (var m in methylGroups)
                 {
-                    int pos;
                     var x = Regex.Match(m, @"\d+");
-                    var successfulParse = Int32.TryParse(x.Value, out pos);
+                    var successfulParse = int.TryParse(x.Value, out var pos);
                     if (successfulParse)
                     {
                         if (Regex.IsMatch(m, @"\d+Me"))
@@ -168,12 +165,12 @@ namespace LiquidBackend.Domain
             if (AcylChainType == AcylChainType.Hydroxy)
             {
                 if (HydroxyPosition < 0) return carbonDoubleBond + "(OH)";
-                else return carbonDoubleBond + string.Format("({0}OH)", HydroxyPosition);
+                return carbonDoubleBond + string.Format("({0}OH)", HydroxyPosition);
             }
             if (MethylCount > 0)
             {
-                string end = "(";
-                foreach (int pos in MethylPositions)
+                var end = "(";
+                foreach (var pos in MethylPositions)
                 {
                     end += string.Format("{0}Me,", pos);
                 }

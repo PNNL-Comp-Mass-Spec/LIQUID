@@ -170,8 +170,7 @@ namespace LiquidBackend.Util
                 var spectrum2 = lcmsRun.GetSpectrum(scan - 1);
                 if (spectrum1 != null && spectrum1.MsLevel == 2)
                 {
-                    var productSpectrum = spectrum1 as ProductSpectrum;
-                    if (productSpectrum != null)
+                    if (spectrum1 is ProductSpectrum productSpectrum)
                     {
                         var deltaMz = productSpectrum.IsolationWindow.IsolationWindowTargetMz - MsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
                         if (Math.Abs(deltaMz) < float.Epsilon)
@@ -182,8 +181,7 @@ namespace LiquidBackend.Util
                 }
                 if (spectrum2 != null && spectrum2.MsLevel == 2)
                 {
-                    var productSpectrum = spectrum2 as ProductSpectrum;
-                    if (productSpectrum != null)
+                    if (spectrum2 is ProductSpectrum productSpectrum)
                     {
                         var deltaMz = productSpectrum.IsolationWindow.IsolationWindowTargetMz - MsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
                         if (Math.Abs(deltaMz) < float.Epsilon)

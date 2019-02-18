@@ -7,13 +7,13 @@ namespace LiquidBackend.Util
     {
         public static string FindLocationOfDataset(string datasetName)
         {
-            var reader = new MSSQLReader()
+            var reader = new MSSQLReader
             {
                 Server = "gigasax",
                 Database = "DMS5",
                 SQLText = "SELECT * FROM V_Mage_Dataset_List WHERE Dataset = '" + datasetName + "'"
             };
-            var fileFilter = new FileListFilter()
+            var fileFilter = new FileListFilter
             {
                 FileColumnName = "Name",
                 OutputColumnList = "Item|+|text, Name|+|text, Folder, Dataset, Dataset_ID, *",

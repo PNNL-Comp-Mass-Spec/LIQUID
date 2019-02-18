@@ -29,7 +29,7 @@ namespace LiquidBackend.Domain
         public int acylChainNumDoubleBonds { get; set; }
         public int acylChainHydroxyPosition { get; set; }
 
-        public List<Int32> targetAcylChainsIndices { get; set; }
+        public List<int> targetAcylChainsIndices { get; set; }
 
         public bool diagnostic { get; set; }
 

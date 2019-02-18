@@ -21,28 +21,27 @@ namespace LiquidBackend.Domain
         public bool headerGroup { get; set; }
         public Composition GetComposition(int numCarbons, int numDoubleBonds)
         {
-            return new Composition(this.C.Evaluate(numCarbons, numDoubleBonds),
-                                   this.H.Evaluate(numCarbons, numDoubleBonds),
-                                   this.N.Evaluate(numCarbons, numDoubleBonds),
-                                   this.O.Evaluate(numCarbons, numDoubleBonds),
-                                   this.S.Evaluate(numCarbons, numDoubleBonds),
-                                   this.P.Evaluate(numCarbons, numDoubleBonds));
+            return new Composition(C.Evaluate(numCarbons, numDoubleBonds),
+                                   H.Evaluate(numCarbons, numDoubleBonds),
+                                   N.Evaluate(numCarbons, numDoubleBonds),
+                                   O.Evaluate(numCarbons, numDoubleBonds),
+                                   S.Evaluate(numCarbons, numDoubleBonds),
+                                   P.Evaluate(numCarbons, numDoubleBonds));
         }
 
         public MsMsSearchUnit GetMsMsSearchUnit(double precursorMz, int numCarbons = 0, int numDoubleBonds = 0, AcylChain acylChain = null)
         {
-            if (this.lossType.Equals("PI"))
+            if (lossType.Equals("PI"))
             {
-                return new MsMsSearchUnit(this.GetComposition(numCarbons, numDoubleBonds).Mass, this.description1, acylChain, this.diagnostic);
+                return new MsMsSearchUnit(GetComposition(numCarbons, numDoubleBonds).Mass, description1, acylChain, diagnostic);
             }
-            else if (this.lossType.Equals("NL"))
+
+            if (lossType.Equals("NL"))
             {
-                return new MsMsSearchUnit(precursorMz - this.GetComposition(numCarbons, numDoubleBonds).Mass, "M-" + this.description1, acylChain, this.diagnostic);
+                return new MsMsSearchUnit(precursorMz - GetComposition(numCarbons, numDoubleBonds).Mass, "M-" + description1, acylChain, diagnostic);
             }
-            else
-            {
-                return null;    
-            }
+
+            return null;
 
         }
 

@@ -34,7 +34,7 @@ namespace LiquidBackend.Scoring
                 return LipidType.CompareTo(other.LipidType);
 
             if (!FragmentDescription.Equals(other.FragmentDescription))
-                return String.Compare(FragmentDescription, other.FragmentDescription, StringComparison.Ordinal);
+                return string.Compare(FragmentDescription, other.FragmentDescription, StringComparison.Ordinal);
 
             if (!FragmentationMode.Equals(other.FragmentationMode))
                 return FragmentationMode.CompareTo(other.FragmentationMode);
