@@ -82,7 +82,22 @@ namespace Liquid.ViewModel
         }
 
         /// <summary>
-        /// Show the program version in the MsDataLoadProgress textbox
+        /// Clear the search results
+        /// </summary>
+        public void InitializeSearchResults()
+        {
+            if (LipidGroupSearchResultList == null)
+            {
+                LipidGroupSearchResultList = new List<LipidGroupSearchResult>();
+            }
+            else
+            {
+                LipidGroupSearchResultList.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Show the program version in the MsDataLoadProgress TextBox
         /// </summary>
         private void ShowProgramVersion()
         {
@@ -298,7 +313,7 @@ namespace Liquid.ViewModel
             var targetsToProcess = LipidTargetList.Where(x => x.LipidTarget.FragmentationMode == fragmentationMode);
 
             // Run global analysis
-            LipidGroupSearchResultList = new List<LipidGroupSearchResult>();
+            InitializeSearchResults();
 
             IEnumerable<IGrouping<double, LipidGroupSearchResult>> resultsGrouped;
             List<LipidGroupSearchResult> lipidGroupSearchResultList;
