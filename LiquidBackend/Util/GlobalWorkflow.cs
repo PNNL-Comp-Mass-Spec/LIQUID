@@ -42,7 +42,7 @@ namespace LiquidBackend.Util
             int MS2Frames = ImsRun.GetNumberOfFrames(DataReader.FrameType.MS2);
 
             var gp = ImsRun.GetGlobalParams();
-            var framelist = ImsRun.GetMasterFrameList();
+            var frameList = ImsRun.GetMasterFrameList();
 
             ActivationMethodCombination activationMethodCombination = MS2Frames > 0 ? ActivationMethodCombination.CidOnly : ActivationMethodCombination.Unsupported;
             if (activationMethodCombination == ActivationMethodCombination.Unsupported) throw new SystemException("Unsupported activation method.");
@@ -80,7 +80,7 @@ namespace LiquidBackend.Util
                 /*
                 for (int lcScan = feature.LcStart; lcScan <= feature.LcEnd; lcScan++)
                 {
-                    if (framelist[lcScan] == DataReader.FrameType.MS1)
+                    if (frameList[lcScan] == DataReader.FrameType.MS1)
                     {
                         for (int imsScan = feature.ImsStart; imsScan <= feature.ImsEnd; imsScan++)
                         {
@@ -138,15 +138,15 @@ namespace LiquidBackend.Util
                 summedSpec = lcmsRun.GetSummedSpectrum(cidScans);
                 var summedCidSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.CID };
 
-                var HcdPresent = summedHcdSpec.Peaks.Any();
-                var CidPresent = summedCidSpec.Peaks.Any();
+                var hcdPresent = summedHcdSpec.Peaks.Any();
+                var cidPresent = summedCidSpec.Peaks.Any();
 
-                if (HcdPresent)
+                if (hcdPresent)
                 {
                     summedHcdSpec.IsolationWindow = new IsolationWindow(mz, hcdMassError, hcdMassError);
 
                 }
-                if (CidPresent)
+                if (cidPresent)
                 {
                     summedCidSpec.IsolationWindow = new IsolationWindow(mz, cidMassError, cidMassError);
                 }

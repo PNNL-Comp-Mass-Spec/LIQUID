@@ -490,14 +490,14 @@ namespace Liquid.View
 
             RenderTargetBitmap result = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
 
-            DrawingVisual drawingvisual = new DrawingVisual();
-            using (DrawingContext context = drawingvisual.RenderOpen())
+            DrawingVisual drawingVisual = new DrawingVisual();
+            using (DrawingContext context = drawingVisual.RenderOpen())
             {
                 context.DrawRectangle(new VisualBrush(view), null, new Rect(new Point(), size));
                 context.Close();
             }
 
-            result.Render(drawingvisual);
+            result.Render(drawingVisual);
             return result;
         }
          * */

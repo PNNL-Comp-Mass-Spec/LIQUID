@@ -20,14 +20,14 @@ namespace LiquidBackend.IO
         private const string PHOSPHORUS = "P";
         private const string ADDITIONAL_ELEMENT = "ADDITIONAL_ELEMENT";
         private const string COUNT_OF_CHAINS = "COUNTOFCHAINS";
-        private const string COUNT_OF_STANDARD_ACYLSCHAINS = "COUNTOFSTANDARDACYLSCHAINS";
+        private const string COUNT_OF_STANDARD_ACYL_CHAINS = "COUNTOFSTANDARDACYLSCHAINS";
         private const string CONTAINS_HYDROXY = "CONTAINSHYDROXY";
         private const string SIALIC = "SIALIC";
-        private const string ACYLCHAINTYPE = "ACYLCHAIN.ACYLCHAINTYPE";
-        private const string ACYLCHAIN_NUMCARBONS = "ACYLCHAIN.NUMCARBONS";
-        private const string ACYLCHAIN_NUMDOUBLEBONDS = "ACYLCHAIN.NUMDOUBLEBONDS";
-        private const string ACYLCHAIN_HYDROXYPOSITION = "ACYLCHAIN.HYDROXYPOSITION";
-        private const string TARGET_ACYLCHAINS = "TARGET_ACYLCHAINS";
+        private const string ACYL_CHAIN_TYPE = "ACYLCHAIN.ACYLCHAINTYPE";
+        private const string ACYL_CHAIN_NUM_CARBONS = "ACYLCHAIN.NUMCARBONS";
+        private const string ACYL_CHAIN_NUM_DOUBLE_BONDS = "ACYLCHAIN.NUMDOUBLEBONDS";
+        private const string ACYL_CHAIN_HYDROXY_POSITION = "ACYLCHAIN.HYDROXYPOSITION";
+        private const string TARGET_ACYL_CHAINS = "TARGET_ACYLCHAINS";
 
         protected override Dictionary<string, int> CreateColumnMapping(string columnString)
         {
@@ -79,29 +79,29 @@ namespace LiquidBackend.IO
                     case COUNT_OF_CHAINS:
                         columnMap.Add(COUNT_OF_CHAINS, i);
                         break;
-                    case COUNT_OF_STANDARD_ACYLSCHAINS:
-                        columnMap.Add(COUNT_OF_STANDARD_ACYLSCHAINS, i);
+                    case COUNT_OF_STANDARD_ACYL_CHAINS:
+                        columnMap.Add(COUNT_OF_STANDARD_ACYL_CHAINS, i);
                         break;
                     case CONTAINS_HYDROXY:
                         columnMap.Add(CONTAINS_HYDROXY, i);
                         break;
-                    case ACYLCHAINTYPE:
-                        columnMap.Add(ACYLCHAINTYPE, i);
+                    case ACYL_CHAIN_TYPE:
+                        columnMap.Add(ACYL_CHAIN_TYPE, i);
                         break;
-                    case ACYLCHAIN_NUMCARBONS:
-                        columnMap.Add(ACYLCHAIN_NUMCARBONS, i);
+                    case ACYL_CHAIN_NUM_CARBONS:
+                        columnMap.Add(ACYL_CHAIN_NUM_CARBONS, i);
                         break;
-                    case ACYLCHAIN_NUMDOUBLEBONDS:
-                        columnMap.Add(ACYLCHAIN_NUMDOUBLEBONDS, i);
+                    case ACYL_CHAIN_NUM_DOUBLE_BONDS:
+                        columnMap.Add(ACYL_CHAIN_NUM_DOUBLE_BONDS, i);
                         break;
-                    case ACYLCHAIN_HYDROXYPOSITION:
-                        columnMap.Add(ACYLCHAIN_HYDROXYPOSITION, i);
+                    case ACYL_CHAIN_HYDROXY_POSITION:
+                        columnMap.Add(ACYL_CHAIN_HYDROXY_POSITION, i);
                         break;
                     case SIALIC:
                         columnMap.Add(SIALIC, i);
                         break;
-                    case TARGET_ACYLCHAINS:
-                        columnMap.Add(TARGET_ACYLCHAINS, i);
+                    case TARGET_ACYL_CHAINS:
+                        columnMap.Add(TARGET_ACYL_CHAINS, i);
                         break;
                 }
             }
@@ -146,29 +146,29 @@ namespace LiquidBackend.IO
                     fragmentationRule.additionalElement = columns[columnMapping[ADDITIONAL_ELEMENT]];
                 if (columnMapping.ContainsKey(COUNT_OF_CHAINS) && !columns[columnMapping[COUNT_OF_CHAINS]].Equals(""))
                     fragmentationRule.conditionForCountOfChains = new ConditionForInteger(columns[columnMapping[COUNT_OF_CHAINS]]);
-                if (columnMapping.ContainsKey(COUNT_OF_STANDARD_ACYLSCHAINS) && !columns[columnMapping[COUNT_OF_STANDARD_ACYLSCHAINS]].Equals(""))
-                    fragmentationRule.conditionForCountOfStandardAcylsChains = new ConditionForInteger(columns[columnMapping[COUNT_OF_STANDARD_ACYLSCHAINS]]);
+                if (columnMapping.ContainsKey(COUNT_OF_STANDARD_ACYL_CHAINS) && !columns[columnMapping[COUNT_OF_STANDARD_ACYL_CHAINS]].Equals(""))
+                    fragmentationRule.conditionForCountOfStandardAcylsChains = new ConditionForInteger(columns[columnMapping[COUNT_OF_STANDARD_ACYL_CHAINS]]);
                 if (columnMapping.ContainsKey(CONTAINS_HYDROXY) && !columns[columnMapping[CONTAINS_HYDROXY]].Equals(""))
                     fragmentationRule.conditionForContainsHydroxy = new ConditionForInteger(columns[columnMapping[CONTAINS_HYDROXY]]);
-                if (columnMapping.ContainsKey(SIALIC) && !columns[columnMapping[SIALIC]].Equals("")) 
+                if (columnMapping.ContainsKey(SIALIC) && !columns[columnMapping[SIALIC]].Equals(""))
                     fragmentationRule.sialic = columns[columnMapping[SIALIC]];
-                if (columnMapping.ContainsKey(ACYLCHAINTYPE) && !columns[columnMapping[ACYLCHAINTYPE]].Equals("")) 
-                    fragmentationRule.acylChainType = columns[columnMapping[ACYLCHAINTYPE]];
-                if (columnMapping.ContainsKey(ACYLCHAIN_NUMCARBONS) && !columns[columnMapping[ACYLCHAIN_NUMCARBONS]].Equals("")) 
-                    fragmentationRule.acylChainNumCarbons = Int32.Parse(columns[columnMapping[ACYLCHAIN_NUMCARBONS]]);
-                if (columnMapping.ContainsKey(ACYLCHAIN_NUMDOUBLEBONDS) && !columns[columnMapping[ACYLCHAIN_NUMDOUBLEBONDS]].Equals("")) 
-                    fragmentationRule.acylChainNumDoubleBonds = Int32.Parse(columns[columnMapping[ACYLCHAIN_NUMDOUBLEBONDS]]);
-                if (columnMapping.ContainsKey(ACYLCHAIN_HYDROXYPOSITION) && !columns[columnMapping[ACYLCHAIN_HYDROXYPOSITION]].Equals(""))
-                    fragmentationRule.acylChainHydroxyPosition = Int32.Parse(columns[columnMapping[ACYLCHAIN_HYDROXYPOSITION]]);
-                if (columnMapping.ContainsKey(TARGET_ACYLCHAINS) && !columns[columnMapping[TARGET_ACYLCHAINS]].Equals(""))
+                if (columnMapping.ContainsKey(ACYL_CHAIN_TYPE) && !columns[columnMapping[ACYL_CHAIN_TYPE]].Equals(""))
+                    fragmentationRule.acylChainType = columns[columnMapping[ACYL_CHAIN_TYPE]];
+                if (columnMapping.ContainsKey(ACYL_CHAIN_NUM_CARBONS) && !columns[columnMapping[ACYL_CHAIN_NUM_CARBONS]].Equals(""))
+                    fragmentationRule.acylChainNumCarbons = int.Parse(columns[columnMapping[ACYL_CHAIN_NUM_CARBONS]]);
+                if (columnMapping.ContainsKey(ACYL_CHAIN_NUM_DOUBLE_BONDS) && !columns[columnMapping[ACYL_CHAIN_NUM_DOUBLE_BONDS]].Equals(""))
+                    fragmentationRule.acylChainNumDoubleBonds = int.Parse(columns[columnMapping[ACYL_CHAIN_NUM_DOUBLE_BONDS]]);
+                if (columnMapping.ContainsKey(ACYL_CHAIN_HYDROXY_POSITION) && !columns[columnMapping[ACYL_CHAIN_HYDROXY_POSITION]].Equals(""))
+                    fragmentationRule.acylChainHydroxyPosition = int.Parse(columns[columnMapping[ACYL_CHAIN_HYDROXY_POSITION]]);
+                if (columnMapping.ContainsKey(TARGET_ACYL_CHAINS) && !columns[columnMapping[TARGET_ACYL_CHAINS]].Equals(""))
                 {
-                    if (columns[columnMapping[TARGET_ACYLCHAINS]].Equals("All"))
+                    if (columns[columnMapping[TARGET_ACYL_CHAINS]].Equals("All"))
                     {
                         fragmentationRule.targetAcylChainsIndices = Enumerable.Range(1, 100).ToList();  // TODO: for any number of chains
                     }
-                    else fragmentationRule.targetAcylChainsIndices = columns[columnMapping[TARGET_ACYLCHAINS]].Split(',').Select(Int32.Parse).ToList();
+                    else fragmentationRule.targetAcylChainsIndices = columns[columnMapping[TARGET_ACYL_CHAINS]].Split(',').Select(int.Parse).ToList();
                 }
-                    
+
             }
             catch (Exception e)
             {

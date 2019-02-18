@@ -174,7 +174,7 @@ namespace Liquid.ViewModel
 
             //var isotopicProfile = this.CurrentInformedResultUnit.IsotopicProfile;
 
-            //foreach (var peak in isotopicProfile.Peaklist)
+            //foreach (var peak in isotopicProfile.PeakList)
             //{
             //  DataPoint dataPoint = new DataPoint(peak.XValue, peak.Height);
             //  isotopicPeakSeries.Points.Add(dataPoint);

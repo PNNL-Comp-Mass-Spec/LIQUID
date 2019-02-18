@@ -157,10 +157,10 @@ namespace Liquid.ViewModel
             }
         }
 
-        public void OnUpdateTargetAdductFragmentation(Adduct adduct, FragmentationMode fragmode)
+        public void OnUpdateTargetAdductFragmentation(Adduct adduct, FragmentationMode fragMode)
         {
             TargetAdduct = adduct;
-            TargetFragmentationMode = fragmode;
+            TargetFragmentationMode = fragMode;
             OnPropertyChanged("TargetAdduct");
             OnPropertyChanged("TargetFragmentationMode");
         }

@@ -434,7 +434,7 @@ namespace LiquidBackend.IO
                     var msmsScan = hcd?.ScanNum ?? cid.ScanNum;
                     var precursorScan = lcmsRun.GetPrecursorScanNum(msmsScan);
                     var apexRt = result.RetentionTime;
-                    var precRT = lcmsRun.GetElutionTime(precursorScan);
+                    var precursorRT = lcmsRun.GetElutionTime(precursorScan);
                     var net = result.NormalizedElutionTime;
                     var mz = hcd?.IsolationWindow.IsolationWindowTargetMz ?? cid.IsolationWindow.IsolationWindowTargetMz;
 
@@ -449,7 +449,7 @@ namespace LiquidBackend.IO
                     line.Append(targetAdduct + "\t");
                     line.Append(mz + "\t");
                     line.Append(apexRt + "\t");
-                    line.Append(precRT + "\t");
+                    line.Append(precursorRT + "\t");
                     line.Append(net + "\t");
                     line.Append(intensity + "\t");
                     line.Append(msmsScan + "\t");
