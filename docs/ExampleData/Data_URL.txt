@@ -1,0 +1,4 @@
+Download UDN_BG_B_P_QC-NIST_L_011_POS_22Sep16_Lola-WCSH8005_excerpt.mzML.gz from GitHub:
+https://github.com/PNNL-Comp-Mass-Spec/LIQUID/tree/master/docs/ExampleData
+
+Optionally also download the PBF file, though LIQUID will auto-generate this file if missing.
