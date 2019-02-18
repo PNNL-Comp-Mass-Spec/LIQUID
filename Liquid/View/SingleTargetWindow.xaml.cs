@@ -193,32 +193,31 @@ namespace Liquid.View
         {
             if (SingleTargetViewModel.LipidGroupSearchResultList == null)
             {
-                MessageBox.Show("Please process a file prior to loading lipid identifications.");
+                MessageBox.Show("Please process a file prior to loading lipid identifications. This is required to initialize various objects and to assure that a targets list is loaded.");
+                return;
             }
-            else
+
+            // Create OpenFileDialog and Set filter for file extension and default file extension
+            var dialog = new VistaOpenFileDialog
             {
-                // Create OpenFileDialog and Set filter for file extension and default file extension
-                var dialog = new VistaOpenFileDialog
-                {
-                    DefaultExt = ".tsv",
-                    Filter = "Tab Separated Files (.tsv)|*.tsv|Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-                };
+                DefaultExt = ".tsv",
+                Filter = "Tab Separated Files (.tsv)|*.tsv|Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            };
 
-                // Get the selected file name and display in a TextBox
-                var result = dialog.ShowDialog();
-                if (result.HasValue && result.Value)
-                {
-                    // Disable processing button while file is loading
-                    ProcessAllTargetsButton.IsEnabled = false;
+            // Get the selected file name and display in a TextBox
+            var result = dialog.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                // Disable processing button while file is loading
+                ProcessAllTargetsButton.IsEnabled = false;
 
-                    // Open file
-                    var fileName = dialog.FileName;
+                // Open file
+                var fileName = dialog.FileName;
 
-                    await Task.Run(() => SingleTargetViewModel.LoadLipidIdentifications(fileName));
+                await Task.Run(() => SingleTargetViewModel.LoadLipidIdentifications(fileName));
 
-                    // Enable processing all targets button if applicable
-                    if (SingleTargetViewModel.LcMsRun != null) ProcessAllTargetsButton.IsEnabled = true;
-                }
+                // Enable processing all targets button if applicable
+                if (SingleTargetViewModel.LcMsRun != null) ProcessAllTargetsButton.IsEnabled = true;
             }
         }
 
