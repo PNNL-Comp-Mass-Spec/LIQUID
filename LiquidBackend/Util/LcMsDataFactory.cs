@@ -22,25 +22,6 @@ namespace LiquidBackend.Util
             progress.ProgressChanged += Progress_ProgressChanged;
 
             var run = PbfLcMsRun.GetLcMsRun(rawFilePath, progress);
-
-            /*
-            string ext = Path.GetExtension(rawFilePath);
-            switch (ext.ToLower())
-            {
-                case ".raw":
-                    run = PbfLcMsRun.GetLcMsRun(rawFilePath, MassSpecDataType.XCaliburRun);
-                    break;
-                case ".mzml":
-                    run = PbfLcMsRun.GetLcMsRun(rawFilePath, MassSpecDataType.MzMLFile);
-                    break;
-                case ".gz":
-                    if (rawFilePath.ToLower().EndsWith(".mzml.gz"))
-                    {
-                        run = PbfLcMsRun.GetLcMsRun(rawFilePath, MassSpecDataType.MzMLFile);
-                    }
-                    break;
-            }*/
-
             return run;
         }
 

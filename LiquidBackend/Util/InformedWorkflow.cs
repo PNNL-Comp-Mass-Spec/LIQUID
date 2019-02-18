@@ -45,7 +45,6 @@ namespace LiquidBackend.Util
             var activationMethodCombination = GlobalWorkflow.FigureOutActivationMethodCombination(lcmsRun);
 
             // Find out which MS/MS scans have a precursor m/z that matches the target
-            //List<int> matchingMsMsScanNumbers = lcmsRun.GetFragmentationSpectraScanNums(targetIon).ToList();
             var matchingMsMsScanNumbers = lcmsRun.GetFragmentationSpectraScanNums(targetMz).ToList();
 
             var spectrumSearchResultList = new List<SpectrumSearchResult>();
