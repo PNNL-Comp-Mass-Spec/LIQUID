@@ -20,7 +20,7 @@ confident identifications of lipid molecular species.
 
 ## Usage
 
-Instructions for use are described in [LIQUID_installation_operation.pdf](https://github.com/PNNL-Comp-Mass-Spec/LIQUID/blob/master/LIQUID_installation_operation.pdf)
+Instructions for use are described in [LIQUID_installation_operation.pdf](https://github.com/PNNL-Comp-Mass-Spec/LIQUID/blob/master/docs/LIQUID_installation_operation.pdf)
 
 Target libraries are available at https://github.com/PNNL-Comp-Mass-Spec/LIQUID/tree/master/TargetDatabase \
 (and are also included in the .zip file attached to each [Release](https://github.com/PNNL-Comp-Mass-Spec/LIQUID/releases))
