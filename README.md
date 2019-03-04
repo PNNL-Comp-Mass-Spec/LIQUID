@@ -18,6 +18,13 @@ confident identifications of lipid molecular species.
 * .NET 4.6.2 (or newer)
   * https://www.microsoft.com/en-us/download/details.aspx?id=53344
 
+## Downloads
+
+Download a .zip file with LIQUID.exe from the releases page:
+* https://github.com/PNNL-Comp-Mass-Spec/LIQUID/releases
+  * Includes the LIQUID executable and other required files
+  * Also includes three target database files and an example results file
+
 ## Usage
 
 Instructions for use are described in [LIQUID_installation_operation.pdf](https://github.com/PNNL-Comp-Mass-Spec/LIQUID/blob/master/docs/LIQUID_installation_operation.pdf)
