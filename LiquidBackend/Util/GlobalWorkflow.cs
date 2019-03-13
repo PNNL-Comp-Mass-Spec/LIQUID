@@ -126,15 +126,15 @@ namespace LiquidBackend.Util
 
             var ms2scans = lcmsRun.GetScanNumbers(2);
             var ms2spectra = ms2scans.Select(scan => lcmsRun.GetSpectrum(scan) as ProductSpectrum).ToList();
-            var uniqueMz = (from spectrum in ms2spectra select spectrum.IsolationWindow.IsolationWindowTargetMz).ToList().Distinct().ToList();
+            var uniqueMz = (from spectrum in ms2spectra select Math.Max(spectrum.IsolationWindow.IsolationWindowTargetMz, (double)spectrum.IsolationWindow.MonoisotopicMz)).ToList().Distinct().ToList();
 
             foreach (var mz in uniqueMz)
             {
-                var hcdScans = ms2spectra.Where(x => Math.Abs(x.IsolationWindow.IsolationWindowTargetMz - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.HCD).Select(x => x.ScanNum).ToList();
+                var hcdScans = ms2spectra.Where(x => Math.Abs(Math.Max(x.IsolationWindow.IsolationWindowTargetMz, (double)x.IsolationWindow.MonoisotopicMz) - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.HCD).Select(x => x.ScanNum).ToList();
                 var summedSpec = lcmsRun.GetSummedSpectrum(hcdScans);
                 var summedHcdSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.HCD };
 
-                var cidScans = ms2spectra.Where(x => Math.Abs(x.IsolationWindow.IsolationWindowTargetMz - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.CID).Select(x => x.ScanNum).ToList();
+                var cidScans = ms2spectra.Where(x => Math.Abs(Math.Max(x.IsolationWindow.IsolationWindowTargetMz, (double)x.IsolationWindow.MonoisotopicMz) - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.CID).Select(x => x.ScanNum).ToList();
                 summedSpec = lcmsRun.GetSummedSpectrum(cidScans);
                 var summedCidSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.CID };
 
@@ -262,8 +262,12 @@ namespace LiquidBackend.Util
                     if (secondMsMsSpectrum == null) continue;
 
                     // If m/z values of the MS/MS spectra do not match, just move on
-                    var deltaMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz -
-                                  secondMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
+                    var firstMsMsSpectrumPrecursor = Math.Max(firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz,
+                        (double)firstMsMsSpectrum.IsolationWindow.MonoisotopicMz);
+                    var secondMsMsSpectrumPrecursor = Math.Max(secondMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz,
+                        (double)secondMsMsSpectrum.IsolationWindow.MonoisotopicMz);
+
+                    var deltaMz = firstMsMsSpectrumPrecursor - secondMsMsSpectrumPrecursor;
                     if (Math.Abs(deltaMz) > 0.01) continue;
                 }
 
@@ -294,7 +298,10 @@ namespace LiquidBackend.Util
                     cidSpectrum = firstMsMsSpectrum;
                 }
 
-                var msMsPrecursorMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
+
+                var msMsPrecursorMz = Math.Max(firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz,
+                    (double)firstMsMsSpectrum.IsolationWindow.MonoisotopicMz);
+
                 var mzToSearchTolerance = hcdMassError * msMsPrecursorMz / 1000000;
                 var lowMz = msMsPrecursorMz - mzToSearchTolerance;
                 var highMz = msMsPrecursorMz + mzToSearchTolerance;
