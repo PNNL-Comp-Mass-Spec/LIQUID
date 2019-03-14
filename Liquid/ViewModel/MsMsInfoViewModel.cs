@@ -4,6 +4,7 @@ using System.Linq;
 using InformedProteomics.Backend.Data.Spectrometry;
 using Liquid.OxyPlot;
 using LiquidBackend.Domain;
+using LiquidBackend.Util;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -76,7 +77,7 @@ namespace Liquid.ViewModel
 
             var plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + 
                 " // Precursor Scan - " + parentScan + 
-                " (" + Math.Max(productSpectrum.IsolationWindow.IsolationWindowTargetMz, (double) productSpectrum.IsolationWindow.MonoisotopicMz).ToString("0.0000") + " m/z)";
+                " (" + GlobalWorkflow.GetMsMsPrecursorMz(productSpectrum).ToString("0.0000") + " m/z)";
 
             var plotModel = new PlotModel
             {

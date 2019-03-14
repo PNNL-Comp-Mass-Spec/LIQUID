@@ -126,15 +126,15 @@ namespace LiquidBackend.Util
 
             var ms2scans = lcmsRun.GetScanNumbers(2);
             var ms2spectra = ms2scans.Select(scan => lcmsRun.GetSpectrum(scan) as ProductSpectrum).ToList();
-            var uniqueMz = (from spectrum in ms2spectra select Math.Max(spectrum.IsolationWindow.IsolationWindowTargetMz, (double)spectrum.IsolationWindow.MonoisotopicMz)).ToList().Distinct().ToList();
+            var uniqueMz = (from spectrum in ms2spectra select GetMsMsPrecursorMz(spectrum)).ToList().Distinct().ToList();
 
             foreach (var mz in uniqueMz)
             {
-                var hcdScans = ms2spectra.Where(x => Math.Abs(Math.Max(x.IsolationWindow.IsolationWindowTargetMz, (double)x.IsolationWindow.MonoisotopicMz) - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.HCD).Select(x => x.ScanNum).ToList();
+                var hcdScans = ms2spectra.Where(x => Math.Abs(GetMsMsPrecursorMz(x)- mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.HCD).Select(x => x.ScanNum).ToList();
                 var summedSpec = lcmsRun.GetSummedSpectrum(hcdScans);
                 var summedHcdSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.HCD };
 
-                var cidScans = ms2spectra.Where(x => Math.Abs(Math.Max(x.IsolationWindow.IsolationWindowTargetMz, (double)x.IsolationWindow.MonoisotopicMz) - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.CID).Select(x => x.ScanNum).ToList();
+                var cidScans = ms2spectra.Where(x => Math.Abs(GetMsMsPrecursorMz(x) - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.CID).Select(x => x.ScanNum).ToList();
                 summedSpec = lcmsRun.GetSummedSpectrum(cidScans);
                 var summedCidSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.CID };
 
@@ -228,6 +228,16 @@ namespace LiquidBackend.Util
             return lipidGroupSearchResultList;
         }
 
+        public static double GetMsMsPrecursorMz(ProductSpectrum s)
+        {
+            var a = (double?)s.IsolationWindow.IsolationWindowTargetMz;
+            var b = s.IsolationWindow.MonoisotopicMz;
+            if (b == null || b == 0) return (double)a;
+            else if (a == null || a == 0) return (double)b;
+            //return Nullable.Compare(a, b) > 0 ? (double)a : (double)b;
+            else return (double)a;
+        }
+
         public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
         {
             //TextWriter textWriter = new StreamWriter("outputNeg.tsv");
@@ -262,11 +272,9 @@ namespace LiquidBackend.Util
                     if (secondMsMsSpectrum == null) continue;
 
                     // If m/z values of the MS/MS spectra do not match, just move on
-                    var firstMsMsSpectrumPrecursor = Math.Max(firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz,
-                        (double)firstMsMsSpectrum.IsolationWindow.MonoisotopicMz);
-                    var secondMsMsSpectrumPrecursor = Math.Max(secondMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz,
-                        (double)secondMsMsSpectrum.IsolationWindow.MonoisotopicMz);
-
+                    var firstMsMsSpectrumPrecursor = GetMsMsPrecursorMz(firstMsMsSpectrum);
+                    var secondMsMsSpectrumPrecursor = GetMsMsPrecursorMz(secondMsMsSpectrum);
+                    
                     var deltaMz = firstMsMsSpectrumPrecursor - secondMsMsSpectrumPrecursor;
                     if (Math.Abs(deltaMz) > 0.01) continue;
                 }
@@ -298,9 +306,7 @@ namespace LiquidBackend.Util
                     cidSpectrum = firstMsMsSpectrum;
                 }
 
-
-                var msMsPrecursorMz = Math.Max(firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz,
-                    (double)firstMsMsSpectrum.IsolationWindow.MonoisotopicMz);
+                var msMsPrecursorMz = GetMsMsPrecursorMz(firstMsMsSpectrum);
 
                 var mzToSearchTolerance = hcdMassError * msMsPrecursorMz / 1000000;
                 var lowMz = msMsPrecursorMz - mzToSearchTolerance;
