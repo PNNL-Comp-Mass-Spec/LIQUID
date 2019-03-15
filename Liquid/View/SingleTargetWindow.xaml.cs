@@ -47,6 +47,7 @@ namespace Liquid.View
             ExportAllGlobalResultsButton.Visibility = Visibility.Hidden;
             ExportFragmentResultsButton.Visibility = Visibility.Hidden;
             FragmentSearchResultsDataGrid.Visibility = Visibility.Hidden;
+            IncludeMsMsPeaksInOutputCheckbox.Visibility = Visibility.Hidden;
 
             // Show the program version in the progress box
             SingleTargetViewModel.ClearProgress();
@@ -263,6 +264,7 @@ namespace Liquid.View
             LipidGroupSearchResultsDataGrid.Visibility = Visibility.Visible;
             ExportGlobalResultsButton.Visibility = Visibility.Visible;
             ExportAllGlobalResultsButton.Visibility = Visibility.Visible;
+            IncludeMsMsPeaksInOutputCheckbox.Visibility = Visibility.Visible;
 
             // Select the best spectrum search result
             if (SingleTargetViewModel.LipidGroupSearchResultList.Count > 0)

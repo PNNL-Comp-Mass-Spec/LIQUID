@@ -73,13 +73,14 @@ namespace LiquidBackend.IO
             }
         }
 
-        public static void OutputResults(List<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null, bool append = false, bool writeHeader = true)
+        public static void OutputResults(List<LipidGroupSearchResult> lipidGroupSearchResults, string fileLocation, string rawFileName, IProgress<int> progress = null, bool append = false, bool writeHeader = true,
+            bool includeObservedAndTheoreticalPeaks = false)
         {
             if (File.Exists(fileLocation) && !append) File.Delete(fileLocation);
 
             if (Path.GetExtension(fileLocation) == ".tsv")
             {
-                OutputResultsToTsv(lipidGroupSearchResults, fileLocation, rawFileName, progress, writeHeader);
+                OutputResultsToTsv(lipidGroupSearchResults, fileLocation, rawFileName, progress, writeHeader, includeObservedAndTheoreticalPeaks);
             }
             else if (Path.GetExtension(fileLocation) == ".mzTab")
             {
@@ -355,14 +356,18 @@ namespace LiquidBackend.IO
             string fileLocation,
             string rawFileName,
             IProgress<int> progress = null,
-            bool writeHeader = true)
+            bool writeHeader = true,
+            bool includeObservedAndTheoreticalPeaks = false)
         {
 
             using (TextWriter textWriter = new StreamWriter(fileLocation, true))
             {
                 if (writeHeader)
                 {
-                    textWriter.WriteLine("Raw Data File\tLM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tApex RT\tPrecursor RT\tApex NET\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID");
+                    var header = "Raw Data File\tLM_ID\tCommon Name\tAdduct\tCategory\tMain Class\tSub Class\tExact m/z\tFormula\tObserved m/z\tppm Error\tApex RT\tPrecursor RT\tApex NET\tIntensity\tPeak Area\tScore\tMS/MS Scan\tPrecursor Scan\tApex Scan\tPUBCHEM_SID\tPUBCHEM_CID\tINCHI_KEY\tKEGG_ID\tHMDBID\tCHEBI_ID\tLIPIDAT_ID\tLIPIDBANK_ID";
+                    if (includeObservedAndTheoreticalPeaks)
+                        header += "\tObserved MS/MS Peaks\tTheoretical MS/MS Peaks";
+                    textWriter.WriteLine(header);
                 }
                 var progressCounter = 0;
 
@@ -387,6 +392,38 @@ namespace LiquidBackend.IO
                     var score = lipidGroupSearchResult.Score;
                     var msmsScan = spectrumSearchResult.HcdSpectrum?.ScanNum ?? spectrumSearchResult.CidSpectrum.ScanNum;
                     var ppmError = LipidUtil.PpmError(targetMz, observedMz);
+
+                    var observedPeaks = string.Empty;
+                    var theoreticalPeaks = string.Empty;
+
+                    if (includeObservedAndTheoreticalPeaks)
+                    {
+                        var delim = ";;";
+
+                        var allObservedPeaks = new List<string>();
+                        foreach (var cidPeak in spectrumSearchResult.MatchingCidResults())
+                        {
+                            allObservedPeaks.Add(string.Format("{0},{1},{2},{3}",
+                                FragmentationType.CID,
+                                Math.Round(cidPeak.ObservedPeak.Mz, 4),
+                                Math.Round(cidPeak.ObservedPeak.Intensity, 2),
+                                cidPeak.TheoreticalPeak.DescriptionForUi));
+                        }
+
+                        foreach (var hcdPeak in spectrumSearchResult.MatchingHcdResults())
+                        {
+                            allObservedPeaks.Add(string.Format("{0},{1},{2},{3}",
+                                FragmentationType.HCD,
+                                Math.Round(hcdPeak.ObservedPeak.Mz, 4),
+                                Math.Round(hcdPeak.ObservedPeak.Intensity, 2),
+                                hcdPeak.TheoreticalPeak.DescriptionForUi));
+                        }
+
+                        var allTheoreticalPeaks = lipidTarget.SortedMsMsSearchUnits.Select(x => string.Format("{0},{1}", Math.Round(x.Mz, 4), x.DescriptionForUi));
+
+                        observedPeaks = string.Join(delim, allObservedPeaks);
+                        theoreticalPeaks = string.Join(delim, allTheoreticalPeaks);
+                    }
 
                     foreach (var lipid in lipidGroupSearchResult.LipidList)
                     {
@@ -419,6 +456,12 @@ namespace LiquidBackend.IO
                         line.Append(lipid.ChebiId + "\t");
                         line.Append(lipid.LipidatId + "\t");
                         line.Append(lipid.LipidBankId + "\t");
+
+                        if (includeObservedAndTheoreticalPeaks)
+                        {
+                            line.Append(observedPeaks + "\t");
+                            line.Append(theoreticalPeaks + "\t");
+                        }
 
                         textWriter.WriteLine(line.ToString());
                     }

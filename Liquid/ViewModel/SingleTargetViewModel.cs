@@ -46,6 +46,7 @@ namespace Liquid.ViewModel
         public string MsDataLoadProgress { get; private set; }
         public bool IsIms { get; private set; }
         public bool AverageSpec { get; set; }
+        public bool IncludeMsMsPeaks { get; set; }
 
         public SingleTargetViewModel()
         {
@@ -60,6 +61,7 @@ namespace Liquid.ViewModel
             LipidIdentifications = new List<Tuple<string, int>>();
             ScoreModel = ScoreModelSerialization.Deserialize("DefaultScoringModel.xml");
             AverageSpec = false;
+            IncludeMsMsPeaks = false;
             // load lipid rules
             LipidRules.LoadLipidRules("DefaultCompositionRules.txt", "DefaultFragmentationRules.txt");
 
@@ -404,14 +406,14 @@ namespace Liquid.ViewModel
         {
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
             var resultsToExport = LipidGroupSearchResultList.Where(x => x.ShouldExport).ToList();
-            LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation, Path.GetFileName(RawFilePath), progress);
+            LipidGroupSearchResultWriter.OutputResults(resultsToExport, fileLocation, Path.GetFileName(RawFilePath), progress, false, true, IncludeMsMsPeaks);
             progress.Report(0);
         }
 
         public void OnExportAllGlobalResults(string fileLocation)
         {
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
-            LipidGroupSearchResultWriter.OutputResults(LipidGroupSearchResultList, fileLocation, Path.GetFileName(RawFilePath), progress);
+            LipidGroupSearchResultWriter.OutputResults(LipidGroupSearchResultList, fileLocation, Path.GetFileName(RawFilePath), progress, false, true, IncludeMsMsPeaks);
             progress.Report(0);
         }
 

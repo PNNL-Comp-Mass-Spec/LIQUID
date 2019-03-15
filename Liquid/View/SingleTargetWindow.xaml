@@ -450,24 +450,42 @@
                                         Header="M/Z" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button
-                                x:Name="ExportGlobalResultsButton"
-                                Width="140"
-                                Height="23"
-                                Margin="0,5,0,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Click="ExportGlobalResultsButtonClick"
-                                Content="Export Selected Results" />
-                            <Button
-                                x:Name="ExportAllGlobalResultsButton"
-                                Width="140"
-                                Height="23"
-                                Margin="0,5,0,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Click="ExportAllGlobalResultsButtonClick"
-                                Content="Export All Results" />
+                            <DockPanel
+                                Height="Auto"
+                                Width="Auto"
+                                Margin="5,0,0,0">
+                                <StackPanel DockPanel.Dock="Left">
+                                    <Button
+                                        x:Name="ExportGlobalResultsButton"
+                                        Width="140"
+                                        Height="23"
+                                        Margin="0,5,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Click="ExportGlobalResultsButtonClick"
+                                        Content="Export Selected Results" />
+                                    <Button
+                                        x:Name="ExportAllGlobalResultsButton"
+                                        Width="140"
+                                        Height="23"
+                                        Margin="0,5,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Click="ExportAllGlobalResultsButtonClick"
+                                        Content="Export All Results" />
+                                </StackPanel>
+                                <CheckBox 
+                                    x:Name="IncludeMsMsPeaksInOutputCheckbox"
+                                    Width="100"
+                                    Margin="5,5,0,5"
+                                    VerticalAlignment="Center" 
+                                    IsChecked="{Binding Path=IncludeMsMsPeaks, Mode=TwoWay}" >
+                                    <TextBlock
+                                        Text="Include MS/MS peaks (.tsv only)"
+                                        TextWrapping="Wrap">                                        
+                                    </TextBlock>
+                                </CheckBox>
+                            </DockPanel>
                         </StackPanel>
                         <StackPanel
                             Width="Auto"
