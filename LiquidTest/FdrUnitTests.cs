@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using LiquidBackend.Domain;
 using LiquidBackend.IO;
 using LiquidBackend.Util;
@@ -12,6 +13,12 @@ namespace LiquidTest
 {
     public class FdrUnitTests
     {
+
+        [OneTimeSetUp]
+        public void setup()
+        {
+            LipidRules.LoadLipidRules("DefaultCompositionRules.txt", "DefaultFragmentationRules.txt");
+        }
 
         /// <summary>
         /// Run the files for verification of new scoring modelb
@@ -803,6 +810,331 @@ namespace LiquidTest
                     writer.WriteLine();
                 }
             }
+        }
+
+        // "TargetsType"
+        public enum tt
+        {
+            // environmental 
+            ENV,
+
+            // human
+            HUM
+        }
+
+        [Test]
+        public void RunAndAggregateResultsPositive()
+        {
+            var posDatasets = new Dictionary<string, tt>
+            {
+                #region positive_datasets
+                    { "UDN_BG_B_P_QC-NIST_L_011_POS_22Sep16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_BG_B_P_QC-Pool_L_014_POS_22Sep16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_Pilot2_P_P1_A_UDN743456_L_024_POS_04Oct16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_Pilot2_P_P2_A_UDN676680_L_026_POS_04Oct16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_Pilot2_P_A_QC_NIST_L_022_POS_04Oct16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_BG_B_P_QC-NIST_L_058_POS_24Sep16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_BG_B_P_QC-Pool_L_105_POS_26Sep16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_BG_B_P_QC-Pool_L_216_POS_02Oct16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_BG_B_P_RVR0146_L_123_POS_28Sep16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_BG_B_P_VU-036911139_L_210_POS_01Oct16_Lola-WCSH8005", tt.HUM },
+                    { "NASA_ISS_F_TP3_D20_50_R1_90_Pos_17May18_Lola-WCSH7804", tt.ENV },
+                    { "NASA_EC_F_TP1_D5_10_R1_17_Pos_17May18_Lola-WCSH7804", tt.ENV },
+                    { "NASA_EC_F_TP3_D20_50_R1_47_Pos_17May18_Lola-WCSH7804", tt.ENV },
+                    { "NASA_ISS_F_TP1_D5_10_R1_60_Pos_17May18_Lola-WCSH7804", tt.ENV },
+                    { "Agile_Rhodo_BIS3_18h_cell_R1_L_POS_17Oct17_Lola-WCSH5805", tt.ENV },
+                    { "Agile_Rhodo_GB2_18h_cell_R3_L_POS_17Oct17_Lola-WCSH5805", tt.ENV },
+                    { "Agile_Rhodo_bis14_48h_cell_R2_L_POS_17Oct17_Lola-WCSH5805", tt.ENV },
+                    { "Agile_Rhodo_WT_18h_cell_R3_L_POS_17Oct17_Lola-WCSH5805", tt.ENV },
+                    { "BetaMarker_Cyto_24h_1622_Lipid_POS_09May17_Lola-WCSH7914", tt.HUM },
+                    { "BetaMarker_Cyto_24h_1693_Lipid_POS_09May17_Lola-WCSH7914", tt.HUM },
+                    { "BetaMarker_noCyto_24h_1622_Lipid_POS_09May17_Lola-WCSH7914", tt.HUM },
+                    { "BetaMarker_noCyto_24h_1693_Lipid_POS_09May17_Lola-WCSH7914", tt.HUM },
+                    { "49259_Ncrassa_L00_3_Lip_45_Pos_27Mar18_Lola-WCSH7804", tt.ENV },
+                    { "49259_Ncrassa_D04_2_Lip_44_Pos_27Mar18_Lola-WCSH7804", tt.ENV },
+                    { "49259_Ncrassa_D10_3_Lip_03_Pos_27Mar18_Brandi-WCSH7804", tt.ENV },
+                    { "EMSL49444_Rich_Isogenie_Lipid_7_POS_25Apr17_Lola-WCSH7906", tt.ENV },
+                    { "EMSL49444_Rich_Isogenie_Lipid_8_POS_25Apr17_Lola-WCSH7906", tt.ENV },
+                    { "EMSL49444_Rich_Isogenie_Lipid_10_POS_25Apr17_Lola-WCSH7906", tt.ENV },
+                    { "49483_Harv_Organic_1_L_POS_11Sep17_Lola-WCSH7909", tt.ENV },
+                    { "49483_Harv_Mineral_3_L_POS_11Sep17_Lola-WCSH7909", tt.ENV },
+                    { "ExtTest_ACHN_MPLEx_1_L_Pos_29May18_Lola-WCSH7804", tt.HUM },
+                    { "ExtTest_TK10_MPLEx_1_L_Pos_29May18_Lola-WCSH7804", tt.HUM },
+                    { "hLM_Biop_D002_L_POS_22June17_Lola-WCSH7914", tt.HUM },
+                    { "hLM_Biop_D015_L_POS_22June17_Lola-WCSH7914", tt.HUM },
+                    { "hLM_Biop_D027_L_POS_22June17_Lola-WCSH7914", tt.HUM },
+                    { "hLM_Biop_D047_L_POS_22June17_Lola-WCSH7914", tt.HUM },
+                    { "hLM_Biop_D087_L_POS_22June17_Lola-WCSH7914", tt.HUM },
+                    { "hLm_HTC_D036_EPI_1_L_POS_30Jul17_Lola-WCSH7909", tt.HUM },
+                    { "hLm_HTC_D036_MES_1_L_POS_30Jul17_Lola-WCSH7909", tt.HUM },
+                    { "hLm_HTC_D036_MIC_1_L_POS_30Jul17_Lola-WCSH7909", tt.HUM },
+                    { "hLm_HTC_D036_PMX_1_L_POS_30Jul17_Lola-WCSH7909", tt.HUM },
+                    { "hLm_HTC_D019_END_1_L_POS_30Jul17_Lola-WCSH7909", tt.HUM },
+                    { "hLm_HTC_D019_EPI_2_L_POS_30Jul17_Lola-WCSH7909", tt.HUM },
+                    { "hLm_HTC_D019_MES_1_L_POS_30Jul17_Lola-WCSH7909", tt.HUM },
+                    { "hLm_HTC_D019_MIC_2_L_POS_30Jul17_Lola-WCSH7909", tt.HUM },
+                    { "hLm_HTC_D019_PMX_1_L_POS_30Jul17_Lola-WCSH7909", tt.HUM },
+                    { "Marco_Soils_Lipids_12_POS_13Feb18_Brandi-WCSH5801", tt.ENV },
+                    { "Marco_Soils_Lipids_17_POS_13Feb18_Brandi-WCSH5801", tt.ENV },
+                    { "Marco_Soils_Lipids_31_POS_13Feb18_Brandi-WCSH5801", tt.ENV },
+                    { "Marco_Soils_Lipids_44_POS_13Feb18_Brandi-WCSH5801", tt.ENV },
+                    { "KidneyAtlas_Pilot_Human_01_Pos_11Apr18_Lola-WCSH7804", tt.HUM },
+                    { "KidneyAtlas_Pilot_Human_02_Pos_11Apr18_Lola-WCSH7804", tt.HUM },
+                    { "KidneyAtlas_Pilot_Human_03_Pos_11Apr18_Lola-WCSH7804", tt.HUM },
+                    { "BIDMC-51-Lipid-Velos-POS_25Jan17_Lola-WCSH7905", tt.HUM },
+                    { "BIDMC-Lipid-P3-Velos-POS_25Jan17_Lola-WCSH7905", tt.HUM },
+                    { "BIDMC-Lipid-P4-Velos-POS_25Jan17_Lola-WCSH7905", tt.HUM },
+                    { "BIDMC-82-Lipid-Velos-POS_25Jan17_Lola-WCSH7905", tt.HUM },
+                    { "NICHD_PG_D5_02_POS_09May17_Lola-WCSH7914", tt.HUM },
+                    { "NICHD_PG_D5_07_POS_09May17_Lola-WCSH7914", tt.HUM },
+                    { "NICHD_PG_D6_03_POS_09May17_Lola-WCSH7914", tt.HUM },
+                    { "NICHD_PG_D7_02_POS_09May17_Lola-WCSH7914", tt.HUM },
+                    { "K-Con-21-2_Lipids_POS_24Feb17_Lola-WCSH7905", tt.ENV },
+                    { "K-Con-128-2_Lipids_POS_24Feb17_Lola-WCSH7905", tt.ENV },
+                    { "K-post-30-3_Lipids_POS_24Feb17_Lola-WCSH7905", tt.ENV },
+                    { "K-post-68-1_Lipids_POS_24Feb17_Lola-WCSH7905", tt.ENV },
+                    { "K-pre-150-1_Lipids_POS_24Feb17_Lola-WCSH7905", tt.ENV },
+                    { "K-pre-176-2_Lipids_POS_24Feb17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7018_Mut_F_B_L_021_POS_03Mar17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7018_Mut_M_B_L_008_POS_03Mar17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7019_Ctl_F_B_L_009_POS_03Mar17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7019_Ctl_M_B_L_003_POS_03Mar17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7019_Mut_F_B_L_014_POS_03Mar17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7019_Mut_M_B_L_016_POS_03Mar17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_iPLA2-VIA_delta174_L_Run1_POS_15Feb17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_iPLA2-VIA_GR_L_Run1_POS_15Feb17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_iPLA2-VIA_PE8_L_Run1_POS_15Feb17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_iPLA2-VIA_Vps26-delta174_L_Run1_POS_15Feb17_Lola-WCSH7905", tt.ENV },
+                    { "Sporid_Cell_A_40H_2_L_025_POS_10Jan18_Brandi-WCSH5801", tt.ENV },
+                    { "Sporid_Cell_G_24H_1_L_023_POS_10Jan18_Brandi-WCSH5801", tt.ENV },
+                    { "Sporid_Cell_G-X_66H_3_L_011_POS_10Jan18_Brandi-WCSH5801", tt.ENV },
+                    { "Sporid_Cell_pCA_90H_1_L_024_POS_10Jan18_Brandi-WCSH5801", tt.ENV },
+                    { "Sporid_Cell_X_90H_2_L_006_POS_10Jan18_Brandi-WCSH5801", tt.ENV },
+                    { "Paraquat_Brain_34_C1_POS_24Feb17_Lola-WCSH7905", tt.HUM },
+                    { "Paraquat_Brain_401_D1_POS_24Feb17_Lola-WCSH7905", tt.HUM },
+                    { "CPTAC_GBM_CPT0002410003_L_007_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0079790013_L_044_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0209440010_L_032_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0228220011_L_008_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0168270013_L_063_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0162060004_L_077_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0204340004_L_055_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0204420004_L_023_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0204380005_L_057_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0204400004_L_068_POS_03Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_pel_Neff_L_2_Pos_04Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_pel_Neff_L_3_Pos_04Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_pel_T4_L_2_Pos_04Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_pel_T4_L_1_Pos_04Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_ves_Neff_L_1_Pos_04Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_ves_Neff_L_3_Pos_04Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_ves_T4_L_1_Pos_04Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_ves_T4_L_3_Pos_04Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "DARPA_Lip_P1_T30_L1T_064_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P1_T30_L3M_070_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P2_T30_L2B_027_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P2_T30_W3T_051_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P2_T30_W1M_024_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P3_T30_W1B_031_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P6_T60_L3T_052_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P4_T60_L3M_015_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P6_T60_L2B_005_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P5_T60_W2T_008_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P4_T60_W3M_105_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P4_T60_W2T_086_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P5_T60_W2B_023_Pos_24Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "mLM_Elinav_BALF_GF_2_L_Pos_21Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_BALF_GF_3_L_Pos_21Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_BALF_SPF_1_L_Pos_21Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_LL_GF_3_L_Pos_22Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_LL_SPF_5_L_Pos_22Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_ROL_GF_3_L_Pos_22Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_ROL_SPF_4_L_Pos_22Feb19_Brandi-WCSH7811", tt.HUM },
+                #endregion
+            };
+
+            RunWorkflowAndOutputDifferentTargets(
+                @"C:\Users\gibe617\Documents\liquid\TargetDatabase\Global_ENV_Dec2018_POS_v13.txt",
+                @"C:\Users\gibe617\Documents\liquid\TargetDatabase\Global_Dec2017_POS_v12.txt",
+                @"C:\Data\Liquid\Original\POS_ENV",
+                @"C:\Data\Liquid\Original\POS",
+                 posDatasets);
+        }
+
+        [Test]
+        public void RunAndAggregateResultsNegative()
+        {
+            var negDatasets = new Dictionary<string, tt>
+            {
+                #region negative_datasets
+                    { "UDN_BG_B_P_QC-NIST_L_011_NEG_07Oct16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_BG_B_P_QC-Pool_L_014_NEG_07Oct16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_Pilot2_P_P1_A_UDN743456_L_024_NEG_19Oct16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_Pilot2_P_P1_A_UDN676680_L_018_NEG_19Oct16_Lola-WCSH8005", tt.HUM },
+                    { "UDN_Pilot2_P_A_QC_NIST_L_022_NEG_19Oct16_Lola-WCSH8005",         tt.HUM },
+                    { "UDN_BG_B_P_QC-NIST_L_058_NEG_09Oct16_Lola-WCSH8005",             tt.HUM },
+                    { "UDN_BG_B_P_QC-Pool_L_105_NEG_11Oct16_Lola-WCSH8005",             tt.HUM },
+                    { "UDN_BG_B_P_QC-Pool_L_216_NEG_17Oct16_Lola-WCSH8005",             tt.HUM },
+                    { "UDN_BG_B_P_RVR0146_L_123_NEG_13Oct16_Lola-WCSH8005",             tt.HUM },
+                    { "UDN_BG_B_P_VU-036911139_L_210_NEG_16Oct16_Lola-WCSH8005",        tt.HUM },
+                    { "NASA_ISS_F_TP3_D20_50_R1_90_Neg_18May18_Lola-WCSH7804",          tt.ENV },
+                    { "NASA_EC_F_TP1_D5_10_R1_17_Neg_18May18_Lola-WCSH7804",            tt.ENV },
+                    { "NASA_EC_F_TP3_D20_50_R1_47_Neg_18May18_Lola-WCSH7804",           tt.ENV },
+                    { "NASA_ISS_F_TP1_D5_10_R1_60_Neg_18May18_Lola-WCSH7804",           tt.ENV },
+                    { "Agile_Rhodo_BIS3_18h_cell_R1_L_NEG_21Oct17_Lola-WCSH5805",       tt.ENV },
+                    { "Agile_Rhodo_GB2_18h_cell_R3_L_NEG_21Oct17_Lola-WCSH5805",        tt.ENV },
+                    { "Agile_Rhodo_bis14_48h_cell_R2_L_NEG_21Oct17_Lola-WCSH5805",      tt.ENV },
+                    { "Agile_Rhodo_WT_18h_cell_R3_L_NEG_21Oct17_Lola-WCSH5805",         tt.ENV },
+                    { "BetaMarker_Cyto_24h_1622_Lipid_NEG_08May17_Lola-WCSH7914",       tt.HUM },
+                    { "BetaMarker_Cyto_24h_1693_Lipid_NEG_08May17_Lola-WCSH7914",       tt.HUM },
+                    { "BetaMarker_noCyto_24h_1622_Lipid_NEG_08May17_Lola-WCSH7914",     tt.HUM },
+                    { "BetaMarker_noCyto_24h_1693_Lipid_NEG_08May17_Lola-WCSH7914",     tt.HUM },
+                    { "49259_Ncrassa_L00_3_Lip_45_NEG_29Mar18_Lola-WCSH7804",           tt.ENV },
+                    { "49259_Ncrassa_D04_2_Lip_44_NEG_29Mar18_Lola-WCSH7804",           tt.ENV },
+                    { "49259_Ncrassa_D10_3_Lip_03_NEG_29Mar18_Lola-WCSH7804",           tt.ENV },
+                    { "EMSL49444_Rich_Isogenie_Lipid_7_NEG_01May17_Lola-WCSH7906",      tt.ENV },
+                    { "EMSL49444_Rich_Isogenie_Lipid_8_NEG_01May17_Lola-WCSH7906",      tt.ENV },
+                    { "EMSL49444_Rich_Isogenie_Lipid_10_NEG_01May17_Lola-WCSH7906",     tt.ENV },
+                    { "49483_Harv_Organic_1_L_NEG_18Sep17_Lola-WCSH7909",               tt.ENV },
+                    { "49483_Harv_Mineral_3_L_NEG_18Sep17_Lola-WCSH7909",               tt.ENV },
+                    { "ExtTest_ACHN_MPLEx_1_L_Neg_29May18_Lola-WCSH7804",               tt.HUM },
+                    { "ExtTest_TK10_MPLEx_1_L_Neg_29May18_Lola-WCSH7804",               tt.HUM },
+                    { "hLM_Biop_D002_L_NEG_23June17_Lola-WCSH7914",                     tt.HUM },
+                    { "hLM_Biop_D015_L_NEG_23June17_Lola-WCSH7914",                     tt.HUM },
+                    { "hLM_Biop_D027_L_NEG_23June17_Lola-WCSH7914",                     tt.HUM },
+                    { "hLM_Biop_D047_L_NEG_23June17_Lola-WCSH7914",                     tt.HUM },
+                    { "hLM_Biop_D087_L_NEG_23June17_Lola-WCSH7914",                     tt.HUM },
+                    { "hLm_HTC_D036_END_1_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "hLm_HTC_D036_EPI_1_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "hLm_HTC_D036_MES_1_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "hLm_HTC_D036_MIC_1_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "hLm_HTC_D036_PMX_1_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "hLm_HTC_D019_END_1_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "hLm_HTC_D019_EPI_2_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "hLm_HTC_D019_MES_1_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "hLm_HTC_D019_MIC_2_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "hLm_HTC_D019_PMX_1_L_NEG_01Aug17_Lola-WCSH7909",                 tt.HUM },
+                    { "Marco_Soils_Lipids_12_NEG_18Feb18_Brandi-WCSH5801",          tt.ENV },
+                    { "Marco_Soils_Lipids_17_NEG_18Feb18_Brandi-WCSH5801",          tt.ENV },
+                    { "Marco_Soils_Lipids_31_NEG_18Feb18_Brandi-WCSH5801",          tt.ENV },
+                    { "Marco_Soils_Lipids_44_NEG_18Feb18_Brandi-WCSH5801",          tt.ENV },
+                    { "KidneyAtlas_Pilot_Human_01_Neg_12Apr18_Lola-WCSH7804",           tt.HUM },
+                    { "KidneyAtlas_Pilot_Human_02_Neg_12Apr18_Lola-WCSH7804",           tt.HUM },
+                    { "KidneyAtlas_Pilot_Human_03_Neg_12Apr18_Lola-WCSH7804",           tt.HUM },
+                    { "BIDMC-51-Lipid-Velos-NEG_03Feb17_Lola-WCSH7905",                 tt.HUM },
+                    { "BIDMC-Lipid-P3-Velos-NEG_03Feb17_Lola-WCSH7905",                 tt.HUM },
+                    { "BIDMC-Lipid-P4-Velos-NEG_03Feb17_Lola-WCSH7905",                 tt.HUM },
+                    { "BIDMC-82-Lipid-Velos-NEG_03Feb17_Lola-WCSH7905",                 tt.HUM },
+                    { "NICHD_PG_D5_02_NEG_08May17_Lola-WCSH7914",                       tt.HUM },
+                    { "NICHD_PG_D5_07_NEG_08May17_Lola-WCSH7914",                       tt.HUM },
+                    { "NICHD_PG_D6_03_NEG_08May17_Lola-WCSH7914",                       tt.HUM },
+                    { "NICHD_PG_D7_02_NEG_08May17_Lola-WCSH7914",                       tt.HUM },
+                    { "K-Con-21-2_Lipids_NEG_17Feb17_Lola-WCSH7905",                        tt.ENV },
+                    { "K-Con-128-2_Lipids_NEG_17Feb17_Lola-WCSH7905",                       tt.ENV },
+                    { "K-post-30-3_Lipids_NEG_17Feb17_Lola-WCSH7905",                       tt.ENV },
+                    { "K-post-68-1_Lipids_NEG_17Feb17_Lola-WCSH7905",                       tt.ENV },
+                    { "K-pre-150-1_Lipids_NEG_17Feb17_Lola-WCSH7905",                       tt.ENV },
+                    { "K-pre-176-2_Lipids_NEG_17Feb17_Lola-WCSH7905",                       tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7018_Mut_F_B_L_021_NEG_05Mar17_Lola-WCSH7905",  tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7018_Mut_M_B_L_008_NEG_05Mar17_Lola-WCSH7905",  tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7019_Ctl_F_B_L_009_NEG_05Mar17_Lola-WCSH7905",  tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7019_Ctl_M_B_L_003_NEG_05Mar17_Lola-WCSH7905",  tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7019_Mut_F_B_L_014_NEG_05Mar17_Lola-WCSH7905",  tt.ENV },
+                    { "UDN_MOSC_Flies_ATP5D_7019_Mut_M_B_L_016_NEG_05Mar17_Lola-WCSH7905",  tt.ENV },
+                    { "UDN_MOSC_Flies_iPLA2-VIA_delta174_L_Run1_NEG_17Feb17_Lola-WCSH7905", tt.ENV },
+                    { "UDN_MOSC_Flies_iPLA2-VIA_GR_L_Run1_NEG_17Feb17_Lola-WCSH7905",       tt.ENV },
+                    { "UDN_MOSC_Flies_iPLA2-VIA_PE8_L_Run1_NEG_17Feb17_Lola-WCSH7905",      tt.ENV },
+                    { "UDN_MOSC_Flies_iPLA2-VIA_Vps26-delta174_L_Run1_NEG_17Feb17_Lola-WCSH7905", tt.ENV },
+                    { "Sporid_Cell_A_40H_2_L_025_NEG_13Jan18_Brandi-WCSH5801",              tt.ENV },
+                    { "Sporid_Cell_G_24H_1_L_023_NEG_13Jan18_Brandi-WCSH5801",              tt.ENV },
+                    { "Sporid_Cell_G-X_66H_3_L_011_NEG_13Jan18_Brandi-WCSH5801",            tt.ENV },
+                    { "Sporid_Cell_pCA_90H_1_L_024_NEG_13Jan18_Brandi-WCSH5801",            tt.ENV },
+                    { "Sporid_Cell_X_90H_2_L_006_NEG_13Jan18_Brandi-WCSH5801",              tt.ENV },
+                    { "Paraquat_Brain_34_C1_NEG_22Feb17_Lola-WCSH7905",                      tt.HUM },
+                    { "Paraquat_Brain_401_D1_NEG_22Feb17_Lola-WCSH7905",                    tt.HUM },
+                    { "CPTAC_GBM_CPT0002410003_L_007_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0079790013_L_044_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0209440010_L_032_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0228220011_L_008_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0168270013_L_063_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0162060004_L_077_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0204340004_L_055_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0204420004_L_023_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0204380005_L_057_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "CPTAC_GBM_CPT0204400004_L_068_NEG_06Dec18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_pel_Neff_L_2_Neg_05Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_pel_Neff_L_3_Neg_05Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_pel_T4_L_2_Neg_05Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_pel_T4_L_1_Neg_05Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_ves_Neff_L_1_Neg_05Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_ves_Neff_L_3_Neg_05Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_ves_T4_L_1_Neg_05Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "A_castellanii_ves_T4_L_3_Neg_05Sep18_Brandi-WCSH7803", tt.HUM },
+                    { "DARPA_Lip_P1_T30_L1T_064_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P1_T30_L3M_070_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P2_T30_L2B_027_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P2_T30_W3T_051_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P2_T30_W1M_024_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P3_T30_W1B_031_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P6_T60_L3T_052_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P4_T60_L3M_015_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P6_T60_L2B_005_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P5_T60_W2T_008_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P4_T60_W3M_105_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P4_T60_W2T_086_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "DARPA_Lip_P5_T60_W2B_023_Neg_29Oct18_Brandi-WCSH7803", tt.ENV },
+                    { "mLM_Elinav_BALF_GF_2_L_Neg_27Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_BALF_GF_3_L_Neg_27Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_BALF_SPF_1_L_Neg_27Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_LL_GF_3_L_Neg_27Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_LL_SPF_5_L_Neg_27Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_ROL_GF_3_L_Neg_27Feb19_Brandi-WCSH7811", tt.HUM },
+                    { "mLM_Elinav_ROL_SPF_4_L_Neg_27Feb19_Brandi-WCSH7811", tt.HUM },
+                #endregion
+            };
+
+            RunWorkflowAndOutputDifferentTargets(
+                @"C:\Users\gibe617\Documents\liquid\TargetDatabase\Global_ENV_Dec2018_NEG_v9.txt",
+                @"C:\Users\gibe617\Documents\liquid\TargetDatabase\Global_Aug2018_NEG_v10.txt",
+                @"C:\Data\Liquid\Original\NEG_ENV",
+                @"C:\Data\Liquid\Original\NEG",
+                negDatasets);
+        }
+
+        /// <summary>
+        /// Processing raw files similiar to RunWorkflowAndOutput but expects datasets to have already been copied locally
+        /// </summary>
+        /// <param name="targetsFilePath"></param>
+        /// <param name="outputFileName"></param>
+        /// <param name="datasetNamesList"></param>
+        private void RunWorkflowAndOutputDifferentTargets(string envList, string humList, string envDir, string humDir, Dictionary<string, tt> datasetNamesList)
+        {
+            var envTargetsFileInfo = new FileInfo(envList);
+            var envLipidReader = new LipidMapsDbReader<Lipid>();
+            var envLipidList = envLipidReader.ReadFile(envTargetsFileInfo);
+
+            var humTargetsFileInfo = new FileInfo(humList);
+            var humLipidReader = new LipidMapsDbReader<Lipid>();
+            var humLipidList = humLipidReader.ReadFile(humTargetsFileInfo);
+
+            //Parallel.ForEach(datasetNamesList, datasetNameKvp =>
+            foreach (var datasetNameKvp in datasetNamesList)
+            {
+                var rawFileName = datasetNameKvp.Key + ".raw";
+                var rawFilePath = Path.Combine(@"C:\Data\Liquid\Original", rawFileName);
+
+                var lipidList = datasetNameKvp.Value == tt.ENV ? envLipidList : humLipidList;
+                var outputDirectory = datasetNameKvp.Value == tt.ENV ? envDir : humDir;
+
+                Console.WriteLine(DateTime.Now + ": Processing " + datasetNameKvp.Key);
+
+                var globalWorkflow = new GlobalWorkflow(rawFilePath);
+                var lipidGroupSearchResults = globalWorkflow.RunGlobalWorkflow(lipidList, 30, 500);
+                LipidGroupSearchResultWriter.OutputResults(lipidGroupSearchResults, $"{outputDirectory}/{datasetNameKvp.Key}.tsv", rawFileName, null, false, true, true);
+
+                globalWorkflow.LcMsRun.Close();
+            }
+            //);
         }
 
     }
