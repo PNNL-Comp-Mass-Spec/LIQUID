@@ -32,7 +32,7 @@ namespace Liquid.ViewModel
         public List<Adduct> AdductList { get; }
         public List<string> IonTypeList { get; }
         public List<Lipid> LipidTargetList { get; }
-        public List<Tuple<string, int>> LipidIdentifications { get; }
+        public List<Tuple<string, int, double?>> LipidIdentifications { get; }
         public List<LipidGroupSearchResult> LipidGroupSearchResultList { get; private set; }
         public ScoreModel ScoreModel { get; }
         public Adduct TargetAdduct { get; set; }
@@ -58,7 +58,7 @@ namespace Liquid.ViewModel
             SpectrumSearchResultList = new List<SpectrumSearchResult>();
             LipidTargetList = new List<Lipid>();
             FragmentSearchList = new ObservableCollection<MsMsSearchUnit>();
-            LipidIdentifications = new List<Tuple<string, int>>();
+            LipidIdentifications = new List<Tuple<string, int, double?>>();
             ScoreModel = ScoreModelSerialization.Deserialize("DefaultScoringModel.xml");
             AverageSpec = false;
             IncludeMsMsPeaks = false;
@@ -227,7 +227,7 @@ namespace Liquid.ViewModel
         {
             var fileInfo = new FileInfo(fileLocation);
 
-            var identificationReader = new OutputFileReader<Tuple<string, int>>();
+            var identificationReader = new OutputFileReader<Tuple<string, int, double?>>();
             var idList = identificationReader.ReadFile(fileInfo);
 
             foreach (var id in idList)
@@ -393,9 +393,11 @@ namespace Liquid.ViewModel
                 {
                     var name = id.Item1;
                     var scan = id.Item2;
+                    var percentage = id.Item3;
                     if (lipid.LipidTarget.StrippedDisplay == name && lipid.SpectrumSearchResult.HcdSpectrum.ScanNum == scan)
                     {
                         lipid.ShouldExport = true;
+                        lipid.DisplayPercentage = percentage;
                         break;
                     }
                 }

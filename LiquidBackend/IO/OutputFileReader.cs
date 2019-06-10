@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 namespace LiquidBackend.IO
 {
-    public class OutputFileReader<T> : FileReader<T> where T : Tuple<string, int>
+    public class OutputFileReader<T> : FileReader<T> where T : Tuple<string, int, double?>
     {
         private const string COMMON_NAME = "COMMON NAME";
         private const string MSMS_SCAN = "MS/MS SCAN";
+        private const string PERCENTAGE = "PERCENTAGE";
 
         /// <summary>
         /// Creates a mapping of column titles to their indices.
@@ -30,6 +31,9 @@ namespace LiquidBackend.IO
                     case MSMS_SCAN:
                         columnMap.Add(MSMS_SCAN, i);
                         break;
+                    case PERCENTAGE:
+                        columnMap.Add(PERCENTAGE, i);
+                        break;
                 }
             }
             return columnMap;
@@ -49,8 +53,11 @@ namespace LiquidBackend.IO
             if (!columnMapping.ContainsKey(MSMS_SCAN)) throw new SystemException("MS/MS Scan is required for lipid import.");
             var name = columns[columnMapping[COMMON_NAME]];
             var scan = int.Parse(columns[columnMapping[MSMS_SCAN]]);
+            double? percentage = null;
+            if (columnMapping.ContainsKey(PERCENTAGE))
+                percentage = double.TryParse(columns[columnMapping[PERCENTAGE]], out var num) ? (double?)num : null;
             //var Id = new T();
-            var ID = new Tuple<string, int>(name, scan);
+            var ID = new Tuple<string, int, double?>(name, scan, percentage);
             //Id.Add(name,scan);
             return (T)ID;
         }

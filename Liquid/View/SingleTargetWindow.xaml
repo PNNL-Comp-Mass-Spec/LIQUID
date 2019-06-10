@@ -446,6 +446,10 @@
                                         Header="Score" />
                                     <DataGridTextColumn
                                         Width="50"
+                                        Binding="{Binding DisplayPercentage, StringFormat=P2}"
+                                        Header="Percentage" />
+                                    <DataGridTextColumn
+                                        Width="50"
                                         Binding="{Binding DisplayMz, StringFormat=0.00}"
                                         Header="M/Z" />
                                 </DataGrid.Columns>

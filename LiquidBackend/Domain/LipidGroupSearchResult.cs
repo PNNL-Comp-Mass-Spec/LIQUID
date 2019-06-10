@@ -18,6 +18,7 @@ namespace LiquidBackend.Domain
         public double PearsonCorrScoreMinus1 { get; }
         public double CosineScore { get; }
         public double CosineScoreMinus1 { get; }
+        public double? DisplayPercentage { get; set; }
 
         public LipidGroupSearchResult(LipidTarget lipidTarget, List<Lipid> lipidList, SpectrumSearchResult spectrumSearchResult)
         {
