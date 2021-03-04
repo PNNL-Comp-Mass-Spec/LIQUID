@@ -10,6 +10,8 @@ namespace Liquid.ViewModel
 {
     public class MsOneInfoViewModel : ViewModelBase
     {
+        // Ignore Spelling: Xic
+
         private const int MINOR_TICK_SIZE = 3;
 
         public LipidTarget CurrentLipidTarget { get; private set; }
@@ -81,7 +83,6 @@ namespace Liquid.ViewModel
         /// <summary>
         /// Added by grant to calculate area under curve over predefined range
         /// </summary>
-        /// <returns></returns>
         private void GetAreaUnderMs1()
         {
             var chromatogram = CurrentSpectrumSearchResult.Xic;

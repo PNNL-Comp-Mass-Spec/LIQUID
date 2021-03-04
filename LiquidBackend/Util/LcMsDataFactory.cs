@@ -9,12 +9,12 @@ namespace LiquidBackend.Util
     /// </summary>
     public class LcMsDataFactory
     {
+        // Ignore Spelling: LcMs
 
         /// <summary>
         /// Returns InformedProteomics LcMsRun object from mass spec data types including .raw and .mzML
         /// </summary>
         /// <param name="rawFilePath"></param>
-        /// <returns></returns>
         public LcMsRun GetLcMsData(string rawFilePath)
         {
             var progress = new Progress<ProgressData>();

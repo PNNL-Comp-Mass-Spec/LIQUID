@@ -22,6 +22,8 @@ namespace Liquid.View
     /// </summary>
     public partial class SingleTargetWindow
     {
+        // Ignore Spelling: Palatino, Rect
+
         public SingleTargetViewModel SingleTargetViewModel { get; }
 
         public SingleTargetWindow()

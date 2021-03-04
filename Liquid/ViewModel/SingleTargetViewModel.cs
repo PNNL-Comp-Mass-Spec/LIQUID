@@ -14,6 +14,8 @@ namespace Liquid.ViewModel
 {
     public class SingleTargetViewModel : ViewModelBase
     {
+        // Ignore Spelling: LcMs
+
         public LcMsRun LcMsRun { get; private set; }
 
         // Unused
