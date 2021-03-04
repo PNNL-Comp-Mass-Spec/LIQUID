@@ -166,17 +166,17 @@ namespace LiquidTest
 
             Console.WriteLine(commonName + "\t" + empiricalFormula);
 
-            List<MsMsSearchUnit> msMsSearchUnitListNew = LipidUtil.CreateMsMsSearchUnitsFromFragmentationRules(commonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList, lipidFragmentationRules);
+            var msMsSearchUnitListNew = LipidUtil.CreateMsMsSearchUnitsFromFragmentationRules(commonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList, lipidFragmentationRules);
 
-            string newResults = "";
+            var newResults = "";
             foreach (var msMsSearchUnit in msMsSearchUnitListNew.OrderBy(x => x.Mz))
             {
                 newResults += msMsSearchUnit.ToString() + "\n";
             }
 
-            List<MsMsSearchUnit> msMsSearchUnitListOld = LipidUtil.CreateMsMsSearchUnits(lipidTarget.CommonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
+            var msMsSearchUnitListOld = LipidUtil.CreateMsMsSearchUnits(lipidTarget.CommonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
 
-            string oldResults = "";
+            var oldResults = "";
             foreach (var msMsSearchUnit in msMsSearchUnitListOld.OrderBy(x => x.Mz))
             {
                 oldResults += msMsSearchUnit.ToString() + "\n";
@@ -222,12 +222,12 @@ namespace LiquidTest
             var lipidFragmentationRulesReader = new LipidFragmentationRuleReader<LipidFragmentationRule>();
             var lipidFragmentationRules = lipidFragmentationRulesReader.ReadFile(targetsFileInfo);
 
-            string commonName = "";
-            string empiricalFormula = "";
+            var commonName = "";
+            var empiricalFormula = "";
 
             Console.WriteLine("================ POSITIVE ================");
-            FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            string[] lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_April2018_all_POS.txt");
+            var fragmentationMode = FragmentationMode.Positive;
+            var lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_April2018_all_POS.txt");
             var numPosTargets = 0;
             var numCorrectPosTargets = 0;
             foreach (var line in lines)
@@ -238,7 +238,7 @@ namespace LiquidTest
                     commonName = tokens[1];
                     empiricalFormula = tokens[7];
                     if (empiricalFormula.Equals("")) empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
-                    bool correct = CheckFragmentaionRules(commonName, empiricalFormula, fragmentationMode, lipidFragmentationRules);
+                    var correct = CheckFragmentaionRules(commonName, empiricalFormula, fragmentationMode, lipidFragmentationRules);
                     numPosTargets += 1;
                     if (correct) numCorrectPosTargets += 1;
                 }
@@ -262,7 +262,7 @@ namespace LiquidTest
                     commonName = tokens[1];
                     empiricalFormula = tokens[7];
                     if (empiricalFormula.Equals("")) empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
-                    bool correct = CheckFragmentaionRules(commonName, empiricalFormula, fragmentationMode, lipidFragmentationRules);
+                    var correct = CheckFragmentaionRules(commonName, empiricalFormula, fragmentationMode, lipidFragmentationRules);
                     numNegTargets += 1;
                     if (correct) numCorrectNegTargets += 1;
                 }

@@ -35,7 +35,7 @@ namespace LiquidTest
 
             Console.WriteLine(oldCommonName);
 
-            Composition oldComp = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(oldCommonName);
+            var oldComp = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(oldCommonName);
             var fattyAcylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(oldCommonName).ToList();
             var carbons = fattyAcylChains.Sum(x => x.NumCarbons);
             var dBonds = fattyAcylChains.Sum(x => x.NumDoubleBonds);
@@ -48,7 +48,7 @@ namespace LiquidTest
 
             foreach (var rule in lipidCompositionRules)
             {
-                Composition newComp = rule.GetComposition(carbons, dBonds);
+                var newComp = rule.GetComposition(carbons, dBonds);
                 if (newComp.Equals(oldComp))
                 {
                     Console.WriteLine(rule.ToString());
@@ -108,12 +108,12 @@ namespace LiquidTest
                 "C40H77NO9"};
             for (var i = 0; i < commonNames.Length; i++)
             {
-                string commonName = commonNames[i];
-                string formula = formulae[i];
+                var commonName = commonNames[i];
+                var formula = formulae[i];
 
-                string empiricalFormula1 = Composition.ParseFromPlainString(formula).ToPlainString();
-                string empiricalFormula2 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
-                string empiricalFormula3 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, lipidCompositionRules).ToPlainString();
+                var empiricalFormula1 = Composition.ParseFromPlainString(formula).ToPlainString();
+                var empiricalFormula2 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+                var empiricalFormula3 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, lipidCompositionRules).ToPlainString();
                 Console.WriteLine(commonName + "\t" + empiricalFormula1 + "\t" + empiricalFormula2 + "\t" + empiricalFormula3);
             }
         }
@@ -126,14 +126,14 @@ namespace LiquidTest
             var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
             var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
 
-            string commonName = "";
-            string empiricalFormula1 = "";
-            string empiricalFormula2 = "";
-            string empiricalFormula3 = "";
+            var commonName = "";
+            var empiricalFormula1 = "";
+            var empiricalFormula2 = "";
+            var empiricalFormula3 = "";
 
             Console.WriteLine("================ POSITIVE ================");
             //FragmentationMode fragmentationMode = FragmentationMode.Positive;
-            string[] lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_August2018_all_updated_ox_POS.txt");
+            var lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_August2018_all_updated_ox_POS.txt");
             var numPosTargets = 0;
             var numCorrectPosTargets = 0;
             foreach (var line in lines)
@@ -224,7 +224,7 @@ namespace LiquidTest
             //var commonName = "DAT1(16:0/22:0(2Me[S],4Me[S]))";
             const string commonName = "DAT2(18:0/23:0(2Me[S],3OH[S],4Me[S],6Me[S]))";
 
-            string empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, LipidRules.LipidCompositionRules).ToPlainString();
+            var empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, LipidRules.LipidCompositionRules).ToPlainString();
             Console.WriteLine(commonName + "\t" + empiricalFormula);
         }
 
@@ -241,20 +241,20 @@ namespace LiquidTest
             const bool printMissing = true;
             const bool printFailed = false;
 
-            List<int> percentage = new List<int>();
+            var percentage = new List<int>();
 
             foreach (var rule in lipidCompositionRules)
             {
                 try
                 {
-                    string oldCommonName = rule.Example;
+                    var oldCommonName = rule.Example;
 
-                    Composition oldComp = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(oldCommonName);
+                    var oldComp = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(oldCommonName);
                     var fattyAcylChains = LipidUtil.ParseLipidCommonNameIntoAcylChains(oldCommonName).ToList();
                     var carbons = fattyAcylChains.Sum(x => x.NumCarbons);
                     var dBonds = fattyAcylChains.Sum(x => x.NumDoubleBonds);
 
-                    Composition newComp = rule.GetComposition(carbons, dBonds);
+                    var newComp = rule.GetComposition(carbons, dBonds);
 
                     if (newComp.Equals(oldComp))
                     {
@@ -293,12 +293,12 @@ namespace LiquidTest
                 }
             }
 
-            int sum = 0;
+            var sum = 0;
             foreach (var entry in percentage)
             {
                 sum += entry;
             }
-            double result = (double)sum / (double)percentage.Count * 100;
+            var result = (double)sum / (double)percentage.Count * 100;
             Console.WriteLine("Percent Correct: " + result + "%");
         }
     }
