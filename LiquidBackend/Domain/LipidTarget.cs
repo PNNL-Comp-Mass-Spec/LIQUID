@@ -41,7 +41,7 @@ namespace LiquidBackend.Domain
             }
         }
 
-        public string EmpiricalFormula => Composition.ToPlainString();
+        public string EmpiricalFormula => Composition?.ToPlainString() ?? "";
 
         public string StrippedDisplay
         {
@@ -113,7 +113,12 @@ namespace LiquidBackend.Domain
             LipidClass = lipidClass;
             FragmentationMode = fragmentationMode;
             Composition = composition;
-            AcylChainList = acylChainList.ToList();
+
+            if (acylChainList == null)
+                AcylChainList = new List<AcylChain>();
+            else
+                AcylChainList = acylChainList.ToList();
+
             Adduct = adduct;
             Charge = charge;
 
