@@ -88,6 +88,7 @@
     <Compile Include="Domain\MsMsSearchResult.cs" />
     <Compile Include="Domain\MsMsSearchUnit.cs" />
     <Compile Include="Domain\SpectrumSearchResult.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\IFileReader.cs" />
     <Compile Include="IO\LipidGroupSearchResultWriter.cs" />
