@@ -8,7 +8,6 @@ namespace LiquidBackend.Domain
     {
         public HashSet<string> DatasetLocations { get; set; }
 
-
         public void AddDataset(string datasetLocation)
         {
             if (!File.Exists(datasetLocation))
@@ -20,28 +19,27 @@ namespace LiquidBackend.Domain
             DatasetLocations.Add(fileInfo.FullName);
         }
 
-        public void AddDmsDatasets(IEnumerable<string> datasetNames)
+        public void AddDmsDatasets(IEnumerable<string> datasetRawFileNames)
         {
-            foreach (var datasetName in datasetNames)
+            foreach (var datasetRawFileName in datasetRawFileNames)
             {
-                AddDmsDataset(datasetName);
+                AddDmsDataset(datasetRawFileName);
             }
         }
 
-        public static void AddDmsDataset(string datasetName)
+        public static void AddDmsDataset(string datasetRawFileName)
         {
 
-            if (!File.Exists(datasetName))
+            if (!File.Exists(datasetRawFileName))
             {
-                // Lookup in DMS via Mage
-                var dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetName.Replace(".raw",""));
+                // Lookup the dataset directory in DMS
+                var dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetRawFileName.Replace(".raw",""));
                 var dmsDirectoryInfo = new DirectoryInfo(dmsFolder);
-                var fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, datasetName);
+                var fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, datasetRawFileName);
 
                 // Copy Locally
-                File.Copy(fullPathToDmsFile, datasetName);
+                File.Copy(fullPathToDmsFile, datasetRawFileName);
             }
-
         }
     }
 }

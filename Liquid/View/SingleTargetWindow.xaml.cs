@@ -483,18 +483,18 @@ namespace Liquid.View
             }
         }
         /*
-        public static RenderTargetBitmap GetImage(View view)
+        public static RenderTargetBitmap GetImage(View targetView)
         {
-            Size size = new Size(view.ActualWidth, view.ActualHeight);
-            if (size.IsEmpty)
+            var currentSize = new Size(targetView.ActualWidth, targetView.ActualHeight);
+            if (currentSize.IsEmpty)
                 return null;
 
-            RenderTargetBitmap result = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Pbgra32);
+            var result = new RenderTargetBitmap((int)currentSize.Width, (int)currentSize.Height, 96, 96, PixelFormats.Pbgra32);
 
-            DrawingVisual drawingVisual = new DrawingVisual();
-            using (DrawingContext context = drawingVisual.RenderOpen())
+            var drawingVisual = new DrawingVisual();
+            using (var context = drawingVisual.RenderOpen())
             {
-                context.DrawRectangle(new VisualBrush(view), null, new Rect(new Point(), size));
+                context.DrawRectangle(new VisualBrush(targetView), null, new Rect(new Point(), currentSize));
                 context.Close();
             }
 
