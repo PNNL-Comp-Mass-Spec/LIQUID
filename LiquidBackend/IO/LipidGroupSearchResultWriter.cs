@@ -505,8 +505,8 @@ namespace LiquidBackend.IO
                     line.Append(precursorScan + "\t");
                     line.Append(apex + "\t");
                     line.Append(query + "\t");
-                    line.Append(hcdIons + "\t");
                     line.Append(cidIons + "\t");
+                    line.Append(hcdIons + "\t");
                     textWriter.WriteLine(line.ToString());
                 }
             }
