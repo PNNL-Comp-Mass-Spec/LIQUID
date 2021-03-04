@@ -9,6 +9,11 @@
             Available database search modes
             </summary>
         </member>
+        <member name="F:InformedProteomics.Backend.Database.DatabaseSearchMode.Undefined">
+            <summary>
+            Search mode not defined
+            </summary>
+        </member>
         <member name="F:InformedProteomics.Backend.Database.DatabaseSearchMode.Target">
             <summary>
             Target search only
@@ -126,7 +131,7 @@
         </member>
         <member name="F:InformedProteomics.Backend.Data.Biology.Atom.AtomArr">
             <summary>
-            Get an array of all supported elements, and some compounds
+            Get an array of all supported elements, plus some compounds
             </summary>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Biology.Atom.C">
@@ -711,11 +716,19 @@
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.ToString">
             <inheritdoc />
         </member>
+        <member name="M:InformedProteomics.Backend.Data.Composition.Composition.ToString(System.Boolean)">
+            <summary>
+            String representation of this composition
+            </summary>
+            <param name="spaceSeparated">When true, separate fields using spaces instead of commas</param>
+            <returns></returns>
+        </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.ToPlainString">
             <summary>
             Return the composition as an empirical formula
             </summary>
-            <returns></returns>
+            <returns>Empirical formula</returns>
+            <remarks>Lists C, H, N, O, S, and P first, then additional elements</remarks>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.ParseFromPlainString(System.String)">
             <summary>
@@ -1088,7 +1101,7 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.#ctor(InformedProteomics.Backend.Data.Sequence.Modification)">
             <summary>
-            Generate an amino acid map with Cys static modification
+            Generate an amino acid map with a Cysteine static modification
             </summary>
             <param name="cysMod"></param>
         </member>
@@ -1543,7 +1556,7 @@
         </member>
         <member name="F:InformedProteomics.Backend.Data.Sequence.Modification.MassToModMap">
             <summary>
-            Dictionary mapping mod mass (formatted with const MOD_MASS_FORMAT_STRING) to mod name
+            Dictionary mapping mod mass (formatted with constant MOD_MASS_FORMAT_STRING) to mod name
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Modification.RegisterAndGetModification(System.String,InformedProteomics.Backend.Data.Composition.Composition)">
@@ -1790,6 +1803,13 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SearchModification.ToString">
             <inheritdoc />
+        </member>
+        <member name="M:InformedProteomics.Backend.Data.Sequence.SearchModification.ToString(System.Boolean)">
+            <summary>
+            String representation of this search mod
+            </summary>
+            <param name="spaceSeparated">When true, separate fields using spaces instead of commas</param>
+            <returns></returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.Sequence">
             <summary>
@@ -2639,17 +2659,6 @@
             <param name="tolerance"></param>
             <param name="corrScoreThreshold"></param>
         </member>
-        <member name="M:InformedProteomics.Backend.Data.Spectrometry.Deconvoluter.#ctor(System.Int32,System.Int32,System.Int32,System.Double,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="minCharge"></param>
-            <param name="maxCharge"></param>
-            <param name="isotopeOffsetTolerance"></param>
-            <param name="filteringWindowSize"></param>
-            <param name="tolerance"></param>
-            <param name="corrScoreThreshold"></param>
-        </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Deconvoluter.GetCombinedDeconvolutedSpectrum(InformedProteomics.Backend.Data.Spectrometry.Spectrum)">
             <summary>
             Get a deconvoluted spectrum that combines multiple charge states
@@ -3215,14 +3224,12 @@
             Constructor
             </summary>
         </member>
-        <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcMsMatchMap.GetMatchingMs2ScanNums(System.Double,InformedProteomics.Backend.Data.Spectrometry.Tolerance,InformedProteomics.Backend.MassSpecData.LcMsRun)">
+        <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcMsMatchMap.GetMatchingMs2ScanNums(System.Double)">
             <summary>
             Get the MS2 scan numbers that match the sequence mass
             </summary>
             <param name="sequenceMass"></param>
-            <param name="tolerance"></param>
-            <param name="run"></param>
-            <returns></returns>
+            <returns>List of scan numbers</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcMsMatchMap.CreateSequenceMassToMs2ScansMap(InformedProteomics.Backend.MassSpecData.LcMsRun,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double,System.Double)">
             <summary>
@@ -3879,6 +3886,11 @@
             Elution time (minutes)
             </summary>
         </member>
+        <member name="P:InformedProteomics.Backend.Data.Spectrometry.Spectrum.DriftTime">
+            <summary>
+            Ion Mobility drift time (milliseconds)
+            </summary>
+        </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.Spectrum.Peaks">
             <summary>
             Peaks
@@ -4057,6 +4069,13 @@
             <param name="minMz"></param>
             <param name="maxMz"></param>
             <returns></returns>
+        </member>
+        <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.OverrideScanNumber(System.Int32)">
+            <summary>
+            Change this spectrum's scan number
+            </summary>
+            <param name="newScanNumber"></param>
+            <remarks>This method is used by InformedProteomics.Backend.MassSpecData.PbfLcMsRun</remarks>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.SummedSpectrum">
             <summary>
@@ -4742,6 +4761,13 @@
             Interface for objects that can supply random access to spectra
             </summary>
         </member>
+        <member name="M:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.GetNativeId(System.Int32)">
+            <summary>
+            Get the native ID of the specified scan number
+            </summary>
+            <param name="scanNum"></param>
+            <returns></returns>
+        </member>
         <member name="P:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.MinLcScan">
             <summary>
             Index of first LC scan in the dataset
@@ -4760,6 +4786,13 @@
         <member name="M:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.GetElutionTime(System.Int32)">
             <summary>
             Get the elution time of the specified scan number
+            </summary>
+            <param name="scanNum"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.GetDriftTime(System.Int32)">
+            <summary>
+            Get the ion mobility drift time of the specified scan number (if data is ion mobility)
             </summary>
             <param name="scanNum"></param>
             <returns></returns>
@@ -4974,6 +5007,20 @@
             <param name="scanNum"></param>
             <returns></returns>
         </member>
+        <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetNativeId(System.Int32)">
+            <summary>
+            Get the native ID of the specified scan number
+            </summary>
+            <param name="scanNum"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetDriftTime(System.Int32)">
+            <summary>
+            Get the ion mobility drift time of the specified scan number (if data is ion mobility)
+            </summary>
+            <param name="scanNum"></param>
+            <returns></returns>
+        </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetPrecursorScanNum(System.Int32)">
             <summary>
             Gets the precursor scan number
@@ -5180,6 +5227,11 @@
         <member name="F:InformedProteomics.Backend.MassSpecData.LcMsRun.ScanNumElutionTimeMap">
             <summary>
             Dictionary to map scan numbers to elution times
+            </summary>
+        </member>
+        <member name="F:InformedProteomics.Backend.MassSpecData.LcMsRun.ScanNumNativeIdMap">
+            <summary>
+            Dictionary to map scan numbers to native IDs
             </summary>
         </member>
         <member name="F:InformedProteomics.Backend.MassSpecData.LcMsRun.IsDiaOrNull">
@@ -5884,6 +5936,11 @@
             If the FDR scores (QValue and PepQValue) have been set
             </summary>
         </member>
+        <member name="P:InformedProteomics.Backend.SearchResults.DatabaseSearchResultData.ResultID">
+            <summary>
+            Integer ID to associate with this result; initially 0
+            </summary>
+        </member>
         <member name="P:InformedProteomics.Backend.SearchResults.DatabaseSearchResultData.SequenceWithEnds">
             <summary>
             The sequence, with the pre and post residues
@@ -5916,9 +5973,15 @@
         </member>
         <member name="M:InformedProteomics.Backend.SearchResults.DatabaseSearchResultData.ReadResultsFromFileToMzIdData(System.String)">
             <summary>
-            Read results from tsv file into group of objects from PSI_Interface
+            Read results from TSV file into group of objects from PSI_Interface
             </summary>
             <param name="idFilePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InformedProteomics.Backend.SearchResults.DatabaseSearchResultData.ToString">
+            <summary>
+            Show the scan number and the sequence
+            </summary>
             <returns></returns>
         </member>
         <member name="T:InformedProteomics.Backend.SearchResults.Extensions">
@@ -6004,7 +6067,7 @@
             Write the results with the FDR data to the specified file
             </summary>
             <param name="outputFilePath"></param>
-            <param name="includeDecoy"></param>
+            <param name="includeDecoy">When true, include decoy-based results in the _IcTda.tsv file</param>
         </member>
         <member name="T:InformedProteomics.Backend.SearchResults.IdentificationExtensions">
             <summary>
@@ -6088,6 +6151,27 @@
             </summary>
             <param name="centroidedMzs"></param>
             <param name="centroidedIntensities"></param>
+        </member>
+        <member name="T:InformedProteomics.Backend.Utils.FlipSwitch">
+            <summary>
+            Singleton class for conditionalizing use of FLIP scoring code.
+            </summary>
+        </member>
+        <member name="P:InformedProteomics.Backend.Utils.FlipSwitch.Instance">
+            <summary>
+            Singleton instance
+            </summary>
+        </member>
+        <member name="P:InformedProteomics.Backend.Utils.FlipSwitch.UseFlipScoring">
+            <summary>
+            If true, FLIP scoring code should be used.
+            </summary>
+        </member>
+        <member name="M:InformedProteomics.Backend.Utils.FlipSwitch.SetUseFlipScoring(System.Boolean)">
+            <summary>
+            Set whether FLIP Scoring should be used or not.
+            </summary>
+            <param name="useIt">True if FLIP Scoring should be used</param>
         </member>
         <member name="T:InformedProteomics.Backend.Utils.IntRange">
             <summary>
@@ -6458,7 +6542,7 @@
             <summary>
             Perform a set number of random mutations on a string
             </summary>
-            <param name="str"></param>
+            <param name="textToMutate"></param>
             <param name="numMutations"></param>
             <returns></returns>
         </member>
