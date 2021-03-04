@@ -154,7 +154,7 @@ namespace LiquidBackend.Scoring
 
             if (!File.Exists(rawFileName))
             {
-                // Lookup in DMS via Mage
+                // Lookup the dataset directory in DMS
                 var dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetName);
                 var dmsDirectoryInfo = new DirectoryInfo(dmsFolder);
                 var fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, rawFileName);

@@ -1,5 +1,5 @@
 ﻿using System;
-using Mage;
+using System.IO;
 
 namespace LiquidBackend.Util
 {
@@ -7,32 +7,36 @@ namespace LiquidBackend.Util
     {
         public static string FindLocationOfDataset(string datasetName)
         {
-            var reader = new MSSQLReader
-            {
-                Server = "gigasax",
-                Database = "DMS5",
-                SQLText = "SELECT * FROM V_Mage_Dataset_List WHERE Dataset = '" + datasetName + "'"
-            };
-            var fileFilter = new FileListFilter
-            {
-                FileColumnName = "Name",
-                OutputColumnList = "Item|+|text, Name|+|text, Folder, Dataset, Dataset_ID, *",
-                FileNameSelector = ".raw" // regex style filter for file names – blank means pass all
-            };
-            var sink = new SimpleSink();
+            var connectionString = string.Format("Data Source={0};Initial Catalog={1};Integrated Security=SSPI;", "gigasax", "DMS5");
+            var dbUtils = PRISMDatabaseUtils.DbToolsFactory.GetDBTools(connectionString);
 
-            var pipeline = ProcessingPipeline.Assemble("test_pipeline", reader, fileFilter, sink);
-            pipeline.RunRoot(null);
+            var query = "SELECT Folder FROM V_Mage_Dataset_List WHERE Dataset = '" + datasetName + "'";
 
-            if (sink.Rows == null || sink.Rows.Count != 1)
+            var success = dbUtils.GetQueryResults(query, out var results);
+
+            if (!success)
             {
-                throw new InvalidOperationException("Mage returned invalid results.");
+                throw new InvalidOperationException(
+                    "Query error looking for the dataset in the DMS database using view V_Mage_Dataset_List; connection string: " + connectionString);
             }
 
-            var folderColumnIndex = sink.ColumnIndex["Folder"];
-            var folderName = sink.Rows[0].GetValue(folderColumnIndex).ToString();
+            if (results.Count == 0)
+            {
+                throw new InvalidOperationException(string.Format("Dataset {0} not found in the database", datasetName));
+            }
 
-            return folderName;
+            var datasetDirectoryPath = results[0][0];
+            var datasetDirectory = new DirectoryInfo(datasetDirectoryPath);
+            var datasetFile = datasetName + ".raw";
+
+            var datasetFiles = datasetDirectory.GetFiles(datasetFile);
+
+            if (datasetFiles.Length == 0)
+            {
+                throw new InvalidOperationException(string.Format("File {0} not found for dataset in {1}", datasetFile, datasetDirectoryPath));
+            }
+
+            return datasetDirectory.FullName;
         }
     }
 }

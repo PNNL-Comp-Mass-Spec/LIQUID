@@ -53,6 +53,9 @@
     <Reference Include="MyEMSLReader">
       <HintPath>..\lib\MyEMSLReader.dll</HintPath>
     </Reference>
+    <PackageReference Include="PRISM-DatabaseUtils">
+      <Version>1.1.7</Version>
+    </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.97</Version>
     </PackageReference>

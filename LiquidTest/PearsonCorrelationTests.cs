@@ -49,7 +49,7 @@ namespace LiquidTest
                 {
                     Console.WriteLine(DateTime.Now + ": Dataset does not exist locally, so we will go get it");
 
-                    // Lookup in DMS via Mage
+                    // Lookup the dataset directory in DMS
                     var dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetName);
                     var dmsDirectoryInfo = new DirectoryInfo(dmsFolder);
                     var fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, rawFileName);
