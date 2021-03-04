@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using Liquid.ViewModel;
+﻿using Liquid.ViewModel;
 
 namespace Liquid.Controls
 {
