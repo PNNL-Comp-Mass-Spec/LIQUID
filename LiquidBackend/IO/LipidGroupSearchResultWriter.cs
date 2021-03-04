@@ -23,12 +23,12 @@ namespace LiquidBackend.IO
 
             foreach (var cidResult in cidResultList)
             {
-                stringBuilder.Append("CID-" + cidResult.TheoreticalPeak.Description + ",");
+                stringBuilder.AppendFormat("CID-{0},", cidResult.TheoreticalPeak.Description);
             }
 
             foreach (var hcdResult in hcdResultList)
             {
-                stringBuilder.Append("HCD-" + hcdResult.TheoreticalPeak.Description + ",");
+                stringBuilder.AppendFormat("HCD-{0},", hcdResult.TheoreticalPeak.Description);
             }
 
             textWriter.WriteLine(stringBuilder.ToString());
@@ -48,8 +48,8 @@ namespace LiquidBackend.IO
                 var hcdMaxValue = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
                 var stringBuilder = new StringBuilder();
-                stringBuilder.Append(datasetName + ",");
-                stringBuilder.Append(targetName + ",");
+                stringBuilder.AppendFormat("{0},", datasetName);
+                stringBuilder.AppendFormat("{0},", targetName);
 
                 foreach (var cidResult in cidResultList)
                 {
@@ -103,17 +103,17 @@ namespace LiquidBackend.IO
                 {
                     var line = new StringBuilder();
                     var target = lipidGroupSearchResult.LipidTarget;
-                    line.Append(target.StrippedDisplay + "\t");
-                    line.Append(target.EmpiricalFormula + "\t");
-                    line.Append(target.MzRounded + "\t");
-                    line.Append(target.FragmentationMode + "\t");
-                    line.Append(target.AdductString + "\t");
-                    line.Append(target.Charge + "\t");
-                    line.Append(target.Composition.C + "\t");
-                    line.Append(target.Composition.H + "\t");
-                    line.Append(target.Composition.N + "\t");
-                    line.Append(target.Composition.O + "\t");
-                    line.Append(target.Composition.S + "\t");
+                    line.AppendFormat("{0}\t", target.StrippedDisplay);
+                    line.AppendFormat("{0}\t", target.EmpiricalFormula);
+                    line.AppendFormat("{0}\t", target.MzRounded);
+                    line.AppendFormat("{0}\t", target.FragmentationMode);
+                    line.AppendFormat("{0}\t", target.AdductString);
+                    line.AppendFormat("{0}\t", target.Charge);
+                    line.AppendFormat("{0}\t", target.Composition.C);
+                    line.AppendFormat("{0}\t", target.Composition.H);
+                    line.AppendFormat("{0}\t", target.Composition.N);
+                    line.AppendFormat("{0}\t", target.Composition.O);
+                    line.AppendFormat("{0}", target.Composition.S);
 
                     textWriter.WriteLine(line.ToString());
 
@@ -302,36 +302,36 @@ namespace LiquidBackend.IO
                         //var id = lipid.LipidTarget.StrippedDisplay.Substring(0, indexToStartRemove);
                         //id = id.Replace("(", "");
                         var id = lipid.LipidTarget.StrippedDisplay;
-                        line.Append(id + "\t");
+                        line.AppendFormat("{0}\t", id);
                         //if (!string.IsNullOrWhiteSpace(lipid.LipidMapsId))
-                        //    line.Append(lipid.LipidMapsId + "\t"); // identifier
+                        //    line.AppendFormat("{0}\t", lipid.LipidMapsId); // identifier
                         //else
-                        //    line.Append("null" + "\t");
-                        line.Append(lipidTarget.EmpiricalFormula + "\t");   // chemical_formula
-                        line.Append("null" + "\t");                         // smiles
+                        //    line.Append("null\t");
+                        line.AppendFormat("{0}\t", lipidTarget.EmpiricalFormula);   // chemical_formula
+                        line.Append("null\t");                         // smiles
                         if (!string.IsNullOrWhiteSpace(lipid.InchiKey))
-                            line.Append(lipid.InchiKey + "\t"); // inchi_key
+                            line.AppendFormat("{0}\t", lipid.InchiKey); // inchi_key
                         else
-                            line.Append("null" + "\t");
-                        line.Append(lipid.SubClass + " : " + lipidTarget.FragmentationMode.ToString() + " charge" + "\t");                 // description
-                        line.Append(observedMz + "\t");                     // exp_mass_to_charge
-                        line.Append(lipidTarget.MzRounded + "\t");          // calc_mass_to_charge
-                        line.Append("1" + "\t");                 // charge
-                        line.Append(spectrumSearchResult.RetentionTime + "\t"); // retention_time
-                        line.Append("null" + "\t");                         // taxid
-                        line.Append("null" + "\t");                         // species
-                        line.Append("null" + "\t");                         // database
-                        line.Append("null" + "\t");                         // database_version
-                        //line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t"); // spectra_ref
-                        line.Append(msmsScan + "\t"); // spectra_ref
-                        line.Append("[, , Liquid, ]" + "\t");                         // search_engine
-                        line.Append(score + "\t");                          // best_search_engine_score[1]
-                        line.Append(score + "\t");                          // search_engine_score[1]_ms_run[1]
-                        line.Append(lipid.AdductFull + "\t"); // FROM ADDUCTFULL
-                        line.Append(spectrumSearchResult.ApexIntensity + "\t");  // small_molecule_abundance_assay[1]
-                        line.Append("null" + "\t");                         // ^^Study_variable[1]
-                        line.Append("null" + "\t");                         // stdev_study_variable[1]
-                        line.Append("null" + "\t");                         // std_err_study_variable[1]
+                            line.Append("null\t");
+                        line.AppendFormat("{0} charge\t", lipid.SubClass + " : " + lipidTarget.FragmentationMode);                 // description
+                        line.AppendFormat("{0}\t", observedMz);                     // exp_mass_to_charge
+                        line.AppendFormat("{0}\t", lipidTarget.MzRounded);          // calc_mass_to_charge
+                        line.Append("1\t");                 // charge
+                        line.AppendFormat("{0}\t", spectrumSearchResult.RetentionTime); // retention_time
+                        line.Append("null\t");                         // taxid
+                        line.Append("null\t");                         // species
+                        line.Append("null\t");                         // database
+                        line.Append("null\t");                         // database_version
+                        //line.AppendFormat("{0}\t", spectrumSearchResult.PrecursorSpectrum.ScanNum); // spectra_ref
+                        line.AppendFormat("{0}\t", msmsScan); // spectra_ref
+                        line.Append("[, , Liquid, ]\t");                         // search_engine
+                        line.AppendFormat("{0}\t", score);                          // best_search_engine_score[1]
+                        line.AppendFormat("{0}\t", score);                          // search_engine_score[1]_ms_run[1]
+                        line.AppendFormat("{0}\t", lipid.AdductFull); // FROM ADDUCTFULL
+                        line.AppendFormat("{0}\t", spectrumSearchResult.ApexIntensity);  // small_molecule_abundance_assay[1]
+                        line.Append("null\t");                         // ^^Study_variable[1]
+                        line.Append("null\t");                         // stdev_study_variable[1]
+                        line.Append("null");                         // std_err_study_variable[1]
 
                         textWriter.WriteLine(line.ToString());
                     }
@@ -420,39 +420,49 @@ namespace LiquidBackend.IO
                     foreach (var lipid in lipidGroupSearchResult.LipidList)
                     {
                         var line = new StringBuilder();
-                        line.Append(rawFileName + "\t");
-                        line.Append(lipid.LipidMapsId + "\t");
-                        line.Append(lipidTarget.StrippedDisplay + "\t");
-                        line.Append(lipid.AdductFull + "\t");
-                        line.Append(lipid.Category + "\t");
-                        line.Append(lipid.MainClass + "\t");
-                        line.Append(lipid.SubClass + "\t");
-                        line.Append(lipidTarget.MzRounded + "\t");
-                        line.Append(lipidTarget.EmpiricalFormula + "\t");
-                        line.Append(observedMz + "\t");
-                        line.Append(ppmError + "\t");
-                        line.Append(spectrumSearchResult.RetentionTime + "\t");
-                        if (Precursor) line.Append(spectrumSearchResult.PrecursorSpectrum.ElutionTime + "\t"); else line.Append("\t");
-                        line.Append(spectrumSearchResult.NormalizedElutionTime + "\t");
-                        line.Append(spectrumSearchResult.ApexIntensity + "\t");
-                        line.Append(spectrumSearchResult.PeakArea + "\t");
-                        line.Append(score + "\t");
-                        line.Append(msmsScan + "\t");
-                        if (Precursor) line.Append(spectrumSearchResult.PrecursorSpectrum.ScanNum + "\t"); else line.Append("\t");
-                        line.Append(spectrumSearchResult.ApexScanNum + "\t");
-                        line.Append(lipid.PubChemSid + "\t");
-                        line.Append(lipid.PubChemCid + "\t");
-                        line.Append(lipid.InchiKey + "\t");
-                        line.Append(lipid.KeggId + "\t");
-                        line.Append(lipid.HmdbId + "\t");
-                        line.Append(lipid.ChebiId + "\t");
-                        line.Append(lipid.LipidatId + "\t");
-                        line.Append(lipid.LipidBankId + "\t");
+                        line.AppendFormat("{0}\t", rawFileName);
+                        line.AppendFormat("{0}\t", lipid.LipidMapsId);
+                        line.AppendFormat("{0}\t", lipidTarget.StrippedDisplay);
+                        line.AppendFormat("{0}\t", lipid.AdductFull);
+                        line.AppendFormat("{0}\t", lipid.Category);
+                        line.AppendFormat("{0}\t", lipid.MainClass);
+                        line.AppendFormat("{0}\t", lipid.SubClass);
+                        line.AppendFormat("{0}\t", lipidTarget.MzRounded);
+                        line.AppendFormat("{0}\t", lipidTarget.EmpiricalFormula);
+                        line.AppendFormat("{0}\t", observedMz);
+                        line.AppendFormat("{0}\t", ppmError);
+                        line.AppendFormat("{0}\t", spectrumSearchResult.RetentionTime);
+
+                        if (Precursor)
+                            line.AppendFormat("{0}\t", spectrumSearchResult.PrecursorSpectrum.ElutionTime);
+                        else
+                            line.Append("\t");
+
+                        line.AppendFormat("{0}\t", spectrumSearchResult.NormalizedElutionTime);
+                        line.AppendFormat("{0}\t", spectrumSearchResult.ApexIntensity);
+                        line.AppendFormat("{0}\t", spectrumSearchResult.PeakArea);
+                        line.AppendFormat("{0}\t", score);
+                        line.AppendFormat("{0}\t", msmsScan);
+
+                        if (Precursor)
+                            line.AppendFormat("{0}\t", spectrumSearchResult.PrecursorSpectrum.ScanNum);
+                        else
+                            line.Append("\t");
+
+                        line.AppendFormat("{0}\t", spectrumSearchResult.ApexScanNum);
+                        line.AppendFormat("{0}\t", lipid.PubChemSid);
+                        line.AppendFormat("{0}\t", lipid.PubChemCid);
+                        line.AppendFormat("{0}\t", lipid.InchiKey);
+                        line.AppendFormat("{0}\t", lipid.KeggId);
+                        line.AppendFormat("{0}\t", lipid.HmdbId);
+                        line.AppendFormat("{0}\t", lipid.ChebiId);
+                        line.AppendFormat("{0}\t", lipid.LipidatId);
+                        line.AppendFormat("{0}\t", lipid.LipidBankId);
 
                         if (includeObservedAndTheoreticalPeaks)
                         {
-                            line.Append(observedPeaks + "\t");
-                            line.Append(theoreticalPeaks + "\t");
+                            line.AppendFormat("{0}\t", observedPeaks);
+                            line.AppendFormat("{0}\t", theoreticalPeaks);
                         }
 
                         textWriter.WriteLine(line.ToString());
@@ -494,19 +504,19 @@ namespace LiquidBackend.IO
                     var cidIons = result.CidSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
 
                     var line = new StringBuilder();
-                    line.Append(rawFileName + "\t");
-                    line.Append(targetAdduct + "\t");
-                    line.Append(mz + "\t");
-                    line.Append(apexRt + "\t");
-                    line.Append(precursorRT + "\t");
-                    line.Append(net + "\t");
-                    line.Append(intensity + "\t");
-                    line.Append(msmsScan + "\t");
-                    line.Append(precursorScan + "\t");
-                    line.Append(apex + "\t");
-                    line.Append(query + "\t");
-                    line.Append(cidIons + "\t");
-                    line.Append(hcdIons + "\t");
+                    line.AppendFormat("{0}\t", rawFileName);
+                    line.AppendFormat("{0}\t", targetAdduct);
+                    line.AppendFormat("{0}\t", mz);
+                    line.AppendFormat("{0}\t", apexRt);
+                    line.AppendFormat("{0}\t", precursorRT);
+                    line.AppendFormat("{0}\t", net);
+                    line.AppendFormat("{0}\t", intensity);
+                    line.AppendFormat("{0}\t", msmsScan);
+                    line.AppendFormat("{0}\t", precursorScan);
+                    line.AppendFormat("{0}\t", apex);
+                    line.AppendFormat("{0}\t", query);
+                    line.AppendFormat("{0}\t", cidIons);
+                    line.AppendFormat("{0}", hcdIons);
                     textWriter.WriteLine(line.ToString());
                 }
             }

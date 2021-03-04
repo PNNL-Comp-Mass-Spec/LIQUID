@@ -531,7 +531,7 @@ namespace LiquidTest
 
                         for (var i = 1; i < splitTarget.Length; i++)
                         {
-                            rebuilt.Append("\t" + splitTarget[i]);
+                            rebuilt.AppendFormat("\t{0}", splitTarget[i]);
                         }
 
                         output.Add(rebuilt.ToString());

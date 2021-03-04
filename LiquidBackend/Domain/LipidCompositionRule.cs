@@ -35,21 +35,22 @@ namespace LiquidBackend.Domain
         public override string ToString()
         {
             var compRule = new StringBuilder();
-            compRule.Append(LipidClass + "\t");
-            compRule.Append(LipidSubClass + "\t");
-            compRule.Append(Category + "\t");
-            compRule.Append(MainClass + "\t");
-            compRule.Append(SubClass + "\t");
-            compRule.Append(C.GetEquationString() + "\t");
-            compRule.Append(H.GetEquationString() + "\t");
-            compRule.Append(N.GetEquationString() + "\t");
-            compRule.Append(O.GetEquationString() + "\t");
-            compRule.Append(S.GetEquationString() + "\t");
-            compRule.Append(P.GetEquationString() + "\t");
-            compRule.Append(Example + "\t");
-            compRule.Append(Formula + "\t");
-            compRule.Append(IonizationMode + "\t");
-            compRule.Append(NumChains);
+            compRule.AppendFormat("{0}\t", LipidClass);
+            compRule.AppendFormat("{0}\t", LipidSubClass);
+            compRule.AppendFormat("{0}\t", Category);
+            compRule.AppendFormat("{0}\t", MainClass);
+            compRule.AppendFormat("{0}\t", SubClass);
+            compRule.AppendFormat("{0}\t", C.GetEquationString());
+            compRule.AppendFormat("{0}\t", H.GetEquationString());
+            compRule.AppendFormat("{0}\t", N.GetEquationString());
+            compRule.AppendFormat("{0}\t", O.GetEquationString());
+            compRule.AppendFormat("{0}\t", S.GetEquationString());
+            compRule.AppendFormat("{0}\t", P.GetEquationString());
+            compRule.AppendFormat("{0}\t", Example);
+            compRule.AppendFormat("{0}\t", Formula);
+            compRule.AppendFormat("{0}\t", IonizationMode);
+            compRule.AppendFormat("{0}", NumChains);
+
             return compRule.ToString();
         }
 

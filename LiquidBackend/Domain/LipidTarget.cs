@@ -53,9 +53,18 @@ namespace LiquidBackend.Domain
                     stringBuilder.Append(CommonName);
                     return stringBuilder.ToString();
                 }
-                if (LipidClass == LipidClass.Ganglioside){ stringBuilder.Append(CommonName.Split('(')[0]); }
-                else if (LipidClass == LipidClass.Ubiquinone) {stringBuilder.Append("Co" + CommonName.Split(' ')[1]);}
-                else { stringBuilder.Append(LipidClass); }
+                if (LipidClass == LipidClass.Ganglioside)
+                {
+                    stringBuilder.Append(CommonName.Split('(')[0]);
+                }
+                else if (LipidClass == LipidClass.Ubiquinone)
+                {
+                    stringBuilder.AppendFormat("Co{0}", CommonName.Split(' ')[1]);
+                }
+                else
+                {
+                    stringBuilder.Append(LipidClass);
+                }
 
                 var acylChainList = AcylChainList;
                 if (acylChainList.Count > 0)
