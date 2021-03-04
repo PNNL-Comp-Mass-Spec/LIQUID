@@ -124,7 +124,6 @@ namespace LiquidBackend.IO
                         progress.Report(currentProgress);
                     }
                 }
-
             }
         }
 
@@ -197,7 +196,6 @@ namespace LiquidBackend.IO
                     }
                     textWriter.WriteLine();
 
-
                     textWriter.WriteLine("Name: {0}; {1}", name, adduct);
                     textWriter.WriteLine("MW: {0}", MW);
 
@@ -228,7 +226,6 @@ namespace LiquidBackend.IO
                 }
             }
         }
-
 
         private static void OutputResultsToMzTab(IReadOnlyCollection<LipidGroupSearchResult> lipidGroupSearchResults,
             string fileLocation, string rawFileName, IProgress<int> progress = null)
@@ -276,7 +273,6 @@ namespace LiquidBackend.IO
                 textWriter.WriteLine("MTD\tcolunit-small_molecule\tretention_time=[UO, UO:0000031, minute, ]");
                 textWriter.WriteLine("");
 
-
                 // Write small molecule section headers
                 // ReSharper disable StringLiteralTypo
                 textWriter.WriteLine("SMH\tidentifier\tchemical_formula\tsmiles\tinchi_key\tdescription\texp_mass_to_charge\tcalc_mass_to_charge\tcharge\tretention_time\ttaxid\tspecies\tdatabase\tdatabase_version\tspectra_ref\tsearch_engine\tbest_search_engine_score[1]\tsearch_engine_score[1]_ms_run[1]\tmodification\tsmallmolecule_abundance_assay[1]\tsmallmolecule_abundance_study_variable[1]\tsmallmolecule_abundance_stdev_study_variable[1]\tsmallmolecule_abundance_std_error_study_variable[1]");
@@ -285,7 +281,6 @@ namespace LiquidBackend.IO
                 // Write small molecule section data
                 foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
                 {
-
                     var lipidTarget = lipidGroupSearchResult.LipidTarget;
                     var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
                     var targetMz = lipidTarget.MzRounded;
@@ -346,7 +341,6 @@ namespace LiquidBackend.IO
                         var currentProgress = (int)(progressCounter / (double)lipidGroupSearchResults.Count * 100);
                         progress.Report(currentProgress);
                     }
-
                 }
             }
         }
@@ -359,7 +353,6 @@ namespace LiquidBackend.IO
             bool writeHeader = true,
             bool includeObservedAndTheoreticalPeaks = false)
         {
-
             using (TextWriter textWriter = new StreamWriter(fileLocation, true))
             {
                 if (writeHeader)
@@ -373,7 +366,6 @@ namespace LiquidBackend.IO
 
                 foreach (var lipidGroupSearchResult in lipidGroupSearchResults)
                 {
-
                     var lipidTarget = lipidGroupSearchResult.LipidTarget;
                     var spectrumSearchResult = lipidGroupSearchResult.SpectrumSearchResult;
                     var Precursor = spectrumSearchResult.PrecursorSpectrum != null;
@@ -477,7 +469,6 @@ namespace LiquidBackend.IO
 
         public static void OutputFragmentInfo(List<SpectrumSearchResult> SearchResultsList, Adduct targetAdduct, ObservableCollection<MsMsSearchUnit> FragmentSearchList, LcMsRun lcmsRun, string fileLocation, string rawFileName, IProgress<int> progress, bool writeHeader = true)
         {
-
             using (TextWriter textWriter = new StreamWriter(fileLocation, true))
             {
                 if (writeHeader)
@@ -502,7 +493,6 @@ namespace LiquidBackend.IO
                     var hcdIons = result.HcdSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
                     var cidIons = result.CidSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
 
-
                     var line = new StringBuilder();
                     line.Append(rawFileName + "\t");
                     line.Append(targetAdduct + "\t");
@@ -520,7 +510,6 @@ namespace LiquidBackend.IO
                     textWriter.WriteLine(line.ToString());
                 }
             }
-
         }
     }
 }

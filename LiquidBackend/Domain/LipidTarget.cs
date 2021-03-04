@@ -110,7 +110,6 @@ namespace LiquidBackend.Domain
             LipidType = FigureOutLipidType();
         }
 
-
         public List<MsMsSearchUnit> GetMsMsSearchUnits()
         {
             // return LipidUtil.CreateMsMsSearchUnits(CommonName, Composition.Mass / Charge, LipidClass, FragmentationMode, AcylChainList);

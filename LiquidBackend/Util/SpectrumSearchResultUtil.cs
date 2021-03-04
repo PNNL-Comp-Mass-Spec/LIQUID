@@ -30,7 +30,6 @@ namespace LiquidBackend.Util
                 spectrumSearchResult.CidSearchResultList :
                 spectrumSearchResult.HcdSearchResultList;
 
-
             foreach (var peak in spectrum.Peaks)
             {
                 var matchedPeaks = resultsList.Where(x => x.ObservedPeak != null && x.ObservedPeak.Equals(peak));

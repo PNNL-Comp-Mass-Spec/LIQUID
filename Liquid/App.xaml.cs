@@ -80,7 +80,6 @@ namespace Liquid
             }
         }
 
-
         private static T FindVisualParent<T>(UIElement element) where T : UIElement
         {
             var parent = element;

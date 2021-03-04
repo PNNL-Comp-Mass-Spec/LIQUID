@@ -174,7 +174,6 @@ namespace LiquidTest
                 newResults += msMsSearchUnit.ToString() + "\n";
             }
 
-
             List<MsMsSearchUnit> msMsSearchUnitListOld = LipidUtil.CreateMsMsSearchUnits(lipidTarget.CommonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
 
             string oldResults = "";
@@ -182,7 +181,6 @@ namespace LiquidTest
             {
                 oldResults += msMsSearchUnit.ToString() + "\n";
             }
-
 
             if (!oldResults.Equals(newResults))
             {
@@ -196,7 +194,6 @@ namespace LiquidTest
 
             return oldResults.Equals(newResults);
         }
-
 
         [Test()]
         public void TestGetFragmentationRules()
@@ -216,7 +213,6 @@ namespace LiquidTest
 
             CheckFragmentaionRules(commonName, empiricalFormula, fragmentationMode, lipidFragmentationRules);
         }
-
 
         [Test()]
         public void TestGetFragmentationRulesForLipidClass()
@@ -250,7 +246,6 @@ namespace LiquidTest
                 {
                     Console.WriteLine(line);
                 }
-
             }
 
             Console.WriteLine("================ NEGATIVE ================");

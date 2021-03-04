@@ -9,7 +9,6 @@ using LiquidBackend.Domain;
 using LiquidBackend.Scoring;
 using PRISM;
 
-
 namespace LiquidBackend.Util
 {
     public class GlobalWorkflow
@@ -144,7 +143,6 @@ namespace LiquidBackend.Util
                 if (hcdPresent)
                 {
                     summedHcdSpec.IsolationWindow = new IsolationWindow(mz, hcdMassError, hcdMassError);
-
                 }
                 if (cidPresent)
                 {
@@ -205,25 +203,17 @@ namespace LiquidBackend.Util
                             lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult, scoreModel);
                         }
 
-
                         lipidGroupSearchResultList.Add(lipidGroupSearchResult);
 
                         //textWriter.WriteLine(lipidTarget.CommonName + "\t" + spectrumSearchResult.Score);
                         //Console.WriteLine(lipidTarget.CommonName + "\t" + spectrumSearchResult.Score);
                     }
                 }
-
             }
-
-
-
-
 
             //var summedHcdSpectra = uniqueMz.Select(mz => new Tuple<double, ProductSpectrum>(mz, lcmsRun.GetSummedMs2Spectrum(mz, minLcScan, (int)maxLcScan, 1, 2, ActivationMethod.HCD))).ToDictionary(x => x.Item1, x => x.Item2);
             //if (summedHcdSpectra != null) { foreach (var spec in summedHcdSpectra) { spec.Value.IsolationWindow = new IsolationWindow(spec.Key, spec.Key, spec.Key); } }
             //var summedCidSpectra = uniqueMz.Select(mz => lcmsRun.GetSummedMs2Spectrum(mz, minLcScan, (int)maxLcScan, 1, 2, ActivationMethod.CID)).ToList();
-
-
 
             return lipidGroupSearchResultList;
         }
@@ -251,8 +241,6 @@ namespace LiquidBackend.Util
 
             var minLcScan = lcmsRun.MinLcScan;
             double maxLcScan = lcmsRun.MaxLcScan;
-
-
 
             var activationMethodCombination = FigureOutActivationMethodCombination(lcmsRun);
             if (activationMethodCombination == ActivationMethodCombination.Unsupported) throw new SystemException("Unsupported activation method.");
@@ -357,9 +345,7 @@ namespace LiquidBackend.Util
                             lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult, scoreModel);
                         }
 
-
                         lipidGroupSearchResultList.Add(lipidGroupSearchResult);
-
                     }
                 }
 
@@ -463,7 +449,6 @@ namespace LiquidBackend.Util
                 if (nextMsMsSpectrum == null) return ActivationMethodCombination.HcdOnly;
                 if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.CID) return ActivationMethodCombination.HcdThenCid;
                 if (nextMsMsSpectrum.ActivationMethod == ActivationMethod.HCD) return ActivationMethodCombination.HcdOnly;
-
             }
             else if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.CID)
             {

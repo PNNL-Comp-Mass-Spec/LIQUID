@@ -40,7 +40,6 @@ namespace Liquid.ViewModel
         public Adduct TargetAdduct { get; set; }
         public FragmentationMode TargetFragmentationMode { get; set; }
 
-
         public int LipidTargetLoadProgress { get; private set; }
         public int GlobalWorkflowProgress { get; private set; }
         public int FragmentSearchProgress { get; private set; }
@@ -66,7 +65,6 @@ namespace Liquid.ViewModel
             IncludeMsMsPeaks = false;
             // load lipid rules
             LipidRules.LoadLipidRules("DefaultCompositionRules.txt", "DefaultFragmentationRules.txt");
-
         }
 
         /// <summary>
@@ -139,7 +137,6 @@ namespace Liquid.ViewModel
                 LcMsRun = dataFactory.GetLcMsData(rawFileLocation);
                 OnPropertyChanged("LcMsRun");
             }
-
         }
 
         public void SearchForTarget(string commonName, Adduct adduct, FragmentationMode fragmentationMode, double hcdMassError, double cidMassError)
@@ -245,7 +242,6 @@ namespace Liquid.ViewModel
 
         public void OnBuildLibrary(IList<string> filesList, double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
         {
-
             foreach (var file in filesList)
             {
                 using (var reader = new StreamReader(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
@@ -304,9 +300,7 @@ namespace Liquid.ViewModel
                         // Ignore the error
                     }
                 }
-
             }
-
         }
 
         public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
@@ -347,7 +341,6 @@ namespace Liquid.ViewModel
             }
             OnPropertyChanged("LipidGroupSearchResultList");
             progress.Report(0);
-
         }
 
         public void AddFragment(double mz, string ionType)
@@ -378,14 +371,12 @@ namespace Liquid.ViewModel
                 CurrentLipidTarget = LipidUtil.CreateLipidTarget((spectrumSearchResult.HcdSpectrum ?? spectrumSearchResult.CidSpectrum).IsolationWindow.IsolationWindowTargetMz, fragmentationMode, adduct);
                 //OnMsMsSearchResultChange(spectrumSearchResult);
                 OnSpectrumSearchResultChange(spectrumSearchResult);
-
             }
             else
             {
                 CurrentSpectrumSearchResult = null;
             }
         }
-
 
         public void SelectLipidIdentifications(List<LipidGroupSearchResult> lipidGroupSearchResultList)
         {

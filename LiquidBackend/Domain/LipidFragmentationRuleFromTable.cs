@@ -42,7 +42,6 @@ namespace LiquidBackend.Domain
             }
 
             return null;
-
         }
 
         public override string ToString()

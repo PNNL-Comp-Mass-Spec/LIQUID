@@ -14,7 +14,6 @@ namespace LiquidBackend.Scoring
 
         private ScoreModel()
         {
-
         }
 
         public ScoreModel(List<ScoreModelUnit> scoreModelUnitList)

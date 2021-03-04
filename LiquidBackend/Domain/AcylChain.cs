@@ -61,7 +61,6 @@ namespace LiquidBackend.Domain
 
             if (hydroPeroxideMatch.Success)
             {
-
                 if (Regex.IsMatch(hydroPeroxideMatch.Value, @"\(OOH\)"))
                 {
                     AcylChainType = AcylChainType.OOH;
@@ -106,7 +105,6 @@ namespace LiquidBackend.Domain
                     acylChainString = hydroxy.Replace(acylChainString, "");
                 }
             }
-
             else if (methylMatch.Success)
             {
                 var methylGroups = methylMatch.Groups[1].Value.Split(',');
@@ -130,7 +128,6 @@ namespace LiquidBackend.Domain
                 }
                 acylChainString = acylChainString.Replace(methylMatch.Groups[0].Value, "");
             }
-
             else if (acylChainString.Contains("(CHO)"))
             {
                 AcylChainType = AcylChainType.OxoCHO;

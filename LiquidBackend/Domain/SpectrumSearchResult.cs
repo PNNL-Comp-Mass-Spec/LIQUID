@@ -74,7 +74,6 @@ namespace LiquidBackend.Domain
             ApexIntensity = Xic.Where(x => x.ScanNum == ApexScanNum).Sum(x => x.Intensity);
             RetentionTime = LcMsRun.GetElutionTime(ApexScanNum);
             if(scoreModel != null && lipidTarget != null) ModelScore = scoreModel.ScoreLipid(lipidTarget, this);
-
         }
 
         public SpectrumSearchResult(ProductSpectrum hcdSpectrum, ProductSpectrum cidSpectrum, List<MsMsSearchResult> hcdSearchResultList, List<MsMsSearchResult> cidSearchResultList, LcMsRun lcMsRun, ScoreModel scoreModel = null, LipidTarget lipidTarget = null)

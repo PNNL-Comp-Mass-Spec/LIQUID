@@ -6,7 +6,6 @@ namespace LiquidBackend.IO
 {
     public class LipidFragmentationRuleReaderFromTable<T> : FileReader<T> where T : LipidFragmentationRuleFromTable, new()
     {
-
         private const string LIPID_SUBCLASS = "LIPIDSUBCLASS";
         private const string FRAGMENTATION_MODE = "FRAGMENTATIONMODE";
         private const string LOSS_TYPE = "LOSSTYPE";

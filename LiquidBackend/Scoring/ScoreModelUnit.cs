@@ -38,7 +38,6 @@ namespace LiquidBackend.Scoring
         /// <remarks>Empty because items are initialized via ScoreModelSerialization</remarks>
         private ScoreModelUnit()
         {
-
         }
 
         public ScoreModelUnit(SpecificFragment specificFragment, double intensityMax, double probability, double probabilityNoise)

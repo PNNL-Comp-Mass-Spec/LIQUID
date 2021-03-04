@@ -184,7 +184,6 @@ namespace LiquidTest
             textWriter.Close();
         }
 
-
         /// <summary>
         /// Create new positive score model
         /// Files for grants redo of the scoring
@@ -531,6 +530,5 @@ namespace LiquidTest
 
             Console.WriteLine("Time Elapsed: " + x.Elapsed);
         }
-
     }
 }

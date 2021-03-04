@@ -116,7 +116,6 @@ namespace LiquidTest
                 string empiricalFormula3 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, lipidCompositionRules).ToPlainString();
                 Console.WriteLine(commonName + "\t" + empiricalFormula1 + "\t" + empiricalFormula2 + "\t" + empiricalFormula3);
             }
-
         }
 
         [Test()]
@@ -169,7 +168,6 @@ namespace LiquidTest
                 {
                     Console.WriteLine(line);
                 }
-
             }
 
             Console.WriteLine("================ NEGATIVE ================");

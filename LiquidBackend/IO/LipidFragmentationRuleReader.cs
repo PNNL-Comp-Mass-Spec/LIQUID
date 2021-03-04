@@ -168,7 +168,6 @@ namespace LiquidBackend.IO
                     }
                     else fragmentationRule.targetAcylChainsIndices = columns[columnMapping[TARGET_ACYL_CHAINS]].Split(',').Select(int.Parse).ToList();
                 }
-
             }
             catch (Exception)
             {

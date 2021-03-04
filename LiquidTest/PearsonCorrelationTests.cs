@@ -110,7 +110,6 @@ namespace LiquidTest
 
                         if (lineCount++ == 0)
                         {   // First line
-
                             for (var i = 0; i < pieces.Length; i++)
                             {
                                 var header = pieces[i];
@@ -228,7 +227,6 @@ namespace LiquidTest
 
                         if (lineCount++ == 0)
                         {   // First line
-
                             writer.Write("Raw File\t");
                             for (var i = 0; i < pieces.Length; i++)
                             {

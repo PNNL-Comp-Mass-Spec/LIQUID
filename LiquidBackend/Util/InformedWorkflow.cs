@@ -91,7 +91,6 @@ namespace LiquidBackend.Util
                 var ppmError = LipidUtil.PpmError(targetMz, msMsPrecursorMz);
                 if (Math.Abs(ppmError) > hcdMassError) continue;
 
-
                 // Assign each MS/MS spectrum to HCD or CID
                 ProductSpectrum hcdSpectrum;
                 ProductSpectrum cidSpectrum;
@@ -119,7 +118,6 @@ namespace LiquidBackend.Util
                 }
                 var precursorSpectrum = lcmsRun.GetSpectrum(precursorScanNumber);
                 var xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(targetMz, hcdTolerance);
-
 
                 // Bogus data
                 if (precursorSpectrum != null && (xic.GetApexScanNum() < 0 || xic.GetSumIntensities() <= 0)) continue;
@@ -213,10 +211,8 @@ namespace LiquidBackend.Util
                 var MsMsSearchUnits = PISearchUnits.Concat(NLSearchUnits).ToList();
                 SpectrumSearchResult spectrumSearchResult;
 
-
                 var hcdSpectrum = MsMsSpectrum.ActivationMethod == ActivationMethod.HCD ? MsMsSpectrum : MatchedSpectrum;
                 var cidSpectrum = MsMsSpectrum.ActivationMethod == ActivationMethod.CID ? MsMsSpectrum : MatchedSpectrum;
-
 
                 var HcdSearchResultList = hcdSpectrum != null? (from msMsSearchUnit in MsMsSearchUnits
                                             let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance)

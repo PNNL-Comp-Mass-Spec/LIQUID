@@ -64,7 +64,6 @@ namespace Liquid.View
             var result = dialog.ShowDialog();
             if (result.HasValue && result.Value)
             {
-
                 // Disable buttons while files is loading
                 ProcessAllTargetsButton.IsEnabled = false;
                 SearchForTargetButton.IsEnabled = false;
@@ -89,7 +88,6 @@ namespace Liquid.View
                 // Delay before clearing the progress to give the data loading thread a chance to report the final progress value
                 System.Threading.Thread.Sleep(250);
                 SingleTargetViewModel.ClearProgress();
-
             }
         }
 
@@ -146,7 +144,6 @@ namespace Liquid.View
                 MsOneInfoUserControl.Visibility = Visibility.Visible;
             }
         }
-
 
         private void UpdateEmpiricalFormula(string empiricalFormula)
         {
@@ -415,7 +412,6 @@ namespace Liquid.View
             {
                MessageBox.Show("Invalid m/z. Please only use numbers.","Warning",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
-
         }
 
         private async void SearchForFragmentsButtonClick(object sender, RoutedEventArgs e)
@@ -451,9 +447,7 @@ namespace Liquid.View
 
         private void RemoveFragmentButton_OnClick(object sender, RoutedEventArgs e)
         {
-
             var items = FragmentSearchListDataGrid.SelectedItems.OfType<MsMsSearchUnit>().ToList();
-
 
             if(FragmentSearchListDataGrid.SelectedItem != null) SingleTargetViewModel.RemoveFragment(items);
             if (SingleTargetViewModel.FragmentSearchList.Count == 0)

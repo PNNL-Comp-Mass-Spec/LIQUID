@@ -13,7 +13,6 @@ namespace LiquidTest
 {
     public class FdrUnitTests
     {
-
         [OneTimeSetUp]
         public void setup()
         {
@@ -168,7 +167,6 @@ namespace LiquidTest
             };
             const string negativeTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4.txt";
             RunWorkflowAndOutput(negativeTargetsFileLocation, "NegativeTrueTargets.tsv", datasetNamesNegative);
-
         }
 
         /// <summary>
@@ -245,7 +243,6 @@ namespace LiquidTest
             };
             const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_7b_Decoys.txt";
             RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "PositiveDecoyTargets.tsv", datasetNamesPositive);
-
         }
 
         /// <summary>
@@ -320,7 +317,6 @@ namespace LiquidTest
             };
             const string negativeDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4_Decoys.txt";
             RunWorkflowAndOutput(negativeDecoyTargetsFileLocation, "NegativeDecoyTargets.tsv", datasetNamesNegative);
-
         }
 
         /// <summary>
@@ -341,7 +337,6 @@ namespace LiquidTest
                 var rawFileName = datasetName + ".raw";
 
                 var rawFilePath = Path.Combine(@"D:\Data\Liquid\Original", rawFileName);
-
 
                 Console.WriteLine(DateTime.Now + ": Processing " + datasetName);
 
@@ -482,7 +477,6 @@ namespace LiquidTest
                     {
                         subclasses[name].Add(line);
                     }
-
                 }
             }
 
@@ -495,7 +489,6 @@ namespace LiquidTest
                     {
                         writer.WriteLine(entry);
                     }
-
                 }
             }
         }
@@ -557,7 +550,6 @@ namespace LiquidTest
                     outstream.WriteLine(x);
                 }
             }
-
         }
 
         [Test]
@@ -657,7 +649,6 @@ namespace LiquidTest
             const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4_Decoys.txt";
             RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "NegativeDecoyTargets.tsv", datasetNamesNegative);
         }
-
 
         [Test]
         public void RunPositiveTargetsForSvm()
@@ -1136,7 +1127,5 @@ namespace LiquidTest
             }
             //);
         }
-
     }
-
 }

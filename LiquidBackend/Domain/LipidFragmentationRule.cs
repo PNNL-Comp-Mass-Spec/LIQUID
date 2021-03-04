@@ -118,7 +118,6 @@ namespace LiquidBackend.Domain
             if (isNeutralLoss)
             {
                 return new MsMsSearchUnit(precursorMz - GetComposition(numCarbons, numDoubleBonds).Mass, description, acylChain, diagnostic);
-
             }
 
             return new MsMsSearchUnit(GetComposition(numCarbons, numDoubleBonds).Mass, description, acylChain, diagnostic);

@@ -103,7 +103,6 @@ namespace LiquidBackend.Util
             //Special Cases with parentheses in name go at top
             if (commonName.Contains("M(IP)2C")) return LipidClass.MIP2C;
 
-
             var commonNameSplit = commonName.Split('(');
             var classAbbrev = commonNameSplit[0];
 
@@ -621,7 +620,6 @@ namespace LiquidBackend.Util
                                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, 2 * carbons + 1 - 2 * doubleBonds, 0, 0, 0, 0).Mass, "[RCO-H2O]", acylChain));
                                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, 2 * (carbons + 8) - 4 - 2 * doubleBonds, 0, 6, 0, 1).Mass, "loss of ketene-59", acylChain));
                                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 5, 2 * (carbons + 8) - 6 - 2 * doubleBonds, 0, 5, 0, 1).Mass, "loss of ether chain-59", acylChain));
-
                                 }
                                 break;
                             case AcylChainType.OxoCHO:
@@ -860,7 +858,6 @@ namespace LiquidBackend.Util
                         msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 9, 1, 0, 0, 0).Mass, "M-(CH2)3NH3"));
                         msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 14, 1, 1, 0, 0).Mass, "C5H14ON")); //CC addtion 1-16-2015
                         msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 6, 0, 4, 0, 1).Mass, "C2H6O4P")); //CC addition 1-16-2015
-
                     }
 
                     if (lipidClass == LipidClass.PE_Cer)
@@ -873,8 +870,6 @@ namespace LiquidBackend.Util
                     if (lipidClass == LipidClass.PI_Cer)
                     {
                         msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(6, 10, 0, 8, 0, 1).Mass, "C6H10O8P"));
-
-
                     }
 
                     msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0, 0).Mass, "M-H2O"));
@@ -1692,7 +1687,6 @@ namespace LiquidBackend.Util
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, 2 * carbons - 1 - 2 * doubleBonds, 0, 3, 0, 0).Mass, "FA with OH", acylChain));
                                 break;
                         }
-
                     }
                 }
                 else if (lipidClass == LipidClass.GlcCer || lipidClass == LipidClass.GalCer)
@@ -1920,7 +1914,6 @@ namespace LiquidBackend.Util
                 {
                     msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz));
                 }
-
             }
 
             foreach (var acylChain in acylChainList)

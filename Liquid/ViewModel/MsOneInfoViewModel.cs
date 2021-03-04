@@ -51,8 +51,6 @@ namespace Liquid.ViewModel
             }
         }
 
-
-
         public void OnLipidTargetChange(LipidTarget lipidTarget)
         {
             CurrentLipidTarget = lipidTarget;

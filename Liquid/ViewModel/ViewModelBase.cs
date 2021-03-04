@@ -84,7 +84,6 @@ namespace Liquid.ViewModel
             yAxis.Zoom(0, yAxis.ActualMaximum);
 
             yAxis.PlotModel.InvalidatePlot(true);
-
         }
     }
 }
