@@ -16,7 +16,7 @@ namespace LiquidTest
         [Test]
         public void TestLipidCompositionRuleReader()
         {
-            var lipidFilePath = @"C:\Users\fuji510\Desktop\LIQUID_REVISED\LIQUID_Subclass_chain_parsing_cleaned.txt";
+            const string lipidFilePath = @"C:\Users\fuji510\Desktop\LIQUID_REVISED\LIQUID_Subclass_chain_parsing_cleaned.txt";
             var lipidFileInfo = new FileInfo(lipidFilePath);
             var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
             var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
@@ -31,7 +31,7 @@ namespace LiquidTest
         public void TestGetCompositionRuleForLipid()
         {
             //Set lipid for testing
-            string oldCommonName = "PC(16:0/0:0)";
+            const string oldCommonName = "PC(16:0/0:0)";
 
             Console.WriteLine(oldCommonName);
 
@@ -41,7 +41,7 @@ namespace LiquidTest
             var dBonds = fattyAcylChains.Sum(x => x.NumDoubleBonds);
             Console.WriteLine("OLD COMPOSITION: " + oldComp.ToPlainString());
 
-            var lipidFilePath = @"C:\Users\fuji510\Desktop\LIQUID_REVISED\LIQUID_Subclass_chain_parsing_cleaned.txt";
+            const string lipidFilePath = @"C:\Users\fuji510\Desktop\LIQUID_REVISED\LIQUID_Subclass_chain_parsing_cleaned.txt";
             var lipidFileInfo = new FileInfo(lipidFilePath);
             var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
             var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
@@ -60,7 +60,7 @@ namespace LiquidTest
         [Test()]
         public void TestGetCompositionRulesForCommonName()
         {
-            var targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\LIQUID_composition_13Aug18_JK.txt";
+            const string targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\LIQUID_composition_13Aug18_JK.txt";
             var lipidFileInfo = new FileInfo(targetsFilePath);
             var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
             var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
@@ -121,7 +121,7 @@ namespace LiquidTest
         [Test()]
         public void TestGetCompositionRulesForLipidClass()
         {
-            var targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\LIQUID_composition_13Aug18_JK.txt";
+            const string targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\LIQUID_composition_13Aug18_JK.txt";
             var lipidFileInfo = new FileInfo(targetsFilePath);
             var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
             var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
@@ -222,7 +222,7 @@ namespace LiquidTest
             Console.WriteLine("Get Composition Rule");
 
             //var commonName = "DAT1(16:0/22:0(2Me[S],4Me[S]))";
-            var commonName = "DAT2(18:0/23:0(2Me[S],3OH[S],4Me[S],6Me[S]))";
+            const string commonName = "DAT2(18:0/23:0(2Me[S],3OH[S],4Me[S],6Me[S]))";
 
             string empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, LipidRules.LipidCompositionRules).ToPlainString();
             Console.WriteLine(commonName + "\t" + empiricalFormula);
@@ -232,14 +232,14 @@ namespace LiquidTest
         public void TestGetCompositionRuleForAllLipids()
         {
             Console.WriteLine("COMPOSITION RULES FOR ALL LIPIDS");
-            var lipidFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\LIQUID_Subclass_chain_parsing_clean.txt";
+            const string lipidFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\LIQUID_Subclass_chain_parsing_clean.txt";
             var lipidFileInfo = new FileInfo(lipidFilePath);
             var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
             var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
 
-            bool printMatches = false;
-            bool printMissing = true;
-            bool printFailed = false;
+            const bool printMatches = false;
+            const bool printMissing = true;
+            const bool printFailed = false;
 
             List<int> percentage = new List<int>();
 

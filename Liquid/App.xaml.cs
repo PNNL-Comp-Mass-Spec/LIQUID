@@ -38,7 +38,7 @@ namespace Liquid
 
         private static void GridColumnFastEdit(DataGridCell cell, RoutedEventArgs e)
         {
-            if (cell == null || cell.IsEditing || cell.IsReadOnly)
+            if (cell?.IsEditing != false || cell.IsReadOnly)
                 return;
 
             var dataGrid = FindVisualParent<DataGrid>(cell);
@@ -60,7 +60,7 @@ namespace Liquid
                 else
                 {
                     var row = FindVisualParent<DataGridRow>(cell);
-                    if (row != null && !row.IsSelected)
+                    if (row?.IsSelected == false)
                     {
                         row.IsSelected = true;
                     }

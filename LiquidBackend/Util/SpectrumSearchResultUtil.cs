@@ -32,7 +32,7 @@ namespace LiquidBackend.Util
 
             foreach (var peak in spectrum.Peaks)
             {
-                var matchedPeaks = resultsList.Where(x => x.ObservedPeak != null && x.ObservedPeak.Equals(peak));
+                var matchedPeaks = resultsList.Where(x => x.ObservedPeak?.Equals(peak) == true);
 
                 resultPeaks.AddRange(matchedPeaks);
             }

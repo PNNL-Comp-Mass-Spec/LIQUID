@@ -55,7 +55,7 @@ namespace LiquidBackend.Domain
                 //int index = this.Xic.BinarySearch(searchPoint);
                 //double intensityOfPrecursor = this.Xic[index].Intensity;
                 //return (this.HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + this.CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity)) / intensityOfPrecursor;
-                return (HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity));
+                return HcdSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity) + CidSearchResultList.Where(x => x.ObservedPeak != null).Sum(x => x.ObservedPeak.Intensity);
             }
         }
 

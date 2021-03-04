@@ -200,6 +200,8 @@ namespace LiquidBackend.Util
             throw new SystemException("No empirical formula calculator found for " + commonName);
         }
 
+#pragma warning disable RCS1123 // Add parentheses when necessary.
+
         public static Composition ParseLipidCommonNameIntoCompositionWithoutAdduct(string commonName)
         {
             var lipidClass = ParseLipidCommonNameIntoClass(commonName);
@@ -488,10 +490,10 @@ namespace LiquidBackend.Util
         {
             var ganglioName = commonName.Split('(')[0];
             int NeuAc;
-            var NeuGc = 0;
+            const int NeuGc = 0;
             int Hex;
             var HexNAc = 0;
-            var DeoxyHex = 0;
+            const int DeoxyHex = 0;
 
             switch (ganglioName[1])
             {
@@ -1849,6 +1851,8 @@ namespace LiquidBackend.Util
             return msMsSearchUnitList;
         }
 
+#pragma warning restore RCS1123 // Add parentheses when necessary.
+
         public static List<MsMsSearchUnit> CreateMsMsSearchUnitsFromFragmentationRules(
             string commonName,
             double precursorMz,
@@ -1877,7 +1881,7 @@ namespace LiquidBackend.Util
                 {
                     msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz));
                 }
-                else if (rule.checkCountOfChains(countOfChains) && rule.targetAcylChainsIndices != null && rule.targetAcylChainsIndices.Count > 0)
+                else if (rule.checkCountOfChains(countOfChains) && rule.targetAcylChainsIndices?.Count > 0)
                 {
                     var carbons = 0;
                     var doubleBonds = 0;
@@ -1910,7 +1914,7 @@ namespace LiquidBackend.Util
                     var combinedChain = new AcylChain(carbons + ":" + doubleBonds);
                     msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, carbons, doubleBonds, combinedChain));
                 }
-                if (rule.sialic != null && rule.sialic.IndexOf(sialic) >= 0)
+                if (rule.sialic?.IndexOf(sialic) >= 0)
                 {
                     msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz));
                 }
@@ -2021,7 +2025,7 @@ namespace LiquidBackend.Util
         public static Peak[] GetAllIsotopePeaks(Spectrum spectrum, Composition composition, Tolerance tolerance, double relativeIntensityThreshold)
         {
             var peaks = spectrum.Peaks;
-            var mostAbundantIsotopeIndex = 0;
+            const int mostAbundantIsotopeIndex = 0;
             var isotopomerEnvelope = IsoProfilePredictor.GetIsotopomerEnvelop(
                                                             composition.C,
                                                             composition.H,

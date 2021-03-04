@@ -62,7 +62,7 @@ namespace LiquidTest
             //datasetNames.Add("Lipid_QC_1_14Jan_POS_Gimli_14Jan14_13-07-01");
             //datasetNames.Add("Lipid_QC_1_14Jan_POS_Gimli_17JAN_13-07-01");
 
-            const string positiveTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_5.txt";
+            const string positiveTargetsFileLocation = "../../../testFiles/Global_LipidMaps_POS_5.txt";
             var positiveTargetsFileInfo = new FileInfo(positiveTargetsFileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(positiveTargetsFileInfo);
@@ -132,7 +132,7 @@ namespace LiquidTest
                 "Oscar_21days_dark_TLE_NEG_06Feb14_13-07-01",
                 "Oscar_14day_TLE_NEG_06Feb14_13-07-01"
             };
-            const string positiveTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_3.txt";
+            const string positiveTargetsFileLocation = "../../../testFiles/Global_LipidMaps_NEG_3.txt";
             var positiveTargetsFileInfo = new FileInfo(positiveTargetsFileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(positiveTargetsFileInfo);
@@ -338,7 +338,7 @@ namespace LiquidTest
                 "Sullivan_Cbaltica_5E6_test_POS_150mm_2Jun15_Polaroid_HSST3-02",
                 "Sullivan_Cbaltica_5E7_test_POS_150mm_2Jun15_Polaroid_HSST3-02"
             };
-            const string positiveTargetsFileLocation = @"../../../testFiles/Global_ENV_Nov2017_POS_v12.txt";
+            const string positiveTargetsFileLocation = "../../../testFiles/Global_ENV_Nov2017_POS_v12.txt";
             var positiveTargetsFileInfo = new FileInfo(positiveTargetsFileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(positiveTargetsFileInfo);
@@ -514,7 +514,7 @@ namespace LiquidTest
             var x = new Stopwatch();
             x.Start();
 
-            const string negativeTargetsFileLocation = @"../../../testFiles/Global_ENV_Mtb_Dec2016_NEG_v7.txt";
+            const string negativeTargetsFileLocation = "../../../testFiles/Global_ENV_Mtb_Dec2016_NEG_v7.txt";
             var negativeTargetsFileInfo = new FileInfo(negativeTargetsFileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(negativeTargetsFileInfo);

@@ -850,8 +850,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPcPositive()
         {
             // Testing PC(16:0/18:1) +H
-            var precursorMz = 760.5855988;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 760.5855988;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("18:1") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
@@ -889,8 +889,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPcEtherPositive()
         {
             // Testing PC(O-16:0/18:1) +H
-            var precursorMz = 746.606333;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 746.606333;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("18:1") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
@@ -924,8 +924,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPcPlasmalogenPositive()
         {
             // Testing PC(P-16:0/18:1) +H
-            var precursorMz = 744.5906838;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 744.5906838;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("18:1") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
@@ -961,8 +961,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpcPositive()
         {
             // Testing PC(16:0/0:0) +H
-            var precursorMz = 496.3402966;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 496.3402966;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("0:0") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
@@ -990,8 +990,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpcPlasmalogenPositive()
         {
             // Testing PC(P-16:0/0:0) +H
-            var precursorMz = 480.3453816;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 480.3453816;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("0:0") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
@@ -1016,8 +1016,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpcEtherPositive()
         {
             // Testing PC(O-16:0/0:0) +H
-            var precursorMz = 482.3610308;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 482.3610308;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("0:0") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PC, fragmentationMode, acylChainList);
@@ -1042,8 +1042,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPePositive()
         {
             // Testing PE(16:0/18:1) +H
-            var precursorMz = 718.5386512;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 718.5386512;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("18:1") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
@@ -1076,8 +1076,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPeEtherPositive()
         {
             // Testing PE(O-16:0/18:1) +H
-            var precursorMz = 704.5593854;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 704.5593854;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("18:1") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
@@ -1104,8 +1104,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForPePlasmalogenPositive()
         {
             // Testing PE(P-16:0/18:1) +H
-            var precursorMz = 702.5437362;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 702.5437362;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("18:1") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
@@ -1134,8 +1134,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpePositive()
         {
             // Testing PE(16:0/0:0) +H
-            var precursorMz = 454.293349;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 454.293349;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("16:0"), new AcylChain("0:0") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
@@ -1158,8 +1158,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpePlasmalogenPositive()
         {
             // Testing PE(P-16:0/0:0) +H
-            var precursorMz = 438.298434;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 438.298434;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("P-16:0"), new AcylChain("0:0") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);
@@ -1179,8 +1179,8 @@ namespace LiquidTest
         public void TestCreateMsMsMsSearchUnitsForLpeEtherPositive()
         {
             // Testing PE(O-16:0/0:0) +H
-            var precursorMz = 440.3140832;
-            var fragmentationMode = FragmentationMode.Positive;
+            const double precursorMz = 440.3140832;
+            const FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var acylChainList = new List<AcylChain> { new AcylChain("O-16:0"), new AcylChain("0:0") };
 
             var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits("", precursorMz, LipidClass.PE, fragmentationMode, acylChainList);

@@ -147,7 +147,7 @@ namespace Liquid.ViewModel
             SpectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(CurrentLipidTarget, LcMsRun, hcdMassError, cidMassError, ScoreModel);
             OnPropertyChanged("SpectrumSearchResultList");
 
-            if (SpectrumSearchResultList.Any())
+            if (SpectrumSearchResultList.Count > 0)
             {
                 var spectrumSearchResult = SpectrumSearchResultList.OrderByDescending(x => x.NumMatchingMsMsPeaks).First();
                 OnSpectrumSearchResultChange(spectrumSearchResult);
@@ -364,7 +364,7 @@ namespace Liquid.ViewModel
             SpectrumSearchResultList = InformedWorkflow.RunFragmentWorkflow(FragmentSearchList, LcMsRun, hcdError, cidError, minMatches, progress);
             OnPropertyChanged("SpectrumSearchResultList");
             progress.Report(0);
-            if (SpectrumSearchResultList.Any())
+            if (SpectrumSearchResultList.Count > 0)
             {
                 var spectrumSearchResult =
                     SpectrumSearchResultList.OrderByDescending(x => x.ApexScanNum).First();

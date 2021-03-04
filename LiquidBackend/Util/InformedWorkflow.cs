@@ -158,14 +158,13 @@ namespace LiquidBackend.Util
             foreach(var scan in msmsScanNumbers)
             {
                 // Lookup the MS/MS Spectrum
-                var MsMsSpectrum = lcmsRun.GetSpectrum(scan) as ProductSpectrum;
-                if (MsMsSpectrum == null)
+                if (!(lcmsRun.GetSpectrum(scan) is ProductSpectrum MsMsSpectrum))
                     continue;
 
                 ProductSpectrum MatchedSpectrum = null;
                 var spectrum1 = lcmsRun.GetSpectrum(scan + 1);
                 var spectrum2 = lcmsRun.GetSpectrum(scan - 1);
-                if (spectrum1 != null && spectrum1.MsLevel == 2)
+                if (spectrum1?.MsLevel == 2)
                 {
                     if (spectrum1 is ProductSpectrum productSpectrum)
                     {
@@ -176,7 +175,7 @@ namespace LiquidBackend.Util
                         }
                     }
                 }
-                if (spectrum2 != null && spectrum2.MsLevel == 2)
+                if (spectrum2?.MsLevel == 2)
                 {
                     if (spectrum2 is ProductSpectrum productSpectrum)
                     {

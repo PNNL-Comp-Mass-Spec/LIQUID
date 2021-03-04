@@ -14,10 +14,10 @@ namespace LiquidTest
         [Test]
         public void TestGlobalWorkflowPositive()
         {
-            var rawFileLocation = @"../../../testFiles/Dey_lipids_Bottom_2_1_pos_dil_Gimli_RZ-12-07-05.raw";
+            const string rawFileLocation = "../../../testFiles/Dey_lipids_Bottom_2_1_pos_dil_Gimli_RZ-12-07-05.raw";
             var globalWorkflow = new GlobalWorkflow(rawFileLocation);
 
-            var fileLocation = @"../../../testFiles/Global_LipidMaps_Pos.txt";
+            const string fileLocation = "../../../testFiles/Global_LipidMaps_Pos.txt";
             var fileInfo = new FileInfo(fileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(fileInfo);
@@ -58,10 +58,10 @@ namespace LiquidTest
         [Test]
         public void TestGlobalWorkflowNegative()
         {
-            var rawFileLocation = @"../../../testFiles/Dey_Lipids_Top_2_3_rerun_Neg_05Jul13_Gimli_12-07-05.raw";
+            const string rawFileLocation = "../../../testFiles/Dey_Lipids_Top_2_3_rerun_Neg_05Jul13_Gimli_12-07-05.raw";
             var globalWorkflow = new GlobalWorkflow(rawFileLocation);
 
-            var fileLocation = @"../../../testFiles/Global_LipidMaps_Neg.txt";
+            const string fileLocation = "../../../testFiles/Global_LipidMaps_Neg.txt";
             var fileInfo = new FileInfo(fileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(fileInfo);
@@ -75,10 +75,10 @@ namespace LiquidTest
         [Test]
         public void TestMassCalibration()
         {
-            var rawFileLocation = @"../../../testFiles/synaptosome_lipid_rafts_lipidomics_synlr_1_bottom__NEG_Polaroid_17Mar14_14-02-04.raw";
+            const string rawFileLocation = "../../../testFiles/synaptosome_lipid_rafts_lipidomics_synlr_1_bottom__NEG_Polaroid_17Mar14_14-02-04.raw";
             var globalWorkflow = new GlobalWorkflow(rawFileLocation);
 
-            var fileLocation = @"../../../testFiles/Global_LipidMaps_NEG_3.txt";
+            const string fileLocation = "../../../testFiles/Global_LipidMaps_NEG_3.txt";
             var fileInfo = new FileInfo(fileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(fileInfo);
@@ -91,7 +91,7 @@ namespace LiquidTest
         [Test]
         public void TestCreateScoringOutput()
         {
-            const string positiveTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_v3.txt";
+            const string positiveTargetsFileLocation = "../../../testFiles/Global_LipidMaps_POS_v3.txt";
             var positiveTargetsFileInfo = new FileInfo(positiveTargetsFileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(positiveTargetsFileInfo);

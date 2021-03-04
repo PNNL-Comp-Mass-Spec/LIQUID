@@ -100,7 +100,7 @@ namespace LiquidBackend.Util
         private Peak[] GetAllIsotopePeaks(Spectrum spectrum, IReadOnlyCollection<double> isotopomerEnvelope, double mass, Tolerance tolerance)
         {
             var peaks = spectrum.Peaks;
-            var mostAbundantIsotopeIndex = 0;
+            const int mostAbundantIsotopeIndex = 0;
             var mostAbundantIsotopeMz = mass;
             var mostAbundantIsotopeMatchedPeakIndex = spectrum.FindPeakIndex(mostAbundantIsotopeMz, tolerance);
             if (mostAbundantIsotopeMatchedPeakIndex < 0) return null;

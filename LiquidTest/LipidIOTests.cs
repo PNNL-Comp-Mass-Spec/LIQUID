@@ -11,7 +11,7 @@ namespace LiquidTest
         [Test]
         public void TestReadLipidMaps()
         {
-            var fileLocation = @"../../../testFiles/Global_LipidMaps_Pos.txt";
+            const string fileLocation = "../../../testFiles/Global_LipidMaps_Pos.txt";
             var fileInfo = new FileInfo(fileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(fileInfo);
@@ -21,7 +21,7 @@ namespace LiquidTest
         [Test]
         public void TestReadLipidMapsAndCreateTargets()
         {
-            var fileLocation = @"../../../testFiles/Global_LipidMaps_Pos.txt";
+            const string fileLocation = "../../../testFiles/Global_LipidMaps_Pos.txt";
             var fileInfo = new FileInfo(fileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(fileInfo);
@@ -36,7 +36,7 @@ namespace LiquidTest
         [Test]
         public void TestReadLipidMapsNegativeAndCreateTargets()
         {
-            var fileLocation = @"../../../testFiles/Global_LipidMaps_Neg.txt";
+            const string fileLocation = "../../../testFiles/Global_LipidMaps_Neg.txt";
             var fileInfo = new FileInfo(fileLocation);
             var lipidReader = new LipidMapsDbReader<Lipid>();
             var lipidList = lipidReader.ReadFile(fileInfo);

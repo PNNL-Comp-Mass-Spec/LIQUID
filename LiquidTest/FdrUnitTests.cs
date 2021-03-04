@@ -91,7 +91,7 @@ namespace LiquidTest
                 "FSFA_Isolate_HL53_0100_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02",
                 "FSFA_Isolate_HL53_0400_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02"
             };
-            const string positiveTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_7b.txt";
+            const string positiveTargetsFileLocation = "../../../testFiles/Global_LipidMaps_POS_7b.txt";
             RunWorkflowAndOutput(positiveTargetsFileLocation, "PositiveTrueTargets.tsv", datasetNamesPositive);
         }
 
@@ -165,7 +165,7 @@ namespace LiquidTest
                 "FSFA_Isolate_HL53_0100_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02",
                 "FSFA_Isolate_HL53_0400_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02"
             };
-            const string negativeTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4.txt";
+            const string negativeTargetsFileLocation = "../../../testFiles/Global_LipidMaps_NEG_4.txt";
             RunWorkflowAndOutput(negativeTargetsFileLocation, "NegativeTrueTargets.tsv", datasetNamesNegative);
         }
 
@@ -241,7 +241,7 @@ namespace LiquidTest
                 "FSFA_Isolate_HL53_0100_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02",
                 "FSFA_Isolate_HL53_0400_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02"
             };
-            const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_7b_Decoys.txt";
+            const string positiveDecoyTargetsFileLocation = "../../../testFiles/Global_LipidMaps_POS_7b_Decoys.txt";
             RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "PositiveDecoyTargets.tsv", datasetNamesPositive);
         }
 
@@ -315,7 +315,7 @@ namespace LiquidTest
                 "FSFA_Isolate_HL53_0100_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02",
                 "FSFA_Isolate_HL53_0400_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02"
             };
-            const string negativeDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4_Decoys.txt";
+            const string negativeDecoyTargetsFileLocation = "../../../testFiles/Global_LipidMaps_NEG_4_Decoys.txt";
             RunWorkflowAndOutput(negativeDecoyTargetsFileLocation, "NegativeDecoyTargets.tsv", datasetNamesNegative);
         }
 
@@ -324,8 +324,8 @@ namespace LiquidTest
         /// </summary>
         /// <param name="targetsFilePath"></param>
         /// <param name="outputFileName"></param>
-        /// <param name="datasetNamesList"></param>
-        private void RunWorkflowAndOutput(string targetsFilePath, string outputFileName, List<string> datasetNamesList)
+        /// <param name="datasetNamesList">Dataset names</param>
+        private void RunWorkflowAndOutput(string targetsFilePath, string outputFileName, IEnumerable<string> datasetNamesList)
         {
             var targetsFileInfo = new FileInfo(targetsFilePath);
             var lipidReader = new LipidMapsDbReader<Lipid>();
@@ -384,12 +384,12 @@ namespace LiquidTest
         [Test]
         public void SubclassStats()
         {
-            var subclassCol = 5;
+            const int subclassCol = 5;
             //string inFilename = "../../../testFiles/Global_LipidMaps_NEG_4.txt";
             //string inFilename = "../../../testFiles/Global_LipidMaps_POS_7b.txt";
             //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeTrueTargets.tsv";
             //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveTrueTargets.tsv";
-            var inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeDecoyTargets.tsv";
+            const string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeDecoyTargets.tsv";
             //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoyTargets.tsv";
 
             var subclasses = new Dictionary<string, int>();
@@ -437,15 +437,15 @@ namespace LiquidTest
         [Test]
         public void SubclassDivider()
         {
-            var subclassCol = 5;
+            const int subclassCol = 5;
             //string inFilename = "../../../testFiles/Global_LipidMaps_NEG_4.txt";
             //string inFilename = "../../../testFiles/Global_LipidMaps_POS_7b.txt";
             //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeTrueTargets.tsv";
             //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveTrueTargets.tsv";
             //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeDecoyTargets.tsv";
-            var inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoyTargets.tsv";
+            const string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoyTargets.tsv";
 
-            var outputDirectory = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoy";
+            const string outputDirectory = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoy";
 
             string header;
 
@@ -599,7 +599,7 @@ namespace LiquidTest
                 "FSFA_Isolate_HL53_0100_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02",
                 "FSFA_Isolate_HL53_0400_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02"
             };
-            const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_7b_Decoys.txt";
+            const string positiveDecoyTargetsFileLocation = "../../../testFiles/Global_LipidMaps_POS_7b_Decoys.txt";
             RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "PositiveDecoyTargets.tsv", datasetNamesPositive);
         }
 
@@ -646,7 +646,7 @@ namespace LiquidTest
                 "FSFA_Isolate_HL53_0100_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02",
                 "FSFA_Isolate_HL53_0400_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02"
             };
-            const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4_Decoys.txt";
+            const string positiveDecoyTargetsFileLocation = "../../../testFiles/Global_LipidMaps_NEG_4_Decoys.txt";
             RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "NegativeDecoyTargets.tsv", datasetNamesNegative);
         }
 
@@ -697,7 +697,7 @@ namespace LiquidTest
                 "FSFA_Isolate_HL53_0100_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02",
                 "FSFA_Isolate_HL53_0400_lipid_POS_150mm_21Aug15_Polaroid_HSST3-02"
             };
-            const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_POS_7b.txt";
+            const string positiveDecoyTargetsFileLocation = "../../../testFiles/Global_LipidMaps_POS_7b.txt";
             RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "PositiveTargetsOutput.tsv", datasetNamesPositive);
         }
 
@@ -744,7 +744,7 @@ namespace LiquidTest
                 "FSFA_Isolate_HL53_0100_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02",
                 "FSFA_Isolate_HL53_0400_lipid_NEG_150mm_24Aug15_Polaroid_HSST3-02"
             };
-            const string positiveDecoyTargetsFileLocation = @"../../../testFiles/Global_LipidMaps_NEG_4.txt";
+            const string positiveDecoyTargetsFileLocation = "../../../testFiles/Global_LipidMaps_NEG_4.txt";
             RunWorkflowAndOutput(positiveDecoyTargetsFileLocation, "NegativeTargetsOutput.tsv", datasetNamesNegative);
         }
 
@@ -806,7 +806,7 @@ namespace LiquidTest
         // "TargetsType"
         public enum tt
         {
-            // environmental 
+            // environmental
             ENV,
 
             // human

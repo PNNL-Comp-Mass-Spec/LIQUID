@@ -29,8 +29,8 @@ namespace LiquidBackend.Scoring
             var cidResultList = spectrumSearchResult.CidSearchResultList;
             var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-            var cidMaxIntensity = spectrumSearchResult.CidSpectrum != null && spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-            var hcdMaxIntensity = spectrumSearchResult.HcdSpectrum != null && spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var cidMaxIntensity = spectrumSearchResult.CidSpectrum?.Peaks.Length > 0 ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var hcdMaxIntensity = spectrumSearchResult.HcdSpectrum?.Peaks.Length > 0 ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
             double lipidScore = 0;
 
@@ -57,8 +57,8 @@ namespace LiquidBackend.Scoring
             var cidResultList = spectrumSearchResult.CidSearchResultList;
             var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-            var cidMaxIntensity = spectrumSearchResult.CidSpectrum != null && spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-            var hcdMaxIntensity = spectrumSearchResult.HcdSpectrum != null && spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var cidMaxIntensity = spectrumSearchResult.CidSpectrum?.Peaks.Length > 0 ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var hcdMaxIntensity = spectrumSearchResult.HcdSpectrum?.Peaks.Length > 0 ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
             double lipidScore = 0;
 
@@ -86,8 +86,8 @@ namespace LiquidBackend.Scoring
             var cidResultList = spectrumSearchResult.CidSearchResultList;
             var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-            var cidMaxIntensity = spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-            var hcdMaxIntensity = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var cidMaxIntensity = spectrumSearchResult.CidSpectrum.Peaks.Length > 0 ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+            var hcdMaxIntensity = spectrumSearchResult.HcdSpectrum.Peaks.Length > 0 ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
             double lipidScore = 0;
 

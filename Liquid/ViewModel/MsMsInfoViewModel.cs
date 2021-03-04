@@ -73,7 +73,7 @@ namespace Liquid.ViewModel
             var peakList = productSpectrum.Peaks;
             var fragmentationType = productSpectrum.ActivationMethod == ActivationMethod.CID ? FragmentationType.CID : FragmentationType.HCD;
 
-            if (!peakList.Any()) return new PlotModel();
+            if (peakList.Length == 0) return new PlotModel();
 
             var plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + 
                 " // Precursor Scan - " + parentScan + 
@@ -161,7 +161,7 @@ namespace Liquid.ViewModel
                 {
                     diagnosticPeakSeries.Points.Add(dataPoint);
                 }
-                else if (matchedPeaks.Any())
+                else if (matchedPeaks.Count > 0)
                 {
                     annotatedPeakSeries.Points.Add(dataPoint);
                 }

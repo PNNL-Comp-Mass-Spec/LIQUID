@@ -69,13 +69,11 @@ namespace Liquid.ViewModel
 
         protected void OnYAxisChange(object sender, AxisChangedEventArgs e)
         {
-            var yAxis = sender as LinearAxis;
-
-            if (yAxis == null)
+            if (!(sender is LinearAxis yAxis))
                 return;
 
             // Set to use 5 major labels no matter where you are zoomed
-                if (yAxis.ActualMaximum > 1) yAxis.MajorStep = yAxis.ActualMaximum / 5.0;
+            if (yAxis.ActualMaximum > 1) yAxis.MajorStep = yAxis.ActualMaximum / 5.0;
 
             // No need to update anything else if the minimum is already <= 0
             if (yAxis.ActualMinimum <= 0) return;

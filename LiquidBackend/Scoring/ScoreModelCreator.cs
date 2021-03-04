@@ -55,8 +55,8 @@ namespace LiquidBackend.Scoring
                         var cidResultList = spectrumSearchResult.CidSearchResultList;
                         var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-                        var cidMaxValue = spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-                        var hcdMaxValue = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+                        var cidMaxValue = spectrumSearchResult.CidSpectrum.Peaks.Length > 0 ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+                        var hcdMaxValue = spectrumSearchResult.HcdSpectrum.Peaks.Length > 0 ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
                         // CID Results
                         foreach (var cidResult in cidResultList)

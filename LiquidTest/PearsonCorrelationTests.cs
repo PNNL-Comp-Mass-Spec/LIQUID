@@ -13,12 +13,12 @@ namespace LiquidTest
     using LiquidBackend.Util;
 
     [TestFixture]
-    class PearsonCorrelationTests
+    internal class PearsonCorrelationTests
     {
         [TestCase(14, "PS(18:0/18:1)", "C42H81N1O10P1", 30)]
         public void TestPearsonCorrelation(int precursor, string commonName, string composition, Tolerance tolerance)
         {
-            var rawFilePath = @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw";
+            const string rawFilePath = @"\\proto-2\UnitTest_Files\Liquid\PearsonCorrelationTests\OMICS_IM102_691_1d_Lipid_pooled_POS_150mm_17Apr15_Polaroid_14-12-16.raw";
 
             var lcmsRun = PbfLcMsRun.GetLcMsRun(rawFilePath);
 
@@ -288,7 +288,7 @@ namespace LiquidTest
 
             var spectrum = lcmsRun.GetSpectrum(precursor);
 
-            var relativeIntensityThreshold = 0.1;
+            const double relativeIntensityThreshold = 0.1;
 
             var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
 
@@ -351,7 +351,7 @@ namespace LiquidTest
 
             var spectrum = lcmsRun.GetSpectrum(precursor);
 
-            var relativeIntensityThreshold = 0.1;
+            const double relativeIntensityThreshold = 0.1;
 
             var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
 

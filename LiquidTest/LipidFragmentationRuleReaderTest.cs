@@ -15,7 +15,7 @@ namespace LiquidTest
         [Test()]
         public void TestLipidFragmentationRuleReader()
         {
-            var targetsFilePath = @"/Users/leej324/Documents/projects/Liquid/LIQUID_Fragments_February2018_all_rules.txt";
+            const string targetsFilePath = "/Users/leej324/Documents/projects/Liquid/LIQUID_Fragments_February2018_all_rules.txt";
             var targetsFileInfo = new FileInfo(targetsFilePath);
             var lipidFragmentationRuleReader = new LipidFragmentationRuleReaderFromTable<LipidFragmentationRuleFromTable>();
             var lipidFragmentationRules = lipidFragmentationRuleReader.ReadFile(targetsFileInfo);
@@ -29,7 +29,7 @@ namespace LiquidTest
         [Test()]
         public void TestGetFragmentationRulesForLipidSubClass()
         {
-            var targetsFilePath = @"/Users/leej324/Documents/projects/Liquid/LIQUID_Fragments_February2018_all_rules.txt";
+            const string targetsFilePath = "/Users/leej324/Documents/projects/Liquid/LIQUID_Fragments_February2018_all_rules.txt";
             var targetsFileInfo = new FileInfo(targetsFilePath);
             var lipidFragmentationRuleReader = new LipidFragmentationRuleReaderFromTable<LipidFragmentationRuleFromTable>();
             var lipidFragmentationRules = lipidFragmentationRuleReader.ReadFile(targetsFileInfo);
@@ -198,7 +198,7 @@ namespace LiquidTest
         [Test()]
         public void TestGetFragmentationRules()
         {
-            var targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\extract_rules_from_code_equations_fixed.txt";
+            const string targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\extract_rules_from_code_equations_fixed.txt";
             var targetsFileInfo = new FileInfo(targetsFilePath);
             var lipidFragmentationRulesReader = new LipidFragmentationRuleReader<LipidFragmentationRule>();
             var lipidFragmentationRules = lipidFragmentationRulesReader.ReadFile(targetsFileInfo);
@@ -207,9 +207,9 @@ namespace LiquidTest
             //string empiricalFormula = "C39H76O2";
             //string commonName = "PC(16:0/11:0(CHO))";
             //string empiricalFormula = "C35H68N1O9P1";
-            string commonName = "GM3(d14:1/24:1)";
-            string empiricalFormula = "C61H110N2O21";
-            FragmentationMode fragmentationMode = FragmentationMode.Negative;
+            const string commonName = "GM3(d14:1/24:1)";
+            const string empiricalFormula = "C61H110N2O21";
+            const FragmentationMode fragmentationMode = FragmentationMode.Negative;
 
             CheckFragmentaionRules(commonName, empiricalFormula, fragmentationMode, lipidFragmentationRules);
         }
@@ -217,7 +217,7 @@ namespace LiquidTest
         [Test()]
         public void TestGetFragmentationRulesForLipidClass()
         {
-            var targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\extract_rules_from_code_equations_fixed.txt";
+            const string targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\extract_rules_from_code_equations_fixed.txt";
             var targetsFileInfo = new FileInfo(targetsFilePath);
             var lipidFragmentationRulesReader = new LipidFragmentationRuleReader<LipidFragmentationRule>();
             var lipidFragmentationRules = lipidFragmentationRulesReader.ReadFile(targetsFileInfo);

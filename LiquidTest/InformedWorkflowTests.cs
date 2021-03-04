@@ -21,7 +21,7 @@ namespace LiquidTest
 
             var lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, lipidClass, fragmentationMode, acylChainList);
 
-            var rawFileLocation = @"../../../testFiles/Daphnia_gut_TLE_POS_Gimli_21Jan14_13-07-01.raw";
+            const string rawFileLocation = "../../../testFiles/Daphnia_gut_TLE_POS_Gimli_21Jan14_13-07-01.raw";
             var informedWorkflow = new InformedWorkflow(rawFileLocation);
             var resultList = informedWorkflow.RunInformedWorkflow(lipidTarget, 30, 500);
 
@@ -43,7 +43,7 @@ namespace LiquidTest
 
             var lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, lipidClass, fragmentationMode, acylChainList);
 
-            var rawFileLocation = @"../../../testFiles/XGA121_lipid_Skin_1.raw";
+            const string rawFileLocation = "../../../testFiles/XGA121_lipid_Skin_1.raw";
             var informedWorkflow = new InformedWorkflow(rawFileLocation);
             var resultList = informedWorkflow.RunInformedWorkflow(lipidTarget, 30, 500);
 

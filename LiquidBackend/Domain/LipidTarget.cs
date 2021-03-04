@@ -22,7 +22,7 @@ namespace LiquidBackend.Domain
             get
             {
                 if (Composition != null)
-                    return Math.Round(Composition.Mass/Charge, 4);
+                    return Math.Round(Composition.Mass / Charge, 4);
 
                 return double.Parse(CommonName); //If this is an unknown target i.e. composition is unknown
             }
@@ -87,8 +87,9 @@ namespace LiquidBackend.Domain
                         }*/
                         //else
                         //{
-                            stringBuilder.Append(acylChain);
-                            if (i < acylChainList.Count - 1) stringBuilder.Append("/");
+                        stringBuilder.Append(acylChain);
+                        if (i < acylChainList.Count - 1)
+                            stringBuilder.Append("/");
                         //}
                     }
                     stringBuilder.Append(")");
@@ -146,27 +147,32 @@ namespace LiquidBackend.Domain
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((LipidTarget) obj);
+            if (obj is null)
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != GetType())
+                return false;
+            return Equals((LipidTarget)obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                var hashCode = (int) LipidClass;
-                hashCode = (hashCode*397) ^ (int) FragmentationMode;
-                hashCode = (hashCode*397) ^ (Composition != null ? Composition.GetHashCode() : 0);
-                if (AcylChainList != null) hashCode = AcylChainList.OrderBy(x => x.NumCarbons).ThenBy(x => x.NumDoubleBonds).ThenBy(x => x.AcylChainType).Aggregate(hashCode, (current, acylChain) => (current * 397) ^ acylChain.GetHashCode());
+                var hashCode = (int)LipidClass;
+                hashCode = (hashCode * 397) ^ (int)FragmentationMode;
+                hashCode = (hashCode * 397) ^ (Composition?.GetHashCode() ?? 0);
+                if (AcylChainList != null)
+                    hashCode = AcylChainList.OrderBy(x => x.NumCarbons).ThenBy(x => x.NumDoubleBonds).ThenBy(x => x.AcylChainType).Aggregate(hashCode, (current, acylChain) => (current * 397) ^ acylChain.GetHashCode());
                 return hashCode;
             }
         }
 
         private LipidType FigureOutLipidType()
         {
-            if (LipidClass == LipidClass.Ubiquinone || LipidClass == LipidClass.Cholesterol || LipidClass == LipidClass.Unknown) return LipidType.Standard;
+            if (LipidClass == LipidClass.Ubiquinone || LipidClass == LipidClass.Cholesterol || LipidClass == LipidClass.Unknown)
+                return LipidType.Standard;
 
             var chainCount = 0;
             var standardChainCount = 0;
@@ -182,40 +188,63 @@ namespace LiquidBackend.Domain
 
             foreach (var acylChain in AcylChainList)
             {
-                if (acylChain.NumCarbons < 1) continue;
+                if (acylChain.NumCarbons < 1)
+                    continue;
 
                 var chainType = acylChain.AcylChainType;
-                if (chainType == AcylChainType.Standard) standardChainCount++;
-                else if (chainType == AcylChainType.Plasmalogen) plasmogenChainCount++;
-                else if (chainType == AcylChainType.Ether) etherChainCount++;
-                else if (chainType == AcylChainType.OxoCHO) oxoCHOChainCount++;
-                else if (chainType == AcylChainType.OxoCOOH) oxoCOOHChainCount++;
-                else if (chainType == AcylChainType.Monohydro) monohydroxyChainCount++;
-                else if (chainType == AcylChainType.Dihydro || chainType == AcylChainType.Hydroxy) dihydroxyChainCount++;
-                else if (chainType == AcylChainType.Trihydro) trihydroChainCount++;
-                else if (chainType == AcylChainType.OOH || chainType == AcylChainType.OOHOH) OOHChainCount++;
-                else if (chainType == AcylChainType.F2IsoP) F2IsoPChainCount++;
+                if (chainType == AcylChainType.Standard)
+                    standardChainCount++;
+                else if (chainType == AcylChainType.Plasmalogen)
+                    plasmogenChainCount++;
+                else if (chainType == AcylChainType.Ether)
+                    etherChainCount++;
+                else if (chainType == AcylChainType.OxoCHO)
+                    oxoCHOChainCount++;
+                else if (chainType == AcylChainType.OxoCOOH)
+                    oxoCOOHChainCount++;
+                else if (chainType == AcylChainType.Monohydro)
+                    monohydroxyChainCount++;
+                else if (chainType == AcylChainType.Dihydro || chainType == AcylChainType.Hydroxy)
+                    dihydroxyChainCount++;
+                else if (chainType == AcylChainType.Trihydro)
+                    trihydroChainCount++;
+                else if (chainType == AcylChainType.OOH || chainType == AcylChainType.OOHOH)
+                    OOHChainCount++;
+                else if (chainType == AcylChainType.F2IsoP)
+                    F2IsoPChainCount++;
 
                 chainCount++;
             }
 
             if (chainCount == 1)
             {
-                if (standardChainCount == 1) return LipidType.SingleChain;
-                if (plasmogenChainCount == 1) return LipidType.SingleChainPlasmogen;
-                if (etherChainCount == 1) return LipidType.SingleChainEther;
-                if (monohydroxyChainCount == 1) return LipidType.SingleChainMonoHydroxy;
-                if (dihydroxyChainCount == 1) return LipidType.SingleChainDihydroxy;
+                if (standardChainCount == 1)
+                    return LipidType.SingleChain;
+                if (plasmogenChainCount == 1)
+                    return LipidType.SingleChainPlasmogen;
+                if (etherChainCount == 1)
+                    return LipidType.SingleChainEther;
+                if (monohydroxyChainCount == 1)
+                    return LipidType.SingleChainMonoHydroxy;
+                if (dihydroxyChainCount == 1)
+                    return LipidType.SingleChainDihydroxy;
             }
             if (chainCount == 2)
             {
-                if (standardChainCount == 2) return LipidType.TwoChains;
-                if (plasmogenChainCount == 1) return LipidType.TwoChainsPlasmogen;
-                if (etherChainCount >= 1) return LipidType.TwoChainsEther; //etherChainCount == 1
-                if (oxoCHOChainCount == 1) return LipidType.TwoChainsOxoCHO;
-                if (oxoCOOHChainCount == 1) return LipidType.TwoChainsOxoCOOH;
-                if (OOHChainCount == 1) return LipidType.TwoChainsOOH;
-                if (F2IsoPChainCount == 1) return LipidType.TwoChainsF2IsoP;
+                if (standardChainCount == 2)
+                    return LipidType.TwoChains;
+                if (plasmogenChainCount == 1)
+                    return LipidType.TwoChainsPlasmogen;
+                if (etherChainCount >= 1)
+                    return LipidType.TwoChainsEther; //etherChainCount == 1
+                if (oxoCHOChainCount == 1)
+                    return LipidType.TwoChainsOxoCHO;
+                if (oxoCOOHChainCount == 1)
+                    return LipidType.TwoChainsOxoCOOH;
+                if (OOHChainCount == 1)
+                    return LipidType.TwoChainsOOH;
+                if (F2IsoPChainCount == 1)
+                    return LipidType.TwoChainsF2IsoP;
                 if (trihydroChainCount == 1)
                 {
                     if (dihydroxyChainCount == 1)
@@ -223,9 +252,12 @@ namespace LiquidBackend.Domain
 
                     return LipidType.TwoChainsPhyto;
                 }
-                if (dihydroxyChainCount == 1) return LipidType.TwoChainsDihidroxy;
-                if (dihydroxyChainCount == 2) return LipidType.TwoChainsTwoDihidroxy;
-                if (monohydroxyChainCount == 1) return LipidType.TwoChainsMonohydroxy;
+                if (dihydroxyChainCount == 1)
+                    return LipidType.TwoChainsDihidroxy;
+                if (dihydroxyChainCount == 2)
+                    return LipidType.TwoChainsTwoDihidroxy;
+                if (monohydroxyChainCount == 1)
+                    return LipidType.TwoChainsMonohydroxy;
             }
             if (chainCount == 3)
             {

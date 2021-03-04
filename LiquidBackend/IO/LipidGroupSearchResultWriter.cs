@@ -44,8 +44,8 @@ namespace LiquidBackend.IO
                 var cidResultList = spectrumSearchResult.CidSearchResultList;
                 var hcdResultList = spectrumSearchResult.HcdSearchResultList;
 
-                var cidMaxValue = spectrumSearchResult.CidSpectrum.Peaks.Any() ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
-                var hcdMaxValue = spectrumSearchResult.HcdSpectrum.Peaks.Any() ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
+                var cidMaxValue = spectrumSearchResult.CidSpectrum.Peaks.Length > 0 ? spectrumSearchResult.CidSpectrum.Peaks.Max(x => x.Intensity) : 1;
+                var hcdMaxValue = spectrumSearchResult.HcdSpectrum.Peaks.Length > 0 ? spectrumSearchResult.HcdSpectrum.Peaks.Max(x => x.Intensity) : 1;
 
                 var stringBuilder = new StringBuilder();
                 stringBuilder.AppendFormat("{0},", datasetName);
@@ -390,7 +390,7 @@ namespace LiquidBackend.IO
 
                     if (includeObservedAndTheoreticalPeaks)
                     {
-                        var delim = ";;";
+                        const string delim = ";;";
 
                         var allObservedPeaks = new List<string>();
                         foreach (var cidPeak in spectrumSearchResult.MatchingCidResults())
@@ -499,9 +499,9 @@ namespace LiquidBackend.IO
                     var mz = hcd?.IsolationWindow.IsolationWindowTargetMz ?? cid.IsolationWindow.IsolationWindowTargetMz;
 
                     var intensity = result.ApexIntensity;
-                    var query = FragmentSearchList.Aggregate("", (i, j) => i + (j.Mz + "(" + j.Description + ")" + ";"));
-                    var hcdIons = result.HcdSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
-                    var cidIons = result.CidSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ")" + ";"));
+                    var query = FragmentSearchList.Aggregate("", (i, j) => i + (j.Mz + "(" + j.Description + ");"));
+                    var hcdIons = result.HcdSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ");"));
+                    var cidIons = result.CidSearchResultList.Where(x => x.ObservedPeak != null).Aggregate("", (current, temp) => current + (temp.ObservedPeak.Mz + "(" + temp.TheoreticalPeak.Description + ");"));
 
                     var line = new StringBuilder();
                     line.AppendFormat("{0}\t", rawFileName);

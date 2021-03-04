@@ -62,7 +62,7 @@ namespace Liquid.View
 
             // Get the selected file name and display in a TextBox
             var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            if (result == true)
             {
                 // Disable buttons while files is loading
                 ProcessAllTargetsButton.IsEnabled = false;
@@ -78,7 +78,7 @@ namespace Liquid.View
                 if (SingleTargetViewModel.LcMsRun != null)
                 {
                     // Enable processing all targets button if applicable
-                    if (SingleTargetViewModel.LipidTargetList != null && SingleTargetViewModel.LipidTargetList.Any())
+                    if (SingleTargetViewModel.LipidTargetList?.Count > 0)
                         ProcessAllTargetsButton.IsEnabled = true;
 
                     // Enable search for target button
@@ -174,7 +174,7 @@ namespace Liquid.View
 
             // Get the selected file name and display in a TextBox
             var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            if (result == true)
             {
                 // Disable processing button while file is loading
                 ProcessAllTargetsButton.IsEnabled = false;
@@ -206,7 +206,7 @@ namespace Liquid.View
 
             // Get the selected file name and display in a TextBox
             var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            if (result == true)
             {
                 // Disable processing button while file is loading
                 ProcessAllTargetsButton.IsEnabled = false;
@@ -237,7 +237,7 @@ namespace Liquid.View
 
             // Get the selected file name and display in a TextBox
             var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            if (result == true)
             {
                 // Disable processing button while file is loading
                 ProcessAllTargetsButton.IsEnabled = false;
@@ -357,7 +357,7 @@ namespace Liquid.View
                 Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp"
             };
             var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            if (result == true)
             {
                 var fileLocation = dialog.FileName;
                 await Task.Run(() => SingleTargetViewModel.OnExportGlobalResults(fileLocation));
@@ -374,7 +374,7 @@ namespace Liquid.View
                 Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp"
             };
             var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            if (result == true)
             {
                 var fileLocation = dialog.FileName;
                 SingleTargetViewModel.OnExportAllGlobalResults(fileLocation);
@@ -391,7 +391,7 @@ namespace Liquid.View
                 Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp"
             };
             var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            if (result == true)
             {
                 var fileLocation = dialog.FileName;
                 SingleTargetViewModel.OnWriteTargetInfo(fileLocation);
@@ -472,7 +472,7 @@ namespace Liquid.View
                 Filter = "Tab-Separated Files (*.tsv)|*.tsv|MzTab Files (*.mzTab)|*.mzTab|MSP Library (*.msp)|*.msp"
             };
             var result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            if (result == true)
             {
                 var fileLocation = dialog.FileName;
                 SingleTargetViewModel.OnWriteFragmentInfo(fileLocation);

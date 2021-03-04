@@ -8,7 +8,7 @@ namespace LiquidTest
         [Test]
         public void TestCreateAcylChain()
         {
-            var chainString = "16:0";
+            const string chainString = "16:0";
             var chain = new AcylChain(chainString);
 
             Assert.AreEqual(16, chain.NumCarbons);
@@ -20,7 +20,7 @@ namespace LiquidTest
         [Test]
         public void TestCreateAcylChainPlasmalogen()
         {
-            var chainString = "P-18:1";
+            const string chainString = "P-18:1";
             var chain = new AcylChain(chainString);
 
             Assert.AreEqual(18, chain.NumCarbons);
@@ -32,7 +32,7 @@ namespace LiquidTest
         [Test]
         public void TestCreateAcylChainEther()
         {
-            var chainString = "O-20:4";
+            const string chainString = "O-20:4";
             var chain = new AcylChain(chainString);
 
             Assert.AreEqual(20, chain.NumCarbons);
@@ -44,7 +44,7 @@ namespace LiquidTest
         [Test]
         public void TestCreateAcylChainMonohydro()
         {
-            var chainString = "m12:2";
+            const string chainString = "m12:2";
             var chain = new AcylChain(chainString);
 
             Assert.AreEqual(12, chain.NumCarbons);
@@ -56,7 +56,7 @@ namespace LiquidTest
         [Test]
         public void TestCreateAcylChainDinohydro()
         {
-            var chainString = "d8:3";
+            const string chainString = "d8:3";
             var chain = new AcylChain(chainString);
 
             Assert.AreEqual(8, chain.NumCarbons);
@@ -68,7 +68,7 @@ namespace LiquidTest
         [Test]
         public void TestCreateAcylChainTrinohydro()
         {
-            var chainString = "t31:6";
+            const string chainString = "t31:6";
             var chain = new AcylChain(chainString);
 
             Assert.AreEqual(31, chain.NumCarbons);

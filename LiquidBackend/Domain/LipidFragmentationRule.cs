@@ -5,6 +5,8 @@ using InformedProteomics.Backend.Data.Composition;
 
 namespace LiquidBackend.Domain
 {
+#pragma warning disable IDE1006 // Naming Styles
+
     public class LipidFragmentationRule
     {
         public string lipidClass { get; set; }
@@ -32,6 +34,8 @@ namespace LiquidBackend.Domain
         public List<int> targetAcylChainsIndices { get; set; }
 
         public bool diagnostic { get; set; }
+
+#pragma warning restore IDE1006 // Naming Styles
 
         public Composition GetComposition(int numCarbons, int numDoubleBonds)
         {

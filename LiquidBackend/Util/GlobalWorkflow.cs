@@ -137,8 +137,8 @@ namespace LiquidBackend.Util
                 summedSpec = lcmsRun.GetSummedSpectrum(cidScans);
                 var summedCidSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.CID };
 
-                var hcdPresent = summedHcdSpec.Peaks.Any();
-                var cidPresent = summedCidSpec.Peaks.Any();
+                var hcdPresent = summedHcdSpec.Peaks.Length > 0;
+                var cidPresent = summedCidSpec.Peaks.Length > 0;
 
                 if (hcdPresent)
                 {
@@ -249,8 +249,8 @@ namespace LiquidBackend.Util
             for (var i = minLcScan; i <= maxLcScan; i++)
             {
                 // Lookup the MS/MS Spectrum
-                var firstMsMsSpectrum = lcmsRun.GetSpectrum(i) as ProductSpectrum;
-                if (firstMsMsSpectrum == null) continue;
+                if (!(lcmsRun.GetSpectrum(i) is ProductSpectrum firstMsMsSpectrum))
+                    continue;
 
                 // Lookup the MS/MS Spectrum
                 ProductSpectrum secondMsMsSpectrum = null;
@@ -262,7 +262,7 @@ namespace LiquidBackend.Util
                     // If m/z values of the MS/MS spectra do not match, just move on
                     var firstMsMsSpectrumPrecursor = GetMsMsPrecursorMz(firstMsMsSpectrum);
                     var secondMsMsSpectrumPrecursor = GetMsMsPrecursorMz(secondMsMsSpectrum);
-                    
+
                     var deltaMz = firstMsMsSpectrumPrecursor - secondMsMsSpectrumPrecursor;
                     if (Math.Abs(deltaMz) > 0.01) continue;
                 }
@@ -386,7 +386,7 @@ namespace LiquidBackend.Util
 
                 var spectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(target, lcmsRun, hcdMassError, 500, scoreModel: null);
 
-                if (spectrumSearchResultList.Any())
+                if (spectrumSearchResultList.Count > 0)
                 {
                     var targetIon = new Ion(target.Composition - Composition.Hydrogen, 1);
                     var targetMz = targetIon.GetMonoIsotopicMz();
@@ -441,7 +441,7 @@ namespace LiquidBackend.Util
 
             // Treat PQD scans as if they were CID
             if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) firstMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
-            if (nextMsMsSpectrum != null && nextMsMsSpectrum.ActivationMethod == ActivationMethod.PQD) nextMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
+            if (nextMsMsSpectrum?.ActivationMethod == ActivationMethod.PQD) nextMsMsSpectrum.ActivationMethod = ActivationMethod.CID;
 
             if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
             {
