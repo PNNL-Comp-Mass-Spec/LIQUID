@@ -26,8 +26,7 @@ namespace LiquidBackend.Scoring
             var fs = new FileStream(fileLocation, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             var reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
 
-            var scoreModel = serializer.ReadObject(reader) as ScoreModel;
-            return scoreModel;
+            return serializer.ReadObject(reader) as ScoreModel;
         }
     }
 }

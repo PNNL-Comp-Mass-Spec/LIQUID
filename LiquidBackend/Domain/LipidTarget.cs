@@ -156,9 +156,7 @@ namespace LiquidBackend.Domain
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            if (obj.GetType() != GetType())
-                return false;
-            return Equals((LipidTarget)obj);
+            return obj.GetType() == GetType() && Equals((LipidTarget)obj);
         }
 
         public override int GetHashCode()
