@@ -14,10 +14,9 @@ namespace LiquidBackend.Scoring
 
             var xmlWriterSettings = new XmlWriterSettings { Indent = true };
 
-            using (var xmlWriter = XmlWriter.Create(fileLocation, xmlWriterSettings))
-            {
-                serializer.WriteObject(xmlWriter, scoreModel);
-            }
+            using var xmlWriter = XmlWriter.Create(fileLocation, xmlWriterSettings);
+
+            serializer.WriteObject(xmlWriter, scoreModel);
         }
 
         public static ScoreModel Deserialize(string fileLocation)

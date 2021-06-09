@@ -24,33 +24,32 @@ namespace LiquidBackend.IO
             double totalLines = File.ReadLines(fileInfo.FullName).Count();
             double currentLineNumber = 0;
 
-            using (var reader = new StreamReader(new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+            using var reader = new StreamReader(new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+            if (reader.EndOfStream)
+                return list;
+
+            var columnHeaders = reader.ReadLine();
+            var columnMapping = CreateColumnMapping(columnHeaders);
+
+            while (!reader.EndOfStream)
             {
-                if (reader.EndOfStream)
-                    return list;
+                var line = reader.ReadLine();
 
-                var columnHeaders = reader.ReadLine();
-                var columnMapping = CreateColumnMapping(columnHeaders);
+                currentLineNumber++;
 
-                while (!reader.EndOfStream)
+                if (string.IsNullOrWhiteSpace(line))
+                    continue;
+
+                var createdObject = ParseLine(line, columnMapping);
+                if (createdObject != null)
+                    list.Add(createdObject);
+
+                // Report progress
+                if (progress != null)
                 {
-                    var line = reader.ReadLine();
-
-                    currentLineNumber++;
-
-                    if (string.IsNullOrWhiteSpace(line))
-                        continue;
-
-                    var createdObject = ParseLine(line, columnMapping);
-                    if (createdObject != null)
-                        list.Add(createdObject);
-
-                    // Report progress
-                    if (progress != null)
-                    {
-                        var currentProgress = (int)(currentLineNumber / totalLines * 100);
-                        progress.Report(currentProgress);
-                    }
+                    var currentProgress = (int)(currentLineNumber / totalLines * 100);
+                    progress.Report(currentProgress);
                 }
             }
 

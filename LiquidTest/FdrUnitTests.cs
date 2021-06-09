@@ -394,34 +394,33 @@ namespace LiquidTest
             var subclasses = new Dictionary<string, int>();
             var total = 0;
 
-            using (var reader = new StreamReader(new FileStream(inFilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+            using var reader = new StreamReader(new FileStream(inFilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+            // Read the header
+            reader.ReadLine();
+
+            while (!reader.EndOfStream)
             {
-                //Read the header
-                reader.ReadLine();
+                // Split read in line so we can get the common name column
+                var line = reader.ReadLine();
+                if (string.IsNullOrWhiteSpace(line))
+                    continue;
 
-                while (!reader.EndOfStream)
+                var splitLine = line.Split('\t');
+
+                // Get the common name for the lipid
+                var name = splitLine[subclassCol];
+
+                if (!subclasses.ContainsKey(name))
                 {
-                    //Split read in line so we can get the common name column
-                    var line = reader.ReadLine();
-                    if (string.IsNullOrWhiteSpace(line))
-                        continue;
-
-                    var splitLine = line.Split('\t');
-
-                    //Get the common name for the lipid
-                    var name = splitLine[subclassCol];
-
-                    if (!subclasses.ContainsKey(name))
-                    {
-                        subclasses.Add(name, 1);
-                    }
-                    else
-                    {
-                        subclasses[name]++;
-                    }
-
-                    total++;
+                    subclasses.Add(name, 1);
                 }
+                else
+                {
+                    subclasses[name]++;
+                }
+
+                total++;
             }
 
             Console.WriteLine("Subclass Stats");
@@ -446,48 +445,45 @@ namespace LiquidTest
 
             const string outputDirectory = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoy";
 
-            string header;
-
             var subclasses = new Dictionary<string, List<string>>();
 
-            using (var reader = new StreamReader(new FileStream(inFilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+            using var reader = new StreamReader(new FileStream(inFilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+            
+            // Read the header
+            var header = reader.ReadLine();
+
+            while (!reader.EndOfStream)
             {
-                //Read the header
-                header = reader.ReadLine();
+                // Split read in line so we can get the common name column
+                var line = reader.ReadLine();
+                if (string.IsNullOrWhiteSpace(line))
+                    continue;
 
-                while (!reader.EndOfStream)
+                var splitLine = line.Split('\t');
+
+                // Get the common name for the lipid
+                var name = splitLine[subclassCol];
+
+                if (!subclasses.ContainsKey(name))
                 {
-                    //Split read in line so we can get the common name column
-                    var line = reader.ReadLine();
-                    if (string.IsNullOrWhiteSpace(line))
-                        continue;
-
-                    var splitLine = line.Split('\t');
-
-                    //Get the common name for the lipid
-                    var name = splitLine[subclassCol];
-
-                    if (!subclasses.ContainsKey(name))
-                    {
-                        subclasses.Add(name, new List<string>());
-                        subclasses[name].Add(line);
-                    }
-                    else
-                    {
-                        subclasses[name].Add(line);
-                    }
+                    subclasses.Add(name, new List<string>());
+                    subclasses[name].Add(line);
+                }
+                else
+                {
+                    subclasses[name].Add(line);
                 }
             }
 
             foreach (var subclass in subclasses)
             {
-                using (var writer = new StreamWriter(outputDirectory + "//" + subclass.Key + ".txt" ))
+                using var writer = new StreamWriter(outputDirectory + "//" + subclass.Key + ".txt" );
+
+                writer.WriteLine(header);
+
+                foreach (var entry in subclass.Value)
                 {
-                    writer.WriteLine(header);
-                    foreach (var entry in subclass.Value)
-                    {
-                        writer.WriteLine(entry);
-                    }
+                    writer.WriteLine(entry);
                 }
             }
         }
