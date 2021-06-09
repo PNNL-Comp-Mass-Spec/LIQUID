@@ -363,15 +363,11 @@ namespace LiquidBackend.Util
             return lipidGroupSearchResultList;
         }
 
-        public void RunGlobalWorkflowSingleScan()
         public MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, double hcdMassError)
         {
-            throw new NotImplementedException();
             return RunMassCalibration(lipidList, LcMsRun, hcdMassError);
         }
 
-        {
-        }
         public static MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError)
         {
             var ppmErrorList = new List<double>();
