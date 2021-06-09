@@ -126,11 +126,6 @@ namespace LiquidTest
             var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
             var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
 
-            var commonName = "";
-            var empiricalFormula1 = "";
-            var empiricalFormula2 = "";
-            var empiricalFormula3 = "";
-
             Console.WriteLine("================ POSITIVE ================");
             //FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_August2018_all_updated_ox_POS.txt");
@@ -141,11 +136,17 @@ namespace LiquidTest
                 try
                 {
                     var tokens = line.Split('\t');
-                    commonName = tokens[1];
-                    if (!tokens[7].Equals("")) empiricalFormula1 = Composition.ParseFromPlainString(tokens[7]).ToPlainString();
-                    else empiricalFormula1 = "";
-                    empiricalFormula2 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
-                    empiricalFormula3 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, lipidCompositionRules).ToPlainString();
+                    var commonName = tokens[1];
+
+                    string empiricalFormula1;
+                    if (!tokens[7].Equals(""))
+                        empiricalFormula1 = Composition.ParseFromPlainString(tokens[7]).ToPlainString();
+                    else
+                        empiricalFormula1 = "";
+
+                    var empiricalFormula2 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+                    var empiricalFormula3 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, lipidCompositionRules).ToPlainString();
+
                     var correct = false;
                     if (empiricalFormula1.Equals(""))
                     {
@@ -156,13 +157,20 @@ namespace LiquidTest
                         //if (empiricalFormula1.Equals(empiricalFormula2) && empiricalFormula2.Equals(empiricalFormula3)) correct = true;
                         if (empiricalFormula1.Equals(empiricalFormula3)) correct = true;
                     }
-                    numPosTargets += 1;
-                    if (correct) numCorrectPosTargets += 1;
-                    else Console.WriteLine(tokens[0] + "\t" +
-                        tokens[1] + "\t" +
-                        tokens[2] + "\t" +
-                        tokens[7] + "\t" +
-                        empiricalFormula2 + "\t" + empiricalFormula3);
+
+                    numPosTargets++;
+                    if (correct)
+                    {
+                        numCorrectPosTargets++;
+                    }
+                    else
+                    {
+                        Console.WriteLine(tokens[0] + "\t" +
+                                          tokens[1] + "\t" +
+                                          tokens[2] + "\t" +
+                                          tokens[7] + "\t" +
+                                          empiricalFormula2 + "\t" + empiricalFormula3);
+                    }
                 }
                 catch
                 {
@@ -181,11 +189,17 @@ namespace LiquidTest
                 try
                 {
                     var tokens = line.Split('\t');
-                    commonName = tokens[1];
-                    if (!tokens[7].Equals("")) empiricalFormula1 = Composition.ParseFromPlainString(tokens[7]).ToPlainString();
-                    else empiricalFormula1 = "";
-                    empiricalFormula2 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
-                    empiricalFormula3 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, lipidCompositionRules).ToPlainString();
+                    var commonName = tokens[1];
+
+                    string empiricalFormula1;
+                    if (!tokens[7].Equals(""))
+                        empiricalFormula1 = Composition.ParseFromPlainString(tokens[7]).ToPlainString();
+                    else
+                        empiricalFormula1 = "";
+
+                    var empiricalFormula2 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
+                    var empiricalFormula3 = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, lipidCompositionRules).ToPlainString();
+
                     var correct = false;
                     if (empiricalFormula1.Equals(""))
                     {
@@ -196,13 +210,20 @@ namespace LiquidTest
                         //if (empiricalFormula1.Equals(empiricalFormula2) && empiricalFormula2.Equals(empiricalFormula3)) correct = true;
                         if (empiricalFormula1.Equals(empiricalFormula3)) correct = true;
                     }
-                    numNegTargets += 1;
-                    if (correct) numCorrectNegTargets += 1;
-                    else Console.WriteLine(tokens[0] + "\t" +
+
+                    numNegTargets++;
+                    if (correct)
+                    {
+                        numCorrectNegTargets++;
+                    }
+                    else
+                    {
+                        Console.WriteLine(tokens[0] + "\t" +
                         tokens[1] + "\t" +
                         tokens[2] + "\t" +
                         tokens[7] + "\t" +
                         empiricalFormula2 + "\t" + empiricalFormula3);
+                    }
                 }
                 catch
                 {
@@ -245,6 +266,7 @@ namespace LiquidTest
 
             foreach (var rule in lipidCompositionRules)
             {
+#pragma warning disable 162
                 try
                 {
                     var oldCommonName = rule.Example;
@@ -281,7 +303,7 @@ namespace LiquidTest
                         percentage.Add(0);
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     percentage.Add(0);
                     if (printFailed)
@@ -291,6 +313,7 @@ namespace LiquidTest
                     }
                     continue;
                 }
+#pragma warning restore 162
             }
 
             var sum = 0;

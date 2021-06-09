@@ -222,9 +222,6 @@ namespace LiquidTest
             var lipidFragmentationRulesReader = new LipidFragmentationRuleReader<LipidFragmentationRule>();
             var lipidFragmentationRules = lipidFragmentationRulesReader.ReadFile(targetsFileInfo);
 
-            var commonName = "";
-            var empiricalFormula = "";
-
             Console.WriteLine("================ POSITIVE ================");
             var fragmentationMode = FragmentationMode.Positive;
             var lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_April2018_all_POS.txt");
@@ -235,12 +232,12 @@ namespace LiquidTest
                 try
                 {
                     var tokens = line.Split('\t');
-                    commonName = tokens[1];
-                    empiricalFormula = tokens[7];
+                    var commonName = tokens[1];
+                    var empiricalFormula = tokens[7];
                     if (empiricalFormula.Equals("")) empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
                     var correct = CheckFragmentaionRules(commonName, empiricalFormula, fragmentationMode, lipidFragmentationRules);
-                    numPosTargets += 1;
-                    if (correct) numCorrectPosTargets += 1;
+                    numPosTargets++;
+                    if (correct) numCorrectPosTargets++;
                 }
                 catch
                 {
@@ -259,12 +256,12 @@ namespace LiquidTest
                 try
                 {
                     var tokens = line.Split('\t');
-                    commonName = tokens[1];
-                    empiricalFormula = tokens[7];
+                    var commonName = tokens[1];
+                    var empiricalFormula = tokens[7];
                     if (empiricalFormula.Equals("")) empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdduct(commonName).ToPlainString();
                     var correct = CheckFragmentaionRules(commonName, empiricalFormula, fragmentationMode, lipidFragmentationRules);
-                    numNegTargets += 1;
-                    if (correct) numCorrectNegTargets += 1;
+                    numNegTargets++;
+                    if (correct) numCorrectNegTargets++;
                 }
                 catch
                 {
