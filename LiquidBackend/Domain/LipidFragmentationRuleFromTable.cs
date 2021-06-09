@@ -4,20 +4,20 @@ namespace LiquidBackend.Domain
 {
     public class LipidFragmentationRuleFromTable
     {
-        public string lipidSubClass { get; set; }
-        public FragmentationMode fragmentationMode { get; set; }
-        public string lossType { get; set; }
-        public string description1 { get; set; }
-        public string description2 { get; set; }
+        public string LipidSubClass { get; set; }
+        public FragmentationMode FragmentationMode { get; set; }
+        public string LossType { get; set; }
+        public string Description1 { get; set; }
+        public string Description2 { get; set; }
         public CompositionFormula C { get; set; }
         public CompositionFormula H { get; set; }
         public CompositionFormula N { get; set; }
         public CompositionFormula O { get; set; }
         public CompositionFormula S { get; set; }
         public CompositionFormula P { get; set; }
-        public string other { get; set; }
-        public bool diagnostic { get; set; }
-        public bool headerGroup { get; set; }
+        public string Other { get; set; }
+        public bool Diagnostic { get; set; }
+        public bool HeaderGroup { get; set; }
         public Composition GetComposition(int numCarbons, int numDoubleBonds)
         {
             return new Composition(C.Evaluate(numCarbons, numDoubleBonds),
@@ -30,14 +30,14 @@ namespace LiquidBackend.Domain
 
         public MsMsSearchUnit GetMsMsSearchUnit(double precursorMz, int numCarbons = 0, int numDoubleBonds = 0, AcylChain acylChain = null)
         {
-            if (lossType.Equals("PI"))
+            if (LossType.Equals("PI"))
             {
-                return new MsMsSearchUnit(GetComposition(numCarbons, numDoubleBonds).Mass, description1, acylChain, diagnostic);
+                return new MsMsSearchUnit(GetComposition(numCarbons, numDoubleBonds).Mass, Description1, acylChain, Diagnostic);
             }
 
-            if (lossType.Equals("NL"))
+            if (LossType.Equals("NL"))
             {
-                return new MsMsSearchUnit(precursorMz - GetComposition(numCarbons, numDoubleBonds).Mass, "M-" + description1, acylChain, diagnostic);
+                return new MsMsSearchUnit(precursorMz - GetComposition(numCarbons, numDoubleBonds).Mass, "M-" + Description1, acylChain, Diagnostic);
             }
 
             return null;
@@ -45,11 +45,11 @@ namespace LiquidBackend.Domain
 
         public override string ToString()
         {
-            return lipidSubClass + "\t" +
-                   lossType + "\t" +
-                   fragmentationMode + "\t" +
-                   diagnostic + "\t" +
-                   headerGroup;
+            return LipidSubClass + "\t" +
+                   LossType + "\t" +
+                   FragmentationMode + "\t" +
+                   Diagnostic + "\t" +
+                   HeaderGroup;
         }
     }
 }

@@ -117,23 +117,26 @@ namespace LiquidBackend.IO
 
             try
             {
-                if (columnMapping.ContainsKey(LIPID_CLASS)) fragmentationRule.lipidClass = columns[columnMapping[LIPID_CLASS]];
+                if (columnMapping.ContainsKey(LIPID_CLASS)) fragmentationRule.LipidClass = columns[columnMapping[LIPID_CLASS]];
                 else throw new SystemException("LipidClass is required for importing fragmentation rules: " + line);
 
                 if (columnMapping.ContainsKey(FRAGMENTATION_MODE))
                 {
                     var fragmentationMode = columns[columnMapping[FRAGMENTATION_MODE]];
-                    if (fragmentationMode.Equals("Positive")) fragmentationRule.fragmentationMode = FragmentationMode.Positive;
-                    else if (fragmentationMode.Equals("Negative")) fragmentationRule.fragmentationMode = FragmentationMode.Negative;
+                    if (fragmentationMode.Equals("Positive")) fragmentationRule.FragmentationMode = FragmentationMode.Positive;
+                    else if (fragmentationMode.Equals("Negative")) fragmentationRule.FragmentationMode = FragmentationMode.Negative;
                     else throw new SystemException("FragmentationMode is required to be Positive or Negative: " + line);
                 }
-                else throw new SystemException("FragmentationMode is required for importing fragmentation rules: " + line);
+                else
+                {
+                    throw new SystemException("FragmentationMode is required for importing fragmentation rules: " + line);
+                }
 
-                if (columnMapping.ContainsKey(NEUTRAL_LOSS)) fragmentationRule.isNeutralLoss = columns[columnMapping[NEUTRAL_LOSS]] == "1";
+                if (columnMapping.ContainsKey(NEUTRAL_LOSS)) fragmentationRule.IsNeutralLoss = columns[columnMapping[NEUTRAL_LOSS]] == "1";
                 else throw new SystemException("NEUTRAL_LOSS is required for importing fragmentation rules: " + line);
 
-                if (columnMapping.ContainsKey(DESCRIPTION)) fragmentationRule.description = columns[columnMapping[DESCRIPTION]];
-                if (columnMapping.ContainsKey(DIAGNOSTIC)) fragmentationRule.diagnostic = columns[columnMapping[DIAGNOSTIC]] == "1";
+                if (columnMapping.ContainsKey(DESCRIPTION)) fragmentationRule.Description = columns[columnMapping[DESCRIPTION]];
+                if (columnMapping.ContainsKey(DIAGNOSTIC)) fragmentationRule.Diagnostic = columns[columnMapping[DIAGNOSTIC]] == "1";
 
                 if (columnMapping.ContainsKey(CARBON)) fragmentationRule.C = new CompositionFormula(columns[columnMapping[CARBON]]);
                 if (columnMapping.ContainsKey(HYDROGEN)) fragmentationRule.H = new CompositionFormula(columns[columnMapping[HYDROGEN]]);
@@ -143,30 +146,33 @@ namespace LiquidBackend.IO
                 if (columnMapping.ContainsKey(PHOSPHORUS)) fragmentationRule.P = new CompositionFormula(columns[columnMapping[PHOSPHORUS]]);
 
                 if (columnMapping.ContainsKey(ADDITIONAL_ELEMENT) && !columns[columnMapping[ADDITIONAL_ELEMENT]].Equals(""))
-                    fragmentationRule.additionalElement = columns[columnMapping[ADDITIONAL_ELEMENT]];
+                    fragmentationRule.AdditionalElement = columns[columnMapping[ADDITIONAL_ELEMENT]];
                 if (columnMapping.ContainsKey(COUNT_OF_CHAINS) && !columns[columnMapping[COUNT_OF_CHAINS]].Equals(""))
-                    fragmentationRule.conditionForCountOfChains = new ConditionForInteger(columns[columnMapping[COUNT_OF_CHAINS]]);
+                    fragmentationRule.ConditionForCountOfChains = new ConditionForInteger(columns[columnMapping[COUNT_OF_CHAINS]]);
                 if (columnMapping.ContainsKey(COUNT_OF_STANDARD_ACYL_CHAINS) && !columns[columnMapping[COUNT_OF_STANDARD_ACYL_CHAINS]].Equals(""))
-                    fragmentationRule.conditionForCountOfStandardAcylsChains = new ConditionForInteger(columns[columnMapping[COUNT_OF_STANDARD_ACYL_CHAINS]]);
+                    fragmentationRule.ConditionForCountOfStandardAcylsChains = new ConditionForInteger(columns[columnMapping[COUNT_OF_STANDARD_ACYL_CHAINS]]);
                 if (columnMapping.ContainsKey(CONTAINS_HYDROXY) && !columns[columnMapping[CONTAINS_HYDROXY]].Equals(""))
-                    fragmentationRule.conditionForContainsHydroxy = new ConditionForInteger(columns[columnMapping[CONTAINS_HYDROXY]]);
+                    fragmentationRule.ConditionForContainsHydroxy = new ConditionForInteger(columns[columnMapping[CONTAINS_HYDROXY]]);
                 if (columnMapping.ContainsKey(SIALIC) && !columns[columnMapping[SIALIC]].Equals(""))
-                    fragmentationRule.sialic = columns[columnMapping[SIALIC]];
+                    fragmentationRule.Sialic = columns[columnMapping[SIALIC]];
                 if (columnMapping.ContainsKey(ACYL_CHAIN_TYPE) && !columns[columnMapping[ACYL_CHAIN_TYPE]].Equals(""))
-                    fragmentationRule.acylChainType = columns[columnMapping[ACYL_CHAIN_TYPE]];
+                    fragmentationRule.AcylChainType = columns[columnMapping[ACYL_CHAIN_TYPE]];
                 if (columnMapping.ContainsKey(ACYL_CHAIN_NUM_CARBONS) && !columns[columnMapping[ACYL_CHAIN_NUM_CARBONS]].Equals(""))
-                    fragmentationRule.acylChainNumCarbons = int.Parse(columns[columnMapping[ACYL_CHAIN_NUM_CARBONS]]);
+                    fragmentationRule.AcylChainNumCarbons = int.Parse(columns[columnMapping[ACYL_CHAIN_NUM_CARBONS]]);
                 if (columnMapping.ContainsKey(ACYL_CHAIN_NUM_DOUBLE_BONDS) && !columns[columnMapping[ACYL_CHAIN_NUM_DOUBLE_BONDS]].Equals(""))
-                    fragmentationRule.acylChainNumDoubleBonds = int.Parse(columns[columnMapping[ACYL_CHAIN_NUM_DOUBLE_BONDS]]);
+                    fragmentationRule.AcylChainNumDoubleBonds = int.Parse(columns[columnMapping[ACYL_CHAIN_NUM_DOUBLE_BONDS]]);
                 if (columnMapping.ContainsKey(ACYL_CHAIN_HYDROXY_POSITION) && !columns[columnMapping[ACYL_CHAIN_HYDROXY_POSITION]].Equals(""))
-                    fragmentationRule.acylChainHydroxyPosition = int.Parse(columns[columnMapping[ACYL_CHAIN_HYDROXY_POSITION]]);
+                    fragmentationRule.AcylChainHydroxyPosition = int.Parse(columns[columnMapping[ACYL_CHAIN_HYDROXY_POSITION]]);
                 if (columnMapping.ContainsKey(TARGET_ACYL_CHAINS) && !columns[columnMapping[TARGET_ACYL_CHAINS]].Equals(""))
                 {
                     if (columns[columnMapping[TARGET_ACYL_CHAINS]].Equals("All"))
                     {
-                        fragmentationRule.targetAcylChainsIndices = Enumerable.Range(1, 100).ToList();  // TODO: for any number of chains
+                        fragmentationRule.TargetAcylChainsIndices = Enumerable.Range(1, 100).ToList();  // TODO: for any number of chains
                     }
-                    else fragmentationRule.targetAcylChainsIndices = columns[columnMapping[TARGET_ACYL_CHAINS]].Split(',').Select(int.Parse).ToList();
+                    else
+                    {
+                        fragmentationRule.TargetAcylChainsIndices = columns[columnMapping[TARGET_ACYL_CHAINS]].Split(',').Select(int.Parse).ToList();
+                    }
                 }
             }
             catch (Exception)
@@ -175,7 +181,7 @@ namespace LiquidBackend.IO
                 throw;
             }
 
-            fragmentationRule.isFromHeader = fragmentationRule.checkFromHeader();
+            fragmentationRule.IsFromHeader = fragmentationRule.CheckFromHeader();
             //fragmentationRule.isSpecialCase = fragmentationRule.checkSpecialCase();
 
             return fragmentationRule;

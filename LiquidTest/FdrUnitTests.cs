@@ -13,7 +13,7 @@ namespace LiquidTest
     public class FdrUnitTests
     {
         [OneTimeSetUp]
-        public void setup()
+        public void Setup()
         {
             LipidRules.LoadLipidRules("DefaultCompositionRules.txt", "DefaultFragmentationRules.txt");
         }

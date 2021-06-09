@@ -26,7 +26,7 @@ namespace LiquidBackend.Domain
             }
         }
 
-        public bool meet(int x)
+        public bool Meet(int x)
         {
             switch (op)
             {

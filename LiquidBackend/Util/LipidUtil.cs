@@ -1874,23 +1874,23 @@ namespace LiquidBackend.Util
 
             foreach (var rule in lipidFragmentationRules)
             {
-                if (rule.isFromHeader && rule.checkCountOfChains(countOfChains))
+                if (rule.IsFromHeader && rule.CheckCountOfChains(countOfChains))
                 {
                     msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz));
                 }
-                else if (rule.checkCountOfChains(countOfChains) && rule.targetAcylChainsIndices?.Count > 0)
+                else if (rule.CheckCountOfChains(countOfChains) && rule.TargetAcylChainsIndices?.Count > 0)
                 {
                     var carbons = 0;
                     var doubleBonds = 0;
 
-                    if (rule.targetAcylChainsIndices.Count == 1)
+                    if (rule.TargetAcylChainsIndices.Count == 1)
                     {
-                        var acylChain = acylChainList[rule.targetAcylChainsIndices[0] - 1];  // _idx should be from 1
+                        var acylChain = acylChainList[rule.TargetAcylChainsIndices[0] - 1];  // _idx should be from 1
                         msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, acylChain.NumCarbons, acylChain.NumDoubleBonds, acylChain));
                     }
                     else
                     {
-                        foreach (var _idx in rule.targetAcylChainsIndices)
+                        foreach (var _idx in rule.TargetAcylChainsIndices)
                         {
                             var idx = _idx - 1;
                             if (acylChainList.Count > idx)
@@ -1904,14 +1904,14 @@ namespace LiquidBackend.Util
                     }
                 }
 
-                if (rule.useCountOfStandardAcylsChains(countOfStandardAcylsChains))
+                if (rule.UseCountOfStandardAcylsChains(countOfStandardAcylsChains))
                 {
                     var carbons = acylChainList.Where(x => x.AcylChainType == AcylChainType.Standard).Sum(x => x.NumCarbons);
                     var doubleBonds = acylChainList.Where(x => x.AcylChainType == AcylChainType.Standard).Sum(x => x.NumDoubleBonds);
                     var combinedChain = new AcylChain(carbons + ":" + doubleBonds);
                     msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, carbons, doubleBonds, combinedChain));
                 }
-                if (rule.sialic?.IndexOf(sialic) >= 0)
+                if (rule.Sialic?.IndexOf(sialic) >= 0)
                 {
                     msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz));
                 }
@@ -1927,7 +1927,7 @@ namespace LiquidBackend.Util
 
                 foreach (var rule in lipidFragmentationRules)
                 {
-                    if (rule.checkAcylChainConditions(acylChain.AcylChainType.ToString(),
+                    if (rule.CheckAcylChainConditions(acylChain.AcylChainType.ToString(),
                                                       numCarbons,
                                                       numDoubleBonds,
                                                       acylChain.HydroxyPosition,
@@ -1952,8 +1952,8 @@ namespace LiquidBackend.Util
 
             foreach (var rule in lipidFragmentationRules)
             {
-                if (rule.fragmentationMode.Equals(fragmentationMode) &&
-                    rule.lipidClass.Equals(lipidClass))
+                if (rule.FragmentationMode.Equals(fragmentationMode) &&
+                    rule.LipidClass.Equals(lipidClass))
                 {
                     lipidFragmentationRulesList.Add(rule);
                 }
@@ -2001,8 +2001,8 @@ namespace LiquidBackend.Util
 
             foreach (var rule in lipidFragmentationRules)
             {
-                if (rule.fragmentationMode.Equals(fragmentationMode) &&
-                    rule.lipidSubClass.Equals(lipidSubClass))
+                if (rule.FragmentationMode.Equals(fragmentationMode) &&
+                    rule.LipidSubClass.Equals(lipidSubClass))
                 {
                     lipidFragmentationRulesList.Add(rule);
                 }
