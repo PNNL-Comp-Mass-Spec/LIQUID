@@ -447,11 +447,11 @@ namespace Liquid.ViewModel
             OnPropertyChanged("FragmentSearchProgress");
         }
 
-        private void ReportExportProgress(int value)
-        {
-            ExportProgress = value;
-            OnPropertyChanged("ExportProgress");
-        }
+        // private void ReportExportProgress(int value)
+        // {
+        //     ExportProgress = value;
+        //     OnPropertyChanged("ExportProgress");
+        // }
 
         private void ReportMsDataLoadProgress(double value)
         {
