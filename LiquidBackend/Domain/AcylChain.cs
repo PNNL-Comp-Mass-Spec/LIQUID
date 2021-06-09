@@ -117,12 +117,12 @@ namespace LiquidBackend.Domain
                         if (Regex.IsMatch(m, @"\d+Me"))
                         {
                             MethylPositions.Add(pos);
-                            MethylCount += 1;
+                            MethylCount++;
                         }
                         else if (Regex.IsMatch(m, @"\d+OH"))
                         {
                             HydroxyPosition = pos;
-                            HydroxyCount += 1;
+                            HydroxyCount++;
                         }
                     }
                 }
