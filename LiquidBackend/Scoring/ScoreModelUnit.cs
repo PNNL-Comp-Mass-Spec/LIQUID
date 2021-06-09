@@ -61,7 +61,7 @@ namespace LiquidBackend.Scoring
         {
             if (!LipidClass.Equals(other.LipidClass)) return LipidClass.CompareTo(other.LipidClass);
             if (!LipidType.Equals(other.LipidType)) return LipidType.CompareTo(other.LipidType);
-            if (!FragmentDescription.Equals(other.FragmentDescription)) return string.Compare(FragmentDescription, other.FragmentDescription, StringComparison.Ordinal);
+            if (!FragmentDescription.Equals(other.FragmentDescription)) return string.CompareOrdinal(FragmentDescription, other.FragmentDescription);
             if (!FragmentationMode.Equals(other.FragmentationMode)) return FragmentationMode.CompareTo(other.FragmentationMode);
             if (!FragmentationType.Equals(other.FragmentationType)) return FragmentationType.CompareTo(other.FragmentationType);
             return IntensityMax.CompareTo(other.IntensityMax);
