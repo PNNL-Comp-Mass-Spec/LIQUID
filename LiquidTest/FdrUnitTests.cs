@@ -496,7 +496,7 @@ namespace LiquidTest
         public void FillCompAndMassForTargetsFile()
         {
             const string targetsFile = @"E:\Source\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b_Decoys.txt";
-            const string outputfile = @"E:\Source\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b_Decoys_test.txt";
+            const string outputFile = @"E:\Source\Liquid\trunk\LiquidTest\testFiles\Global_LipidMaps_POS_7b_Decoys_test.txt";
 
             const int massCol = 6;
             const int compCol = 7;
@@ -543,11 +543,11 @@ namespace LiquidTest
                 }
             }
 
-            using (var outstream = new StreamWriter(outputfile))
+            using (var writer = new StreamWriter(outputFile))
             {
                 foreach (var x in output)
                 {
-                    outstream.WriteLine(x);
+                    writer.WriteLine(x);
                 }
             }
         }
