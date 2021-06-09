@@ -360,7 +360,7 @@ namespace Liquid.ViewModel
             }
         }
 
-        public void SearchForFragments(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude, int minMatches, Adduct adduct)
+        public void SearchForFragments(double hcdError, double cidError, FragmentationMode fragmentationMode, int minMatches, Adduct adduct)
         {
             IProgress<int> progress = new Progress<int>(ReportFragmentSearchProgress);
             SpectrumSearchResultList = InformedWorkflow.RunFragmentWorkflow(FragmentSearchList, LcMsRun, hcdError, cidError, minMatches, progress);
@@ -417,7 +417,7 @@ namespace Liquid.ViewModel
         public void OnWriteTargetInfo(string fileLocation)
         {
             IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
-            LipidGroupSearchResultWriter.OutputTargetInfo(LipidTargetList, fileLocation, Path.GetFileName(RawFilePath), progress);
+            LipidGroupSearchResultWriter.OutputTargetInfo(LipidTargetList, fileLocation, progress);
             progress.Report(0);
         }
 

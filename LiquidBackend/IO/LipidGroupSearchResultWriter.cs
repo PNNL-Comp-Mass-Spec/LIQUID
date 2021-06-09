@@ -93,7 +93,7 @@ namespace LiquidBackend.IO
         }
 
         public static void OutputTargetInfo(List<Lipid> lipidGroupSearchResults,
-            string fileLocation, string rawFileName, IProgress<int> progress = null)
+            string fileLocation, IProgress<int> progress = null)
         {
             using (TextWriter textWriter = new StreamWriter(fileLocation))
             {

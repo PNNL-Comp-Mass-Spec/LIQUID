@@ -71,7 +71,7 @@ namespace LiquidTest
             //liquidScoreModelCreator.AddDmsDatasets(new List<string> {datasetNames[0]});
             liquidScoreModelCreator.AddDmsDatasets(datasetNames);
             liquidScoreModelCreator.AddLipidTargets(lipidList);
-            var scoreModel = liquidScoreModelCreator.CreateScoreModel(30, 500);
+            var scoreModel = liquidScoreModelCreator.CreateScoreModel();
             //Console.WriteLine(scoreModel.ToString());
 
             ScoreModelSerialization.Serialize(scoreModel, "scoringTestPositive.xml");
@@ -141,7 +141,7 @@ namespace LiquidTest
             //liquidScoreModelCreator.AddDmsDatasets(new List<string> { datasetNames[0] });
             liquidScoreModelCreator.AddDmsDatasets(datasetNames);
             liquidScoreModelCreator.AddLipidTargets(lipidList);
-            var scoreModel = liquidScoreModelCreator.CreateScoreModel(30, 500);
+            var scoreModel = liquidScoreModelCreator.CreateScoreModel();
             //Console.WriteLine(scoreModel.ToString());
 
             ScoreModelSerialization.Serialize(scoreModel, "scoringTestNegative.xml");
@@ -347,7 +347,7 @@ namespace LiquidTest
             //liquidScoreModelCreator.AddDmsDatasets(new List<string> {datasetNames[0]});
             liquidScoreModelCreator.AddDmsDatasets(datasetNames);
             liquidScoreModelCreator.AddLipidTargets(lipidList);
-            var scoreModel = liquidScoreModelCreator.CreateScoreModel(30, 500);
+            var scoreModel = liquidScoreModelCreator.CreateScoreModel();
             //Console.WriteLine(scoreModel.ToString());
 
             ScoreModelSerialization.Serialize(scoreModel, "scoringTestPositive_Grant.xml");
@@ -523,7 +523,7 @@ namespace LiquidTest
             //liquidScoreModelCreator.AddDmsDatasets(new List<string> {datasetNames[0]});
             liquidScoreModelCreator.AddDmsDatasets(datasetNames);
             liquidScoreModelCreator.AddLipidTargets(lipidList);
-            var scoreModel = liquidScoreModelCreator.CreateScoreModel(30, 500);
+            var scoreModel = liquidScoreModelCreator.CreateScoreModel();
             //Console.WriteLine(scoreModel.ToString());
 
             ScoreModelSerialization.Serialize(scoreModel, "scoringTestNegative_Grant.xml");

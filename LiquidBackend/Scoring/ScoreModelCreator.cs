@@ -21,7 +21,7 @@ namespace LiquidBackend.Scoring
             _binList = new List<double>{0, 0.25, 0.5, 0.75, 1};
         }
 
-        public ScoreModel CreateScoreModel(double hcdError, double cidError)
+        public ScoreModel CreateScoreModel()
         {
             const int numTopHitsToConsider = 1;
 
