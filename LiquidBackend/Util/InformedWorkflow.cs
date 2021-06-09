@@ -164,26 +164,21 @@ namespace LiquidBackend.Util
                 ProductSpectrum MatchedSpectrum = null;
                 var spectrum1 = lcmsRun.GetSpectrum(scan + 1);
                 var spectrum2 = lcmsRun.GetSpectrum(scan - 1);
-                if (spectrum1?.MsLevel == 2)
+                if (spectrum1?.MsLevel == 2 && spectrum1 is ProductSpectrum productSpectrum1)
                 {
-                    if (spectrum1 is ProductSpectrum productSpectrum)
+                    var deltaMz = productSpectrum1.IsolationWindow.IsolationWindowTargetMz - MsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
+                    if (Math.Abs(deltaMz) < float.Epsilon)
                     {
-                        var deltaMz = productSpectrum.IsolationWindow.IsolationWindowTargetMz - MsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
-                        if (Math.Abs(deltaMz) < float.Epsilon)
-                        {
-                            MatchedSpectrum = productSpectrum;
-                        }
+                        MatchedSpectrum = productSpectrum1;
                     }
                 }
-                if (spectrum2?.MsLevel == 2)
+
+                if (spectrum2?.MsLevel == 2 && spectrum2 is ProductSpectrum productSpectrum2)
                 {
-                    if (spectrum2 is ProductSpectrum productSpectrum)
+                    var deltaMz = productSpectrum2.IsolationWindow.IsolationWindowTargetMz - MsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
+                    if (Math.Abs(deltaMz) < float.Epsilon)
                     {
-                        var deltaMz = productSpectrum.IsolationWindow.IsolationWindowTargetMz - MsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
-                        if (Math.Abs(deltaMz) < float.Epsilon)
-                        {
-                            MatchedSpectrum = productSpectrum;
-                        }
+                        MatchedSpectrum = productSpectrum2;
                     }
                 }
 

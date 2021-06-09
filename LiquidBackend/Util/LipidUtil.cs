@@ -62,7 +62,7 @@ namespace LiquidBackend.Util
 
         public static LipidTarget CreateLipidTarget(double mz, FragmentationMode fragmentationMode, Adduct adduct)
         {
-            var compositionOfAdduct = GetCompositionOfAdduct(adduct);
+            // var compositionOfAdduct = GetCompositionOfAdduct(adduct);
             var charge = IonCharge(adduct);
 
             return new LipidTarget(mz.ToString(CultureInfo.InvariantCulture), LipidClass.Unknown, fragmentationMode, null, null, adduct, charge);
@@ -106,9 +106,9 @@ namespace LiquidBackend.Util
             var commonNameSplit = commonName.Split('(');
             var classAbbrev = commonNameSplit[0];
 
-            if (classAbbrev.Length == 0)
+            if (classAbbrev.Length == 0 && commonNameSplit[1].Contains("sulf"))
             {
-                if (commonNameSplit[1].Contains("sulf")) return LipidClass.Sulfatide;
+                return LipidClass.Sulfatide;
             }
 
             var classFound = Enum.TryParse(classAbbrev, true, out LipidClass lipidClass);
@@ -176,24 +176,21 @@ namespace LiquidBackend.Util
             // find a rule for this lipid target
             foreach (var rule in lipidCompositionRules)
             {
-                if (rule.LipidClass.Equals(lipidClass.ToString().ToUpper()))
+                if (rule.LipidClass.Equals(lipidClass.ToString().ToUpper()) && rule.NumChains == numChains)
                 {
-                    if (rule.NumChains == numChains)
+                    if (
+                        rule.ContainsOOH == containsOOH &&
+                        rule.ContainsDiether == containsDiether &&
+                        rule.ContainsEther == containsEther &&
+                        rule.ContainsLCB == dihydro &&
+                        rule.ContainsLCBPlusOH == trihydro &&
+                        rule.ContainsLCBMinusOH == monohydro &&
+                        rule.NumOH == numOH &&
+                        rule.ContainsPlasmalogen == containsPlasmogen &&
+                        rule.IsOxoCHO == isOxoCHO &&
+                        rule.IsOxoCOOH == isOxoCOOH)
                     {
-                        if (
-                            rule.ContainsOOH == containsOOH &&
-                            rule.ContainsDiether == containsDiether &&
-                            rule.ContainsEther == containsEther &&
-                            rule.ContainsLCB == dihydro &&
-                            rule.ContainsLCBPlusOH == trihydro &&
-                            rule.ContainsLCBMinusOH == monohydro &&
-                            rule.NumOH == numOH &&
-                            rule.ContainsPlasmalogen == containsPlasmogen &&
-                            rule.IsOxoCHO == isOxoCHO &&
-                            rule.IsOxoCOOH == isOxoCOOH)
-                        {
-                            return rule.GetComposition(numCarbons, numDoubleBonds);
-                        }
+                        return rule.GetComposition(numCarbons, numDoubleBonds);
                     }
                 }
             }
