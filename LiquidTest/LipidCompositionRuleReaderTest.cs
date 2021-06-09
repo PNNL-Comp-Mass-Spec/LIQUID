@@ -30,7 +30,7 @@ namespace LiquidTest
         [Test]
         public void TestGetCompositionRuleForLipid()
         {
-            //Set lipid for testing
+            // Set lipid for testing
             const string oldCommonName = "PC(16:0/0:0)";
 
             Console.WriteLine(oldCommonName);
@@ -127,7 +127,7 @@ namespace LiquidTest
             var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
 
             Console.WriteLine("================ POSITIVE ================");
-            //FragmentationMode fragmentationMode = FragmentationMode.Positive;
+            // FragmentationMode fragmentationMode = FragmentationMode.Positive;
             var lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_August2018_all_updated_ox_POS.txt");
             var numPosTargets = 0;
             var numCorrectPosTargets = 0;
@@ -154,7 +154,7 @@ namespace LiquidTest
                     }
                     else
                     {
-                        //if (empiricalFormula1.Equals(empiricalFormula2) && empiricalFormula2.Equals(empiricalFormula3)) correct = true;
+                        // if (empiricalFormula1.Equals(empiricalFormula2) && empiricalFormula2.Equals(empiricalFormula3)) correct = true;
                         if (empiricalFormula1.Equals(empiricalFormula3)) correct = true;
                     }
 
@@ -179,7 +179,7 @@ namespace LiquidTest
             }
 
             Console.WriteLine("================ NEGATIVE ================");
-            //fragmentationMode = FragmentationMode.Negative;
+            // fragmentationMode = FragmentationMode.Negative;
             lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_August2018_all_updated_ox_NEG.txt");
             var numNegTargets = 0;
             var numCorrectNegTargets = 0;
@@ -207,7 +207,7 @@ namespace LiquidTest
                     }
                     else
                     {
-                        //if (empiricalFormula1.Equals(empiricalFormula2) && empiricalFormula2.Equals(empiricalFormula3)) correct = true;
+                        // if (empiricalFormula1.Equals(empiricalFormula2) && empiricalFormula2.Equals(empiricalFormula3)) correct = true;
                         if (empiricalFormula1.Equals(empiricalFormula3)) correct = true;
                     }
 
@@ -242,7 +242,7 @@ namespace LiquidTest
             LipidRules.LoadLipidRules(@"C:\Users\leej324\source\repos\liquid\LiquidBackend\DefaultCompositionRules.txt", @"C:\Users\leej324\source\repos\liquid\LiquidBackend\DefaultFragmentationRules.txt");
             Console.WriteLine("Get Composition Rule");
 
-            //var commonName = "DAT1(16:0/22:0(2Me[S],4Me[S]))";
+            // var commonName = "DAT1(16:0/22:0(2Me[S],4Me[S]))";
             const string commonName = "DAT2(18:0/23:0(2Me[S],3OH[S],4Me[S],6Me[S]))";
 
             var empiricalFormula = LipidUtil.ParseLipidCommonNameIntoCompositionWithoutAdductUsingCompositionRules(commonName, LipidRules.LipidCompositionRules).ToPlainString();

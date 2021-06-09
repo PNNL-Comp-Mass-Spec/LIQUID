@@ -133,7 +133,7 @@ namespace LiquidBackend.IO
 
             var lipid = new T();
 
-            //Convert and populate object
+            // Convert and populate object
             if (columnMapping.ContainsKey(LIPID_CLASS)) lipid.LipidClass = columns[columnMapping[LIPID_CLASS]].ToUpper();
             if (columnMapping.ContainsKey(LIPID_SUBCLASS)) lipid.LipidSubClass = columns[columnMapping[LIPID_SUBCLASS]];
             if (columnMapping.ContainsKey(CATEGORY)) lipid.Category = columns[columnMapping[CATEGORY]];

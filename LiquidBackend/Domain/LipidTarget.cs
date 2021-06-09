@@ -24,7 +24,7 @@ namespace LiquidBackend.Domain
                 if (Composition != null)
                     return Math.Round(Composition.Mass / Charge, 4);
 
-                return double.Parse(CommonName); //If this is an unknown target i.e. composition is unknown
+                return double.Parse(CommonName); // If this is an unknown target i.e. composition is unknown
             }
         }
 
@@ -241,7 +241,7 @@ namespace LiquidBackend.Domain
                 if (plasmogenChainCount == 1)
                     return LipidType.TwoChainsPlasmogen;
                 if (etherChainCount >= 1)
-                    return LipidType.TwoChainsEther; //etherChainCount == 1
+                    return LipidType.TwoChainsEther; // etherChainCount == 1
                 if (oxoCHOChainCount == 1)
                     return LipidType.TwoChainsOxoCHO;
                 if (oxoCOOHChainCount == 1)

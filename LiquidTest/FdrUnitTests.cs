@@ -384,12 +384,12 @@ namespace LiquidTest
         public void SubclassStats()
         {
             const int subclassCol = 5;
-            //string inFilename = "../../../testFiles/Global_LipidMaps_NEG_4.txt";
-            //string inFilename = "../../../testFiles/Global_LipidMaps_POS_7b.txt";
-            //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeTrueTargets.tsv";
-            //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveTrueTargets.tsv";
+            // string inFilename = "../../../testFiles/Global_LipidMaps_NEG_4.txt";
+            // string inFilename = "../../../testFiles/Global_LipidMaps_POS_7b.txt";
+            // string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeTrueTargets.tsv";
+            // string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveTrueTargets.tsv";
             const string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeDecoyTargets.tsv";
-            //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoyTargets.tsv";
+            // string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoyTargets.tsv";
 
             var subclasses = new Dictionary<string, int>();
             var total = 0;
@@ -437,11 +437,11 @@ namespace LiquidTest
         public void SubclassDivider()
         {
             const int subclassCol = 5;
-            //string inFilename = "../../../testFiles/Global_LipidMaps_NEG_4.txt";
-            //string inFilename = "../../../testFiles/Global_LipidMaps_POS_7b.txt";
-            //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeTrueTargets.tsv";
-            //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveTrueTargets.tsv";
-            //string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeDecoyTargets.tsv";
+            // string inFilename = "../../../testFiles/Global_LipidMaps_NEG_4.txt";
+            // string inFilename = "../../../testFiles/Global_LipidMaps_POS_7b.txt";
+            // string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeTrueTargets.tsv";
+            // string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveTrueTargets.tsv";
+            // string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\NegativeDecoyTargets.tsv";
             const string inFilename = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoyTargets.tsv";
 
             const string outputDirectory = @"C:\Users\fuji510\Desktop\LiquidData\PositiveDecoy";
@@ -1107,7 +1107,7 @@ namespace LiquidTest
             var humLipidReader = new LipidMapsDbReader<Lipid>();
             var humLipidList = humLipidReader.ReadFile(humTargetsFileInfo);
 
-            //Parallel.ForEach(datasetNamesList, datasetNameKvp =>
+            // Parallel.ForEach(datasetNamesList, datasetNameKvp =>
             foreach (var datasetNameKvp in datasetNamesList)
             {
                 var rawFileName = datasetNameKvp.Key + ".raw";

@@ -64,10 +64,10 @@ namespace LiquidBackend.Domain
                 && ConditionForCountOfStandardAcylsChains == null;
         }
 
-        //public boolean checkSpecialCase()
-        //{
-        //    return (!this.isFromHeader && this.acylChainType == null);
-        //}
+        // public boolean checkSpecialCase()
+        // {
+        //     return (!this.isFromHeader && this.acylChainType == null);
+        // }
 
         public bool CheckAcylChainConditions(string acylChainTypeCompare,
                                              int acylChainNumCarbonsCompare,
@@ -132,9 +132,9 @@ namespace LiquidBackend.Domain
                    + "acylChainType:" + AcylChainType;
         }
 
-        //Composition ILipidFragmentationRule.GetComposition(int numCarbons, int numDoubleBonds)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        // Composition ILipidFragmentationRule.GetComposition(int numCarbons, int numDoubleBonds)
+        // {
+        //     throw new NotImplementedException();
+        // }
     }
 }

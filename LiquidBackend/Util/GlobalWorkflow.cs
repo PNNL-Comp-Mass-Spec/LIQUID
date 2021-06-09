@@ -63,7 +63,7 @@ namespace LiquidBackend.Util
                     if (mz > highMz) break;
                     if (mz > lowMz)
                     {
-                        //Target IMS feature found in this scan
+                        // Target IMS feature found in this scan
                         double[] MS2Mz;
                         int[] MS2Ints;
                         ImsRun.GetSpectrum(feature.LcStart, feature.LcEnd, DataReader.FrameType.MS2, feature.ImsStart,
@@ -92,7 +92,7 @@ namespace LiquidBackend.Util
                                 if (mz > highMz) break;
                                 if (mz > lowMz)
                                 {
-                                    //Target IMS feature found in this scan
+                                    // Target IMS feature found in this scan
                                     feature.AddCoord(lcScan, imsScan);
                                 }
                             }
@@ -169,7 +169,7 @@ namespace LiquidBackend.Util
                     if (lipidMz > lowMz)
                     {
                         // Find the MS1 data
-                        //Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(lipidMz, hcdTolerance, i);
+                        // Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(lipidMz, hcdTolerance, i);
                         var xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(lipidMz, hcdTolerance);
 
                         // Bogus data
@@ -193,7 +193,7 @@ namespace LiquidBackend.Util
                             };
                             lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult, scoreModel);
                         }
-                        else //If there are no precursor scans in this file
+                        else // If there are no precursor scans in this file
                         {
                             spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, hcdSearchResultList, cidSearchResultList, lcmsRun)
                             {
@@ -272,7 +272,7 @@ namespace LiquidBackend.Util
                 // Grab Precursor Spectrum
 
                 var precursorScanNumber = 0;
-                if (lcmsRun.MinMsLevel == 1) //Make sure there are precursor scans in file
+                if (lcmsRun.MinMsLevel == 1) // Make sure there are precursor scans in file
                 {
                     precursorScanNumber = lcmsRun.GetPrecursorScanNum(i);
                 }
@@ -310,7 +310,7 @@ namespace LiquidBackend.Util
                     if (lipidMz > lowMz)
                     {
                         // Find the MS1 data
-                        //Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(lipidMz, hcdTolerance, i);
+                        // Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(lipidMz, hcdTolerance, i);
                         var xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(lipidMz, hcdTolerance);
 
                         // Bogus data
@@ -335,7 +335,7 @@ namespace LiquidBackend.Util
                             };
                             lipidGroupSearchResult = new LipidGroupSearchResult(lipidTarget, grouping.ToList(), spectrumSearchResult, scoreModel);
                         }
-                        else //If there are no precursor scans in this file
+                        else // If there are no precursor scans in this file
                         {
                             spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, hcdSearchResultList, cidSearchResultList, lcmsRun)
                             {

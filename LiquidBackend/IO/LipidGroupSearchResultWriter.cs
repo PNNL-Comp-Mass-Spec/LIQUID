@@ -53,7 +53,7 @@ namespace LiquidBackend.IO
 
                 foreach (var cidResult in cidResultList)
                 {
-                    //stringBuilder.Append(cidResult.TheoreticalPeak.Description + "***");
+                    // stringBuilder.Append(cidResult.TheoreticalPeak.Description + "***");
                     if (cidResult.ObservedPeak != null) stringBuilder.Append(Math.Log10(cidResult.ObservedPeak.Intensity) / Math.Log10(cidMaxValue));
                     else stringBuilder.Append("0");
 
@@ -62,7 +62,7 @@ namespace LiquidBackend.IO
 
                 foreach (var hcdResult in hcdResultList)
                 {
-                    //stringBuilder.Append(hcdResult.TheoreticalPeak.Description + "***");
+                    // stringBuilder.Append(hcdResult.TheoreticalPeak.Description + "***");
                     if (hcdResult.ObservedPeak != null) stringBuilder.Append(Math.Log10(hcdResult.ObservedPeak.Intensity) / Math.Log10(hcdMaxValue));
                     else stringBuilder.Append("0");
 

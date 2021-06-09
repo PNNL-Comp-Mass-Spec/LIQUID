@@ -32,7 +32,7 @@ namespace LiquidBackend.Domain
 
         public double ApexIntensity { get; }
 
-        //Implemented by grant. Used as a way to pass the area under the curve selected by the user to the exported results.
+        // Implemented by grant. Used as a way to pass the area under the curve selected by the user to the exported results.
         public double? PeakArea { get; set; }
 
         public double RetentionTime { get; }

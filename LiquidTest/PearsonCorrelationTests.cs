@@ -292,7 +292,7 @@ namespace LiquidTest
 
             var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
 
-            //Get the values to use to calculate pearson correlation
+            // Get the values to use to calculate pearson correlation
             var observedPeaks = LipidUtil.GetAllIsotopePeaks(spectrum, composition, tolerance,
                 relativeIntensityThreshold);
             if (observedPeaks == null) Console.WriteLine("Observed peaks is null for scan " + id);
@@ -345,7 +345,7 @@ namespace LiquidTest
             var lipidTarget = lipid.CreateLipidTarget();
 
             var composition = lipidTarget.Composition;
-            var compMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P); //Subtract one hydrogen to make this a minus1 fit score
+            var compMinus1 = new Composition(composition.C, composition.H - 1, composition.N, composition.O, composition.S, composition.P); // Subtract one hydrogen to make this a minus1 fit score
 
             var lcmsRun = PbfLcMsRun.GetLcMsRun(rawFilePath);
 
@@ -355,7 +355,7 @@ namespace LiquidTest
 
             var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
 
-            //Get the values to use to calculate pearson correlation
+            // Get the values to use to calculate pearson correlation
             var observedPeaks = LipidUtil.GetAllIsotopePeaks(spectrum, compMinus1, tolerance,
                 relativeIntensityThreshold);
             if (observedPeaks == null) Console.WriteLine("Observed peaks is null for scan " + id);

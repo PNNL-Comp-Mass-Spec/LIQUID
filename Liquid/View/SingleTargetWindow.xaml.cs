@@ -74,7 +74,7 @@ namespace Liquid.View
 
                 await Task.Run(() => SingleTargetViewModel.UpdateRawFileLocation(fileInfo.FullName));
 
-                //Make sure we loaded a file
+                // Make sure we loaded a file
                 if (SingleTargetViewModel.LcMsRun != null)
                 {
                     // Enable processing all targets button if applicable

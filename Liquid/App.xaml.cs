@@ -71,7 +71,7 @@ namespace Liquid
                 if (!(cell.Content is ComboBox cb))
                     return;
 
-                //DataGrid dataGrid = FindVisualParent<DataGrid>(cell);
+                // DataGrid dataGrid = FindVisualParent<DataGrid>(cell);
                 dataGrid.BeginEdit(e);
                 cell.Dispatcher.Invoke(
                     DispatcherPriority.Background,

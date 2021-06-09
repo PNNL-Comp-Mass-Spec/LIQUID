@@ -100,7 +100,7 @@ namespace LiquidBackend.Util
 
         public static LipidClass ParseLipidCommonNameIntoClass(string commonName)
         {
-            //Special Cases with parentheses in name go at top
+            // Special Cases with parentheses in name go at top
             if (commonName.Contains("M(IP)2C")) return LipidClass.MIP2C;
 
             var commonNameSplit = commonName.Split('(');
@@ -531,7 +531,7 @@ namespace LiquidBackend.Util
 
             var sugarCount = Hex + HexNAc + DeoxyHex + NeuAc + NeuGc;
             var carbons = 6 * Hex + 8 * HexNAc + 6 * DeoxyHex + 11 * NeuAc + 11 * NeuGc;
-            var hydrogens = 12 * Hex + 15 * HexNAc + 12 * DeoxyHex + 19 * NeuAc + 19 * NeuGc - 2 * (sugarCount - 1); //Subtract H2O for each glycosidic bond formed
+            var hydrogens = 12 * Hex + 15 * HexNAc + 12 * DeoxyHex + 19 * NeuAc + 19 * NeuGc - 2 * (sugarCount - 1); // Subtract H2O for each glycosidic bond formed
             var nitrogens = 0 * Hex + 1 * HexNAc + 0 * DeoxyHex + 1 * NeuAc + 1 * NeuGc;
             var oxygens = 6 * Hex + 6 * HexNAc + 5 * DeoxyHex + 9 * NeuAc + 10 * NeuGc - 1 * (sugarCount - 1);
 
@@ -855,8 +855,8 @@ namespace LiquidBackend.Util
                     {
                         msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 15, 1, 4, 0, 1).Mass, "C5H15O4NP", true));
                         msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 9, 1, 0, 0, 0).Mass, "M-(CH2)3NH3"));
-                        msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 14, 1, 1, 0, 0).Mass, "C5H14ON")); //CC addtion 1-16-2015
-                        msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 6, 0, 4, 0, 1).Mass, "C2H6O4P")); //CC addition 1-16-2015
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(5, 14, 1, 1, 0, 0).Mass, "C5H14ON")); // CC addition 1-16-2015
+                        msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(2, 6, 0, 4, 0, 1).Mass, "C2H6O4P")); // CC addition 1-16-2015
                     }
 
                     if (lipidClass == LipidClass.PE_Cer)
@@ -992,7 +992,7 @@ namespace LiquidBackend.Util
                 else if (lipidClass == LipidClass.WE)
                 {
                     msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(0, 2, 0, 1, 0).Mass, "M-H2O"));
-                    var FA = acylChainList.Last(); //Second chain in WE name is the FA
+                    var FA = acylChainList.Last(); // Second chain in WE name is the FA
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(FA.NumCarbons, 2 * FA.NumCarbons + 1 - 2 * FA.NumDoubleBonds, 0, 2, 0).Mass, "FA+H2O / Fatty alcohol", FA));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(FA.NumCarbons, 2 * FA.NumCarbons - 1 - 2 * FA.NumDoubleBonds, 0, 1, 0).Mass, "FA", FA));
                 }
@@ -1230,7 +1230,7 @@ namespace LiquidBackend.Util
                         {
                             case AcylChainType.Standard:
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, 2 * carbons - 1 - 2 * doubleBonds, 0, 2, 0, 0).Mass, "FA", acylChain));
-                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, 2 * carbons - 1 - 2 * doubleBonds, 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); //CC addition 1-18-2015
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, 2 * carbons - 1 - 2 * doubleBonds, 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); // CC addition 1-18-2015
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, 2 * (carbons + 3) + 0 - 2 * doubleBonds, 0, 7, 0, 1).Mass, "LPA-H", acylChain));
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, 2 * (carbons + 3) - 2 - 2 * doubleBonds, 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
                                 if (countOfChains == 2)
@@ -1420,7 +1420,7 @@ namespace LiquidBackend.Util
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(6, 10, 0, 6, 0, 1).Mass, "C6H10O6P"));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(3, 6, 0, 5, 0, 1).Mass, "C3H6O5P"));
                     msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 6, 0, 2, 0, 0).Mass, "M-C3H6O2"));
-                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(6, 12, 0, 7, 0, 1).Mass, "C6H12O7P")); //CC addition 1-19-2015
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(6, 12, 0, 7, 0, 1).Mass, "C6H12O7P")); // CC addition 1-19-2015
 
                     var countOfChains = acylChainList.Count(x => x.NumCarbons > 0);
                     var countOfStandardAcylsChains = acylChainList.Count(x => x.AcylChainType == AcylChainType.Standard && x.NumCarbons > 0);
@@ -1437,7 +1437,7 @@ namespace LiquidBackend.Util
                         {
                             case AcylChainType.Standard:
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, 2 * carbons - 1 - 2 * doubleBonds, 0, 2, 0, 0).Mass, "FA", acylChain));
-                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, 2 * carbons - 1 - 2 * doubleBonds, 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); //CC addition 1-18-2015
+                                msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, 2 * carbons - 1 - 2 * doubleBonds, 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); // CC addition 1-18-2015
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, 2 * (carbons + 3) + 0 - 2 * doubleBonds, 0, 7, 0, 1).Mass, "LPA-H", acylChain));
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, 2 * (carbons + 3) - 2 - 2 * doubleBonds, 0, 6, 0, 1).Mass, "LPA-H2O-H", acylChain));
                                 if (countOfChains == 2)
@@ -1451,8 +1451,8 @@ namespace LiquidBackend.Util
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, 2 * (carbons + 3) + 0 - 2 * doubleBonds, 0, 5, 0, 1).Mass, "LPA(O-)-H2O", acylChain));
                                 if (countOfChains == 2)
                                 {
-                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, 2 * carbons - 1 - 2 * doubleBonds, 0, 2, 0, 0).Mass, "FA", acylChain)); //CC addition 1-27-2015
-                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, 2 * carbons - 1 - 2 * doubleBonds, 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); //CC addition 1-27-2015
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, 2 * carbons - 1 - 2 * doubleBonds, 0, 2, 0, 0).Mass, "FA", acylChain)); // CC addition 1-27-2015
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, 2 * carbons - 1 - 2 * doubleBonds, 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); // CC addition 1-27-2015
                                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, 2 * (carbons + 6) + 2 - 2 * doubleBonds, 0, 8, 0, 1).Mass, "LPG(O-)", acylChain));
                                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, 2 * (carbons + 6) + 0 - 2 * doubleBonds, 0, 7, 0, 1).Mass, "LPG(O-)-H2O", acylChain));
                                 }
@@ -1462,8 +1462,8 @@ namespace LiquidBackend.Util
                                 msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 3, 2 * (carbons + 3) - 2 - 2 * doubleBonds, 0, 5, 0, 1).Mass, "LPA(P-)-H2O", acylChain));
                                 if (countOfChains == 2)
                                 {
-                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, 2 * carbons - 1 - 2 * doubleBonds, 0, 2, 0, 0).Mass, "FA", acylChain)); //CC addition 1-27-2015
-                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, 2 * carbons - 1 - 2 * doubleBonds, 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); //CC addition 1-27-2015
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons, 2 * carbons - 1 - 2 * doubleBonds, 0, 2, 0, 0).Mass, "FA", acylChain)); // CC addition 1-27-2015
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons - 1, 2 * carbons - 1 - 2 * doubleBonds, 0, 0, 0, 0).Mass, "FA-CO2", acylChain)); // CC addition 1-27-2015
                                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, 2 * (carbons + 6) + 0 - 2 * doubleBonds, 0, 8, 0, 1).Mass, "LPG(P-)", acylChain));
                                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(carbons + 6, 2 * (carbons + 6) - 2 - 2 * doubleBonds, 0, 7, 0, 1).Mass, "LPG(P-)-H2O", acylChain));
                                 }
@@ -1535,8 +1535,8 @@ namespace LiquidBackend.Util
                                 }
                                 else if (countOfChains == 2)
                                 {
-                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 5, 1, 2, 0, 0).Mass - new Composition(carbons, 2 * carbons - 2 - 2 * doubleBonds, 0, 1, 0, 0).Mass, "M-Ketene", acylChain)); //really M-C3H5O2N-Ketene
-                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 5, 1, 2, 0, 0).Mass - new Composition(carbons, 2 * carbons - 0 - 2 * doubleBonds, 0, 2, 0, 0).Mass, "M-FA", acylChain)); //really M-C3H5O2N-FA
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 5, 1, 2, 0, 0).Mass - new Composition(carbons, 2 * carbons - 2 - 2 * doubleBonds, 0, 1, 0, 0).Mass, "M-Ketene", acylChain)); // really M-C3H5O2N-Ketene
+                                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(3, 5, 1, 2, 0, 0).Mass - new Composition(carbons, 2 * carbons - 0 - 2 * doubleBonds, 0, 2, 0, 0).Mass, "M-FA", acylChain)); // really M-C3H5O2N-FA
                                 }
                                 break;
                             case AcylChainType.Plasmalogen:
@@ -1660,8 +1660,8 @@ namespace LiquidBackend.Util
                         {
                             msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(18, 33, 0, 21, 0, 2).Mass, "Cer"));
                             msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(18, 32, 0, 19, 0, 1).Mass, "MIP(2)-P"));
-                            msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(18, 32, 0, 18, 0, 2).Mass / 2, "[M(IP)2]2-")); //Charge = -2
-                            msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(sumCarbon + 18, 2 * (sumCarbon + 18) - 3 - sumDB, 1, 26, 0, 2).Mass / 2, "[M-2H]2- - M(IP)2C")); //Charge = -2
+                            msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(18, 32, 0, 18, 0, 2).Mass / 2, "[M(IP)2]2-")); // Charge = -2
+                            msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(sumCarbon + 18, 2 * (sumCarbon + 18) - 3 - sumDB, 1, 26, 0, 2).Mass / 2, "[M-2H]2- - M(IP)2C")); // Charge = -2
                         }
                     }
 
@@ -1728,8 +1728,8 @@ namespace LiquidBackend.Util
                     msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(2, 4, 0, 2, 0).Mass, "M-C2H4O2 (cross ring cleavage)"));
 
                     msMsSearchUnitList.Add(new MsMsSearchUnit(new Composition(11, 16, 1, 8, 0).Mass, "NAc-H"));
-                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(11, 17, 1, 8, 0).Mass, "M-NAc-H")); //Adduct is M-H
-                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(11, 16, 1, 8, 0).Mass, "M-NAc-H")); //Adduct is M-2H
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(11, 17, 1, 8, 0).Mass, "M-NAc-H")); // Adduct is M-H
+                    msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(11, 16, 1, 8, 0).Mass, "M-NAc-H")); // Adduct is M-2H
                     if (sialic == 'D' || sialic == 'T' || sialic == 'Q')
                     {
                         msMsSearchUnitList.Add(new MsMsSearchUnit(precursorMz - new Composition(22, 33, 2, 16, 0).Mass, "M-2NAc-H"));

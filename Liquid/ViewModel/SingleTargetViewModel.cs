@@ -279,13 +279,13 @@ namespace Liquid.ViewModel
                         LoadLipidIdentifications(file);
                         OnExportGlobalResults(file.Replace(".tsv", ".msp"));
 
-                        //Delete the raw files we copied from DMS to save space
+                        // Delete the raw files we copied from DMS to save space
                         LcMsRun.Close();
                         LcMsRun = null;
                         OnPropertyChanged("LcMsRun");
                         GC.Collect();
 
-                        //File.Delete(rawFileName);
+                        // File.Delete(rawFileName);
                         var pbfFilePath = Path.ChangeExtension(rawFileName, ".pbf");
                         if (string.IsNullOrWhiteSpace(pbfFilePath))
                             continue;

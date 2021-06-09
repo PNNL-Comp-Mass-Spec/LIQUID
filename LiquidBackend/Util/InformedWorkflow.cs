@@ -110,9 +110,9 @@ namespace LiquidBackend.Util
                 var cidSearchResultList = cidSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
 
                 // Find the MS1 data
-                //Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(targetMz, hcdTolerance, firstScanNumber);
+                // Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(targetMz, hcdTolerance, firstScanNumber);
                 var precursorScanNumber = 0;
-                if (lcmsRun.MinMsLevel == 1) //Make sure there are precursor scans in file
+                if (lcmsRun.MinMsLevel == 1) // Make sure there are precursor scans in file
                 {
                     precursorScanNumber = lcmsRun.GetPrecursorScanNum(matchingMsMsScanNumbers[i]);
                 }
@@ -130,7 +130,7 @@ namespace LiquidBackend.Util
                         PrecursorTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm)
                     };
                 }
-                else //If there are no precursor scans in this file
+                else // If there are no precursor scans in this file
                 {
                     spectrumSearchResult = new SpectrumSearchResult(hcdSpectrum, cidSpectrum, hcdSearchResultList, cidSearchResultList, lcmsRun, scoreModel, target)
                     {
@@ -192,7 +192,7 @@ namespace LiquidBackend.Util
                 // Bogus data
                 //if (xic.GetApexScanNum() < 0) continue;
                 var msmsPrecursorScan = 0;
-                if (lcmsRun.MinMsLevel == 1) //Make sure there are precursor scans in file
+                if (lcmsRun.MinMsLevel == 1) // Make sure there are precursor scans in file
                 {
                     msmsPrecursorScan = lcmsRun.GetPrecursorScanNum(scan);
                 }

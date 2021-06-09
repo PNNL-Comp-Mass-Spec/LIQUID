@@ -28,7 +28,7 @@ namespace Liquid.ViewModel
         public double CurrentMz { get; private set; }
         public double CurrentPpmError { get; private set; }
 
-        //Used for the calculation of area under ms1 xic curve over manually specified range
+        // Used for the calculation of area under ms1 xic curve over manually specified range
         public double AreaUnderCurve { get; private set; }
         private double _startScanForAreaUnderTheCurve;
         private double _stopScanForAreaUnderTheCurve;
