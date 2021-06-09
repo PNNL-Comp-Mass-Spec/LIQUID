@@ -11,7 +11,7 @@ namespace LiquidBackend.Util
     using InformedProteomics.Backend.Data.Biology;
     using InformedProteomics.Backend.Data.Spectrometry;
 
-    public class LipidUtil
+    public static class LipidUtil
     {
         public static LipidTarget CreateLipidTarget(string commonName, string empiricalFormula, LipidClass lipidClass, FragmentationMode fragmentationMode, IEnumerable<AcylChain> acylChainList)
         {

@@ -3,7 +3,7 @@ using System.IO;
 
 namespace LiquidBackend.Util
 {
-    public class DmsDatasetFinder
+    public static class DmsDatasetFinder
     {
         public static string FindLocationOfDataset(string datasetName)
         {

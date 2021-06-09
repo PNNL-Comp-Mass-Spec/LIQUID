@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LiquidBackend.Util
 {
-    public class QcUtil
+    public static class QcUtil
     {
         /// <summary>
         /// Produces histogram data for a set of error values.

@@ -10,7 +10,7 @@ using LiquidBackend.Util;
 
 namespace LiquidBackend.IO
 {
-    public class LipidGroupSearchResultWriter
+    public static class LipidGroupSearchResultWriter
     {
         public static void AddHeaderForScoring(LipidGroupSearchResult lipidGroupSearchResult, TextWriter textWriter)
         {

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace LiquidBackend.Domain
 {
-    public class LipidRules
+    public static class LipidRules
     {
         public static List<LipidCompositionRule> LipidCompositionRules { get; set; }
         public static List<LipidFragmentationRule> LipidFragmentationRules { get; set; }

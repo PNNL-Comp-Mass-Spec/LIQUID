@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace LiquidBackend.Scoring
 {
-    public class ScoreModelSerialization
+    public static class ScoreModelSerialization
     {
         public static void Serialize(ScoreModel scoreModel, string fileLocation)
         {
