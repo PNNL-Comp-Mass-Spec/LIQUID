@@ -30,6 +30,7 @@ namespace LiquidTest
             foreach (var lipid in lipidList)
             {
                 var lipidTarget = lipid.LipidTarget;
+                Console.WriteLine(lipidTarget.CommonName);
             }
         }
 
@@ -45,6 +46,7 @@ namespace LiquidTest
             foreach (var lipid in lipidList)
             {
                 var lipidTarget = lipid.LipidTarget;
+                Console.WriteLine(lipidTarget.CommonName);
             }
         }
     }
