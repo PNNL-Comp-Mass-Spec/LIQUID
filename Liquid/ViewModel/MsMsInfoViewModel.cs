@@ -74,8 +74,8 @@ namespace Liquid.ViewModel
 
             if (peakList.Length == 0) return new PlotModel();
 
-            var plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum + 
-                " // Precursor Scan - " + parentScan + 
+            var plotTitle = commonName + "\nMS/MS Spectrum - " + productSpectrum.ActivationMethod + " - " + productSpectrum.ScanNum +
+                " // Precursor Scan - " + parentScan +
                 " (" + GlobalWorkflow.GetMsMsPrecursorMz(productSpectrum).ToString("0.0000") + " m/z)";
 
             var plotModel = new PlotModel

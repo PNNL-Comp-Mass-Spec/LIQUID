@@ -355,7 +355,10 @@ namespace Liquid.ViewModel
 
         public void RemoveFragment(IList<MsMsSearchUnit> items)
         {
-            foreach (var i in items) FragmentSearchList.Remove(i);
+            foreach (var i in items)
+            {
+                FragmentSearchList.Remove(i);
+            }
         }
 
         public void SearchForFragments(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude, int minMatches, Adduct adduct)
@@ -467,6 +470,7 @@ namespace Liquid.ViewModel
         {
             ReportMsDataLoadProgress(e.Percent);
         }
+
         #endregion
     }
 }

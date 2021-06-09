@@ -94,8 +94,8 @@ namespace Liquid.View
         private void SearchForTargetButtonClick(object sender, RoutedEventArgs e)
         {
             var commonName = CommonNameTextBox.Text;
-            var adduct = (Adduct) AdductComboBox.SelectedItem;
-            var fragmentationMode = (FragmentationMode) FragmentationModeComboBox.SelectedItem;
+            var adduct = (Adduct)AdductComboBox.SelectedItem;
+            var fragmentationMode = (FragmentationMode)FragmentationModeComboBox.SelectedItem;
             var hcdMassError = double.Parse(HcdErrorTextBox.Text);
             var cidMassError = double.Parse(CidErrorTextBox.Text);
 
@@ -292,7 +292,7 @@ namespace Liquid.View
                         removeList.Add(entry);
                     }
                 }
-                foreach(var remove in removeList)
+                foreach (var remove in removeList)
                 {
                     SingleTargetViewModel.LipidGroupSearchResultList.Remove(remove);
                 }
@@ -410,21 +410,21 @@ namespace Liquid.View
             }
             else
             {
-               MessageBox.Show("Invalid m/z. Please only use numbers.","Warning",MessageBoxButton.OK,MessageBoxImage.Warning);
+                MessageBox.Show("Invalid m/z. Please only use numbers.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private async void SearchForFragmentsButtonClick(object sender, RoutedEventArgs e)
         {
-            var fragmentationMode = (FragmentationMode) FragmentationModeComboBox.SelectedItem;
+            var fragmentationMode = (FragmentationMode)FragmentationModeComboBox.SelectedItem;
             var hcdMassError = double.Parse(HcdErrorTextBox.Text);
             var cidMassError = double.Parse(CidErrorTextBox.Text);
             var resultsPerScan = int.Parse(ResultsPerScanTextBox.Text);
             var minMatches = int.Parse(MinimumMatchesTextBox.Text);
-            var adduct = (Adduct) AdductComboBox2.SelectedItem;
+            var adduct = (Adduct)AdductComboBox2.SelectedItem;
 
             SingleTargetViewModel.OnUpdateTargetAdductFragmentation(adduct, fragmentationMode);
-            await Task.Run(() =>SingleTargetViewModel.SearchForFragments(hcdMassError, cidMassError,fragmentationMode,resultsPerScan, minMatches, adduct));
+            await Task.Run(() => SingleTargetViewModel.SearchForFragments(hcdMassError, cidMassError, fragmentationMode, minMatches, adduct));
 
             MsMsInfoUserControl.MsMsInfoViewModel.OnLipidTargetChange(SingleTargetViewModel.CurrentLipidTarget);
             MsOneInfoUserControl.MsOneInfoViewModel.OnLipidTargetChange(SingleTargetViewModel.CurrentLipidTarget);
@@ -449,7 +449,7 @@ namespace Liquid.View
         {
             var items = FragmentSearchListDataGrid.SelectedItems.OfType<MsMsSearchUnit>().ToList();
 
-            if(FragmentSearchListDataGrid.SelectedItem != null) SingleTargetViewModel.RemoveFragment(items);
+            if (FragmentSearchListDataGrid.SelectedItem != null) SingleTargetViewModel.RemoveFragment(items);
             if (SingleTargetViewModel.FragmentSearchList.Count == 0)
             {
                 SearchForFragmentsButton.IsEnabled = false;

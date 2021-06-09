@@ -38,8 +38,12 @@ namespace LiquidTest
                 {
                     var resultToAdd = groupOrdered[i];
 
-                    if (resultToAdd.LipidTarget.LipidClass == LipidClass.PC && resultToAdd.LipidTarget.AcylChainList.Count(x => x.NumCarbons > 0) == 2 && resultToAdd.LipidTarget.AcylChainList.Count(x => x.AcylChainType == AcylChainType.Standard) == 2)
-                    filteredLipidGroupSearchResults.Add(resultToAdd);
+                    if (resultToAdd.LipidTarget.LipidClass == LipidClass.PC &&
+                        resultToAdd.LipidTarget.AcylChainList.Count(x => x.NumCarbons > 0) == 2 &&
+                        resultToAdd.LipidTarget.AcylChainList.Count(x => x.AcylChainType == AcylChainType.Standard) == 2)
+                    {
+                        filteredLipidGroupSearchResults.Add(resultToAdd);
+                    }
                 }
             }
 
