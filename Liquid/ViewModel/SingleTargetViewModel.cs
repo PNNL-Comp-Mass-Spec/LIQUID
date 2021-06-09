@@ -294,9 +294,10 @@ namespace Liquid.ViewModel
                         if (pbfFile.Exists)
                             pbfFile.Delete();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         // Ignore the error
+                        Console.WriteLine("Exception in OnBuildLibrary: " + ex.Message);
                     }
                 }
             }

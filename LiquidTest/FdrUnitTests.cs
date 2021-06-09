@@ -535,9 +535,10 @@ namespace LiquidTest
 
                         output.Add(rebuilt.ToString());
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         // Ignore the error
+                        Console.WriteLine("Exception in FillCompAndMassForTargetsFile: " + ex.Message);
                     }
                 }
             }
