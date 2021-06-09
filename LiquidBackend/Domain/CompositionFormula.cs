@@ -25,7 +25,7 @@ namespace LiquidBackend.Domain
             {
                 if (part.Success)
                 {
-                    var negative = part.Value.First() == '-';
+                    var negative = part.Value[0] == '-';
 
                     if (part.Value.Contains('X') || part.Value.Contains('x'))
                         CarbonMultiplier = negative ? -1 : 1;
