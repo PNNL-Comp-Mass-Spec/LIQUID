@@ -62,10 +62,7 @@ namespace Liquid.ViewModel
             }
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void Dispose();
 
         protected void OnYAxisChange(object sender, AxisChangedEventArgs e)
         {

@@ -472,5 +472,10 @@ namespace Liquid.ViewModel
         }
 
         #endregion
+
+        public override void Dispose()
+        {
+            // Nothing to do
+        }
     }
 }

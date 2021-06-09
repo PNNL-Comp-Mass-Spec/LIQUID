@@ -342,5 +342,10 @@ namespace Liquid.ViewModel
             XicPlot = plotModel;
             OnPropertyChanged("XicPlot");
         }
+
+        public override void Dispose()
+        {
+            // Nothing to do
+        }
     }
 }

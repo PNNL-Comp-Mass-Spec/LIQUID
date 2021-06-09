@@ -224,5 +224,10 @@ namespace Liquid.ViewModel
 
             return plotModel;
         }
+
+        public override void Dispose()
+        {
+            // Nothing to do
+        }
     }
 }
