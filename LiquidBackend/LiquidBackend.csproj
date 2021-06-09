@@ -43,10 +43,6 @@
     <Reference Include="InformedProteomics.Backend.MassSpecData">
       <HintPath>..\lib\InformedProteomics.Backend.MassSpecData.dll</HintPath>
     </Reference>
-    <Reference Include="Mage, Version=1.5.6877.36481, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Mage.dll</HintPath>
-    </Reference>
     <Reference Include="MultiDimensionalPeakFinding">
       <HintPath>..\lib\MultiDimensionalPeakFinding.dll</HintPath>
     </Reference>
