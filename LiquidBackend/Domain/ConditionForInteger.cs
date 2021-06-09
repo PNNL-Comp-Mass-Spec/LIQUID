@@ -18,7 +18,10 @@ namespace LiquidBackend.Domain
             else if (condition.Contains("<")) op = "<";
             else op = "==";
 
-            if (!condition.Contains("==") && op.Equals("==")) conditionValue = int.Parse(condition);
+            if (!condition.Contains("==") && op.Equals("=="))
+            {
+                conditionValue = int.Parse(condition);
+            }
             else
             {
                 var tokens = Regex.Split(condition, op);
