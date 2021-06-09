@@ -29,7 +29,7 @@ namespace LiquidTest
             //var target = new LipidTarget(commonName, LipidClass.DG, FragmentationMode.Positive, parsedComposition, new List<AcylChain>(), Adduct.Hydrogen);
             var spectrumSearchResult = new SpectrumSearchResult(null, null, spectrum, null, null, new Xic(), lcmsRun) { PrecursorTolerance = tolerance };
             var correlation = correlationCalculator.GetFitScore(spectrumSearchResult, parsedComposition);
-            Console.WriteLine("The Pearson correlation is: " + correlation);
+            Console.WriteLine("The Pearson correlation for {0} is: {1}", commonName, correlation);
         }
 
         public string GetRawFilePath(string directory, string datasetName)
