@@ -383,19 +383,21 @@ namespace LiquidBackend.Util
 
                 var spectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(target, lcmsRun, hcdMassError, 500, scoreModel: null);
 
-                if (spectrumSearchResultList.Count > 0)
+                if (spectrumSearchResultList.Count == 0)
                 {
-                    var targetIon = new Ion(target.Composition - Composition.Hydrogen, 1);
-                    var targetMz = targetIon.GetMonoIsotopicMz();
-
-                    var bestSpectrumSearchResult = spectrumSearchResultList.OrderBy(x => x.Score).First();
-
-                    var massSpectrum = bestSpectrumSearchResult.PrecursorSpectrum.Peaks;
-                    var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
-
-                    var ppmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
-                    ppmErrorList.Add(ppmError);
+                    continue;
                 }
+
+                var targetIon = new Ion(target.Composition - Composition.Hydrogen, 1);
+                var targetMz = targetIon.GetMonoIsotopicMz();
+
+                var bestSpectrumSearchResult = spectrumSearchResultList.OrderBy(x => x.Score).First();
+
+                var massSpectrum = bestSpectrumSearchResult.PrecursorSpectrum.Peaks;
+                var closestPeak = massSpectrum.OrderBy(x => Math.Abs(x.Mz - targetMz)).First();
+
+                var ppmError = LipidUtil.PpmError(targetMz, closestPeak.Mz);
+                ppmErrorList.Add(ppmError);
             }
 
             var ppmHistogram = QcUtil.CalculateHistogram(ppmErrorList, hcdMassError, 0.25);
