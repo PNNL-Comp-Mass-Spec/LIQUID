@@ -73,6 +73,7 @@
     <Compile Include="Controls\MsOneInfoUserControl.xaml.cs">
       <DependentUpon>MsOneInfoUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="OxyPlot\InvisibleAxis.cs" />
     <Compile Include="OxyPlot\MsMsAnnotation.cs" />
     <Compile Include="Plot.xaml.cs">

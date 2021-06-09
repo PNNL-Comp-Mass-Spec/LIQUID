@@ -54,6 +54,7 @@
     <Compile Include="AcylChainTests.cs" />
     <Compile Include="CompositionFormulaTests.cs" />
     <Compile Include="FdrUnitTests.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalWorkflowTests.cs" />
     <Compile Include="InformedWorkflowTests.cs" />
     <Compile Include="LipidCompositionRuleReaderTest.cs" />
