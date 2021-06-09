@@ -161,7 +161,7 @@ namespace LiquidBackend.Util
 
             var numChains = fattyAcylChains.Count(x => x.NumCarbons > 0);
             var containsEther = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) == 1;
-            var containsOOH = fattyAcylChains.Count(x => (x.AcylChainType == AcylChainType.OOH || x.AcylChainType == AcylChainType.OOHOH)) == 1;
+            var containsOOH = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.OOH || x.AcylChainType == AcylChainType.OOHOH) == 1;
             var containsDiether = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Ether) > 1;
             var containsPlasmogen = fattyAcylChains.Count(x => x.AcylChainType == AcylChainType.Plasmalogen) > 0;
             var numOH = hydroxyCount;

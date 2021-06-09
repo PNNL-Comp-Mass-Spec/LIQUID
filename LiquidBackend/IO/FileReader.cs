@@ -48,7 +48,7 @@ namespace LiquidBackend.IO
                     // Report progress
                     if (progress != null)
                     {
-                        var currentProgress = (int)((currentLineNumber / totalLines) * 100);
+                        var currentProgress = (int)(currentLineNumber / totalLines * 100);
                         progress.Report(currentProgress);
                     }
                 }

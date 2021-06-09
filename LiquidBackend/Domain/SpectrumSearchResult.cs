@@ -95,7 +95,7 @@ namespace LiquidBackend.Domain
 
         public int GetNumMatchingMsMsPeaks()
         {
-            return (HcdSearchResultList.Where(x => x.ObservedPeak != null).Union(CidSearchResultList.Where(x => x.ObservedPeak != null))).Count();
+            return HcdSearchResultList.Where(x => x.ObservedPeak != null).Union(CidSearchResultList.Where(x => x.ObservedPeak != null)).Count();
         }
     }
 }

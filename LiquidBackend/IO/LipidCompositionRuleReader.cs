@@ -156,32 +156,32 @@ namespace LiquidBackend.IO
             if (columnMapping.ContainsKey(CONTAINS_ETHER))
             {
                 int.TryParse(columns[columnMapping[CONTAINS_ETHER]], out var containsEther);
-                lipid.ContainsEther = (containsEther == 1);
+                lipid.ContainsEther = containsEther == 1;
             }
             if (columnMapping.ContainsKey(CONTAINS_DIETHER))
             {
                 int.TryParse(columns[columnMapping[CONTAINS_DIETHER]], out var containsDiether);
-                lipid.ContainsDiether = (containsDiether == 1);
+                lipid.ContainsDiether = containsDiether == 1;
             }
             if (columnMapping.ContainsKey(CONTAINS_PLASMALOGEN))
             {
                 int.TryParse(columns[columnMapping[CONTAINS_PLASMALOGEN]], out var containsPlasmalogen);
-                lipid.ContainsPlasmalogen = (containsPlasmalogen == 1);
+                lipid.ContainsPlasmalogen = containsPlasmalogen == 1;
             }
             if (columnMapping.ContainsKey(CONTAINS_LCB))
             {
                 int.TryParse(columns[columnMapping[CONTAINS_LCB]], out var containsLcb);
-                lipid.ContainsLCB = (containsLcb == 1);
+                lipid.ContainsLCB = containsLcb == 1;
             }
             if (columnMapping.ContainsKey(CONTAINS_LCB_PLUS_OH))
             {
                 int.TryParse(columns[columnMapping[CONTAINS_LCB_PLUS_OH]], out var containsLcbPlusOh);
-                lipid.ContainsLCBPlusOH = (containsLcbPlusOh == 1);
+                lipid.ContainsLCBPlusOH = containsLcbPlusOh == 1;
             }
             if (columnMapping.ContainsKey(CONTAINS_LCB_MINUS_OH))
             {
                 int.TryParse(columns[columnMapping[CONTAINS_LCB_MINUS_OH]], out var containsLcbMinusOh);
-                lipid.ContainsLCBMinusOH = (containsLcbMinusOh == 1);
+                lipid.ContainsLCBMinusOH = containsLcbMinusOh == 1;
             }
             if (columnMapping.ContainsKey(IS_OXO_CHO))
             {
@@ -201,12 +201,12 @@ namespace LiquidBackend.IO
             if (columnMapping.ContainsKey(CONTAINS_OOH))
             {
                 int.TryParse(columns[columnMapping[CONTAINS_OOH]], out var containsOOH);
-                lipid.ContainsOOH = (containsOOH == 1);
+                lipid.ContainsOOH = containsOOH == 1;
             }
             if (columnMapping.ContainsKey(CONTAINS_F2ISOP))
             {
                 int.TryParse(columns[columnMapping[CONTAINS_F2ISOP]], out var containsF2IsoP);
-                lipid.ContainsF2IsoP = (containsF2IsoP == 1);
+                lipid.ContainsF2IsoP = containsF2IsoP == 1;
             }
 
             return lipid;
