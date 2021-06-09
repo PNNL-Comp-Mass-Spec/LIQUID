@@ -44,7 +44,7 @@ namespace LiquidBackend.Scoring
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((SpecificFragment)obj);
@@ -56,7 +56,7 @@ namespace LiquidBackend.Scoring
             {
                 var hashCode = (int)LipidClass;
                 hashCode = (hashCode * 397) ^ (int)LipidType;
-                hashCode = (hashCode * 397) ^ (FragmentDescription != null ? FragmentDescription.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (FragmentDescription?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (int)FragmentationMode;
                 hashCode = (hashCode * 397) ^ (int)FragmentationType;
                 return hashCode;

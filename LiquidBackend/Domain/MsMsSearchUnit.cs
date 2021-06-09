@@ -46,7 +46,7 @@ namespace LiquidBackend.Domain
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((MsMsSearchUnit) obj);
@@ -56,7 +56,7 @@ namespace LiquidBackend.Domain
         {
             unchecked
             {
-                return (Mz.GetHashCode()*397) ^ (Description != null ? Description.GetHashCode() : 0);
+                return (Mz.GetHashCode()*397) ^ (Description?.GetHashCode() ?? 0);
             }
         }
     }
