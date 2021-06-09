@@ -110,8 +110,7 @@ namespace LiquidBackend.Util
             LcMsRun lcmsRun,
             double hcdMassError,
             double cidMassError,
-            ScoreModel scoreModel,
-            IProgress<int> progress = null)
+            ScoreModel scoreModel)
         {
             var lipidGroupSearchResultList = new List<LipidGroupSearchResult>();
 
@@ -365,16 +364,15 @@ namespace LiquidBackend.Util
         }
 
         public void RunGlobalWorkflowSingleScan()
+        public MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, double hcdMassError)
         {
             throw new NotImplementedException();
+            return RunMassCalibration(lipidList, LcMsRun, hcdMassError);
         }
 
-        public MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, double hcdMassError, IProgress<int> progress = null)
         {
-            return RunMassCalibration(lipidList, LcMsRun, hcdMassError, progress);
         }
-
-        public static MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, IProgress<int> progress = null)
+        public static MassCalibrationResults RunMassCalibration(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError)
         {
             var ppmErrorList = new List<double>();
 

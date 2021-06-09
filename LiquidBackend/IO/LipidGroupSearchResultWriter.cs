@@ -477,7 +477,14 @@ namespace LiquidBackend.IO
             }
         }
 
-        public static void OutputFragmentInfo(List<SpectrumSearchResult> SearchResultsList, Adduct targetAdduct, ObservableCollection<MsMsSearchUnit> FragmentSearchList, LcMsRun lcmsRun, string fileLocation, string rawFileName, IProgress<int> progress, bool writeHeader = true)
+        public static void OutputFragmentInfo(
+            List<SpectrumSearchResult> SearchResultsList,
+            Adduct targetAdduct,
+            ObservableCollection<MsMsSearchUnit> FragmentSearchList,
+            LcMsRun lcmsRun,
+            string fileLocation,
+            string rawFileName,
+            bool writeHeader = true)
         {
             using (TextWriter textWriter = new StreamWriter(fileLocation, true))
             {

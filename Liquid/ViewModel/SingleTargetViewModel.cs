@@ -43,7 +43,6 @@ namespace Liquid.ViewModel
         public int LipidTargetLoadProgress { get; private set; }
         public int GlobalWorkflowProgress { get; private set; }
         public int FragmentSearchProgress { get; private set; }
-        public int ExportProgress { get; private set; }
         public string MsDataLoadProgress { get; private set; }
         public bool IsIms { get; private set; }
         public bool AverageSpec { get; set; }
@@ -317,7 +316,7 @@ namespace Liquid.ViewModel
             List<LipidGroupSearchResult> lipidGroupSearchResultList;
             if (AverageSpec)
             {
-                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, LcMsRun, hcdError, cidError, ScoreModel, progress);
+                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, LcMsRun, hcdError, cidError, ScoreModel);
                 resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum?.IsolationWindow.IsolationWindowTargetMz ?? x.SpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz);
             }
             else
@@ -426,7 +425,7 @@ namespace Liquid.ViewModel
         {
             IProgress<int> progress = new Progress<int>(ReportFragmentSearchProgress);
             var resultsToExport = SpectrumSearchResultList.Where(x => x.ShouldExport).ToList();
-            LipidGroupSearchResultWriter.OutputFragmentInfo(resultsToExport, TargetAdduct, FragmentSearchList, LcMsRun, fileLocation, Path.GetFileName(RawFilePath), progress);
+            LipidGroupSearchResultWriter.OutputFragmentInfo(resultsToExport, TargetAdduct, FragmentSearchList, LcMsRun, fileLocation, Path.GetFileName(RawFilePath));
             progress.Report(0);
         }
 
