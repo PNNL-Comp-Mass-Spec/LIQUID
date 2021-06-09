@@ -267,6 +267,7 @@ namespace LiquidTest
             foreach (var rule in lipidCompositionRules)
             {
 #pragma warning disable 162
+                // ReSharper disable ConditionIsAlwaysTrueOrFalse
                 try
                 {
                     var oldCommonName = rule.Example;
@@ -313,6 +314,7 @@ namespace LiquidTest
                     }
                     continue;
                 }
+                // ReSharper restore ConditionIsAlwaysTrueOrFalse
 #pragma warning restore 162
             }
 

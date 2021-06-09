@@ -75,7 +75,9 @@ namespace LiquidBackend.Scoring
             return Equals((ScoreModelUnit)obj);
         }
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         public override int GetHashCode()
         {
             unchecked
