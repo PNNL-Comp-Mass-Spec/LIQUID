@@ -100,21 +100,18 @@ namespace LiquidBackend.Domain
             //if (this.conditionForCountOfStandardAcylsChains != null) { if (!this.conditionForCountOfStandardAcylsChains.meet(countOfStandardAcylsChains)) return false; }
             //return true;
             if (conditionForCountOfStandardAcylsChains == null) return false;
-            if (conditionForCountOfStandardAcylsChains.meet(countOfStandardAcylsChains)) return true;
-            return false;
+            return conditionForCountOfStandardAcylsChains.meet(countOfStandardAcylsChains);
         }
 
         public bool checkCountOfChains(int countOfChains)
         {
             if (conditionForCountOfChains == null) return true;
-            if (conditionForCountOfChains.meet(countOfChains)) return true;
-            return false;
+            return conditionForCountOfChains.meet(countOfChains);
         }
 
         public bool checkTargetAcylsChains()
         {
-            if (targetAcylChainsIndices.Count > 0) return true;
-            return false;
+            return targetAcylChainsIndices.Count > 0;
         }
 
         public MsMsSearchUnit GetMsMsSearchUnit(double precursorMz, int numCarbons = 0, int numDoubleBonds = 0, AcylChain acylChain = null)

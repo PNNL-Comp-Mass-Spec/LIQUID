@@ -219,12 +219,12 @@ namespace LiquidBackend.Util
 
         public static double GetMsMsPrecursorMz(ProductSpectrum s)
         {
-            var a = (double?)s.IsolationWindow.IsolationWindowTargetMz;
+            var a = s.IsolationWindow.IsolationWindowTargetMz;
             var b = s.IsolationWindow.MonoisotopicMz;
-            if (b == null || b == 0) return (double)a;
-            else if (a == null || a == 0) return (double)b;
+            if (b == null || b == 0) return a;
+            if (a == 0) return (double)b;
             //return Nullable.Compare(a, b) > 0 ? (double)a : (double)b;
-            else return (double)a;
+            return a;
         }
 
         public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
@@ -376,11 +376,10 @@ namespace LiquidBackend.Util
         {
             var ppmErrorList = new List<double>();
 
-            var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList();
-
-            foreach (var kvp in lipidsGroupedByTarget)
+            // Iterate through the lipids, group by target
+            foreach (var item in lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList())
             {
-                var target = kvp.Key;
+                var target = item.Key;
 
                 var spectrumSearchResultList = InformedWorkflow.RunInformedWorkflow(target, lcmsRun, hcdMassError, 500, scoreModel: null);
 
