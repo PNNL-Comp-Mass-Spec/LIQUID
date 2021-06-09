@@ -110,7 +110,7 @@ namespace Liquid.ViewModel
         public void UpdateRawFileLocation(string rawFileLocation)
         {
             var rawFileInfo = new FileInfo(rawFileLocation);
-            IsIms = Path.GetExtension(rawFileLocation).ToLower() == ".uimf";
+            IsIms = string.Equals(Path.GetExtension(rawFileLocation), ".uimf", StringComparison.OrdinalIgnoreCase);
 
             RawFilePath = "File loaded: none";
             OnPropertyChanged("RawFilePath");
