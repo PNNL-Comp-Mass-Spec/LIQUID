@@ -13,6 +13,8 @@ namespace LiquidBackend.Util
 {
     public class GlobalWorkflow
     {
+        // Ignore Spelling: foreach, Lumos, Orbitrap, workflow, xic
+
         public LcMsRun LcMsRun { get; }
         public ScoreModel ScoreModel { get; }
 

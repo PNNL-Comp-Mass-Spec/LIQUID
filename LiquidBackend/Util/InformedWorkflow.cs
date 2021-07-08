@@ -13,6 +13,8 @@ namespace LiquidBackend.Util
 {
     public class InformedWorkflow
     {
+        // Ignore Spelling: protonated, xic
+
         public LcMsRun LcMsRun { get; }
 
         public InformedWorkflow(string rawFileLocation)
