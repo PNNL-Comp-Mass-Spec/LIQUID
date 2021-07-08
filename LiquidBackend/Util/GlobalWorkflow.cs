@@ -181,8 +181,8 @@ namespace LiquidBackend.Util
                         IEnumerable<MsMsSearchUnit> msMsSearchUnits = lipidTarget.GetMsMsSearchUnits();
 
                         // Get all matching peaks
-                        var hcdSearchResultList = (from msMsSearchUnit in msMsSearchUnits let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
-                        var cidSearchResultList = (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
+                        var hcdSearchResultList = GetMatchingPeaks(msMsSearchUnits, hcdSpectrum, hcdTolerance);
+                        var cidSearchResultList = GetMatchingPeaks(msMsSearchUnits, cidSpectrum, cidTolerance);
 
                         // Create spectrum search results
                         SpectrumSearchResult spectrumSearchResult;
@@ -322,8 +322,8 @@ namespace LiquidBackend.Util
                         IEnumerable<MsMsSearchUnit> msMsSearchUnits = lipidTarget.GetMsMsSearchUnits();
 
                         // Get all matching peaks
-                        var hcdSearchResultList = hcdSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
-                        var cidSearchResultList = cidSpectrum != null ? (from msMsSearchUnit in msMsSearchUnits let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance) select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
+                        var hcdSearchResultList = GetMatchingPeaks(msMsSearchUnits, hcdSpectrum, hcdTolerance);
+                        var cidSearchResultList = GetMatchingPeaks(msMsSearchUnits, cidSpectrum, cidTolerance);
 
                         // Create spectrum search results
                         SpectrumSearchResult spectrumSearchResult;
@@ -458,6 +458,15 @@ namespace LiquidBackend.Util
             return ActivationMethodCombination.Unsupported;
         }
 
+        private static List<MsMsSearchResult> GetMatchingPeaks(IEnumerable<MsMsSearchUnit> msMsSearchUnits, Spectrum spectrum, Tolerance tolerance)
+        {
+            if (spectrum == null)
+                return new List<MsMsSearchResult>();
+
+            return (from msMsSearchUnit in msMsSearchUnits
+                    let peak = spectrum.FindPeak(msMsSearchUnit.Mz, tolerance)
+                    select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
+        }
         #region "Events"
 
         private void LcMsDataFactory_ProgressChanged(object sender, ProgressData e)
