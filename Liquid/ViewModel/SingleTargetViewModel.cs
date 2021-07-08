@@ -243,62 +243,61 @@ namespace Liquid.ViewModel
         {
             foreach (var file in filesList)
             {
-                using (var reader = new StreamReader(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+                using var reader = new StreamReader(new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+                if (reader.EndOfStream)
+                    continue;
+
+                var headerLine = reader.ReadLine();
+                if (string.IsNullOrWhiteSpace(headerLine))
                 {
-                    if (reader.EndOfStream)
-                        continue;
+                    // Empty header line
+                    continue;
+                }
+                var header = headerLine.Split('\t').ToList();
 
-                    var headerLine = reader.ReadLine();
-                    if (string.IsNullOrWhiteSpace(headerLine))
+                var index = header.IndexOf("Raw Data File");
+                if (index == -1)
+                    continue;
+
+                if (reader.EndOfStream)
+                    continue;
+
+                try
+                {
+                    var dataLine = reader.ReadLine();
+                    if (string.IsNullOrWhiteSpace(dataLine))
                     {
-                        // Empty header line
+                        // Empty data line
                         continue;
                     }
-                    var header = headerLine.Split('\t').ToList();
 
-                    var index = header.IndexOf("Raw Data File");
-                    if (index == -1)
+                    var rawFileName = dataLine.Split('\t')[index];
+                    LibraryBuilder.AddDmsDataset(rawFileName);
+                    UpdateRawFileLocation(rawFileName);
+                    OnProcessAllTarget(hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
+                    LoadLipidIdentifications(file);
+                    OnExportGlobalResults(file.Replace(".tsv", ".msp"));
+
+                    // Delete the raw files we copied from DMS to save space
+                    LcMsRun.Close();
+                    LcMsRun = null;
+                    OnPropertyChanged("LcMsRun");
+                    GC.Collect();
+
+                    // File.Delete(rawFileName);
+                    var pbfFilePath = Path.ChangeExtension(rawFileName, ".pbf");
+                    if (string.IsNullOrWhiteSpace(pbfFilePath))
                         continue;
 
-                    if (reader.EndOfStream)
-                        continue;
-
-                    try
-                    {
-                        var dataLine = reader.ReadLine();
-                        if (string.IsNullOrWhiteSpace(dataLine))
-                        {
-                            // Empty data line
-                            continue;
-                        }
-
-                        var rawFileName = dataLine.Split('\t')[index];
-                        LibraryBuilder.AddDmsDataset(rawFileName);
-                        UpdateRawFileLocation(rawFileName);
-                        OnProcessAllTarget(hcdError, cidError, fragmentationMode, numResultsPerScanToInclude);
-                        LoadLipidIdentifications(file);
-                        OnExportGlobalResults(file.Replace(".tsv", ".msp"));
-
-                        // Delete the raw files we copied from DMS to save space
-                        LcMsRun.Close();
-                        LcMsRun = null;
-                        OnPropertyChanged("LcMsRun");
-                        GC.Collect();
-
-                        // File.Delete(rawFileName);
-                        var pbfFilePath = Path.ChangeExtension(rawFileName, ".pbf");
-                        if (string.IsNullOrWhiteSpace(pbfFilePath))
-                            continue;
-
-                        var pbfFile = new FileInfo(pbfFilePath);
-                        if (pbfFile.Exists)
-                            pbfFile.Delete();
-                    }
-                    catch (Exception ex)
-                    {
-                        // Ignore the error
-                        Console.WriteLine("Exception in OnBuildLibrary: " + ex.Message);
-                    }
+                    var pbfFile = new FileInfo(pbfFilePath);
+                    if (pbfFile.Exists)
+                        pbfFile.Delete();
+                }
+                catch (Exception ex)
+                {
+                    // Ignore the error
+                    Console.WriteLine("Exception in OnBuildLibrary: " + ex.Message);
                 }
             }
         }
