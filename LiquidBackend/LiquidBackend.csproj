@@ -104,6 +104,7 @@
     <Compile Include="Util\GlobalWorkflow.cs" />
     <Compile Include="Util\InformedWorkflow.cs" />
     <Compile Include="Domain\LibraryBuilder.cs" />
+    <Compile Include="Util\ScanPair.cs" />
     <Compile Include="Util\SpectrumSearchResultUtil.cs" />
     <Compile Include="Util\LipidUtil.cs" />
     <Compile Include="Util\LcMsDataFactory.cs" />
