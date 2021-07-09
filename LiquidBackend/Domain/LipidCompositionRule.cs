@@ -56,12 +56,12 @@ namespace LiquidBackend.Domain
 
         public Composition GetComposition(int numCarbons, int numDoubleBonds)
         {
-            return new Composition(this.C.Evaluate(numCarbons, numDoubleBonds),
-                                   this.H.Evaluate(numCarbons, numDoubleBonds),
-                                   this.N.Evaluate(numCarbons, numDoubleBonds),
-                                   this.O.Evaluate(numCarbons, numDoubleBonds),
-                                   this.S.Evaluate(numCarbons, numDoubleBonds),
-                                   this.P.Evaluate(numCarbons, numDoubleBonds));
+            return new(C.Evaluate(numCarbons, numDoubleBonds),
+                       H.Evaluate(numCarbons, numDoubleBonds),
+                       N.Evaluate(numCarbons, numDoubleBonds),
+                       O.Evaluate(numCarbons, numDoubleBonds),
+                       S.Evaluate(numCarbons, numDoubleBonds),
+                       P.Evaluate(numCarbons, numDoubleBonds));
         }
     }
 }
