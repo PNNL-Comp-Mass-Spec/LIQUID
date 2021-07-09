@@ -1,5 +1,5 @@
-﻿using InformedProteomics.Backend.Data.Composition;
-using System.Text;
+﻿using System.Text;
+using InformedProteomics.Backend.Data.Composition;
 
 namespace LiquidBackend.Domain
 {

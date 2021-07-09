@@ -1,5 +1,4 @@
 ﻿using InformedProteomics.Backend.Data.Spectrometry;
-using LiquidBackend.Domain;
 
 namespace LiquidBackend.Util
 {

@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using InformedProteomics.Backend.Data.Biology;
+using InformedProteomics.Backend.Data.Composition;
+using InformedProteomics.Backend.Data.Spectrometry;
 using InformedProteomics.Backend.MathAndStats;
+using LiquidBackend.Domain;
 
 namespace LiquidBackend.Util
 {
-    using System.Linq;
 
-    using InformedProteomics.Backend.Data.Biology;
-    using InformedProteomics.Backend.Data.Composition;
-    using InformedProteomics.Backend.Data.Spectrometry;
-
-    using Domain;
 
     /// <summary>
     /// Base class for calculating the fit between a theoretical isotopic profile and observed
