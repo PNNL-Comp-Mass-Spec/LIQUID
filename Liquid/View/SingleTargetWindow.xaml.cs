@@ -20,6 +20,7 @@ namespace Liquid.View
     /// <summary>
     /// Interaction logic for SingleTargetWindow.xaml
     /// </summary>
+    // ReSharper disable once UnusedMember.Global
     public partial class SingleTargetWindow
     {
         // Ignore Spelling: Palatino, Rect
