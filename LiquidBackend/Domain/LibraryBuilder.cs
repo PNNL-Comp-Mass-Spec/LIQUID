@@ -29,16 +29,18 @@ namespace LiquidBackend.Domain
 
         public static void AddDmsDataset(string datasetRawFileName)
         {
-            if (!File.Exists(datasetRawFileName))
+            if (File.Exists(datasetRawFileName))
             {
-                // Lookup the dataset directory in DMS
-                var dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetRawFileName.Replace(".raw",""));
-                var dmsDirectoryInfo = new DirectoryInfo(dmsFolder);
-                var fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, datasetRawFileName);
-
-                // Copy Locally
-                File.Copy(fullPathToDmsFile, datasetRawFileName);
+                return;
             }
+
+            // Lookup the dataset directory in DMS
+            var dmsFolder = DmsDatasetFinder.FindLocationOfDataset(datasetRawFileName.Replace(".raw",""));
+            var dmsDirectoryInfo = new DirectoryInfo(dmsFolder);
+            var fullPathToDmsFile = Path.Combine(dmsDirectoryInfo.FullName, datasetRawFileName);
+
+            // Copy Locally
+            File.Copy(fullPathToDmsFile, datasetRawFileName);
         }
     }
 }
