@@ -24,7 +24,7 @@ namespace LiquidBackend.Domain
         public int LipidatId { get; set; }
         public string LipidBankId { get; set; }
 
-        public LipidTarget LipidTarget => _lipidTarget ?? (_lipidTarget = CreateLipidTarget());
+        public LipidTarget LipidTarget => _lipidTarget ??= CreateLipidTarget();
 
         public LipidTarget CreateLipidTarget()
         {
