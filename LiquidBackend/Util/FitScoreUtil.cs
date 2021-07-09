@@ -8,7 +8,7 @@ using LiquidBackend.Domain;
 
 namespace LiquidBackend.Util
 {
-
+    // Ignore Spelling: isotopomer
 
     /// <summary>
     /// Base class for calculating the fit between a theoretical isotopic profile and observed

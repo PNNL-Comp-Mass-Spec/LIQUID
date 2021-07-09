@@ -5,6 +5,8 @@ namespace LiquidBackend.Domain
 {
     public class Lipid
     {
+        // Ignore Spelling: Oac
+
         private LipidTarget _lipidTarget;
 
         public string LipidMapsId { get; set; }

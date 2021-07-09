@@ -6,6 +6,8 @@ namespace LiquidBackend.Domain
 {
     public class AcylChain : IComparable<AcylChain>
     {
+        // Ignore Spelling: acyl, Cer, trihydro
+
         public int NumCarbons { get; }
         public int NumDoubleBonds { get; }
         public int HydroxyPosition { get; }

@@ -14,7 +14,7 @@ namespace Liquid.ViewModel
 {
     public class SingleTargetViewModel : ViewModelBase
     {
-        // Ignore Spelling: LcMs
+        // Ignore Spelling: foreach, LcMs, Workflow
 
         public LcMsRun LcMsRun { get; private set; }
 
