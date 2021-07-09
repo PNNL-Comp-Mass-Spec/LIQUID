@@ -37,49 +37,35 @@ namespace LiquidBackend.Util
         {
             IEnumerable<MsMsSearchUnit> msMsSearchUnits = target.GetMsMsSearchUnits();
 
-            // I have to subtract an H for the target Ion since InformedProteomics will assume protonated
-            var targetIon = new Ion(target.Composition - Composition.Hydrogen, 1);
             var targetMz = target.MzRounded;
             var hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
             var cidTolerance = new Tolerance(cidMassError, ToleranceUnit.Ppm);
-            var activationMethodCombination = GlobalWorkflow.FigureOutActivationMethodCombination(lcmsRun);
+
+            var fragScanPairs = GlobalWorkflow.GetSortedMsMsScans(lcmsRun);
 
             // Find out which MS/MS scans have a precursor m/z that matches the target
-            var matchingMsMsScanNumbers = lcmsRun.GetFragmentationSpectraScanNums(targetMz).ToList();
+            var matchingScanPairs = GetFilteredFragmentationScanPairs(lcmsRun, fragScanPairs, targetMz);
 
             var spectrumSearchResultList = new List<SpectrumSearchResult>();
 
-            for (var i = 0; i+1 < matchingMsMsScanNumbers.Count; i+=2)
+            var scanPairCount = matchingScanPairs.Count;
+
+            for (var i = 0; i < scanPairCount; i++)
             {
-                var firstScanNumber = matchingMsMsScanNumbers[i];
-                var secondScanNumber = matchingMsMsScanNumbers[i+1];
+                var scanPair = fragScanPairs[i];
 
-                // Scan numbers should be consecutive.
-                /*
-                if (secondScanNumber - firstScanNumber != 1)
+
+                ProductSpectrum firstMsMsSpectrum;
+                ProductSpectrum secondMsMsSpectrum;
+                if (scanPair.HasTwoScans)
                 {
-                    i--;
-                    continue;
+                    firstMsMsSpectrum = lcmsRun.GetSpectrum(scanPair.FirstScan) as ProductSpectrum;
+                    secondMsMsSpectrum = lcmsRun.GetSpectrum(scanPair.SecondScan) as ProductSpectrum;
                 }
-                 * */
-                ProductSpectrum firstMsMsSpectrum = null;
-                ProductSpectrum secondMsMsSpectrum = null;
-
-                if (activationMethodCombination == ActivationMethodCombination.CidThenHcd ||
-                    activationMethodCombination == ActivationMethodCombination.HcdThenCid)
+                else
                 {
-                    // Lookup the MS/MS Spectrum
-                    firstMsMsSpectrum = lcmsRun.GetSpectrum(firstScanNumber) as ProductSpectrum;
-                    if (firstMsMsSpectrum == null) continue;
-
-                    // Lookup the MS/MS Spectrum
-                    secondMsMsSpectrum = lcmsRun.GetSpectrum(secondScanNumber) as ProductSpectrum;
-                    if (secondMsMsSpectrum == null) continue;
-                }
-                else if(activationMethodCombination == ActivationMethodCombination.CidOnly ||
-                    activationMethodCombination == ActivationMethodCombination.HcdOnly)
-                {
-                    firstMsMsSpectrum = lcmsRun.GetSpectrum(firstScanNumber) as ProductSpectrum;
+                    firstMsMsSpectrum = lcmsRun.GetSpectrum(scanPair.FirstScan) as ProductSpectrum;
+                    secondMsMsSpectrum = null;
                 }
 
                 if (firstMsMsSpectrum == null)
@@ -87,22 +73,24 @@ namespace LiquidBackend.Util
 
                 // Filter MS/MS Spectrum based on mass error
                 var msMsPrecursorMz = firstMsMsSpectrum.IsolationWindow.IsolationWindowTargetMz;
+
                 //if (Math.Abs(msMsPrecursorMz - targetMz) > 0.4) continue;
                 var ppmError = LipidUtil.PpmError(targetMz, msMsPrecursorMz);
-                if (Math.Abs(ppmError) > hcdMassError) continue;
+                if (Math.Abs(ppmError) > hcdMassError)
+                    continue;
 
                 // Assign each MS/MS spectrum to HCD or CID
                 ProductSpectrum hcdSpectrum;
                 ProductSpectrum cidSpectrum;
-                if (firstMsMsSpectrum.ActivationMethod == ActivationMethod.HCD)
+                if (scanPair.HasTwoScans)
                 {
                     hcdSpectrum = firstMsMsSpectrum;
                     cidSpectrum = secondMsMsSpectrum;
                 }
                 else
                 {
-                    hcdSpectrum = secondMsMsSpectrum;
                     cidSpectrum = firstMsMsSpectrum;
+                    hcdSpectrum = null;
                 }
 
                 // Get all matching peaks
@@ -111,12 +99,8 @@ namespace LiquidBackend.Util
 
                 // Find the MS1 data
                 // Xic xic = lcmsRun.GetPrecursorExtractedIonChromatogram(targetMz, hcdTolerance, firstScanNumber);
-                var precursorScanNumber = 0;
-                if (lcmsRun.MinMsLevel == 1) // Make sure there are precursor scans in file
-                {
-                    precursorScanNumber = lcmsRun.GetPrecursorScanNum(matchingMsMsScanNumbers[i]);
-                }
-                var precursorSpectrum = lcmsRun.GetSpectrum(precursorScanNumber);
+
+                var precursorSpectrum = lcmsRun.GetSpectrum(scanPair.PrecursorScanNumber);
                 var xic = lcmsRun.GetFullPrecursorIonExtractedIonChromatogram(targetMz, hcdTolerance);
 
                 // Bogus data
@@ -248,7 +232,34 @@ namespace LiquidBackend.Util
             return spectrumSearchResultList;
         }
 
-        #region "Events"
+        /// <summary>
+        /// Gets scan numbers of the fragmentation spectra whose isolation window contains the precursor ion specified
+        /// </summary>
+        /// <param name="lcmsRun"></param>
+        /// <param name="fragScanPairs"></param>
+        /// <param name="mostAbundantIsotopeMz"></param>
+        /// <returns>scan numbers of fragmentation spectra</returns>
+        private static List<ScanPair> GetFilteredFragmentationScanPairs(ILcMsRun lcmsRun, IEnumerable<ScanPair> fragScanPairs, double mostAbundantIsotopeMz)
+        {
+            var matchingScanNumbers = new SortedSet<int>();
+
+            foreach (var scanNumber in lcmsRun.GetFragmentationSpectraScanNums(mostAbundantIsotopeMz))
+            {
+                matchingScanNumbers.Add(scanNumber);
+            }
+
+            var matchingScanPairs = new List<ScanPair>();
+
+            foreach (var scanPair in fragScanPairs)
+            {
+                if (matchingScanNumbers.Contains(scanPair.FirstScan))
+                {
+                    matchingScanPairs.Add(scanPair);
+                }
+            }
+
+            return matchingScanPairs;
+        }
 
         private void LcMsDataFactory_ProgressChanged(object sender, ProgressData e)
         {
@@ -259,7 +270,5 @@ namespace LiquidBackend.Util
         /// Raised for each reported progress value
         /// </summary>
         public event EventHandler<ProgressData> ProgressChanged;
-
-        #endregion
     }
 }

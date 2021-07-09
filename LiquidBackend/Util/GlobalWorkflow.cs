@@ -15,9 +15,44 @@ namespace LiquidBackend.Util
     {
         // Ignore Spelling: foreach, Lumos, Orbitrap, workflow, xic
 
+        private struct FragmentationScanInfo
+        {
+            /// <summary>
+            /// Fragmentation type
+            /// </summary>
+            public ActivationMethod ScanType;
+
+            /// <summary>
+            /// Precursor m/z
+            /// </summary>
+            public double PrecursorMz;
+
+            /// <summary>
+            /// Scan Number
+            /// </summary>
+            public int ScanNumber;
+
+            public override string ToString()
+            {
+                return string.Format("Scan {0}, {1}, {2:F2} m/z", ScanNumber, ScanType, PrecursorMz);
+            }
+        }
+
+        /// <summary>
+        /// LC/MS Run object
+        /// </summary>
         public LcMsRun LcMsRun { get; }
+
+        /// <summary>
+        /// Scoring model
+        /// </summary>
         public ScoreModel ScoreModel { get; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="rawFileLocation"></param>
+        /// <param name="scoreModelLocation"></param>
         public GlobalWorkflow(string rawFileLocation, string scoreModelLocation = "DefaultScoringModel.xml")
         {
             var dataFactory = new LcMsDataFactory();
@@ -138,16 +173,13 @@ namespace LiquidBackend.Util
 
             var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.MzRounded).GroupBy(x => x.LipidTarget).ToList();
 
-            var minLcScan = lcmsRun.MinLcScan;
-            double maxLcScan = lcmsRun.MaxLcScan;
-
             var ms2scans = lcmsRun.GetScanNumbers(2);
             var ms2spectra = ms2scans.Select(scan => lcmsRun.GetSpectrum(scan) as ProductSpectrum).ToList();
             var uniqueMz = (from spectrum in ms2spectra select GetMsMsPrecursorMz(spectrum)).ToList().Distinct().ToList();
 
             foreach (var mz in uniqueMz)
             {
-                var hcdScans = ms2spectra.Where(x => Math.Abs(GetMsMsPrecursorMz(x)- mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.HCD).Select(x => x.ScanNum).ToList();
+                var hcdScans = ms2spectra.Where(x => Math.Abs(GetMsMsPrecursorMz(x) - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.HCD).Select(x => x.ScanNum).ToList();
                 var summedSpec = lcmsRun.GetSummedSpectrum(hcdScans);
                 var summedHcdSpec = new ProductSpectrum(summedSpec.Peaks, 0) { ActivationMethod = ActivationMethod.HCD };
 
@@ -236,7 +268,6 @@ namespace LiquidBackend.Util
             return lipidGroupSearchResultList;
         }
 
-        public static double GetMsMsPrecursorMz(ProductSpectrum s)
         /// <summary>
         /// Get the precursor m/z of the given spectrum
         /// </summary>
@@ -246,12 +277,16 @@ namespace LiquidBackend.Util
         /// but will use IsolationWindow.MonoisotopicMz if IsolationWindowTargetMz is 0
         /// </remarks>
         /// <returns>Precursor m/z</returns>
+        public static double GetMsMsPrecursorMz(ProductSpectrum spectrum)
         {
-            var a = s.IsolationWindow.IsolationWindowTargetMz;
-            var b = s.IsolationWindow.MonoisotopicMz;
-            if (b == null || b == 0) return a;
-            if (a == 0) return (double)b;
-            //return Nullable.Compare(a, b) > 0 ? (double)a : (double)b;
+            var a = spectrum.IsolationWindow.IsolationWindowTargetMz;
+            var b = spectrum.IsolationWindow.MonoisotopicMz;
+            if (b is null or 0)
+                return a;
+
+            if (a == 0)
+                return b.Value;
+
             return a;
         }
 
@@ -276,46 +311,41 @@ namespace LiquidBackend.Util
             //var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.Composition.Mass).GroupBy(x => x.LipidTarget).ToList(); //order by mz
             var lipidsGroupedByTarget = lipidList.OrderBy(x => x.LipidTarget.MzRounded).GroupBy(x => x.LipidTarget).ToList();
 
-            var minLcScan = lcmsRun.MinLcScan;
-            double maxLcScan = lcmsRun.MaxLcScan;
+            // Obtain the ms/ms scan numbers, sorted by precursor m/z, then HCD, then CID
+            // This is necessary because HCD/CID paired MS/MS spectra in datasets from the Orbitrap Fusion Lumos are not necessarily stored adjacent to one another
+            var fragScanPairs = GetSortedMsMsScans(lcmsRun);
 
-            var activationMethodCombination = FigureOutActivationMethodCombination(lcmsRun);
-            if (activationMethodCombination == ActivationMethodCombination.Unsupported) throw new SystemException("Unsupported activation method.");
-            var useTwoScans = activationMethodCombination == ActivationMethodCombination.CidThenHcd || activationMethodCombination == ActivationMethodCombination.HcdThenCid;
+            if (fragScanPairs.Count == 0)
+                throw new SystemException("File has not MS/MS spectra");
 
-            for (var i = minLcScan; i <= maxLcScan; i++)
+            var scanPairCount = fragScanPairs.Count;
+
+            for (var i = 0; i < scanPairCount; i++ )
             {
+                var scanPair = fragScanPairs[i];
+
                 // Lookup the MS/MS Spectrum
-                if (!(lcmsRun.GetSpectrum(i) is ProductSpectrum firstMsMsSpectrum))
+                if (lcmsRun.GetSpectrum(scanPair.FirstScan) is not ProductSpectrum firstMsMsSpectrum)
                     continue;
 
                 // Lookup the MS/MS Spectrum
-                ProductSpectrum secondMsMsSpectrum = null;
-                if (useTwoScans)
+                ProductSpectrum secondMsMsSpectrum;
+                if (scanPair.HasTwoScans)
                 {
-                    secondMsMsSpectrum = lcmsRun.GetSpectrum(i + 1) as ProductSpectrum;
-                    if (secondMsMsSpectrum == null) continue;
-
-                    // If m/z values of the MS/MS spectra do not match, just move on
-                    var firstMsMsSpectrumPrecursor = GetMsMsPrecursorMz(firstMsMsSpectrum);
-                    var secondMsMsSpectrumPrecursor = GetMsMsPrecursorMz(secondMsMsSpectrum);
-
-                    var deltaMz = firstMsMsSpectrumPrecursor - secondMsMsSpectrumPrecursor;
-                    if (Math.Abs(deltaMz) > 0.01) continue;
+                    secondMsMsSpectrum = lcmsRun.GetSpectrum(scanPair.SecondScan) as ProductSpectrum;
+                    if (secondMsMsSpectrum == null)
+                        continue;
+                }
+                else
+                {
+                    secondMsMsSpectrum = null;
                 }
 
                 //textWriter.WriteLine(i);
                 //Console.WriteLine(DateTime.Now + "\tProcessing Scan" + i);
 
                 // Grab Precursor Spectrum
-
-                var precursorScanNumber = 0;
-                if (lcmsRun.MinMsLevel == 1) // Make sure there are precursor scans in file
-                {
-                    precursorScanNumber = lcmsRun.GetPrecursorScanNum(i);
-                }
-
-                var precursorSpectrum = lcmsRun.GetSpectrum(precursorScanNumber);
+                var precursorSpectrum = lcmsRun.GetSpectrum(scanPair.PrecursorScanNumber);
 
                 // Assign each MS/MS spectrum to HCD or CID
                 ProductSpectrum hcdSpectrum;
@@ -386,13 +416,10 @@ namespace LiquidBackend.Util
                     }
                 }
 
-                // Skip an extra scan if we look at 2 at a time
-                if (useTwoScans) i++;
-
                 // Report progress
                 if (progress != null)
                 {
-                    var currentProgress = (int)(i / maxLcScan * 100);
+                    var currentProgress = (int)(i / (double)scanPairCount * 100);
                     progress.Report(currentProgress);
                 }
             }
@@ -436,11 +463,11 @@ namespace LiquidBackend.Util
 
             var ppmHistogram = QcUtil.CalculateHistogram(ppmErrorList, hcdMassError, 0.25);
 
-            var massCalibrationResults = new MassCalibrationResults(ppmHistogram);
-            return massCalibrationResults;
+            return new MassCalibrationResults(ppmHistogram);
         }
 
-        public static ActivationMethodCombination FigureOutActivationMethodCombination(LcMsRun lcmsRun)
+        [Obsolete("Deprecated after switching to List<ScanPair>")]
+        private static ActivationMethodCombination FigureOutActivationMethodCombination(ISpectrumAccessor lcmsRun)
         {
             var ms1ScanNumbers = lcmsRun.GetScanNumbers(1).ToList();
             var ms2ScanNumbers = lcmsRun.GetScanNumbers(2).ToList();
@@ -504,6 +531,159 @@ namespace LiquidBackend.Util
             return (from msMsSearchUnit in msMsSearchUnits
                     let peak = spectrum.FindPeak(msMsSearchUnit.Mz, tolerance)
                     select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
+        }
+
+        /// <summary>
+        /// Obtain the ms/ms scan numbers, sorted by precursor m/z, then HCD, then CID
+        /// </summary>
+        /// <param name="lcmsRun"></param>
+        /// <remarks>
+        /// This is necessary because HCD/CID paired MS/MS spectra in datasets from the Orbitrap Fusion Lumos are not necessarily stored adjacent to one another
+        /// </remarks>
+        /// <returns>List of scan numbers</returns>
+        internal static List<ScanPair> GetSortedMsMsScans(LcMsRun lcmsRun)
+        {
+            // ReSharper disable CommentTypo
+
+            // Example scans, from dataset QC_BTLE_01_POS_01Jul21_Glacier-WCSH316601
+
+            // Original order
+            // Scan 444,  447.3465 m/z, HCD
+            // Scan 445,  447.3465 m/z, CID
+            // Scan 446,  411.1716 m/z, HCD
+            // Scan 447,  411.1716 m/z, CID
+            // Scan 448, 1055.2985 m/z, HCD
+            // Scan 449,  308.2068 m/z, HCD
+            // Scan 450,  308.2068 m/z, CID
+            // Scan 451, 1055.2985 m/z, CID
+            // Scan 452,  360.1803 m/z, HCD
+            // Scan 453,  360.1803 m/z, CID
+            // Scan 454,  822.7541 m/z, HCD
+            // Scan 455,  822.7541 m/z, CID
+
+            // Sorted order
+            // Scan 449,  308.2068 m/z, HCD
+            // Scan 450,  308.2068 m/z, CID
+            // Scan 452,  360.1803 m/z, HCD
+            // Scan 453,  360.1803 m/z, CID
+            // Scan 446,  411.1716 m/z, HCD
+            // Scan 447,  411.1716 m/z, CID
+            // Scan 444,  447.3465 m/z, HCD
+            // Scan 445,  447.3465 m/z, CID
+            // Scan 454,  822.7541 m/z, HCD
+            // Scan 455,  822.7541 m/z, CID
+            // Scan 448, 1055.2985 m/z, HCD
+            // Scan 451, 1055.2985 m/z, CID
+
+            // ReSharper restore CommentTypo
+
+            var fragScanPairs = new List<ScanPair>();
+
+            var ms2ScansByPrecursor = new SortedDictionary<int, List<int>>();
+
+            foreach (var ms2Scan in lcmsRun.GetScanNumbers(2))
+            {
+                var precursorScan = lcmsRun.MinMsLevel <= 1 ? lcmsRun.GetPrecursorScanNum(ms2Scan) : 0;
+
+                if (ms2ScansByPrecursor.TryGetValue(precursorScan, out var precursorScans))
+                {
+                    precursorScans.Add(ms2Scan);
+                    continue;
+                }
+
+                ms2ScansByPrecursor.Add(precursorScan, new List<int> { ms2Scan });
+            }
+
+            var scanGroupScans = new List<FragmentationScanInfo>();
+            var sortComparer = new FragmentationScanComparer();
+
+            foreach (var scanGroup in ms2ScansByPrecursor)
+            {
+                var precursorScan = scanGroup.Key;
+                scanGroupScans.Clear();
+
+                foreach (var ms2Scan in scanGroup.Value)
+                {
+                    var spectrum = lcmsRun.GetSpectrum(ms2Scan) as ProductSpectrum;
+                    if (spectrum == null)
+                        continue;
+
+                    var scanInfo = new FragmentationScanInfo
+                    {
+                        ScanNumber = ms2Scan,
+                        ScanType = spectrum.ActivationMethod,
+                        PrecursorMz = GetMsMsPrecursorMz(spectrum)
+                    };
+
+                    scanGroupScans.Add(scanInfo);
+                }
+
+                scanGroupScans.Sort(sortComparer);
+
+                for (var scanIndex = 0; scanIndex < scanGroupScans.Count; scanIndex++)
+                {
+                    var firstScan = scanGroupScans[scanIndex];
+                    if (scanIndex == scanGroupScans.Count - 1)
+                    {
+                        var singleScan = new ScanPair(precursorScan, firstScan.ScanNumber, firstScan.ScanType);
+
+                        fragScanPairs.Add(singleScan);
+                        continue;
+                    }
+
+                    var secondScan = scanGroupScans[scanIndex + 1];
+
+                    var deltaMz = firstScan.PrecursorMz - secondScan.PrecursorMz;
+                    if (Math.Abs(deltaMz) > 0.01)
+                    {
+                        // Scans do not have the same precursor
+                        var singleScan = new ScanPair(precursorScan, firstScan.ScanNumber, firstScan.ScanType);
+
+                        fragScanPairs.Add(singleScan);
+                        continue;
+                    }
+
+                    // The Sort comparer should have put the HCD scan first and the CID scan second
+
+                    if (firstScan.ScanType == ActivationMethod.HCD && secondScan.ScanType != ActivationMethod.HCD)
+                    {
+                        var scanPair = new ScanPair(precursorScan, firstScan.ScanNumber, secondScan.ScanNumber);
+                        fragScanPairs.Add(scanPair);
+
+                        // Increment the scan index so that the second scan is skipped
+                        scanIndex++;
+                        continue;
+                    }
+
+                    // This is not a valid HCD / CID scan pair; store the scans separately
+                    fragScanPairs.Add(new ScanPair(precursorScan, firstScan.ScanNumber, firstScan.ScanType));
+                }
+            }
+
+            return fragScanPairs;
+        }
+
+        private class FragmentationScanComparer : IComparer<FragmentationScanInfo>
+        {
+            public int Compare(FragmentationScanInfo x, FragmentationScanInfo y)
+            {
+                if (x.PrecursorMz > y.PrecursorMz)
+                {
+                    return 1;
+                }
+
+                if (x.PrecursorMz < y.PrecursorMz)
+                {
+                    return -1;
+                }
+
+                // Sort HCD scans before non HCD scans
+                var scanType1 = x.ScanType == ActivationMethod.HCD ? 0 : 1;
+
+                var scanType2 = y.ScanType == ActivationMethod.HCD ? 0 : 1;
+
+                return scanType1.CompareTo(scanType2);
+            }
         }
 
         #region "Events"
