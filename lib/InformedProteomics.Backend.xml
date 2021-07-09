@@ -57,11 +57,9 @@
         <member name="M:InformedProteomics.Backend.Database.FastaDatabaseConstants.ValidFASTAExtension(System.String)">
             <summary>
             Examine the extension on the database file
-            Return true if .fasta or .fa or .faa
-            Otherwise, return false
             </summary>
             <param name="databaseFilePath"></param>
-            <returns></returns>
+            <returns>True if .fasta or .fa or .faa, otherwise false</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Database.InternalCleavageType">
             <summary>
@@ -164,7 +162,7 @@
             Get the atom that corresponds to the provided atomic symbol
             </summary>
             <param name="code"></param>
-            <returns></returns>
+            <returns>Atom object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Biology.Atom.Equals(InformedProteomics.Backend.Data.Biology.Atom)">
             <inheritdoc />
@@ -207,17 +205,17 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Biology.Constants.GetBinNum(System.Double)">
             <summary>
-            Get the bin number of the supplied mass <paramref name="m"/>
+            Get the bin number of the supplied mass <paramref name="mass"/>
             </summary>
-            <param name="m"></param>
-            <returns></returns>
+            <param name="mass"></param>
+            <returns>Bin number</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Biology.Constants.GetBinNumHighPrecision(System.Double)">
             <summary>
-            Get the high-precision bin number of the supplied mass <paramref name="m"/>
+            Get the high-precision bin number of the supplied mass <paramref name="mass"/>
             </summary>
-            <param name="m"></param>
-            <returns></returns>
+            <param name="mass"></param>
+            <returns>Bin number</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Biology.Enzyme">
             <summary>
@@ -254,7 +252,7 @@
             Test if the enzyme will cleave at <paramref name="residue"/>
             </summary>
             <param name="residue"></param>
-            <returns></returns>
+            <returns>True if this residue is a cleavage point</returns>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Biology.Enzyme.UnspecificCleavage">
             <summary>
@@ -352,14 +350,14 @@
             <summary>
             Get the monoisotopic m/z of the ion
             </summary>
-            <returns></returns>
+            <returns>Monoisotopic m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Biology.Ion.GetIsotopeMz(System.Int32)">
             <summary>
-            Gets the m/z of ith isotope
+            Gets the m/z of nth isotope
             </summary>
             <param name="isotopeIndex">isotope index. 0 means mono-isotope, 1 means 2nd isotope, etc.</param>
-            <returns></returns>
+            <returns>Isotope m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Biology.Ion.GetMostAbundantIsotopeMz">
             <summary>
@@ -369,10 +367,10 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Biology.Ion.GetIsotopeMz(System.Double)">
             <summary>
-            Gets the m/z of ith isotope
+            Gets the m/z of nth isotope
             </summary>
-            <param name="isotopeIndexInRealNumber">isotope index in real number. 0 means mono-isotope, 0.5 means the center of mono and 2nd isotopes.</param>
-            <returns></returns>
+            <param name="isotopeIndexInRealNumber">isotope index in real number. 0 means mono-isotope, 0.5 means the center of mono and 2nd isotopes</param>
+            <returns>m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Biology.Ion.GetIsotopes(System.Double)">
             <summary>
@@ -392,7 +390,7 @@
             <summary>
             Get the top 3 isotopes for this ion
             </summary>
-            <returns></returns>
+            <returns>List of isotopes</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Biology.Ion.GetIsotopeMz(System.Double,System.Int32,System.Int32)">
             <summary>
@@ -401,7 +399,7 @@
             <param name="monoIsotopicMass"></param>
             <param name="charge"></param>
             <param name="isotopeIndex"></param>
-            <returns></returns>
+            <returns>m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Biology.Ion.GetMonoIsotopicMass(System.Double,System.Int32,System.Int32)">
             <summary>
@@ -410,7 +408,7 @@
             <param name="isotopeMz"></param>
             <param name="charge"></param>
             <param name="isotopeIndex"></param>
-            <returns></returns>
+            <returns>Monoisotopic mass</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Composition.AbstractComposition">
             <summary>
@@ -429,39 +427,44 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.AbstractComposition.GetIsotopeMass(System.Int32)">
             <summary>
-            Gets the mass of ith isotope
+            Gets the mass of nth isotope
             </summary>
             <param name="isotopeIndex">isotope index. 0 means mono-isotope, 1 means 2nd isotope, etc.</param>
-            <returns></returns>
+            <returns>m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.AbstractComposition.GetIsotopeMass(System.Double)">
             <summary>
-            Gets the m/z of ith isotope
+            Gets the m/z of nth isotope
             </summary>
-            <param name="isotopeIndexInRealNumber">isotope index in real number. 0 means mono-isotope, 0.5 means the center of mono and 2nd isotopes.</param>
-            <returns></returns>
+            <param name="isotopeIndexInRealNumber">isotope index in real number. 0 means mono-isotope, 0.5 means the center of mono and 2nd isotopes</param>
+            <returns>m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.AbstractComposition.GetIsotopomerEnvelope">
             <summary>
             Get the <see cref="T:InformedProteomics.Backend.Data.Composition.IsotopomerEnvelope"/> for this composition
             </summary>
-            <returns></returns>
+            <returns>Isotopomer envelope</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.AbstractComposition.GetIsotopomerEnvelopeRelativeIntensities">
             <summary>
             Get the relative intensities of the Isotopomer envelope for this composition
             </summary>
-            <returns></returns>
+            <returns>Array of intensities</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.AbstractComposition.GetMostAbundantIsotopeZeroBasedIndex">
             <summary>
             Get the zero-based index of the most abundant isotope, according to the isotopomer envelope
             </summary>
-            <returns></returns>
+            <returns>Index of the most abundant isotope</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Composition.Averagine">
             <summary>
             Averagine algorithm - creates isotopic envelopes based on an averaged elemental composition
+            </summary>
+        </member>
+        <member name="F:InformedProteomics.Backend.Data.Composition.Averagine.IsotopeEnvelopeMap">
+            <summary>
+            Map of NominalMass to Isotope Envelope
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Averagine.#ctor">
@@ -474,7 +477,7 @@
             Get the Isotopomer envelope for <paramref name="monoIsotopeMass"/>
             </summary>
             <param name="monoIsotopeMass"></param>
-            <returns></returns>
+            <returns>Isotopomer envelope</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Averagine.GetIsotopomerEnvelopeInst(System.Double,InformedProteomics.Backend.Data.Composition.IsoProfilePredictor)">
             <summary>
@@ -482,7 +485,7 @@
             </summary>
             <param name="monoIsotopeMass"></param>
             <param name="isoProfilePredictor"></param>
-            <returns></returns>
+            <returns>Isotopomer envelope</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Averagine.GetTheoreticalIsotopeProfile(System.Double,System.Int32,System.Double)">
             <summary>
@@ -491,7 +494,7 @@
             <param name="monoIsotopeMass"></param>
             <param name="charge"></param>
             <param name="relativeIntensityThreshold"></param>
-            <returns></returns>
+            <returns>List of peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Averagine.GetTheoreticalIsotopeProfileInst(System.Double,System.Int32,System.Double,InformedProteomics.Backend.Data.Composition.IsoProfilePredictor)">
             <summary>
@@ -501,14 +504,14 @@
             <param name="charge"></param>
             <param name="relativeIntensityThreshold"></param>
             <param name="isoProfilePredictor"></param>
-            <returns></returns>
+            <returns>List of peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Averagine.GetIsotopomerEnvelopeFromNominalMass(System.Int32)">
             <summary>
             Get the Isotopomer envelope for the nominal mass <paramref name="nominalMass"/>
             </summary>
             <param name="nominalMass"></param>
-            <returns></returns>
+            <returns>Isotopomer envelope</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Averagine.GetIsotopomerEnvelopeFromNominalMassInst(System.Int32,InformedProteomics.Backend.Data.Composition.IsoProfilePredictor)">
             <summary>
@@ -516,7 +519,7 @@
             </summary>
             <param name="nominalMass"></param>
             <param name="isoProfilePredictor"></param>
-            <returns></returns>
+            <returns>Isotopomer envelope</returns>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Composition.Averagine.DefaultAveragine">
             <summary>
@@ -672,17 +675,17 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.AddComposition(InformedProteomics.Backend.Data.Composition.Composition)">
             <summary>
-            Return a new composition that consists of this composition and <paramref name="c"/>
+            Return a new composition that consists of this composition plus <paramref name="c"/>
             </summary>
             <param name="c"></param>
-            <returns></returns>
+            <returns>New composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.Add(InformedProteomics.Backend.Data.Composition.Composition)">
             <summary>
-            Return a new composition that consists of this composition and <paramref name="c"/>
+            Return a new composition that consists of this composition plus <paramref name="c"/>
             </summary>
             <param name="c"></param>
-            <returns></returns>
+            <returns>New composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.op_Addition(InformedProteomics.Backend.Data.Composition.Composition,InformedProteomics.Backend.Data.Composition.Composition)">
             <summary>
@@ -690,20 +693,20 @@
             </summary>
             <param name="c1"></param>
             <param name="c2"></param>
-            <returns></returns>
+            <returns>New composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.Negate">
             <summary>
             Return the inverse composition (all counts negative)
             </summary>
-            <returns></returns>
+            <returns>New composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.op_UnaryNegation(InformedProteomics.Backend.Data.Composition.Composition)">
             <summary>
             Unary -
             </summary>
             <param name="c"></param>
-            <returns></returns>
+            <returns>New composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.op_Subtraction(InformedProteomics.Backend.Data.Composition.Composition,InformedProteomics.Backend.Data.Composition.Composition)">
             <summary>
@@ -711,7 +714,7 @@
             </summary>
             <param name="c1"></param>
             <param name="c2"></param>
-            <returns></returns>
+            <returns>New composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.ToString">
             <inheritdoc />
@@ -721,7 +724,7 @@
             String representation of this composition
             </summary>
             <param name="spaceSeparated">When true, separate fields using spaces instead of commas</param>
-            <returns></returns>
+            <returns>Empirical formula</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.ToPlainString">
             <summary>
@@ -745,7 +748,14 @@
             H(117) C(77) N(17) O(26) S(2)
             </summary>
             <param name="compositionStr"></param>
-            <remarks>Requires the use of parentheses for element counts.  Also requires whitespace (typically a space) between each element and count</remarks>
+            <remarks>
+            <para>
+            Requires the use of parentheses for element counts
+            </para>
+            <para>
+            Also requires whitespace (typically a space) between each element and count
+            </para>
+            </remarks>
             <returns>Composition object, or null if a parse error</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.Composition.GetMonoIsotopicMass">
@@ -791,23 +801,23 @@
             Return a new composition that consists of this composition added to <paramref name="c"/>
             </summary>
             <param name="c"></param>
-            <returns></returns>
+            <returns>New composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.CompositionWithDeltaMass.Negate">
             <summary>
             Return the negation of this composition
             </summary>
-            <returns></returns>
+            <returns>New composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.CompositionWithDeltaMass.ToString">
             <inheritdoc />
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.CompositionWithDeltaMass.Equals(InformedProteomics.Backend.Data.Composition.CompositionWithDeltaMass)">
             <summary>
-            Check 2 CompositionWithDeltaMasses for equality
+            Check two CompositionWithDeltaMasses for equality
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.CompositionWithDeltaMass.Equals(System.Object)">
             <inheritdoc />
@@ -839,7 +849,7 @@
             <param name="n"></param>
             <param name="o"></param>
             <param name="s"></param>
-            <returns></returns>
+            <returns>Isotopomer envelope</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Composition.IsoProfilePredictor.GetIsotopomerEnvelope(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -850,7 +860,7 @@
             <param name="n"></param>
             <param name="o"></param>
             <param name="s"></param>
-            <returns></returns>
+            <returns>Isotopomer envelope</returns>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Composition.IsoProfilePredictor.Predictor">
             <summary>
@@ -1030,7 +1040,7 @@
             <summary>
             Nominal mass of the amino acid
             </summary>
-            <returns></returns>
+            <returns>Nominal mass</returns>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Sequence.AminoAcid.ProteinNTerm">
             <summary>
@@ -1072,7 +1082,7 @@
             Checks if <paramref name="residue"/> is a standard amino acid character
             </summary>
             <param name="residue"></param>
-            <returns></returns>
+            <returns>True if a standard amino acid symbol</returns>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Sequence.AminoAcid.StandardAminoAcidFrequency">
             <summary>
@@ -1084,7 +1094,7 @@
             Get the UniProt statistical frequency of <paramref name="residue"/>
             </summary>
             <param name="residue"></param>
-            <returns></returns>
+            <returns>Frequency at which this residue is seen (number between 0 and 1)</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcid.ToString">
             <inheritdoc />
@@ -1126,7 +1136,7 @@
         </member>
         <member name="P:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.SearchModifications">
             <summary>
-            The list of search modifications provided via the mods file.
+            The list of search modifications provided via the mods file
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.GetAminoAcid(System.Char)">
@@ -1134,7 +1144,7 @@
             Get the amino acid specified by character <paramref name="residue"/>, with any static modifications
             </summary>
             <param name="residue"></param>
-            <returns></returns>
+            <returns>Amino acid object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.GetAminoAcid(System.Char,InformedProteomics.Backend.Data.Enum.SequenceLocation)">
             <summary>
@@ -1142,14 +1152,14 @@
             </summary>
             <param name="residue"></param>
             <param name="location"></param>
-            <returns></returns>
+            <returns>Amino acid object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.GetModificationIndices(System.Char)">
             <summary>
             Get the indices of modifications that apply to residue <paramref name="residue"/>
             </summary>
             <param name="residue"></param>
-            <returns></returns>
+            <returns>Indices</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.GetModificationIndices(System.Char,InformedProteomics.Backend.Data.Enum.SequenceLocation)">
             <summary>
@@ -1157,21 +1167,21 @@
             </summary>
             <param name="residue"></param>
             <param name="location"></param>
-            <returns></returns>
+            <returns>Array of zero-based indices</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.GetComposition(System.String)">
             <summary>
             Get the composition of <paramref name="sequence"/> using this amino acid map (with static modification masses added)
             </summary>
             <param name="sequence"></param>
-            <returns></returns>
-            <remarks>This method ignores N- and C-term specific modifications.</remarks>
+            <returns>Composition object</returns>
+            <remarks>This method ignores N- and C-term specific modifications</remarks>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.GetModificationParams">
             <summary>
             Get the parameters governing use of dynamic modifications
             </summary>
-            <returns></returns>
+            <returns>Dynamic modification parameters</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.Display">
             <summary>
@@ -1182,19 +1192,19 @@
             <summary>
             Get the set of unique compositions within this amino acid set
             </summary>
-            <returns></returns>
+            <returns>List of unique compositions</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.GetStandardAminoAcidSet">
             <summary>
             Get the standard amino acid set, with no modifications
             </summary>
-            <returns></returns>
+            <returns>Standard amino acid set</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.AminoAcidSet.GetStandardAminoAcidSetWithCarboamidomethylCys">
             <summary>
             Get the standard amino acid set, with static Cysteine Alkylation (Carboamidomethyl)
             </summary>
-            <returns></returns>
+            <returns>Standard amino acid set, with alkylated cysteines</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.Cleavage">
             <summary>
@@ -1240,7 +1250,7 @@
             Get the sequence tags for ProductSpectrum <paramref name="spec"/>
             </summary>
             <param name="spec"></param>
-            <returns></returns>
+            <returns>List of sequence tags</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.ModFileParser">
             <summary>
@@ -1273,7 +1283,7 @@
             Parse the provided modification line
             </summary>
             <param name="line"></param>
-            <returns></returns>
+            <returns>List of modification definitions</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ModFileParser.Parse(System.Collections.Generic.IEnumerable{System.String},System.Int32@)">
             <summary>
@@ -1281,7 +1291,7 @@
             </summary>
             <param name="lines"></param>
             <param name="maxNumDynModsPerPeptide"></param>
-            <returns></returns>
+            <returns>List of modification definitions</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ModFileParser.Parse(System.String,System.Int32@)">
             <summary>
@@ -1289,7 +1299,7 @@
             </summary>
             <param name="modFilePath"></param>
             <param name="maxNumDynModsPerPeptide"></param>
-            <returns></returns>
+            <returns>List of modification definitions</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.Modification">
             <summary>
@@ -1355,10 +1365,10 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Modification.ToString">
             <summary>
-            Returns a string that represents this modification object.
+            Returns a string that represents this modification object
             </summary>
             <returns>
-            A string that represents the modification.
+            A string that represents the modification
             </returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Modification.Get(System.String)">
@@ -1380,14 +1390,14 @@
             Get the modification that matches the given mass
             </summary>
             <param name="mass"></param>
-            <returns></returns>
+            <returns>List of modification objects</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Modification.GetFromMass(System.String)">
             <summary>
             Get the modification that matches the given mass
             </summary>
             <param name="massStr"></param>
-            <returns></returns>
+            <returns>List of modification definitions</returns>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Sequence.Modification.NoModification">
             <summary>
@@ -1565,7 +1575,7 @@
             </summary>
             <param name="name"></param>
             <param name="composition"></param>
-            <returns></returns>
+            <returns>Modification definition</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Modification.RegisterAndGetModification(System.String,System.Double)">
             <summary>
@@ -1573,30 +1583,29 @@
             </summary>
             <param name="name"></param>
             <param name="mass"></param>
-            <returns></returns>
+            <returns>Modification object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Modification.UpdateAndGetModification(System.String,InformedProteomics.Backend.Data.Composition.Composition)">
             <summary>
-            Register a new modification or update existing modification.
+            Register a new modification or update existing modification
             </summary>
-            <param name="name">The name of the modification.</param>
-            <param name="composition">The composition of the modification.</param>
-            <returns>Registered modification.</returns>
+            <param name="name">The name of the modification</param>
+            <param name="composition">The composition of the modification</param>
+            <returns>Registered modification</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Modification.UpdateAndGetModification(System.String,System.Double)">
             <summary>
-            Register a new modification or update an existing modification.
+            Register a new modification or update an existing modification
             </summary>
-            <param name="name">The name of the modification.</param>
-            <param name="mass">The mass of the modification.</param>
-            <returns>Registered modification.</returns>
+            <param name="name">The name of the modification</param>
+            <param name="mass">The mass of the modification</param>
+            <returns>Registered modification</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Modification.UnregisterModification(InformedProteomics.Backend.Data.Sequence.Modification)">
             <summary>
-            Unregister a modification by name.
-            Added by Chris.
+            Unregister a modification by name
             </summary>
-            <param name="modification">The modification to remove.</param>
+            <param name="modification">The modification to remove</param>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Modification.Register(InformedProteomics.Backend.Data.Sequence.Modification)">
             <summary>
@@ -1634,7 +1643,7 @@
             <summary>
             Number of modifications applied to the sequence
             </summary>
-            <returns></returns>
+            <returns>Modification count</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ModificationCombination.ToString">
             <inheritdoc />
@@ -1669,7 +1678,7 @@
             Get a new <see cref="T:InformedProteomics.Backend.Data.Sequence.ModificationInstance"/> at offset <paramref name="offset"/> from this instance
             </summary>
             <param name="offset"></param>
-            <returns></returns>
+            <returns>Modification object</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.ModificationParams">
             <summary>
@@ -1711,7 +1720,7 @@
             Get the modification at index <paramref name="modIndex"/>
             </summary>
             <param name="modIndex"></param>
-            <returns></returns>
+            <returns>Modification object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ModificationParams.GetModificationCombinationIndex(System.Int32,System.Int32)">
             <summary>
@@ -1719,7 +1728,7 @@
             </summary>
             <param name="prevModCombIndex"></param>
             <param name="modIndex"></param>
-            <returns></returns>
+            <returns>Index of the modification, or -1 if not found</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ModificationParams.GetModificationIndexBetween(System.Int32,System.Int32)">
             <summary>
@@ -1727,13 +1736,13 @@
             </summary>
             <param name="prevModCombIndex"></param>
             <param name="curModCombIndex"></param>
-            <returns></returns>
+            <returns>Modification object, or null if not found</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ModificationParams.GetModificationCombinations">
             <summary>
             Get all <see cref="T:InformedProteomics.Backend.Data.Sequence.ModificationCombination"/>s in this instance
             </summary>
-            <returns></returns>
+            <returns>List of Modification Combination objects</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.ModifiedAminoAcid">
             <summary>
@@ -1809,7 +1818,7 @@
             String representation of this search mod
             </summary>
             <param name="spaceSeparated">When true, separate fields using spaces instead of commas</param>
-            <returns></returns>
+            <returns>Description of the modification</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.Sequence">
             <summary>
@@ -1833,7 +1842,7 @@
             <summary>
             Get the list (as a string) of the modifications and their locations in this sequence
             </summary>
-            <returns></returns>
+            <returns>Human readable list of modifications</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Sequence.CreateSequence(System.String,System.String,InformedProteomics.Backend.Data.Sequence.AminoAcidSet)">
             <summary>
@@ -1842,7 +1851,7 @@
             <param name="sequence"></param>
             <param name="modStr">E.g. Acetyl 0,Oxidation 1,Oxidation 20,Oxidation 27</param>
             <param name="aminoAcidSet"></param>
-            <returns></returns>
+            <returns>Sequence object</returns>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Sequence.Sequence.PrefixComposition">
             <summary>
@@ -1865,7 +1874,7 @@
             </summary>
             <param name="from">inclusive</param>
             <param name="to">exclusive</param>
-            <returns></returns>
+            <returns>Summed mass of the matching residues</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Sequence.GetComposition(System.Int32,System.Int32)">
             <summary>
@@ -1873,46 +1882,46 @@
             </summary>
             <param name="from">inclusive</param>
             <param name="to">exclusive</param>
-            <returns></returns>
+            <returns>Composition of the matching residues</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Sequence.GetInternalCleavages">
             <summary>
             Get the internal cleavages
             </summary>
-            <returns></returns>
+            <returns>List of internal cleavage points</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Sequence.GetPrefixCompositions">
             <summary>
             Get the prefix compositions
             </summary>
-            <returns></returns>
+            <returns>List of prefix compositions</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Sequence.GetSuffixCompositions">
             <summary>
             Get the suffix compositions
             </summary>
-            <returns></returns>
+            <returns>List of suffix compositions</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Sequence.GetPrecursorIon(System.Int32)">
             <summary>
             Get the precursor ion
             </summary>
             <param name="charge"></param>
-            <returns></returns>
+            <returns>Precursor ion for the given charge state</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Sequence.GetProductIons(System.Collections.Generic.IEnumerable{InformedProteomics.Backend.Data.Spectrometry.IonType})">
             <summary>
             Get the product ions of the specified types
             </summary>
             <param name="ionTypes"></param>
-            <returns></returns>
+            <returns>Dictionary of product ions, where keys are Tuples of IonType and int, while are Ion objects</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.Sequence.GetSequenceFromMsGfPlusPeptideStr(System.String)">
             <summary>
             Parse peptide string from MS-GF+ results
             </summary>
             <param name="msgfPlusPeptideStr">string of format "+229.163C+57.021GLGGSGTPVDELDK+229.163C+57.021C+57.021QTHDNC+57.021YDQAK+229.163"</param>
-            <returns></returns>
+            <returns>Sequence object</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.SequenceGraph">
             <summary>
@@ -1921,15 +1930,15 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.CreateGraph(InformedProteomics.Backend.Data.Sequence.AminoAcidSet,System.String)">
             <summary>
-            Create a graph representing the annotation. Annotation is reversed.
+            Create a graph representing the annotation; annotation is reversed
             </summary>
             <param name="aaSet">amino acid set</param>
             <param name="annotation">annotation (e.g. G.PEPTIDER.K or _.PEPTIDER._)</param>
-            <returns></returns>
+            <returns>Sequence graph object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.CreateGraph(InformedProteomics.Backend.Data.Sequence.AminoAcidSet,InformedProteomics.Backend.Data.Sequence.AminoAcid,System.String,InformedProteomics.Backend.Data.Sequence.AminoAcid)">
             <summary>
-            Create a graph representing the sequence. Sequence is reversed.
+            Create a graph representing the sequence; sequence is reversed
             </summary>
             <param name="aaSet">amino acid set</param>
             <param name="nTerm">N-term amino acid</param>
@@ -1986,31 +1995,31 @@
             Get the number of proteoform sequences possible with the provided number of dynamic modifications
             </summary>
             <param name="nDynMods"></param>
-            <returns></returns>
+            <returns>Number of possible proteoform sequences</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.GetNumProteoformSequences(System.Int32)">
             <summary>
             Get number of possible proteoform sequences for the specified modification combination
             </summary>
             <param name="modIndex">index of modification combination</param>
-            <returns>number of sequences</returns>
+            <returns>Number of sequences</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.CleaveNTerm">
             <summary>
-            Perform  N-Terminus cleavage on the sequence graph
+            Perform N-Terminus cleavage on the sequence graph
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.GetModificationCombinations">
             <summary>
             Get the modification combinations in the current sequence graph
             </summary>
-            <returns></returns>
+            <returns>Array of modification combinations</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.GetUnmodifiedSequenceComposition">
             <summary>
-            Gets the composition of the sequence without variable modification.
+            Gets the composition of the sequence without variable modification
             </summary>
-            <returns></returns>
+            <returns>Composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.GetNumFragmentCompositions">
             <summary>
@@ -2022,7 +2031,7 @@
             <summary>
             Get the compositions of all fragment nodes
             </summary>
-            <returns></returns>
+            <returns>List of compositions</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.GetFragmentCompositions(System.Int32,System.Int32)">
             <summary>
@@ -2030,7 +2039,7 @@
             </summary>
             <param name="modIndex"></param>
             <param name="numNTermCleavages"></param>
-            <returns></returns>
+            <returns>List of compositions</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.SetSink(System.Int32)">
             <summary>
@@ -2042,21 +2051,21 @@
             <summary>
             Get the Sink sequence composition with H2O added
             </summary>
-            <returns></returns>
+            <returns>Composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.GetFragmentScore(InformedProteomics.Backend.Data.Spectrometry.IScorer)">
             <summary>
             Get the fragment score using the provided scorer
             </summary>
             <param name="scorer"></param>
-            <returns></returns>
+            <returns>Fragment score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.GetFragmentScoreAndModifications(InformedProteomics.Backend.Data.Spectrometry.IScorer)">
             <summary>
             Get the fragment score and string-format modifications of this sequence graph
             </summary>
             <param name="scorer"></param>
-            <returns></returns>
+            <returns>Fragment score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.#ctor(InformedProteomics.Backend.Data.Sequence.AminoAcidSet,InformedProteomics.Backend.Data.Sequence.AminoAcid,System.String,InformedProteomics.Backend.Data.Sequence.AminoAcid)">
             <summary>
@@ -2073,7 +2082,7 @@
             </summary>
             <param name="seqIndex"></param>
             <param name="modIndex"></param>
-            <returns></returns>
+            <returns>Composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.GetComplementaryComposition(System.Int32,System.Int32)">
             <summary>
@@ -2081,7 +2090,7 @@
             </summary>
             <param name="seqIndex"></param>
             <param name="modIndex"></param>
-            <returns></returns>
+            <returns>Composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.GetFragmentScore(System.Int32,System.Int32,InformedProteomics.Backend.Data.Spectrometry.IScorer,System.Nullable{System.Double}[][],System.Nullable{System.Double}[][])">
             <summary>
@@ -2092,7 +2101,7 @@
             <param name="scorer"></param>
             <param name="nodeScore"></param>
             <param name="maxScore"></param>
-            <returns></returns>
+            <returns>Fragment score</returns>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Sequence.SequenceGraph._maxSeqIndex">
             <summary>
@@ -2111,11 +2120,11 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.SequenceGraph.PutAminoAcid(System.Int32,System.Char)">
             <summary>
-            Add an amino acid residue to this generator.
+            Add an amino acid residue to this generator
             </summary>
-            <param name="index">index to add the amino acid. 0 is C-term. 1 is the C-term amino acid.</param>
-            <param name="residue">amino acid residue to add.</param>
-            <returns>true if residue is a valid amino acid; false otherwise.</returns>
+            <param name="index">index to add the amino acid: 0 is C-term, 1 is the C-term amino acid</param>
+            <param name="residue">amino acid residue to add</param>
+            <returns>true if residue is a valid amino acid; false otherwise</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.Node">
             <summary>
@@ -2131,7 +2140,7 @@
             <summary>
             Get the indices of the previous nodes
             </summary>
-            <returns></returns>
+            <returns>List of indices</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Sequence.ShiftedSequenceGraph">
             <summary>
@@ -2154,7 +2163,7 @@
             </summary>
             <param name="residue"></param>
             <param name="location"></param>
-            <returns></returns>
+            <returns>True if residue is a valid amino acid, otherwise false</returns>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Sequence.ShiftedSequenceGraph.AminoAcidSet">
             <summary>
@@ -2198,21 +2207,21 @@
             <summary>
             Get the sink sequence composition with H2O added
             </summary>
-            <returns></returns>
+            <returns>Composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ShiftedSequenceGraph.GetFragmentScore(InformedProteomics.Backend.Data.Spectrometry.IScorer)">
             <summary>
             Get the fragment score using the provided scorer
             </summary>
             <param name="scorer"></param>
-            <returns></returns>
+            <returns>Fragment score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ShiftedSequenceGraph.GetScoreAndModifications(InformedProteomics.Backend.Data.Spectrometry.IScorer)">
             <summary>
             Get the score and modifications
             </summary>
             <param name="scorer"></param>
-            <returns></returns>
+            <returns>Tuple of fragment score and list of modifications</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ShiftedSequenceGraph.GetFragmentScoreAndModifications(System.Int32,System.Int32,InformedProteomics.Backend.Data.Spectrometry.IScorer,System.Collections.Generic.IReadOnlyList{System.Nullable{System.Double}[]},System.Collections.Generic.IReadOnlyList{System.Tuple{System.Double,System.Collections.Generic.LinkedList{InformedProteomics.Backend.Data.Sequence.ModificationInstance}}[]})">
             <summary>
@@ -2223,7 +2232,7 @@
             <param name="scorer"></param>
             <param name="nodeScore"></param>
             <param name="maxScoreAndMods"></param>
-            <returns></returns>
+            <returns>Tuple of fragment score and list of modifications</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ShiftedSequenceGraph.GetComposition(System.Int32,System.Int32)">
             <summary>
@@ -2231,7 +2240,7 @@
             </summary>
             <param name="seqIndex"></param>
             <param name="modIndex"></param>
-            <returns></returns>
+            <returns>Composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ShiftedSequenceGraph.GetComplementaryComposition(System.Int32,System.Int32)">
             <summary>
@@ -2239,7 +2248,7 @@
             </summary>
             <param name="seqIndex"></param>
             <param name="modIndex"></param>
-            <returns></returns>
+            <returns>Composition object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ShiftedSequenceGraph.GetFragmentScore(System.Int32,System.Int32,InformedProteomics.Backend.Data.Spectrometry.IScorer,System.Nullable{System.Double}[][],System.Nullable{System.Double}[][])">
             <summary>
@@ -2250,16 +2259,16 @@
             <param name="scorer"></param>
             <param name="nodeScore"></param>
             <param name="maxScore"></param>
-            <returns></returns>
+            <returns>Fragment score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Sequence.ShiftedSequenceGraph.PutAminoAcid(System.Int32,System.Char,InformedProteomics.Backend.Data.Enum.SequenceLocation)">
             <summary>
-            Add an amino acid residue to this generator.
+            Add an amino acid residue to this generator
             </summary>
-            <param name="index">index to add the amino acid. 0 is C-term. 1 is the C-term amino acid.</param>
-            <param name="residue">amino acid residue to add.</param>
-            <param name="loc">location of the residue</param>
-            <returns>true if residue is a valid amino acid; false otherwise.</returns>
+            <param name="index">Index to add the amino acid; 0 is C-terminus; 1 is the C-terminal amino acid</param>
+            <param name="residue">Amino acid residue to add</param>
+            <param name="loc">Location of the residue</param>
+            <returns>True if residue is a valid amino acid, otherwise false</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.AbstractFragmentScorer">
             <summary>
@@ -2285,21 +2294,21 @@
             <param name="suffixFragmentComposition"></param>
             <param name="nTerminalResidue"></param>
             <param name="cTerminalResidue"></param>
-            <returns></returns>
+            <returns>Fragment score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.AbstractFragmentScorer.GetMinMaxChargeRange(InformedProteomics.Backend.Data.Composition.Composition)">
             <summary>
             Get the range of min and max charges for the fragment composition
             </summary>
             <param name="fragmentComposition"></param>
-            <returns></returns>
+            <returns>Charge range object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.AbstractFragmentScorer.GetMinMaxChargeRange(System.Double)">
             <summary>
             Get the range of min and max charges for the provided fragment mass
             </summary>
             <param name="fragmentIonMostAbuMass"></param>
-            <returns></returns>
+            <returns>Charge range object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.AbstractFragmentScorer.FindMatchedPeaks(InformedProteomics.Backend.Data.Composition.Composition,System.Double,System.Double)">
             <summary>
@@ -2308,7 +2317,7 @@
             <param name="fragmentComposition"></param>
             <param name="corrThreshold"></param>
             <param name="distThreshold"></param>
-            <returns></returns>
+            <returns>List of deconvoluted peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.AbstractFragmentScorer.FindMostIntensePeak(InformedProteomics.Backend.Data.Composition.Composition,System.Double,System.Double,System.Int32@,System.Double@,System.Double@)">
             <summary>
@@ -2320,7 +2329,7 @@
             <param name="observedCharge"></param>
             <param name="envelopeCorr"></param>
             <param name="envelopeDist"></param>
-            <returns></returns>
+            <returns>List of peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.AbstractFragmentScorer.GetDistCorr(InformedProteomics.Backend.Data.Biology.Ion,InformedProteomics.Backend.Data.Spectrometry.Peak[])">
             <summary>
@@ -2328,7 +2337,7 @@
             </summary>
             <param name="ion"></param>
             <param name="observedPeaks"></param>
-            <returns></returns>
+            <returns>Tuple of Bhattacharyya distance and Pearson correlation</returns>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Spectrometry.AbstractFragmentScorer.Ms2Spectrum">
             <summary>
@@ -2505,7 +2514,7 @@
             Calculates the composition of the ion, with option amino acid
             </summary>
             <param name="aminoAcid"></param>
-            <returns></returns>
+            <returns>List of composition objects</returns>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.BaseIonType.Symbol">
             <summary>
@@ -2526,14 +2535,14 @@
             <summary>
             Gets the deconvoluted version of this ion
             </summary>
-            <returns></returns>
+            <returns>Deconvoluted ion</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.BaseIonType.GetPossibleCompositions(InformedProteomics.Backend.Data.Sequence.AminoAcid)">
             <summary>
             Get possible compositions of this ion
             </summary>
             <param name="residue"></param>
-            <returns></returns>
+            <returns>List of compositions</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.DeconvolutedPeak">
             <summary>
@@ -2597,7 +2606,7 @@
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.DeconvolutedPeak.ObservedPeakIndices">
             <summary>
-            Used for retrieving Observed peaks when reading from a .dpbf file, in conjunction with a .pbf file.
+            Used for retrieving Observed peaks when reading from a .dpbf file, in conjunction with a .pbf file
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.DeconvolutedPeak.SetObservedPeaksFromSpectrum(InformedProteomics.Backend.Data.Spectrometry.Spectrum)">
@@ -2631,7 +2640,7 @@
             </summary>
             <param name="composition"></param>
             <param name="tolerance"></param>
-            <returns></returns>
+            <returns>Deconvoluted peak</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.DeconvolutedSpectrum.StorePeaks(System.Collections.Generic.IReadOnlyList{InformedProteomics.Backend.Data.Spectrometry.DeconvolutedPeak})">
             <summary>
@@ -2664,7 +2673,7 @@
             Get a deconvoluted spectrum that combines multiple charge states
             </summary>
             <param name="spectrum"></param>
-            <returns></returns>
+            <returns>Deconvoluted spectrum object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Deconvoluter.GetDeconvolutedSpectrum(InformedProteomics.Backend.Data.Spectrometry.Spectrum,System.Int32,System.Int32,System.Int32,System.Double,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
             <summary>
@@ -2677,7 +2686,7 @@
             <param name="filteringWindowSize"></param>
             <param name="tolerance"></param>
             <param name="corrScoreThreshold"></param>
-            <returns></returns>
+            <returns>Deconvoluted spectrum object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Deconvoluter.GetCombinedDeconvolutedSpectrum(InformedProteomics.Backend.Data.Spectrometry.Spectrum,System.Int32,System.Int32,System.Int32,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
             <summary>
@@ -2689,7 +2698,7 @@
             <param name="isotopeOffsetTolerance"></param>
             <param name="tolerance"></param>
             <param name="corrScoreThreshold"></param>
-            <returns></returns>
+            <returns>Deconvoluted spectrum object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Deconvoluter.GetDeconvolutedPeaks_new(InformedProteomics.Backend.Data.Spectrometry.Peak[],System.Int32,System.Int32,System.Int32,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
             <summary>
@@ -2701,7 +2710,7 @@
             <param name="isotopeOffsetTolerance"></param>
             <param name="tolerance"></param>
             <param name="corrScoreThreshold"></param>
-            <returns></returns>
+            <returns>List of deconvoluted peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Deconvoluter.GetDeconvolutedPeaks(System.Int32,InformedProteomics.Backend.Data.Spectrometry.Peak[],System.Int32,System.Int32,System.Int32,System.Double,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
             <summary>
@@ -2715,7 +2724,7 @@
             <param name="filteringWindowSize"></param>
             <param name="tolerance"></param>
             <param name="corrScoreThreshold"></param>
-            <returns></returns>
+            <returns>List of deconvoluted peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Deconvoluter.FilterOut(System.Collections.Generic.List{InformedProteomics.Backend.Data.Spectrometry.DeconvolutedPeak},System.Double,System.Int32)">
             <summary>
@@ -2724,7 +2733,7 @@
             <param name="peaks"></param>
             <param name="windowSize"></param>
             <param name="topRankCutoff"></param>
-            <returns></returns>
+            <returns>List of deconvoluted peaks</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.Fragment">
             <summary>
@@ -2739,17 +2748,17 @@
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.Fragment.ChargeState">
             <summary>
-            The charge state of the fragment.
+            The charge state of the fragment
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.Fragment.Mz">
             <summary>
-            The m/z of the fragment.
+            The m/z of the fragment
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.Fragment.Mass">
             <summary>
-            The mass of the fragment.
+            The mass of the fragment
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.Fragment.IonType">
@@ -2759,20 +2768,20 @@
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.Fragment.ResidueNumber">
             <summary>
-            The index of the residue this fragment breaks the peptide at.
+            The index of the residue this fragment breaks the peptide at
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.Fragment.IonSymbol">
             <summary>
-            The full ion symbol of the fragment. e.g. y6 or y6++ or y6-H2O++
+            The full ion symbol of the fragment; e.g. y6 or y6++ or y6-H2O++
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Fragment.Equals(InformedProteomics.Backend.Data.Spectrometry.Fragment)">
             <summary>
-            Check if 2 fragments are equal
+            Check if two fragments are equal
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Fragment.Equals(System.Object)">
             <inheritdoc />
@@ -2786,7 +2795,6 @@
             </summary>
             <param name="left"></param>
             <param name="right"></param>
-            <returns></returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Fragment.op_Inequality(InformedProteomics.Backend.Data.Spectrometry.Fragment,InformedProteomics.Backend.Data.Spectrometry.Fragment)">
             <summary>
@@ -2794,7 +2802,6 @@
             </summary>
             <param name="left"></param>
             <param name="right"></param>
-            <returns></returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Fragment.ToString">
             <inheritdoc />
@@ -2810,7 +2817,7 @@
             </summary>
             <param name="composition"></param>
             <param name="tolerance"></param>
-            <returns></returns>
+            <returns>Matching peak</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.IFragmentScorerFactory">
             <summary>
@@ -2825,7 +2832,7 @@
             <param name="precursorMass"></param>
             <param name="precursorCharge"></param>
             <param name="activationMethod"></param>
-            <returns></returns>
+            <returns>Scorer object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IFragmentScorerFactory.GetScorer(System.Int32,System.Double,System.Int32,InformedProteomics.Backend.Data.Spectrometry.ActivationMethod)">
             <summary>
@@ -2835,7 +2842,7 @@
             <param name="precursorMass"></param>
             <param name="precursorCharge"></param>
             <param name="activationMethod"></param>
-            <returns></returns>
+            <returns>Scorer object</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.IonType">
             <summary>
@@ -2891,21 +2898,21 @@
             Get the m/z of <paramref name="cutMass"/> + (the offset mass)
             </summary>
             <param name="cutMass"></param>
-            <returns></returns>
+            <returns>m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonType.GetMz(InformedProteomics.Backend.Data.Composition.Composition)">
             <summary>
             Get the m/z of <paramref name="prefixComposition"/> + (the offset composition)
             </summary>
             <param name="prefixComposition"></param>
-            <returns></returns>
+            <returns>m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonType.GetIon(InformedProteomics.Backend.Data.Composition.Composition)">
             <summary>
             Get the Ion with the cutComposition added
             </summary>
             <param name="cutComposition"></param>
-            <returns></returns>
+            <returns>Ion object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonType.GetPossibleIons(InformedProteomics.Backend.Data.Composition.Composition,InformedProteomics.Backend.Data.Sequence.AminoAcid)">
             <summary>
@@ -2913,14 +2920,14 @@
             </summary>
             <param name="cutComposition"></param>
             <param name="terminalResidue"></param>
-            <returns></returns>
+            <returns>List of ions</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonType.GetPossibleIons(InformedProteomics.Backend.Data.Sequence.Sequence)">
             <summary>
             Get possible ions for <paramref name="sequence"/>
             </summary>
             <param name="sequence"></param>
-            <returns></returns>
+            <returns>List of ions</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonType.ToString">
             <inheritdoc />
@@ -2930,21 +2937,21 @@
             Returns ion name with ion index (e.g. y++4-H2O => charge 2 y4 - H2O)
             </summary>
             <param name="index"></param>
-            <returns></returns>
+            <returns>Ion name</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonType.Parse(System.String)">
             <summary>
             Parse an ion from string <paramref name="s"/>
             </summary>
             <param name="s"></param>
-            <returns></returns>
+            <returns>Ion type object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonType.Equals(InformedProteomics.Backend.Data.Spectrometry.IonType)">
             <summary>
             Check for equality
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonType.Equals(System.Object)">
             <inheritdoc />
@@ -2984,14 +2991,14 @@
             </summary>
             <param name="baseIons"></param>
             <param name="neutralLosses"></param>
-            <returns></returns>
+            <returns>New ion type factory</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonTypeFactory.GetIonType(System.String)">
             <summary>
             Get an ion type by name, e.g. y2-NH3
             </summary>
             <param name="name"></param>
-            <returns></returns>
+            <returns>Ion type object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonTypeFactory.GetIonType(InformedProteomics.Backend.Data.Spectrometry.BaseIonType,System.Int32,InformedProteomics.Backend.Data.Spectrometry.NeutralLoss)">
             <summary>
@@ -3000,12 +3007,12 @@
             <param name="baseIonType"></param>
             <param name="charge"></param>
             <param name="neutralLoss"></param>
-            <returns></returns>
+            <returns>Ion type object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IonTypeFactory.GetIonTypesFromDecharged(System.Collections.Generic.IEnumerable{InformedProteomics.Backend.Data.Spectrometry.IonType},System.Int32)">
             <summary>
             Given a list of IonTypes of charge 1 and a charge value, a list of the same IonTypes of charge up to and
-            including charge are outputted.
+            including charge are outputted
             </summary>
             <param name="ionTypes">List of IonTypes of charge 1</param>
             <param name="charge">IonTypes of charge up to and including charge will be outputted</param>
@@ -3015,7 +3022,7 @@
             <summary>
             Get all known ion types
             </summary>
-            <returns></returns>
+            <returns>List of ion types</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.IScorer">
             <summary>
@@ -3030,7 +3037,7 @@
             <param name="suffixFragmentComposition"></param>
             <param name="nTerminalResidue"></param>
             <param name="cTerminalResidue"></param>
-            <returns></returns>
+            <returns>Fragment score</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.ISequenceFilter">
             <summary>
@@ -3042,7 +3049,7 @@
             Get MS2 scans that have a precursor mass that matches <paramref name="sequenceMass"/>
             </summary>
             <param name="sequenceMass"></param>
-            <returns></returns>
+            <returns>List of scan numbers</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.IsolationWindow">
             <summary>
@@ -3106,24 +3113,24 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IsolationWindow.Contains(System.Double)">
             <summary>
-            True of the mz is within the isolation window
+            True if the m/z is within the isolation window
             </summary>
             <param name="mz"></param>
-            <returns></returns>
+            <returns>True if in the window</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IsolationWindow.Equals(InformedProteomics.Backend.Data.Spectrometry.IsolationWindow)">
             <summary>
             Object equality
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IsolationWindow.CompareTo(InformedProteomics.Backend.Data.Spectrometry.IsolationWindow)">
             <summary>
             Comparer for sorting, orders by Target m/z
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>0, 1, or -1</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IsolationWindow.Equals(System.Object)">
             <inheritdoc />
@@ -3158,7 +3165,7 @@
             Compare two isotopes by Index
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>0, -1, or 1</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Isotope.ToString">
             <inheritdoc />
@@ -3178,24 +3185,24 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcMsChargeMap.GetMatchingFeatureIds(System.Double)">
             <summary>
-            Get feature ids of features that match the sequence mass
+            Get feature IDs of features that match the sequence mass
             </summary>
             <param name="sequenceMass"></param>
-            <returns></returns>
+            <returns>List of Feature IDs</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcMsChargeMap.GetMatchingMs2ScanNums(System.Double)">
             <summary>
             Get MS2 scan numbers that have precursors that match the sequence mass
             </summary>
             <param name="sequenceMass"></param>
-            <returns></returns>
+            <returns>List of scan numbers</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcMsChargeMap.GetMatchingMass(System.Int32)">
             <summary>
             Get the mass matching the scan number
             </summary>
             <param name="ms2ScanNum"></param>
-            <returns></returns>
+            <returns>List of matching m/z values</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcMsChargeMap.CreateMassToScanNumMap">
             <summary>
@@ -3253,14 +3260,14 @@
             Get the bin number for the provided mass
             </summary>
             <param name="mass"></param>
-            <returns></returns>
+            <returns>Bin number</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcMsMatchMap.GetMass(System.Int32)">
             <summary>
             Get the mass for the provided bin number
             </summary>
             <param name="binNum"></param>
-            <returns></returns>
+            <returns>m/z</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.LcMsPeak">
             <summary>
@@ -3282,10 +3289,10 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcMsPeak.CompareTo(InformedProteomics.Backend.Data.Spectrometry.LcMsPeak)">
             <summary>
-            Compare 2 LcMsPeaks (for sorting)
+            Compare two LcMsPeaks (for sorting)
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>0, -1 or 1</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter">
             <summary>
@@ -3294,22 +3301,22 @@
         </member>
         <member name="F:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.dataReader">
             <summary>
-            MassSpec data reader to read raw spectra from.
+            MassSpec data reader to read raw spectra from
             </summary>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.deconvoluter">
             <summary>
-            Spectrum deconvoluter.
+            Spectrum deconvoluter
             </summary>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.msLevelSet">
             <summary>
-            The MS levels (ex MS1, MS2, etc) to extract spectra for.
+            The MS levels (ex MS1, MS2, etc) to extract spectra for
             </summary>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.maxDegreeOfParallelism">
             <summary>
-            The maximum number of threads the deconvoluter can use.
+            The maximum number of threads the deconvoluter can use
             </summary>
             <remarks>
             If -1, the system will decide the max thread count
@@ -3318,39 +3325,45 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.#ctor(InformedProteomics.Backend.MassSpecData.IMassSpecDataReader,InformedProteomics.Backend.Data.Spectrometry.Deconvoluter,System.Collections.Generic.IEnumerable{System.Int32},System.Int32)">
             <summary>
-            Initializes a new instance of the <see cref="T:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter" /> class.
-            This constructor creates an instance with multiple MSLevels for default (MS1 and MS2).
+            Initializes a new instance of the <see cref="T:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter" /> class
             </summary>
-            <param name="dataReader">MassSpec data reader to read raw spectra from.</param>
-            <param name="deconvoluter">Spectrum deconvoluter.</param>
-            <param name="msLevels">The MS levels (ex MS1, MS2, etc) to extract spectra for.</param>
-            <param name="maxDegreeOfParallelism">The maximum number of threads the deconvoluter can use.</param>
+            <param name="dataReader">MassSpec data reader to read raw spectra from</param>
+            <param name="deconvoluter">Spectrum deconvoluter</param>
+            <param name="msLevels">The MS levels (ex MS1, MS2, etc) to extract spectra for</param>
+            <param name="maxDegreeOfParallelism">The maximum number of threads the deconvoluter can use</param>
+            <remarks>
+            This constructor creates an instance with multiple MSLevels for default (MS1 and MS2)
+            </remarks>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.#ctor(InformedProteomics.Backend.MassSpecData.IMassSpecDataReader,InformedProteomics.Backend.Data.Spectrometry.Deconvoluter,System.Int32,System.Int32)">
             <summary>
-            Initializes a new instance of the <see cref="T:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter" /> class.
-            This constructor creates an instance with a single MSLevel
+            Initializes a new instance of the <see cref="T:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter" /> class
             </summary>
-            <param name="dataReader">MassSpec data reader to read raw spectra from.</param>
-            <param name="deconvoluter">Spectrum deconvoluter.</param>
-            <param name="msLevel">The MS level (ex MS1, MS2, etc) to extract spectra for.</param>
-            <param name="maxDegreeOfParallelism">The maximum number of threads the deconvoluter can use.</param>
+            <param name="dataReader">MassSpec data reader to read raw spectra from</param>
+            <param name="deconvoluter">Spectrum deconvoluter</param>
+            <param name="msLevel">The MS level (ex MS1, MS2, etc) to extract spectra for</param>
+            <param name="maxDegreeOfParallelism">The maximum number of threads the deconvoluter can use</param>
+            <remarks>
+            This constructor creates an instance with a single MSLevel
+            </remarks>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.ReadAllSpectra(System.Boolean)">
             <summary>
-            Gets all spectra.
-            Deconvolutes spectra in parallel as it reads them.
+            Gets all spectra
             </summary>
             <param name="includePeaks">Ignored</param>
-            <returns>Deconvoluted spectra.</returns>
+            <returns>Deconvoluted spectra</returns>
+            <remarks>
+            Deconvolutes spectra in parallel as it reads them
+            </remarks>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.ReadMassSpectrum(System.Int32,System.Boolean)">
             <summary>
-            Returns the spectrum specified by the scan number and deconvolutes it.
+            Returns the spectrum specified by the scan number and deconvolutes it
             </summary>
-            <param name="scanNum">The scan to deconvolute.</param>
+            <param name="scanNum">The scan to deconvolute</param>
             <param name="includePeaks">Should it be deconvoluted?</param>
-            <returns>Deconvoluted spectrum.</returns>
+            <returns>Deconvoluted spectrum</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.GetSpectrum(System.Int32,System.Boolean)">
             <summary>
@@ -3358,16 +3371,16 @@
             </summary>
             <param name="scanNum"></param>
             <param name="includePeaks"></param>
-            <returns></returns>
+            <returns>Spectrum object</returns>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.NumSpectra">
             <summary>
-            Gets the number of spectra in the file.
+            Gets the number of spectra in the file
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.Close">
             <summary>
-            Close the reader.
+            Close the reader
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.Dispose">
@@ -3383,15 +3396,19 @@
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.NativeIdFormat">
             <summary>
-            The NativeIdFormat stored/used by the source file - needed for tracking purposes.
-            Child term of PSI-MS term MS:1000767, native spectrum identifier format
+            The NativeIdFormat stored/used by the source file - needed for tracking purposes
             </summary>
+            <remarks>
+            Child term of PSI-MS term MS:1000767, native spectrum identifier format
+            </remarks>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.NativeFormat">
             <summary>
-            The Native Format of the source file - needed for tracking purposes.
-            Child term of PSI-MS term MS:1000560, mass spectrometer file format
+            The Native Format of the source file - needed for tracking purposes
             </summary>
+            <remarks>
+            Child term of PSI-MS term MS:1000560, mass spectrometer file format
+            </remarks>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.LcmsRunDeconvoluter.FilePath">
             <summary>
@@ -3505,17 +3522,17 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Peak.CompareTo(InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
-            Compare 2 peaks (for sorting by m/z)
+            Compare two peaks (for sorting by m/z)
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>0, 1, or -1</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Peak.Equals(InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
-            Test 2 peaks for equality
+            Test two peaks for equality
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Peak.Equals(System.Object)">
             <inheritdoc />
@@ -3529,7 +3546,6 @@
             </summary>
             <param name="left"></param>
             <param name="right"></param>
-            <returns></returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Peak.op_Inequality(InformedProteomics.Backend.Data.Spectrometry.Peak,InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
@@ -3537,7 +3553,6 @@
             </summary>
             <param name="left"></param>
             <param name="right"></param>
-            <returns></returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.IntensityComparer">
             <summary>
@@ -3546,15 +3561,15 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.IntensityComparer.Compare(InformedProteomics.Backend.Data.Spectrometry.Peak,InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
-            Compare 2 peaks by intensity
+            Compare two peaks by intensity
             </summary>
             <param name="x"></param>
             <param name="y"></param>
-            <returns></returns>
+            <returns>0, 1, or -1</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithTolerance">
             <summary>
-            Compare by m/z. Two peaks within ppmTolerance are considered to be equal.
+            Compare by m/z; two peaks within ppmTolerance are considered to be equal
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithTolerance.#ctor(InformedProteomics.Backend.Data.Spectrometry.Tolerance)">
@@ -3571,26 +3586,26 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithTolerance.Compare(InformedProteomics.Backend.Data.Spectrometry.Peak,InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
-            Compare 2 peaks by m/z with a tolerance
+            Compare two peaks by m/z with a tolerance
             </summary>
             <param name="x"></param>
             <param name="y"></param>
-            <returns></returns>
+            <returns>0, 1, or-1</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithTolerance.Equals(InformedProteomics.Backend.Data.Spectrometry.Peak,InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
-            Test 2 peaks for m/z equality, within a tolerance
+            Test two peaks for m/z equality, within a tolerance
             </summary>
             <param name="x"></param>
             <param name="y"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithTolerance.GetHashCode(InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <inheritdoc />
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithPpmTolerance">
             <summary>
-            Compare by m/z. Two peaks within ppmTolerance are considered to be equal.
+            Compare by m/z; two peaks within ppmTolerance are considered to be equal
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithPpmTolerance.#ctor(System.Double)">
@@ -3601,15 +3616,15 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithPpmTolerance.Equals(InformedProteomics.Backend.Data.Spectrometry.Peak,InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
-            Test 2 peaks for m/z equality, within a tolerance
+            Test two peaks for m/z equality, within a tolerance
             </summary>
             <param name="x"></param>
             <param name="y"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithToleranceMz">
             <summary>
-            Compare by m/z. Two peaks within toleranceTh Th are considered to be equal.
+            Compare by m/z; two peaks within toleranceTh Th are considered to be equal
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithToleranceMz.#ctor(System.Double)">
@@ -3620,18 +3635,18 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithToleranceMz.Equals(InformedProteomics.Backend.Data.Spectrometry.Peak,InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
-            Test 2 peaks for m/z equality, within a tolerance
+            Test two peaks for m/z equality, within a tolerance
             </summary>
             <param name="x"></param>
             <param name="y"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithToleranceMz.GetHashCode(InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <inheritdoc />
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning">
             <summary>
-            Compare by m/z. Two peaks within ppmTolerance are considered to be equal.
+            Compare by m/z; two peaks within ppmTolerance are considered to be equal
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.#ctor(System.Int32)">
@@ -3642,71 +3657,71 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.Equals(InformedProteomics.Backend.Data.Spectrometry.Peak,InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
-            Check if 2 peaks are in the same m/z bin
+            Check if two peaks are in the same m/z bin
             </summary>
             <param name="x"></param>
             <param name="y"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.Equals(System.Double,System.Double)">
             <summary>
-            Check if 2 masses are in the same m/z bin
+            Check if two masses are in the same m/z bin
             </summary>
             <param name="x"></param>
             <param name="y"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.GetHashCode(InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <inheritdoc />
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.Compare(InformedProteomics.Backend.Data.Spectrometry.Peak,InformedProteomics.Backend.Data.Spectrometry.Peak)">
             <summary>
-            Compare 2 peaks by m/z bin
+            Compare two peaks by m/z bin
             </summary>
             <param name="x"></param>
             <param name="y"></param>
-            <returns></returns>
+            <returns>0, 1, or -1</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.GetRoundedValue(System.Double)">
             <summary>
             Get the m/z rounded by <see cref="F:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.NumBits"/> using bit shifting magic
             </summary>
             <param name="mz"></param>
-            <returns></returns>
+            <returns>Rounded m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.GetBinNumber(System.Double)">
             <summary>
             Get the bin number for the m/z
             </summary>
             <param name="mz"></param>
-            <returns></returns>
+            <returns>Bin number</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.GetMzStart(System.Int32)">
             <summary>
             Get the lowest m/z value in bin <paramref name="binNum"/>, inclusive
             </summary>
             <param name="binNum"></param>
-            <returns></returns>
+            <returns>Lowest m/z in the bin</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.GetMzEnd(System.Int32)">
             <summary>
             Get the highest m/z value in bin <paramref name="binNum"/>, exclusive
             </summary>
             <param name="binNum"></param>
-            <returns></returns>
+            <returns>Highest m/z in the bin</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.GetMzAverage(System.Int32)">
             <summary>
             Get average m/z for bin <paramref name="binNum"/>
             </summary>
             <param name="binNum"></param>
-            <returns></returns>
+            <returns>Average m/z value (halfway between the lowest and highest values)</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.GetTolerance">
             <summary>
             Get the ppm tolerance that corresponds to <see cref="F:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.NumBits"/>
             </summary>
-            <returns></returns>
+            <returns>Tolerance object</returns>
         </member>
         <member name="P:InformedProteomics.Backend.Data.Spectrometry.MzComparerWithBinning.Ppm">
             <summary>
@@ -3929,7 +3944,7 @@
             <param name="ion">ion</param>
             <param name="tolerance">tolerance</param>
             <param name="relativeIntensityThreshold">relative intensity threshold of the theoretical isotope profile</param>
-            <returns>true if spectrum contains all ions; false otherwise.</returns>
+            <returns>true if spectrum contains all ions; false otherwise</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.GetAllIsotopePeaks(InformedProteomics.Backend.Data.Biology.Ion,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
             <summary>
@@ -3938,7 +3953,7 @@
             <param name="ion">ion</param>
             <param name="tolerance">tolerance</param>
             <param name="relativeIntensityThreshold">relative intensity threshold of the theoretical isotope profile</param>
-            <returns>array of observed isotope peaks in the spectrum. null if no peak found.</returns>
+            <returns>Array of observed isotope peaks in the spectrum; null if no peak found</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.GetAllIsotopePeaks(System.Double,System.Int32,InformedProteomics.Backend.Data.Composition.IsotopomerEnvelope,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
             <summary>
@@ -3949,7 +3964,7 @@
             <param name="envelope"></param>
             <param name="tolerance"></param>
             <param name="relativeIntensityThreshold"></param>
-            <returns></returns>
+            <returns>Array of matching peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.GetCorrScore(InformedProteomics.Backend.Data.Biology.Ion,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
             <summary>
@@ -4019,7 +4034,7 @@
             </summary>
             <param name="peakStartIndex"></param>
             <param name="peakEndIndex"></param>
-            <returns></returns>
+            <returns>Histogram bucket</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.FilterNoiseByIntensityHistogram">
             <summary>
@@ -4037,14 +4052,14 @@
             Get a spectrum where the peaks have been filtered by the signal to noise ratio
             </summary>
             <param name="signalToNoiseRatio"></param>
-            <returns></returns>
+            <returns>Filtered spectrum</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.GetFilteredSpectrumBySlope(System.Double)">
             <summary>
             Get a spectrum where the peaks have been filtered by the slope
             </summary>
             <param name="slopeThreshold"></param>
-            <returns></returns>
+            <returns>Filtered spectrum</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.GetFilteredSpectrumByLocalWindow(System.Double,System.Int32)">
             <summary>
@@ -4052,7 +4067,7 @@
             </summary>
             <param name="signalToNoiseRatio"></param>
             <param name="windowPpm"></param>
-            <returns></returns>
+            <returns>Filtered spectrum</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.FindPeakIndex(System.Double,InformedProteomics.Backend.Data.Spectrometry.Tolerance)">
             <summary>
@@ -4060,7 +4075,7 @@
             </summary>
             <param name="mz"></param>
             <param name="tolerance"></param>
-            <returns></returns>
+            <returns>Peak index</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.FindPeakIndex(System.Double,System.Double)">
             <summary>
@@ -4068,7 +4083,7 @@
             </summary>
             <param name="minMz"></param>
             <param name="maxMz"></param>
-            <returns></returns>
+            <returns>Peak index</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Spectrum.OverrideScanNumber(System.Int32)">
             <summary>
@@ -4096,47 +4111,47 @@
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.TargetedDeconvolutedSpectrum">
             <summary>
-            This class exists to do a single targeted, single ion deconvolution of a non-deconvoluted spectrum.
+            This class exists to do a single targeted, single ion deconvolution of a non-deconvoluted spectrum
             </summary>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Spectrometry.TargetedDeconvolutedSpectrum.spectrum">
             <summary>
-            Non-deconvoluted spectrum.
+            Non-deconvoluted spectrum
             </summary>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Spectrometry.TargetedDeconvolutedSpectrum.minCharge">
             <summary>
-            The minimum charge state to consider.
+            The minimum charge state to consider
             </summary>
         </member>
         <member name="F:InformedProteomics.Backend.Data.Spectrometry.TargetedDeconvolutedSpectrum.maxCharge">
             <summary>
-            The maximum charge state to consider.
+            The maximum charge state to consider
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.TargetedDeconvolutedSpectrum.#ctor(InformedProteomics.Backend.Data.Spectrometry.Spectrum,System.Int32,System.Int32)">
             <summary>
-            Initializes a new instance of the <see cref="T:InformedProteomics.Backend.Data.Spectrometry.TargetedDeconvolutedSpectrum" /> class.
+            Initializes a new instance of the <see cref="T:InformedProteomics.Backend.Data.Spectrometry.TargetedDeconvolutedSpectrum" /> class
             </summary>
-            <param name="spectrum">Non-deconvoluted spectrum.</param>
-            <param name="minCharge">The minimum charge state to consider.</param>
-            <param name="maxCharge">The maximum charge state to consider.</param>
+            <param name="spectrum">Non-deconvoluted spectrum</param>
+            <param name="minCharge">The minimum charge state to consider</param>
+            <param name="maxCharge">The maximum charge state to consider</param>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.TargetedDeconvolutedSpectrum.FindPeak(InformedProteomics.Backend.Data.Composition.Composition,InformedProteomics.Backend.Data.Spectrometry.Tolerance)">
             <summary>
             Find a neutral monoisotopic peak corresponding to a single compound
             </summary>
-            <param name="composition">The compound to look for.</param>
-            <param name="tolerance">The peak tolerance to use.</param>
-            <returns>The neutral monoisotopic peak.</returns>
+            <param name="composition">The compound to look for</param>
+            <param name="tolerance">The peak tolerance to use</param>
+            <returns>The neutral monoisotopic peak</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.TargetedDeconvolutedSpectrum.GetCorrCos(InformedProteomics.Backend.Data.Biology.Ion,System.Collections.Generic.IReadOnlyList{InformedProteomics.Backend.Data.Spectrometry.Peak})">
             <summary>
-            Gets the pearson correlation and cosine score of an observed isotopic distribution compared to a theoretical ion.
+            Gets the Pearson correlation and cosine score of an observed isotopic distribution compared to a theoretical ion
             </summary>
-            <param name="ion">Theoretical ion.</param>
-            <param name="observedPeaks">The observed isotopic distribution.</param>
-            <returns>A tuple where the first item is pearson correlation and the second item is cosine.</returns>
+            <param name="ion">Theoretical ion</param>
+            <param name="observedPeaks">The observed isotopic distribution</param>
+            <returns>A tuple where the first item is Pearson correlation and the second item is cosine</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.Tolerance">
             <summary>
@@ -4145,12 +4160,12 @@
         </member>
         <member name="F:InformedProteomics.Backend.Data.Spectrometry.Tolerance.OnePpm">
             <summary>
-            Constant tolerance object for 1 PPM
+            Constant tolerance object for 1 ppm
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Tolerance.#ctor(System.Double)">
             <summary>
-            Instantiate a tolerance with the supplied value and PPM units
+            Instantiate a tolerance with the supplied value and ppm units
             </summary>
             <param name="value"></param>
         </member>
@@ -4165,27 +4180,27 @@
             <summary>
             Get the tolerance value for this instance
             </summary>
-            <returns></returns>
+            <returns>Tolerance value</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Tolerance.GetUnit">
             <summary>
             Get the tolerance unit set for this instance
             </summary>
-            <returns></returns>
+            <returns>Tolerance unit</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Tolerance.GetToleranceAsMz(System.Double)">
             <summary>
             Get the tolerance limit in terms of m/z for the supplied mass
             </summary>
             <param name="mz"></param>
-            <returns></returns>
+            <returns>Tolerance, as m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Tolerance.GetToleranceAsTh(System.Double)">
             <summary>
             Get the tolerance limit in terms of Thomsons (m/z) for the supplied mass
             </summary>
             <param name="mz"></param>
-            <returns></returns>
+            <returns>Tolerance, as m/z</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Tolerance.GetToleranceAsDa(System.Double,System.Int32)">
             <summary>
@@ -4193,7 +4208,7 @@
             </summary>
             <param name="mz"></param>
             <param name="charge"></param>
-            <returns></returns>
+            <returns>Tolerance, as uncharged mass in Daltons</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Tolerance.IsWithin(System.Double,System.Double)">
             <summary>
@@ -4201,20 +4216,20 @@
             </summary>
             <param name="mz1"></param>
             <param name="mz2"></param>
-            <returns></returns>
+            <returns>True if the m/z values are within tolerance</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Tolerance.ToString">
             <summary>
             Return the string representation of this tolerance
             </summary>
-            <returns></returns>
+            <returns>Human-readable tolerance, including units</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Tolerance.Parse(System.String)">
             <summary>
             Return a tolerance object that was created using the data from the supplied string
             </summary>
             <param name="tolStr"></param>
-            <returns></returns>
+            <returns>Tolerance object</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Data.Spectrometry.ToleranceUnit">
             <summary>
@@ -4248,44 +4263,44 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.GetCorrelation(InformedProteomics.Backend.Data.Spectrometry.Xic)">
             <summary>
-            Get the Pearson correlation of 2 XICs
+            Get the Pearson correlation of two XICs
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>Correlation score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.GetCosine(InformedProteomics.Backend.Data.Spectrometry.Xic)">
             <summary>
-            Get the Cosine score of 2 XICs
+            Get the Cosine score of two XICs
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>Cosine</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.GetSumIntensities">
             <summary>
             Get the sum of the intensities in the XIC
             </summary>
-            <returns></returns>
+            <returns>Summed intensity</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.ContainsScanNum(System.Int32)">
             <summary>
             Check if this XIC contains data in scan <paramref name="scanNum"/>
             </summary>
             <param name="scanNum"></param>
-            <returns></returns>
+            <returns>True if the XIC includes the given scan</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.GetApexScanNum">
             <summary>
             Get the scan number of the highest-intensity peak in this XIC
             </summary>
-            <returns></returns>
+            <returns>Scan number</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.GetNearestApexScanNum(System.Int32,System.Boolean)">
             <summary>
-            Get the nearest intensity peak to the provided scan number
+            Get the scan number of the peak closest to the given scan number
             </summary>
             <param name="scanNumber"></param>
             <param name="performSmoothing"></param>
-            <returns></returns>
+            <returns>Scan number</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.Display(System.Int32)">
             <summary>
@@ -4299,17 +4314,17 @@
             Sort XicPoints and select one peak per scan
             </summary>
             <param name="xic"></param>
-            <returns></returns>
+            <returns>Xic object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.Equals(System.Object)">
             <inheritdoc />
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.Equals(InformedProteomics.Backend.Data.Spectrometry.Xic)">
             <summary>
-            Check 2 XICs for equality
+            Check two XICs for equality
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.Xic.GetHashCode">
             <inheritdoc />
@@ -4350,17 +4365,17 @@
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.XicPoint.CompareTo(InformedProteomics.Backend.Data.Spectrometry.XicPoint)">
             <summary>
-            Compare 2 XicPoints
+            Compare two XicPoints
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>0, 1, or -1</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.XicPoint.Equals(InformedProteomics.Backend.Data.Spectrometry.XicPoint)">
             <summary>
-            Check 2 XicPoints for equality
+            Check two XicPoints for equality
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>True if the items match</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.XicPoint.ToString">
             <inheritdoc />
@@ -4377,7 +4392,6 @@
             </summary>
             <param name="left"></param>
             <param name="right"></param>
-            <returns></returns>
         </member>
         <member name="M:InformedProteomics.Backend.Data.Spectrometry.XicPoint.op_Inequality(InformedProteomics.Backend.Data.Spectrometry.XicPoint,InformedProteomics.Backend.Data.Spectrometry.XicPoint)">
             <summary>
@@ -4385,7 +4399,6 @@
             </summary>
             <param name="left"></param>
             <param name="right"></param>
-            <returns></returns>
         </member>
         <member name="T:InformedProteomics.Backend.FeatureFindingResults.Ms1FtEntry">
             <summary>
@@ -4496,7 +4509,7 @@
             </summary>
             <param name="filePath">path to .ms1ft file</param>
             <param name="readExtendedData">if true, and file has extended data, <see cref="P:InformedProteomics.Backend.FeatureFindingResults.Ms1FtEntry.ExtendedData"/> will be populated from the file</param>
-            <returns></returns>
+            <returns>List of features</returns>
         </member>
         <member name="T:InformedProteomics.Backend.FeatureFindingResults.Ms1FtEntry.Ms1FtEntryMap">
             <summary>
@@ -4630,7 +4643,7 @@
             </summary>
             <param name="mz">target m/z</param>
             <param name="tolerance">tolerance</param>
-            <returns>XIC as an Xic object</returns>
+            <returns>XIC object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.IChromatogramExtractor.GetFullPrecursorIonExtractedIonChromatogram(System.Double,System.Double)">
             <summary>
@@ -4639,7 +4652,7 @@
             </summary>
             <param name="minMz">min m/z</param>
             <param name="maxMz">max m/z</param>
-            <returns>XIC as an Xic object</returns>
+            <returns>XIC object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.IChromatogramExtractor.GetFullProductExtractedIonChromatogram(System.Double,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
             <summary>
@@ -4648,16 +4661,16 @@
             <param name="mz">target m/z</param>
             <param name="tolerance">tolerance</param>
             <param name="precursorIonMz">precursor m/z of the precursor ion</param>
-            <returns>XIC as an Xic object</returns>
+            <returns>XIC object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.IChromatogramExtractor.GetFullProductExtractedIonChromatogram(System.Double,System.Double,System.Double)">
             <summary>
-            Returns a xic for the chosen range that covers the entire run.
+            Returns a XIC for the chosen range that covers the entire run.
             </summary>
             <param name="minMz"></param>
             <param name="maxMz"></param>
             <param name="precursorIonMz"></param>
-            <returns></returns>
+            <returns>XIC object</returns>
         </member>
         <member name="T:InformedProteomics.Backend.MassSpecData.ILcMsRun">
             <summary>
@@ -4701,7 +4714,7 @@
             </summary>
             <param name="scanNum"></param>
             <param name="includePeaks"></param>
-            <returns></returns>
+            <returns>Spectrum object</returns>
         </member>
         <member name="P:InformedProteomics.Backend.MassSpecData.IMassSpecDataReader.NumSpectra">
             <summary>
@@ -4766,7 +4779,7 @@
             Get the native ID of the specified scan number
             </summary>
             <param name="scanNum"></param>
-            <returns></returns>
+            <returns>Native ID string</returns>
         </member>
         <member name="P:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.MinLcScan">
             <summary>
@@ -4788,14 +4801,14 @@
             Get the elution time of the specified scan number
             </summary>
             <param name="scanNum"></param>
-            <returns></returns>
+            <returns>Elution time</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.GetDriftTime(System.Int32)">
             <summary>
             Get the ion mobility drift time of the specified scan number (if data is ion mobility)
             </summary>
             <param name="scanNum"></param>
-            <returns></returns>
+            <returns>Drift time</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.GetMsLevel(System.Int32)">
             <summary>
@@ -4810,7 +4823,7 @@
             </summary>
             <param name="scanNum">scan number</param>
             <param name="msLevel">MS level</param>
-            <returns>previous scan number at the specified level</returns>
+            <returns>Previous scan number at the specified level</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.GetNextScanNum(System.Int32,System.Int32)">
             <summary>
@@ -4818,21 +4831,21 @@
             </summary>
             <param name="scanNum">scan number</param>
             <param name="msLevel">MS level</param>
-            <returns>next scan number at the specified level</returns>
+            <returns>Next scan number at the specified level</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.GetScanNumbers(System.Int32)">
             <summary>
             Gets the scan numbers of the specified msLevel
             </summary>
             <param name="msLevel">MS level</param>
-            <returns>scan numbers of the specified msLevel</returns>
+            <returns>Scan numbers of the specified msLevel</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.ISpectrumAccessor.GetIsolationWindow(System.Int32)">
             <summary>
             Read and return the isolation window for the specified scan number
             </summary>
             <param name="scanNum"></param>
-            <returns></returns>
+            <returns>Isolation window</returns>
         </member>
         <member name="T:InformedProteomics.Backend.MassSpecData.ISpectrumExtractor">
             <summary>
@@ -4845,7 +4858,7 @@
             </summary>
             <param name="scanNum"></param>
             <param name="includePeaks"></param>
-            <returns></returns>
+            <returns>Spectrum object</returns>
         </member>
         <member name="T:InformedProteomics.Backend.MassSpecData.LcMsRun">
             <summary>
@@ -4962,7 +4975,7 @@
             </summary>
             <param name="scanNum"></param>
             <param name="includePeaks"></param>
-            <returns></returns>
+            <returns>Spectrum object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.TryMakeRandomAccessCapable">
             <summary>
@@ -4976,7 +4989,7 @@
             </summary>
             <param name="scanNum"></param>
             <param name="includePeaks"></param>
-            <returns></returns>
+            <returns>Spectrum object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetMs1Spectrum(System.Int32,System.Int32@)">
             <summary>
@@ -4984,42 +4997,42 @@
             </summary>
             <param name="scanNum"></param>
             <param name="ms1ScanIndex"></param>
-            <returns></returns>
+            <returns>Spectrum object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetIsolationWindow(System.Int32)">
             <summary>
             Return the isolation window for the specified scan number
             </summary>
             <param name="scanNum"></param>
-            <returns></returns>
+            <returns>Isolation window object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetMsLevel(System.Int32)">
             <summary>
-            Gets the MS level of the specified scan
+            Gets the MS Level of the specified scan
             </summary>
             <param name="scanNum">scan number</param>
-            <returns>MS level</returns>
+            <returns>MS Level</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetElutionTime(System.Int32)">
             <summary>
             Get the elution time of the specified scan number
             </summary>
             <param name="scanNum"></param>
-            <returns></returns>
+            <returns>Elution time</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetNativeId(System.Int32)">
             <summary>
             Get the native ID of the specified scan number
             </summary>
             <param name="scanNum"></param>
-            <returns></returns>
+            <returns>Native ID string</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetDriftTime(System.Int32)">
             <summary>
             Get the ion mobility drift time of the specified scan number (if data is ion mobility)
             </summary>
             <param name="scanNum"></param>
-            <returns></returns>
+            <returns>Drift time</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetPrecursorScanNum(System.Int32)">
             <summary>
@@ -5030,7 +5043,7 @@
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetNextScanNum(System.Int32)">
             <summary>
-            Gets the next scan number whose ms level is smaller by 1
+            Gets the next scan number whose MS Level is smaller by 1
             </summary>
             <param name="scanNum">scan number</param>
             <returns>next scan number or MaxLc for MS1</returns>
@@ -5040,35 +5053,35 @@
             Gets the greatest scan number smaller than ms2ScanNum
             </summary>
             <param name="scanNum">scan number</param>
-            <param name="msLevel">MS level</param>
+            <param name="msLevel">MS Level</param>
             <returns>previous scan number at the specified level</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetNextScanNum(System.Int32,System.Int32)">
             <summary>
-            Gets the smallest scan number larger than ms2ScanNum
+            Gets the smallest scan number larger than ms2ScanNum, for the given MS Level
             </summary>
             <param name="scanNum">scan number</param>
-            <param name="msLevel">MS level</param>
+            <param name="msLevel">MS Level</param>
             <returns>next scan number at the specified level</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetScanNumbers(System.Int32)">
             <summary>
             Gets the scan numbers of the specified msLevel
             </summary>
-            <param name="msLevel">MS level</param>
+            <param name="msLevel">MS Level</param>
             <returns>scan numbers of the specified msLevel</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetMs1ScanVector">
             <summary>
             An array of all of the MS1 scan numbers
             </summary>
-            <returns></returns>
+            <returns>MS1 scan numbers</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetMs1ScanNumToIndex">
             <summary>
             Array of length MaxLcScan where entries that are non-zero are the scan index of the given scan number
             </summary>
-            <returns></returns>
+            <returns>Scan number</returns>
             <remarks>
             For example, if scan 7 is the 5th MS1 scan in the dataset, then _ms1ScanNumToIndex[7] is 4
             Entries in the array that are 0 mean that MS1 scan does not map to an index
@@ -5096,7 +5109,7 @@
             </summary>
             <param name="mz">target m/z</param>
             <param name="tolerance">tolerance</param>
-            <returns>XIC as an Xic object</returns>
+            <returns>XIC object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetFullPrecursorIonExtractedIonChromatogram(System.Double,System.Double)">
             <summary>
@@ -5105,7 +5118,7 @@
             </summary>
             <param name="minMz">min m/z</param>
             <param name="maxMz">max m/z</param>
-            <returns>XIC as an Xic object</returns>
+            <returns>XIC object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetFullPrecursorIonExtractedIonChromatogramVector(System.Double,System.Double)">
             <summary>
@@ -5121,7 +5134,7 @@
             </summary>
             <param name="mz">target m/z</param>
             <param name="tolerance">tolerance</param>
-            <returns>XIC as an Xic object</returns>
+            <returns>XIC object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetPrecursorExtractedIonChromatogram(System.Double,System.Double)">
             <summary>
@@ -5129,7 +5142,7 @@
             </summary>
             <param name="minMz"></param>
             <param name="maxMz"></param>
-            <returns></returns>
+            <returns>Extracted ion chromatogram data</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetPrecursorExtractedIonChromatogram(System.Double,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Int32,System.Int32)">
             <summary>
@@ -5159,7 +5172,7 @@
             </summary>
             <param name="minMz"></param>
             <param name="maxMz"></param>
-            <returns></returns>
+            <returns>Extracted ion chromatogram data</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetFullProductExtractedIonChromatogram(System.Double,InformedProteomics.Backend.Data.Spectrometry.Tolerance,System.Double)">
             <summary>
@@ -5168,7 +5181,7 @@
             <param name="mz">target m/z</param>
             <param name="tolerance">tolerance</param>
             <param name="precursorIonMz">precursor m/z of the precursor ion</param>
-            <returns>XIC as an Xic object</returns>
+            <returns>XIC object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetFullProductExtractedIonChromatogram(System.Double,System.Double,System.Double)">
             <summary>
@@ -5177,7 +5190,7 @@
             <param name="minMz"></param>
             <param name="maxMz"></param>
             <param name="precursorMz"></param>
-            <returns></returns>
+            <returns>Extracted ion chromatogram data</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetTrimmedXic(InformedProteomics.Backend.Data.Spectrometry.Xic,System.Int32,System.Int32)">
             <summary>
@@ -5192,13 +5205,13 @@
             <summary>
             Return the number of unique isolation windows in the dataset
             </summary>
-            <returns></returns>
+            <returns>Isolation window count</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetMinIsolationWindowWidth">
             <summary>
             Get the narrowest isolation window width
             </summary>
-            <returns></returns>
+            <returns>Narrowest window width</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.GetFragmentationSpectraScanNums(InformedProteomics.Backend.Data.Biology.Ion)">
             <summary>
@@ -5239,6 +5252,19 @@
             True if DIA data, false if not, null if unknown
             </summary>
         </member>
+        <member name="F:InformedProteomics.Backend.MassSpecData.LcMsRun._precursorScan">
+            <summary>
+            This dictionary tracks, for each scan, its corresponding precursor scan number (if an MS2 scan); for MS1 scans, it stores 0
+            </summary>
+        </member>
+        <member name="F:InformedProteomics.Backend.MassSpecData.LcMsRun._nextScan">
+            <summary>
+            This dictionary tracks, for each scan, the next scan number whose MS Level is smaller by 1
+            </summary>
+            <remarks>
+            For all MS1 scans, it stores one more than the final scan number in the file
+            </remarks>
+        </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRun.CreatePrecursorNextScanMap">
             <summary>
             Create the maps for linking MSn scans to their precursors, and for getting the next MS1 scan number given a scan number
@@ -5256,7 +5282,7 @@
             <param name="lcmsRun"></param>
             <param name="scanNums"></param>
             <param name="repScanNum">Representative scan number</param>
-            <returns></returns>
+            <returns>Summed spectrum</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRunExtensions.GetSummedMs1Spectrum(InformedProteomics.Backend.MassSpecData.ISpectrumAccessor,System.Int32,System.Double)">
             <summary>
@@ -5265,7 +5291,7 @@
             <param name="lcmsRun"></param>
             <param name="scanNum"></param>
             <param name="elutionTimeTolerance"></param>
-            <returns></returns>
+            <returns>Summed spectrum</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRunExtensions.GetSummedMs1Spectrum(InformedProteomics.Backend.MassSpecData.ISpectrumAccessor,System.Int32,System.Int32)">
             <summary>
@@ -5274,7 +5300,7 @@
             <param name="lcmsRun"></param>
             <param name="minScanNum">min scan number, inclusive</param>
             <param name="maxScanNum">max scan number, inclusive</param>
-            <returns></returns>
+            <returns>Summed spectrum</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MassSpecData.LcMsRunExtensions.GetSummedMs2Spectrum(InformedProteomics.Backend.MassSpecData.ILcMsRun,System.Double,System.Int32,System.Int32,System.Int32,System.Int32,InformedProteomics.Backend.Data.Spectrometry.ActivationMethod)">
             <summary>
@@ -5287,7 +5313,7 @@
             <param name="minCharge">min charge, inclusive</param>
             <param name="maxCharge">max charge, inclusive</param>
             <param name="activationMethod"></param>
-            <returns></returns>
+            <returns>Summed MS2 spectrum</returns>
         </member>
         <member name="T:InformedProteomics.Backend.MathAndStats.ArrayUtil">
             <summary>
@@ -5310,7 +5336,7 @@
             <param name="array"></param>
             <param name="delimiter"></param>
             <param name="format"></param>
-            <returns></returns>
+            <returns>Human-readable list of values</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.ArrayUtil.GetRankings(System.Collections.Generic.IEnumerable{System.Double},System.Double)">
             <summary>
@@ -5318,7 +5344,7 @@
             </summary>
             <param name="values"></param>
             <param name="lowerBoundValue"></param>
-            <returns></returns>
+            <returns>Array of rankings</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.ArrayUtil.GetRankings(System.Collections.Generic.IEnumerable{System.Double},System.Double@,System.Double)">
             <summary>
@@ -5327,18 +5353,9 @@
             <param name="values"></param>
             <param name="median"></param>
             <param name="lowerBoundValue"></param>
-            <returns></returns>
+            <returns>Array of rankings</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.ArrayUtil.MaxSumSubarray(System.Collections.Generic.IList{System.Int32},System.Int32@,System.Int32@)">
-            <summary>
-            Kadane's algorithm
-            </summary>
-            <param name="a"></param>
-            <param name="start"></param>
-            <param name="len"></param>
-            <returns></returns>
-        </member>
-        <member name="M:InformedProteomics.Backend.MathAndStats.ArrayUtil.MaxSumSubarray(System.Collections.Generic.IList{System.Double},System.Int32@,System.Int32@)">
             <summary>
             Kadane's algorithm
             https://en.wikipedia.org/wiki/Maximum_subarray_problem
@@ -5346,16 +5363,27 @@
             <param name="a"></param>
             <param name="start"></param>
             <param name="len"></param>
-            <returns></returns>
+            <returns>Maximum sum of a contiguous subarray</returns>
+        </member>
+        <member name="M:InformedProteomics.Backend.MathAndStats.ArrayUtil.MaxSumSubarray(System.Collections.Generic.IList{System.Double},System.Int32@,System.Int32@)">
+            <summary>
+            Kadane's algorithm
+            </summary>
+            <param name="a"></param>
+            <param name="start"></param>
+            <param name="len"></param>
+            <returns>Maximum sum of a contiguous subarray</returns>
         </member>
         <member name="T:InformedProteomics.Backend.MathAndStats.CubicSpline">
             <summary>
-            Cubic spline interpolation.
-            Call Fit (or use the corrector constructor) to compute spline coefficients, then Eval to evaluate the spline at other X coordinates.
+            Cubic spline interpolation
+            <para>
+            Call Fit (or use the corrector constructor) to compute spline coefficients, then Eval to evaluate the spline at other X coordinates
+            </para>
             </summary>
             <remarks>
             <para>
-            This is implemented based on the wikipedia article:
+            This is implemented based on the Wikipedia article:
             http://en.wikipedia.org/wiki/Spline_interpolation
             I'm not sure I have the right to include a copy of the article so the equation numbers referenced in
             comments will end up being wrong at some point.
@@ -5369,22 +5397,22 @@
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.#ctor">
             <summary>
-            Default ctor.
+            Constructor
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.#ctor(System.Single[],System.Single[],System.Single,System.Single,System.Boolean)">
             <summary>
-            Construct and call Fit.
+            Construct and call Fit
             </summary>
-            <param name="x">Input. X coordinates to fit.</param>
-            <param name="y">Input. Y coordinates to fit.</param>
-            <param name="startSlope">Optional slope constraint for the first point. Single.NaN means no constraint.</param>
-            <param name="endSlope">Optional slope constraint for the final point. Single.NaN means no constraint.</param>
-            <param name="debug">Turn on console output. Default is false.</param>
+            <param name="x">Input: X coordinates to fit</param>
+            <param name="y">Input: Y coordinates to fit</param>
+            <param name="startSlope">Optional slope constraint for the first point. Single.NaN means no constraint</param>
+            <param name="endSlope">Optional slope constraint for the final point. Single.NaN means no constraint</param>
+            <param name="debug">True to write messages to the console</param>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.CheckAlreadyFitted">
             <summary>
-            Throws if Fit has not been called.
+            Throws an exception if Fit has not yet been called
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.GetNextXIndex(System.Single)">
@@ -5396,27 +5424,27 @@
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.EvalSpline(System.Single,System.Int32,System.Boolean)">
             <summary>
-            Evaluate the specified x value using the specified spline.
+            Evaluate the specified x value using the specified spline
             </summary>
-            <param name="x">The x value.</param>
-            <param name="j">Which spline to use.</param>
-            <param name="debug">Turn on console output. Default is false.</param>
-            <returns>The y value.</returns>
+            <param name="x">The x value</param>
+            <param name="j">Which spline to use</param>
+            <param name="debug">True to enable writing messages to the console</param>
+            <returns>The y value</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.FitAndEval(System.Single[],System.Single[],System.Single[],System.Single,System.Single,System.Boolean)">
             <summary>
-            Fit x,y and then eval at points xs and return the corresponding y's.
+            Fit x,y and then evaluate at points in xs and return the corresponding y's.
             This does the "natural spline" style for ends.
             This can extrapolate off the ends of the splines.
             You must provide points in X sort order.
             </summary>
-            <param name="x">Input. X coordinates to fit.</param>
-            <param name="y">Input. Y coordinates to fit.</param>
-            <param name="xs">Input. X coordinates to evaluate the fitted curve at.</param>
-            <param name="startSlope">Optional slope constraint for the first point. Single.NaN means no constraint.</param>
-            <param name="endSlope">Optional slope constraint for the final point. Single.NaN means no constraint.</param>
-            <param name="debug">Turn on console output. Default is false.</param>
-            <returns>The computed y values for each xs.</returns>
+            <param name="x">Input: X coordinates to fit</param>
+            <param name="y">Input: Y coordinates to fit</param>
+            <param name="xs">Input: X coordinates to evaluate the fitted curve at</param>
+            <param name="startSlope">Optional slope constraint for the first point. Single.NaN means no constraint</param>
+            <param name="endSlope">Optional slope constraint for the final point. Single.NaN means no constraint</param>
+            <param name="debug">Turn on console output. Default is false</param>
+            <returns>The computed y values for each xs</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.Fit(System.Single[],System.Single[],System.Single,System.Single,System.Boolean)">
             <summary>
@@ -5425,11 +5453,11 @@
             This can extrapolate off the ends of the splines.
             You must provide points in X sort order.
             </summary>
-            <param name="x">Input. X coordinates to fit.</param>
-            <param name="y">Input. Y coordinates to fit.</param>
-            <param name="startSlope">Optional slope constraint for the first point. Single.NaN means no constraint.</param>
-            <param name="endSlope">Optional slope constraint for the final point. Single.NaN means no constraint.</param>
-            <param name="debug">Turn on console output. Default is false.</param>
+            <param name="x">Input: X coordinates to fit</param>
+            <param name="y">Input: Y coordinates to fit</param>
+            <param name="startSlope">Optional slope constraint for the first point. Single.NaN means no constraint</param>
+            <param name="endSlope">Optional slope constraint for the final point. Single.NaN means no constraint</param>
+            <param name="debug">Turn on console output. Default is false</param>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.Eval(System.Single[],System.Boolean)">
             <summary>
@@ -5438,9 +5466,9 @@
             You must provide X's in ascending order.
             The spline must already be computed before calling this, meaning you must have already called Fit() or FitAndEval().
             </summary>
-            <param name="x">Input. X coordinates to evaluate the fitted curve at.</param>
-            <param name="debug">Turn on console output. Default is false.</param>
-            <returns>The computed y values for each x.</returns>
+            <param name="x">Input. X coordinates to evaluate the fitted curve at</param>
+            <param name="debug">Turn on console output. Default is false</param>
+            <returns>The computed y values for each x</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.EvalSlope(System.Single[],System.Boolean)">
             <summary>
@@ -5449,32 +5477,32 @@
             You must provide X's in ascending order.
             The spline must already be computed before calling this, meaning you must have already called Fit() or FitAndEval().
             </summary>
-            <param name="x">Input. X coordinates to evaluate the fitted curve at.</param>
-            <param name="debug">Turn on console output. Default is false.</param>
-            <returns>The computed y values for each x.</returns>
+            <param name="x">Input. X coordinates to evaluate the fitted curve at</param>
+            <param name="debug">Turn on console output. Default is false</param>
+            <returns>The computed y values for each x</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.Compute(System.Single[],System.Single[],System.Single[],System.Single,System.Single,System.Boolean)">
             <summary>
-            Static all-in-one method to fit the splines and evaluate at X coordinates.
+            Static all-in-one method to fit the splines and evaluate at X coordinates
             </summary>
-            <param name="x">Input. X coordinates to fit.</param>
-            <param name="y">Input. Y coordinates to fit.</param>
-            <param name="xs">Input. X coordinates to evaluate the fitted curve at.</param>
-            <param name="startSlope">Optional slope constraint for the first point. Single.NaN means no constraint.</param>
-            <param name="endSlope">Optional slope constraint for the final point. Single.NaN means no constraint.</param>
-            <param name="debug">Turn on console output. Default is false.</param>
-            <returns>The computed y values for each xs.</returns>
+            <param name="x">Input: X coordinates to fit</param>
+            <param name="y">Input: Y coordinates to fit</param>
+            <param name="xs">Input: X coordinates to evaluate the fitted curve at</param>
+            <param name="startSlope">Optional slope constraint for the first point. Single.NaN means no constraint</param>
+            <param name="endSlope">Optional slope constraint for the final point. Single.NaN means no constraint</param>
+            <param name="debug">Turn on console output. Default is false</param>
+            <returns>The computed y values for each xs</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.CubicSpline.FitGeometric(System.Single[],System.Single[],System.Int32,System.Single[]@,System.Single[]@)">
             <summary>
             Fit the input x,y points using a 'geometric' strategy so that y does not have to be a single-valued
-            function of x.
+            function of x
             </summary>
-            <param name="x">Input x coordinates.</param>
-            <param name="y">Input y coordinates, do not need to be a single-valued function of x.</param>
-            <param name="nOutputPoints">How many output points to create.</param>
-            <param name="xs">Output (interpolated) x values.</param>
-            <param name="ys">Output (interpolated) y values.</param>
+            <param name="x">Input: x coordinates</param>
+            <param name="y">Input: y coordinates, do not need to be a single-valued function of x</param>
+            <param name="nOutputPoints">How many output points to create</param>
+            <param name="xs">Output (interpolated) x values</param>
+            <param name="ys">Output (interpolated) y values</param>
         </member>
         <member name="T:InformedProteomics.Backend.MathAndStats.FitScoreCalculator">
             <summary>
@@ -5490,7 +5518,7 @@
             <param name="count"></param>
             <param name="v1Index"></param>
             <param name="v2Index"></param>
-            <returns></returns>
+            <returns>Distance</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.FitScoreCalculator.GetHyperGeometricPValue(System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean)">
             <summary>
@@ -5501,7 +5529,7 @@
             <param name="n1"></param>
             <param name="k1"></param>
             <param name="upperTailProb"></param>
-            <returns></returns>
+            <returns>P value</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.FitScoreCalculator.GetRankSumPValue(System.Double,System.Double,System.Double,System.Boolean)">
             <summary>
@@ -5511,7 +5539,7 @@
             <param name="n1"></param>
             <param name="r1"></param>
             <param name="upperTailProb"></param>
-            <returns></returns>
+            <returns>P value</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.FitScoreCalculator.GetDistanceAndCorrelation(System.Double[],System.Double[],System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -5522,7 +5550,7 @@
             <param name="count"></param>
             <param name="v1Index"></param>
             <param name="v2Index"></param>
-            <returns></returns>
+            <returns>Distance and correlation</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.FitScoreCalculator.GetPearsonCorrelation(System.Double[],System.Double[],System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -5533,7 +5561,7 @@
             <param name="count"></param>
             <param name="v1Index"></param>
             <param name="v2Index"></param>
-            <returns></returns>
+            <returns>Correlation</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.FitScoreCalculator.GetCosine(System.Double[],System.Double[])">
             <summary>
@@ -5541,7 +5569,7 @@
             </summary>
             <param name="theoreticalPeakList"></param>
             <param name="observedPeakList"></param>
-            <returns></returns>
+            <returns>Cosine score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.FitScoreCalculator.GetDotProduct(System.Double[],System.Double[])">
             <summary>
@@ -5549,15 +5577,15 @@
             </summary>
             <param name="theoreticalPeakList"></param>
             <param name="observedPeakList"></param>
-            <returns></returns>
+            <returns>Dot product</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.FitScoreCalculator.GetDeconToolsFit(System.Double[],System.Double[])">
             <summary>
-            Calculate the Decon Tools fit score for the provided data. Smaller scores are better.
+            Calculate the DeconTools fit score for the provided data. Smaller scores are better.
             </summary>
             <param name="theoreticalPeakList"></param>
             <param name="observedPeakList"></param>
-            <returns></returns>
+            <returns>Fit score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.FitScoreCalculator.GetFitOfNormalizedVectors(System.Double[],System.Double[])">
             <summary>
@@ -5565,7 +5593,7 @@
             </summary>
             <param name="normTheoreticalPeakList"></param>
             <param name="normObservedPeakList"></param>
-            <returns></returns>
+            <returns>Fit score</returns>
         </member>
         <member name="T:InformedProteomics.Backend.MathAndStats.OtsuThreshold">
             <summary>
@@ -5582,7 +5610,7 @@
             <param name="intervalX"></param>
             <param name="xLb"></param>
             <param name="xUb"></param>
-            <returns></returns>
+            <returns>Threshold</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.OtsuThreshold.GetThreshold(System.Double[][],System.Double,System.Double,System.Double,System.Int32,System.Int32,System.Int32,System.Int32,System.Double,System.Double)">
             <summary>
@@ -5598,7 +5626,7 @@
             <param name="maxCol"></param>
             <param name="xLb"></param>
             <param name="xUb"></param>
-            <returns></returns>
+            <returns>Threshold</returns>
         </member>
         <member name="T:InformedProteomics.Backend.MathAndStats.SavitzkyGolaySmoother">
             <summary>
@@ -5623,7 +5651,7 @@
             Smooth the provided array
             </summary>
             <param name="inputValues"></param>
-            <returns></returns>
+            <returns>Array of smoothed values</returns>
         </member>
         <member name="T:InformedProteomics.Backend.MathAndStats.SimpleMath">
             <summary>
@@ -5636,7 +5664,7 @@
             </summary>
             <param name="n"></param>
             <param name="k"></param>
-            <returns></returns>
+            <returns>Calculated value</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetCombination(System.Int32,System.Int32)">
             <summary>
@@ -5644,7 +5672,7 @@
             </summary>
             <param name="n"></param>
             <param name="k"></param>
-            <returns></returns>
+            <returns>Calculated value</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetLogCombination(System.Int32,System.Int32)">
             <summary>
@@ -5652,7 +5680,7 @@
             </summary>
             <param name="n"></param>
             <param name="k"></param>
-            <returns></returns>
+            <returns>Calculated value</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetCombinationsWithRepetition(System.Int32,System.Int32)">
             <summary>
@@ -5660,7 +5688,7 @@
             </summary>
             <param name="n"></param>
             <param name="length"></param>
-            <returns></returns>
+            <returns>Calculated value</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetNtoTheKCombinations(System.Int32,System.Int32)">
             <summary>
@@ -5668,7 +5696,7 @@
             </summary>
             <param name="n"></param>
             <param name="length"></param>
-            <returns></returns>
+            <returns>Calculated value</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetCorrelation(System.Double[],System.Double[])">
             <summary>
@@ -5676,14 +5704,14 @@
             </summary>
             <param name="v1"></param>
             <param name="v2"></param>
-            <returns></returns>
+            <returns>Correlation score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetSampleMean(System.Double[])">
             <summary>
             Get the mean of the values in <paramref name="x"/>
             </summary>
             <param name="x"></param>
-            <returns></returns>
+            <returns>Mean</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetSampleVariance(System.Double[],System.Double)">
             <summary>
@@ -5691,14 +5719,14 @@
             </summary>
             <param name="x"></param>
             <param name="m"></param>
-            <returns></returns>
+            <returns>Variance</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetSampleMean(System.Single[])">
             <summary>
             Get the mean of the values in <paramref name="x"/>
             </summary>
             <param name="x"></param>
-            <returns></returns>
+            <returns>Mean</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetSampleVariance(System.Single[],System.Single)">
             <summary>
@@ -5706,14 +5734,14 @@
             </summary>
             <param name="x"></param>
             <param name="m"></param>
-            <returns></returns>
+            <returns>Variance</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetFactors(System.Int32)">
             <summary>
             Get the factors of x
             </summary>
             <param name="x"></param>
-            <returns></returns>
+            <returns>List of factors</returns>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.SimpleMath.GetKLDivergence(System.Double[],System.Double[])">
             <summary>
@@ -5721,16 +5749,16 @@
             </summary>
             <param name="P"></param>
             <param name="Q"></param>
-            <returns></returns>
+            <returns>Calculated value</returns>
         </member>
         <member name="T:InformedProteomics.Backend.MathAndStats.TriDiagonalMatrixF">
             <summary>
             A tri-diagonal matrix has non-zero entries only on the main diagonal, the diagonal above the main (super), and the
-            diagonal below the main (sub).
+            diagonal below the main (sub)
             </summary>
             <remarks>
             <para>
-            This is based on the wikipedia article: http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm
+            This is based on the Wikipedia article: http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm
             </para>
             <para>
             The entries in the matrix on a particular row are A[i], B[i], and C[i] where i is the row index.
@@ -5743,50 +5771,59 @@
         </member>
         <member name="F:InformedProteomics.Backend.MathAndStats.TriDiagonalMatrixF.A">
             <summary>
-            The values for the sub-diagonal. A[0] is never used.
+            The values for the sub-diagonal
             </summary>
+            <remarks>
+            A[0] is never used
+            </remarks>
         </member>
         <member name="F:InformedProteomics.Backend.MathAndStats.TriDiagonalMatrixF.B">
             <summary>
-            The values for the main diagonal.
+            The values for the main diagonal
             </summary>
         </member>
         <member name="F:InformedProteomics.Backend.MathAndStats.TriDiagonalMatrixF.C">
             <summary>
-            The values for the super-diagonal. C[C.Length-1] is never used.
+            The values for the super-diagonal
             </summary>
+            <remarks>
+            C[C.Length-1] is never used
+            </remarks>
         </member>
         <member name="P:InformedProteomics.Backend.MathAndStats.TriDiagonalMatrixF.N">
             <summary>
-            The width and height of this matrix.
+            The width and height of this matrix
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.MathAndStats.TriDiagonalMatrixF.Item(System.Int32,System.Int32)">
             <summary>
-            Indexer. Setter throws an exception if you try to set any not on the super, main, or sub diagonals.
+            Indexer
             </summary>
+            <remarks>
+            Setter throws an exception if you try to set any not on the super, main, or sub diagonals
+            </remarks>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.TriDiagonalMatrixF.#ctor(System.Int32)">
             <summary>
-            Construct an NxN matrix.
+            Construct an NxN matrix
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.TriDiagonalMatrixF.ToDisplayString(System.String,System.String)">
             <summary>
-            Produce a string representation of the contents of this matrix.
+            Produce a string representation of the contents of this matrix
             </summary>
-            <param name="fmt">Optional. For String.Format. Must include the colon. Examples are ':0.000' and ',5:0.00' </param>
-            <param name="prefix">Optional. Per-line indentation prefix.</param>
+            <param name="fmt">Optional: For string.Format. Must include the colon. Examples are ':0.000' and ',5:0.00'</param>
+            <param name="prefix">Optional: Per-line indentation prefix</param>
         </member>
         <member name="M:InformedProteomics.Backend.MathAndStats.TriDiagonalMatrixF.Solve(System.Single[])">
             <summary>
-            Solve the system of equations this*x=d given the specified d.
+            Solve the system of equations this*x=d given the specified d
             </summary>
             <remarks>
-            Uses the Thomas algorithm described in the wikipedia article: http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm
+            Uses the Thomas algorithm described in the Wikipedia article: http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm
             Not optimized. Not destructive.
             </remarks>
-            <param name="d">Right side of the equation.</param>
+            <param name="d">Right side of the equation</param>
         </member>
         <member name="T:InformedProteomics.Backend.MathAndStats.VennDiagram`1">
             <summary>
@@ -5969,20 +6006,20 @@
             Read in result data from the specified TSV format file.
             </summary>
             <param name="filePath"></param>
-            <returns></returns>
+            <returns>List of database search results</returns>
         </member>
         <member name="M:InformedProteomics.Backend.SearchResults.DatabaseSearchResultData.ReadResultsFromFileToMzIdData(System.String)">
             <summary>
             Read results from TSV file into group of objects from PSI_Interface
             </summary>
             <param name="idFilePath"></param>
-            <returns></returns>
+            <returns>Container with database search results</returns>
         </member>
         <member name="M:InformedProteomics.Backend.SearchResults.DatabaseSearchResultData.ToString">
             <summary>
-            Show the scan number and the sequence
+            Show the scan number, scores, and sequence
             </summary>
-            <returns></returns>
+            <returns>Human-readable description of this database search result</returns>
         </member>
         <member name="T:InformedProteomics.Backend.SearchResults.Extensions">
             <summary>
@@ -5995,7 +6032,7 @@
             </summary>
             <param name="results"></param>
             <param name="pepQValueThreshold"></param>
-            <returns></returns>
+            <returns>List of peptides</returns>
         </member>
         <member name="M:InformedProteomics.Backend.SearchResults.Extensions.GetPeptidesAboveQValueThreshold(System.Collections.Generic.IEnumerable{InformedProteomics.Backend.SearchResults.DatabaseSearchResultData},System.Double)">
             <summary>
@@ -6003,7 +6040,7 @@
             </summary>
             <param name="results"></param>
             <param name="qValueThreshold"></param>
-            <returns></returns>
+            <returns>List of filter-passing peptides</returns>
         </member>
         <member name="M:InformedProteomics.Backend.SearchResults.Extensions.GetPeptidesAboveThreshold(System.Collections.Generic.IEnumerable{InformedProteomics.Backend.SearchResults.DatabaseSearchResultData},System.Func{InformedProteomics.Backend.SearchResults.DatabaseSearchResultData,System.Double},System.Double)">
             <summary>
@@ -6012,7 +6049,7 @@
             <param name="results"></param>
             <param name="fieldSelector">A function, e.g. x => x.QValue</param>
             <param name="threshold"></param>
-            <returns></returns>
+            <returns>List of filter-passing peptides</returns>
         </member>
         <member name="T:InformedProteomics.Backend.SearchResults.FdrCalculator">
             <summary>
@@ -6060,7 +6097,6 @@
             <summary>
             True if there was an error calculating the FDR scores
             </summary>
-            <returns></returns>
         </member>
         <member name="M:InformedProteomics.Backend.SearchResults.FdrCalculator.WriteTo(System.String,System.Boolean)">
             <summary>
@@ -6079,7 +6115,7 @@
             Convert the sequence information from the external types to the internal types
             </summary>
             <param name="peptide"></param>
-            <returns></returns>
+            <returns>Sequence object</returns>
         </member>
         <member name="T:InformedProteomics.Backend.SearchResults.ResultFileReader">
             <summary>
@@ -6094,29 +6130,29 @@
         </member>
         <member name="M:InformedProteomics.Backend.SearchResults.ResultFileReader.ReadResultFile(System.String)">
             <summary>
-            Read the file at path <paramref name="filePath"/>.
+            Read the file at path <paramref name="filePath"/>
             </summary>
             <param name="filePath"></param>
-            <returns></returns>
+            <returns>Container with database search results</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Utils.AnonymousComparer`1">
             <summary>
-            Class used for helping create an IComparer class for binary search.
+            Class used for helping create an IComparer class for binary search
             </summary>
             <typeparam name="T"></typeparam>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.AnonymousComparer`1.#ctor(System.Comparison{`0})">
             <summary>
-            Constructor that requires the Comparison be passed in.
+            Constructor that requires the Comparison be passed in
             </summary>
-            <param name="comparison">The Comparison to be used for the binary search.</param>
+            <param name="comparison">The Comparison to be used for the binary search</param>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.AnonymousComparer`1.Compare(`0,`0)">
             <summary>
-            Compares 2 objects using the Comparison passed in when creating the AnonymousComparer class.
+            Compares 2 objects using the Comparison passed in when creating the AnonymousComparer class
             </summary>
-            <param name="x">The first object.</param>
-            <param name="y">The second object.</param>
+            <param name="x">The first object</param>
+            <param name="y">The second object</param>
             <returns>
             Less than zero if the first object precedes the second.
             Zero if the objects occur in the same position.
@@ -6190,22 +6226,22 @@
             Check if <paramref name="value"/> is within this range
             </summary>
             <param name="value"></param>
-            <returns></returns>
+            <returns>True if within range</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IntRange.Overlaps(InformedProteomics.Backend.Utils.IntRange)">
             <summary>
-            Check if 2 IntRanges overlap
+            Check if two IntRanges overlap
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>True if the ranges overlap</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IntRange.Union(InformedProteomics.Backend.Utils.IntRange,InformedProteomics.Backend.Utils.IntRange)">
             <summary>
-            Create a new IntRange that is the union of 2 other ranges
+            Create a new IntRange that is the union of two other ranges
             </summary>
             <param name="range1"></param>
             <param name="range2"></param>
-            <returns></returns>
+            <returns>New IntRange</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IntRange.Add(System.Int32)">
             <summary>
@@ -6230,143 +6266,143 @@
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IntRange.CompareTo(InformedProteomics.Backend.Utils.IntRange)">
             <summary>
-            Compare 2 IntRanges
+            Compare two IntRanges
             </summary>
             <param name="other"></param>
-            <returns></returns>
+            <returns>0, 1, or -1</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner">
             <summary>
             Class attempts to find ideal concentration of particular isotope by comparing it to an
-            observed isotopic profile.
+            observed isotopic profile
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.#ctor">
             <summary>
-            Initializes new instance of the <see cref="T:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner" /> class.
+            Initializes new instance of the <see cref="T:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner" /> class
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.Element">
             <summary>
-            Gets or sets the element to manipulate isotope proportions for.
+            Gets or sets the element for which isotope proportions will be manipulated
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeIndex">
             <summary>
-            Gets or sets the index of the isotope to manipulate, relative to the monoisotope.
+            Gets or sets the index of the isotope to manipulate, relative to the monoisotope
             </summary>
-            <remarks>Monoisotope is index 0.</remarks>
+            <remarks>Monoisotope is index 0</remarks>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.Tolerance">
             <summary>
-            Gets the peak tolerance for matching observed peaks to theoretical peaks.
+            Gets the peak tolerance for matching observed peaks to theoretical peaks
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.ObservedPeaks">
             <summary>
-            Gets or sets the list of observed peaks to compare to the theoretical isotope profile.
+            Gets or sets the list of observed peaks to compare to the theoretical isotope profile
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.Mass">
             <summary>
-            Gets or sets the monoisotopic mass of the ion to calculate isotope peaks for.
+            Gets or sets the monoisotopic mass of the ion for which isotope peaks will be calculated
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.Charge">
             <summary>
-            Gets or sets the charge of the ion to calculate isotope peaks for.
+            Gets or sets the charge of the ion for which isotope peaks will be calculated
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.StepSize">
             <summary>
-            Gets or sets the amount to increase the concentration of the selected isotope index for each iteration.
+            Gets or sets the amount to increase the concentration of the selected isotope index for each iteration
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.MaxConcentration">
             <summary>
-            Gets or sets the maximum concentration of the selected isotope to consider.
+            Gets or sets the maximum concentration of the selected isotope to consider
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.RelativeIntensityThreshold">
             <summary>
-            Gets or sets the least abundant theoretical isotope peak to consider, relative to the highest theoretical isotope peak.
+            Gets or sets the least abundant theoretical isotope peak to consider, relative to the highest theoretical isotope peak
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.Tune(System.IProgress{PRISM.ProgressData})">
             <summary>
             Try to find the best concentration of the selected isotope
             by stepping through the concentrations and fitting a theoretical
-            isotopic profile to the provided observed peaks.
+            isotopic profile to the provided observed peaks
             </summary>
-            <param name="progress">The progress reporter.</param>
+            <param name="progress">The progress reporter</param>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.GetTheoreticalIsotopeProfile(System.Double[])">
             <summary>
             Gets the theoretical isotope profile calculated using Averagine with the provided
-            isotope proportions.
+            isotope proportions
             </summary>
-            <param name="proportions">The proportions of each isotope.</param>
-            <returns>The theoretical isotope profile peaks.</returns>
+            <param name="proportions">The proportions of each isotope</param>
+            <returns>The theoretical isotope profile peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.AlignObservedPeaks(System.Collections.Generic.IList{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.IList{InformedProteomics.Backend.Data.Spectrometry.Peak},InformedProteomics.Backend.Data.Spectrometry.Tolerance)">
             <summary>
-            Aligns observed peak list to theoretical peak list.
+            Aligns observed peak list to theoretical peak list
             </summary>
             <param name="observedPeaks"></param>
             <param name="theoreticalPeaks"></param>
             <param name="tolerance"></param>
-            <returns></returns>
+            <returns>List of peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.GetDefaultProportions(InformedProteomics.Backend.Data.Biology.Atom)">
             <summary>
-            Get the default isotope proportions for the given element.
+            Get the default isotope proportions for the given element
             </summary>
-            <param name="element">The element to get the default proportions for.</param>
+            <param name="element">The element to get the default proportions for</param>
             <returns>An array where each index is the </returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.ValidateParameters">
             <summary>
-            Checks to make sure that the selected element is one that is possible to manipulate.
+            Checks to make sure that the selected element is one that is possible to manipulate
             </summary>
         </member>
         <member name="T:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve">
             <summary>
-            Class representing a the results of the isotope concentration tuning.
+            Class representing a the results of the isotope concentration tuning
             </summary>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve" />.
+            Initializes a new instance of the <see cref="T:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve" />
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve.DataPoints">
             <summary>
-            Gets or sets the curve showing isotope concentration vs pearson correlation with fit to observed peaks.
+            Gets or sets the curve showing isotope concentration vs Pearson correlation with fit to observed peaks
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve.BestConcentration">
             <summary>
-            The concentration with the best fit with observed peaks.
+            The concentration with the best fit with observed peaks
             </summary>
         </member>
         <member name="T:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve.ConcentrationCorrelationPoint">
             <summary>
-            Class representing a single point in the curve showing concentration vs correlation.
+            Class representing a single point in the curve showing concentration vs correlation
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve.ConcentrationCorrelationPoint.IsotopeConcentration">
             <summary>
-            Gets the concentration of selected isotope.
+            Gets the concentration of selected isotope
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve.ConcentrationCorrelationPoint.MonoisotopeConcentration">
             <summary>
-            Gets the concentration of monoisotope..
+            Gets the concentration of the monoisotope
             </summary>
         </member>
         <member name="P:InformedProteomics.Backend.Utils.IsotopicConcentrationTuner.IsotopeConcentrationCorrelationCurve.ConcentrationCorrelationPoint.PearsonCorrelation">
             <summary>
-            Gets pearson correlation of the isotope concentration fit to the observed peaks.
+            Gets Pearson correlation of the isotope concentration fit to the observed peaks
             </summary>
         </member>
         <member name="T:InformedProteomics.Backend.Utils.Misc">
@@ -6378,27 +6414,27 @@
             <summary>
             Parse the assembly's version to try to get a build date
             </summary>
-            <returns></returns>
+            <returns>Build date</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.Misc.GetBuildDateFromVersion(System.Version)">
             <summary>
             Parse the supplied version to try to get a build date
             </summary>
             <param name="version"></param>
-            <returns></returns>
+            <returns>Build date as a DateTime object</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.Misc.GetBuildDateTextFromVersion">
             <summary>
             Parse the assembly's version to try to get a build date
             </summary>
-            <returns></returns>
+            <returns>Build date</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.Misc.GetBuildDateTextFromVersion(System.Version)">
             <summary>
             Parse the supplied version to try to get a build date
             </summary>
             <param name="version"></param>
-            <returns></returns>
+            <returns>Build date</returns>
         </member>
         <member name="T:InformedProteomics.Backend.Utils.ParallelizationUtils">
             <summary>
@@ -6432,7 +6468,7 @@
             <param name="peakList"></param>
             <param name="mz"></param>
             <param name="tolerance"></param>
-            <returns></returns>
+            <returns>Peak in the given m/z range with the highest intensity</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.PeakListUtils.FindPeak(System.Collections.Generic.List{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Double,System.Double)">
             <summary>
@@ -6441,7 +6477,7 @@
             <param name="peakList"></param>
             <param name="minMz"></param>
             <param name="maxMz"></param>
-            <returns></returns>
+            <returns>Peak in the given m/z range with the highest intensity</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.PeakListUtils.FindAllPeaks(System.Collections.Generic.List{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Double,InformedProteomics.Backend.Data.Spectrometry.Tolerance)">
             <summary>
@@ -6450,7 +6486,7 @@
             <param name="peakList"></param>
             <param name="mz"></param>
             <param name="tolerance"></param>
-            <returns></returns>
+            <returns>List of matched peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.PeakListUtils.FindAllPeaks(System.Collections.Generic.List{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Double,System.Double)">
             <summary>
@@ -6459,7 +6495,7 @@
             <param name="peakList"></param>
             <param name="minMz"></param>
             <param name="maxMz"></param>
-            <returns></returns>
+            <returns>List of matched peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.PeakListUtils.GetPearsonCorrelation(System.Collections.Generic.IList{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.IList{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.IComparer{InformedProteomics.Backend.Data.Spectrometry.Peak})">
             <summary>
@@ -6468,7 +6504,7 @@
             <param name="spec"></param>
             <param name="isoProfile"></param>
             <param name="comparer"></param>
-            <returns></returns>
+            <returns>Pearson correlation</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.PeakListUtils.GetCosine(System.Collections.Generic.IList{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.IList{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.IComparer{InformedProteomics.Backend.Data.Spectrometry.Peak})">
             <summary>
@@ -6477,7 +6513,7 @@
             <param name="spec"></param>
             <param name="isoProfile"></param>
             <param name="comparer"></param>
-            <returns></returns>
+            <returns>Cosine score</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.PeakListUtils.GetIntersection(System.Collections.Generic.List{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.List{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.IComparer{InformedProteomics.Backend.Data.Spectrometry.Peak})">
             <summary>
@@ -6486,7 +6522,7 @@
             <param name="peakList1"></param>
             <param name="peakList2"></param>
             <param name="comparer"></param>
-            <returns></returns>
+            <returns>List of matching peaks</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.PeakListUtils.GetExceptWith(System.Collections.Generic.List{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.List{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.IComparer{InformedProteomics.Backend.Data.Spectrometry.Peak})">
             <summary>
@@ -6495,16 +6531,16 @@
             <param name="peakList1"></param>
             <param name="peakList2"></param>
             <param name="comparer"></param>
-            <returns></returns>
+            <returns>List of peaks only in peakList1</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.PeakListUtils.Sum(System.Collections.Generic.IList{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.IList{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.IComparer{InformedProteomics.Backend.Data.Spectrometry.Peak})">
             <summary>
-            Get the sum of the 2 peak lists
+            Get the sum of the two peak lists
             </summary>
             <param name="peakList1"></param>
             <param name="peakList2"></param>
             <param name="comparer"></param>
-            <returns></returns>
+            <returns>Combined list of peaks (without any duplicates)</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.PeakListUtils.FilterNoise(System.Collections.Generic.IList{InformedProteomics.Backend.Data.Spectrometry.Peak},System.Collections.Generic.List{InformedProteomics.Backend.Data.Spectrometry.Peak}@,System.Double)">
             <summary>
@@ -6536,7 +6572,7 @@
             Random shuffle a string
             </summary>
             <param name="str"></param>
-            <returns></returns>
+            <returns>Shuffled string</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.SimpleStringProcessing.Mutate(System.String,System.Int32)">
             <summary>
@@ -6544,14 +6580,15 @@
             </summary>
             <param name="textToMutate"></param>
             <param name="numMutations"></param>
-            <returns></returns>
+            <remarks>The given number of residues will be changed to a different residue</remarks>
+            <returns>String with randomly changed amino acids</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.SimpleStringProcessing.GetStringBetweenDots(System.String)">
             <summary>
-            Get the string between 2 periods, so A.PEPTIDE.J returns PEPTIDE
+            Get the string between two periods, so A.PEPTIDE.J returns PEPTIDE
             </summary>
             <param name="str"></param>
-            <returns></returns>
+            <returns>Sequence without the prefix or suffix residue</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.SimpleStringProcessing.DefineRandomNumberGeneratorSeed(System.Int32)">
             <summary>
@@ -6589,44 +6626,56 @@
             <summary>
             Get the TSV file headers
             </summary>
-            <returns></returns>
+            <returns>List of headers</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.TsvFileParser.GetAllData">
             <summary>
             Get all data in the TSV
             </summary>
-            <returns></returns>
+            <returns>Dictionary where keys are column names and values are the list of data read from the input file for the given column</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.TsvFileParser.GetData(System.String)">
             <summary>
             Get the data in the specified column
             </summary>
             <param name="columnName"></param>
-            <returns></returns>
+            <returns>List of data read from the input file for the given column, or null if the column name is invalid</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.TsvFileParser.GetRows">
             <summary>
             Get all rows of data
             </summary>
-            <returns></returns>
+            <returns>List of the data rows</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.TsvFileParser.GetPeptides(System.Double)">
             <summary>
-            Get peptides that pass the specified threshold
+            Get peptides that pass the specified PepQValue threshold
             </summary>
             <param name="pepQValueThreshold"></param>
-            <returns></returns>
+            <remarks>Filters on Q-values in column PepQValue</remarks>
+            <returns>List of filter passing peptides</returns>
         </member>
         <member name="M:InformedProteomics.Backend.Utils.TsvFileParser.GetPeptidesAboveQValueThreshold(System.Double)">
             <summary>
-            Get peptides that pass the specified threshold
+            Get peptides that pass the specified Q-value threshold
             </summary>
             <param name="qValueThreshold"></param>
-            <returns></returns>
+            <remarks>Filters on Q-values in column QValue</remarks>
+            <returns>List of filter passing peptides</returns>
         </member>
         <member name="F:InformedProteomics.Backend.Utils.TsvFileParser._header">
             <summary>
             Map from header column index to header column name
+            </summary>
+        </member>
+        <member name="F:InformedProteomics.Backend.Utils.TsvFileParser._rows">
+            <summary>
+            List of each row of data read from the input file
+            </summary>
+        </member>
+        <member name="F:InformedProteomics.Backend.Utils.TsvFileParser._data">
+            <summary>
+            Keys in this dictionary are column names, values are the list of data read from the input file for the given column
             </summary>
         </member>
     </members>
