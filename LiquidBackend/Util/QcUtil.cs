@@ -6,12 +6,12 @@ namespace LiquidBackend.Util
     public static class QcUtil
     {
         /// <summary>
-        /// Produces histogram data for a set of error values.
+        /// Produces histogram data for a set of error values
         /// </summary>
-        /// <param name="errorValues">A group of values to calculate the histogram data for.</param>
+        /// <param name="errorValues">A group of values to calculate the histogram data for</param>
         /// <param name="maxErrorToCheck"></param>
-        /// <param name="increment">The increment to use for bins.</param>
-        /// <returns>A SortedDictionary mapping maximum error to the number of values with that error.</returns>
+        /// <param name="increment">The increment to use for bins</param>
+        /// <returns>A SortedDictionary mapping maximum error to the number of values with that error</returns>
         public static SortedDictionary<double, int> CalculateHistogram(IEnumerable<double> errorValues, double maxErrorToCheck, double increment)
         {
             var hist = new SortedDictionary<double, int>();

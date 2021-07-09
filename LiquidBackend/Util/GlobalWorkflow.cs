@@ -27,6 +27,14 @@ namespace LiquidBackend.Util
             ScoreModel = ScoreModelSerialization.Deserialize(scoreModelLocation);
         }
 
+        /// <summary>
+        /// Run the workflow
+        /// </summary>
+        /// <param name="lipidList"></param>
+        /// <param name="hcdMassError"></param>
+        /// <param name="cidMassError"></param>
+        /// <param name="progress"></param>
+        /// <returns>List of search results</returns>
         public List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, double hcdMassError, double cidMassError, IProgress<int> progress = null)
         {
             return RunGlobalWorkflow(lipidList, LcMsRun, hcdMassError, cidMassError, ScoreModel, progress);
@@ -107,6 +115,15 @@ namespace LiquidBackend.Util
         }
         */
 
+        /// <summary>
+        /// Run the workflow on summed spectra
+        /// </summary>
+        /// <param name="lipidList"></param>
+        /// <param name="lcmsRun"></param>
+        /// <param name="hcdMassError"></param>
+        /// <param name="cidMassError"></param>
+        /// <param name="scoreModel"></param>
+        /// <returns>List of search results</returns>
         public static List<LipidGroupSearchResult> RunGlobalWorkflowAvgSpec(
             IEnumerable<Lipid> lipidList,
             LcMsRun lcmsRun,
@@ -220,6 +237,15 @@ namespace LiquidBackend.Util
         }
 
         public static double GetMsMsPrecursorMz(ProductSpectrum s)
+        /// <summary>
+        /// Get the precursor m/z of the given spectrum
+        /// </summary>
+        /// <param name="spectrum"></param>
+        /// <remarks>
+        /// Preferentially uses IsolationWindow.IsolationWindowTargetMz,
+        /// but will use IsolationWindow.MonoisotopicMz if IsolationWindowTargetMz is 0
+        /// </remarks>
+        /// <returns>Precursor m/z</returns>
         {
             var a = s.IsolationWindow.IsolationWindowTargetMz;
             var b = s.IsolationWindow.MonoisotopicMz;
@@ -229,6 +255,16 @@ namespace LiquidBackend.Util
             return a;
         }
 
+        /// <summary>
+        /// Run the workflow
+        /// </summary>
+        /// <param name="lipidList"></param>
+        /// <param name="lcmsRun"></param>
+        /// <param name="hcdMassError"></param>
+        /// <param name="cidMassError"></param>
+        /// <param name="scoreModel"></param>
+        /// <param name="progress"></param>
+        /// <returns>List of search results</returns>
         public static List<LipidGroupSearchResult> RunGlobalWorkflow(IEnumerable<Lipid> lipidList, LcMsRun lcmsRun, double hcdMassError, double cidMassError, ScoreModel scoreModel, IProgress<int> progress = null)
         {
             //TextWriter textWriter = new StreamWriter("outputNeg.tsv");

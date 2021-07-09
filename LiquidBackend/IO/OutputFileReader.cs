@@ -10,10 +10,10 @@ namespace LiquidBackend.IO
         private const string PERCENTAGE = "PERCENTAGE";
 
         /// <summary>
-        /// Creates a mapping of column titles to their indices.
+        /// Creates a mapping of column titles to their indices
         /// </summary>
-        /// <param name="columnString">The line containing the headers.</param>
-        /// <returns>A Dictionary mapping column titles to their indices.</returns>
+        /// <param name="columnString">The line containing the headers</param>
+        /// <returns>A Dictionary mapping column titles to their indices</returns>
         protected override Dictionary<string, int> CreateColumnMapping(string columnString)
         {
             var columnMap = new Dictionary<string, int>();
@@ -40,11 +40,11 @@ namespace LiquidBackend.IO
         }
 
         /// <summary>
-        /// Parses a line to create a Name, Scan map.
+        /// Parses a line to create a Name, Scan map
         /// </summary>
-        /// <param name="line">A line containing data representing a Lipid Identification.</param>
-        /// <param name="columnMapping">The mapping of column titles to their indices.</param>
-        /// <returns>A dictionary pairing common name with the scan the lipid was detected in.</returns>
+        /// <param name="line">A line containing data representing a Lipid Identification</param>
+        /// <param name="columnMapping">The mapping of column titles to their indices</param>
+        /// <returns>A dictionary pairing common name with the scan the lipid was detected in</returns>
         protected override T ParseLine(string line, IDictionary<string, int> columnMapping)
         {
             var columns = line.Split('\t', '\n');

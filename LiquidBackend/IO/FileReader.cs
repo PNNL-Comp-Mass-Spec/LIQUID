@@ -6,17 +6,17 @@ using System.Linq;
 namespace LiquidBackend.IO
 {
     /// <summary>
-    /// Parses a delimited file to create a list of data objects.
+    /// Parses a delimited file to create a list of data objects
     /// </summary>
     /// <typeparam name="T">Generic type</typeparam>
     public abstract class FileReader<T> : IFileReader<T> where T : class
     {
         /// <summary>
-        /// Reads in a file to produce a list of objects.
+        /// Reads in a file to produce a list of objects
         /// </summary>
-        /// <param name="fileInfo">A delimited file where the first line contains the headers.</param>
-        /// <param name="progress">Progress of the file loading.</param>
-        /// <returns>A list of objects generated from the data in the file.</returns>
+        /// <param name="fileInfo">A delimited file where the first line contains the headers</param>
+        /// <param name="progress">Progress of the file loading</param>
+        /// <returns>A list of objects generated from the data in the file</returns>
         public List<T> ReadFile(FileInfo fileInfo, IProgress<int> progress = null)
         {
             var list = new List<T>();

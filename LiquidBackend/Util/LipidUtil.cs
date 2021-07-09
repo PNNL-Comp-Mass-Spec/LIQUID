@@ -2014,11 +2014,11 @@ namespace LiquidBackend.Util
         /// <summary>
         /// Finds all isotope peaks corresponding to theoretical profiles with relative intensity higher than the threshold
         /// </summary>
-        /// <param name="spectrum">Observed spectrum.</param>
-        /// <param name="composition">Composition to calculate theoretical isotopic profile for.</param>
-        /// <param name="tolerance">Peak ppm tolerance.</param>
+        /// <param name="spectrum">Observed spectrum</param>
+        /// <param name="composition">Composition to calculate theoretical isotopic profile for</param>
+        /// <param name="tolerance">Peak ppm tolerance</param>
         /// <param name="relativeIntensityThreshold"></param>
-        /// <returns>array of observed isotope peaks in the spectrum. null if no peak found.</returns>
+        /// <returns>array of observed isotope peaks in the spectrum; null if no peak found</returns>
         public static Peak[] GetAllIsotopePeaks(Spectrum spectrum, Composition composition, Tolerance tolerance, double relativeIntensityThreshold)
         {
             var peaks = spectrum.Peaks;
@@ -2098,11 +2098,11 @@ namespace LiquidBackend.Util
         }
 
         /// <summary>
-        /// Calculates the PPM error between two values.
+        /// Calculates the ppm-based error between two values
         /// </summary>
-        /// <param name="num1">Expected value.</param>
-        /// <param name="num2">Observed value.</param>
-        /// <returns>PPM error between expected and observed value.</returns>
+        /// <param name="num1">Expected value</param>
+        /// <param name="num2">Observed value</param>
+        /// <returns>Parts per million based error between expected and observed values</returns>
         public static double PpmError(double num1, double num2)
         {
             // (X - Y) / X * 1,000,000
