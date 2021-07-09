@@ -50,7 +50,7 @@ namespace LiquidBackend.Util
             int MS1Frames = ImsRun.GetNumberOfFrames(DataReader.FrameType.MS1);
             int MS2Frames = ImsRun.GetNumberOfFrames(DataReader.FrameType.MS2);
 
-            var gp = ImsRun.GetGlobalParams();
+            var globalParams = ImsRun.GetGlobalParams();
             var frameList = ImsRun.GetMasterFrameList();
 
             ActivationMethodCombination activationMethodCombination = MS2Frames > 0 ? ActivationMethodCombination.CidOnly : ActivationMethodCombination.Unsupported;
@@ -74,12 +74,12 @@ namespace LiquidBackend.Util
                     if (mz > lowMz)
                     {
                         // Target IMS feature found in this scan
-                        double[] MS2Mz;
-                        int[] MS2Ints;
+                        double[] ms2Mz;
+                        int[] ms2Intensities;
                         ImsRun.GetSpectrum(feature.LcStart, feature.LcEnd, DataReader.FrameType.MS2, feature.ImsStart,
-                            feature.ImsEnd, out MS2Mz, out MS2Ints);
-                        var MS2Intensity = (from intensity in MS2Ints select (double) (intensity)).ToArray();
-                        Spectrum spec = new ProductSpectrum(MS2Mz, MS2Intensity, feature.ImsScan);
+                            feature.ImsEnd, out ms2Mz, out ms2Intensities);
+                        var ms2Intensity = (from intensity in ms2Intensities select (double) (intensity)).ToArray();
+                        Spectrum spec = new ProductSpectrum(ms2Mz, ms2Intensity, feature.ImsScan);
                         spec.MsLevel = 2;
                         Spectra.Add(spec);
                     }
@@ -442,25 +442,27 @@ namespace LiquidBackend.Util
 
         public static ActivationMethodCombination FigureOutActivationMethodCombination(LcMsRun lcmsRun)
         {
-            var Ms1ScanNumbers = lcmsRun.GetScanNumbers(1).ToList();
-            var Ms2ScanNumbers = lcmsRun.GetScanNumbers(2).ToList();
+            var ms1ScanNumbers = lcmsRun.GetScanNumbers(1).ToList();
+            var ms2ScanNumbers = lcmsRun.GetScanNumbers(2).ToList();
             ProductSpectrum firstMsMsSpectrum;
             int firstMsMsScanNumber;
-            if (Ms1ScanNumbers.Count > 0)
+            if (ms1ScanNumbers.Count > 0)
             {
                 // Grab an MS1 Scan that's about 33% through the file so that we get accurate MS2 data
-                var indexToGrab = (int)Math.Floor(Ms1ScanNumbers.Count / 3.0);
-                var ms1ScanNumberInMiddleOfRun = Ms1ScanNumbers[indexToGrab];
+                var indexToGrab = (int)Math.Floor(ms1ScanNumbers.Count / 3.0);
+                var ms1ScanNumberInMiddleOfRun = ms1ScanNumbers[indexToGrab];
 
+                // Find the scan number of the next MS/MS spectrum
                 firstMsMsScanNumber = lcmsRun.GetNextScanNum(ms1ScanNumberInMiddleOfRun, 2);
 
-                // Lookup the first MS/MS Spectrum
+                // Get the MS/MS spectrum
                 firstMsMsSpectrum = lcmsRun.GetSpectrum(firstMsMsScanNumber) as ProductSpectrum;
             }
             else
             {
-                var indexToGrab = (int)Math.Floor(Ms2ScanNumbers.Count / 3.0);
-                var ms2ScanNumberInMiddleOfRun = Ms2ScanNumbers[indexToGrab];
+                // There are no MS1 spectra
+                var indexToGrab = (int)Math.Floor(ms2ScanNumbers.Count / 3.0);
+                var ms2ScanNumberInMiddleOfRun = ms2ScanNumbers[indexToGrab];
                 firstMsMsSpectrum = lcmsRun.GetSpectrum(ms2ScanNumberInMiddleOfRun) as ProductSpectrum;
                 if (firstMsMsSpectrum == null) return ActivationMethodCombination.Unsupported;
                 firstMsMsScanNumber = firstMsMsSpectrum.ScanNum;
@@ -468,7 +470,7 @@ namespace LiquidBackend.Util
 
             if (firstMsMsSpectrum == null) return ActivationMethodCombination.Unsupported;
 
-            // Lookup the second MS/MS Spectrum
+            // Get the next MS/MS spectrum
             var nextMsMsScanNumber = lcmsRun.GetNextScanNum(firstMsMsScanNumber, 2);
             var nextMsMsSpectrum = lcmsRun.GetSpectrum(nextMsMsScanNumber) as ProductSpectrum;
 
@@ -503,6 +505,7 @@ namespace LiquidBackend.Util
                     let peak = spectrum.FindPeak(msMsSearchUnit.Mz, tolerance)
                     select new MsMsSearchResult(msMsSearchUnit, peak)).ToList();
         }
+
         #region "Events"
 
         private void LcMsDataFactory_ProgressChanged(object sender, ProgressData e)
