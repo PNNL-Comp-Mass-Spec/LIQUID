@@ -127,7 +127,7 @@ namespace LiquidBackend.Util
             return spectrumSearchResultList;
         }
 
-        public static List<SpectrumSearchResult> RunFragmentWorkflow(ICollection<MsMsSearchUnit> fragments, LcMsRun lcmsRun, double hcdMassError, double cidMassError, int minMatches, IProgress<int> progress = null )
+        public static List<SpectrumSearchResult> RunFragmentWorkflow(ICollection<MsMsSearchUnit> fragments, LcMsRun lcmsRun, double hcdMassError, double cidMassError, int minMatches, IProgress<int> progress = null)
         {
             var PISearchUnits = fragments.Where(x => x.Description.Equals("Product Ion")).ToList();
             var hcdTolerance = new Tolerance(hcdMassError, ToleranceUnit.Ppm);
@@ -139,7 +139,7 @@ namespace LiquidBackend.Util
             var spectrumSearchResultList = new List<SpectrumSearchResult>();
             var maxScans = msmsScanNumbers.Count;
 
-            foreach(var scan in msmsScanNumbers)
+            foreach (var scan in msmsScanNumbers)
             {
                 // Lookup the MS/MS Spectrum
                 if (!(lcmsRun.GetSpectrum(scan) is ProductSpectrum MsMsSpectrum))
@@ -185,19 +185,19 @@ namespace LiquidBackend.Util
                 // Get all matching peaks
 
                 //IEnumerable<MsMsSearchUnit> NLSearchUnits = fragments.Where(x=> x.Description.Equals("Neutral Loss")).Select(x => {x.Mz = (msmsPrecursorMz - x.Mz); return x;});
-                var NLSearchUnits = fragments.Where(x => x.Description.Equals("Neutral Loss")).Select(y => new MsMsSearchUnit(msmsPrecursorMz-y.Mz,"Neutral Loss"));
+                var NLSearchUnits = fragments.Where(x => x.Description.Equals("Neutral Loss")).Select(y => new MsMsSearchUnit(msmsPrecursorMz - y.Mz, "Neutral Loss"));
                 var MsMsSearchUnits = PISearchUnits.Concat(NLSearchUnits).ToList();
                 SpectrumSearchResult spectrumSearchResult;
 
                 var hcdSpectrum = MsMsSpectrum.ActivationMethod == ActivationMethod.HCD ? MsMsSpectrum : MatchedSpectrum;
                 var cidSpectrum = MsMsSpectrum.ActivationMethod == ActivationMethod.CID ? MsMsSpectrum : MatchedSpectrum;
 
-                var HcdSearchResultList = hcdSpectrum != null? (from msMsSearchUnit in MsMsSearchUnits
-                                            let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance)
-                                            select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
-                var CidSearchResultList = cidSpectrum != null? (from msMsSearchUnit in MsMsSearchUnits
-                                            let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance)
-                                            select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
+                var HcdSearchResultList = hcdSpectrum != null ? (from msMsSearchUnit in MsMsSearchUnits
+                                                                 let peak = hcdSpectrum.FindPeak(msMsSearchUnit.Mz, hcdTolerance)
+                                                                 select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
+                var CidSearchResultList = cidSpectrum != null ? (from msMsSearchUnit in MsMsSearchUnits
+                                                                 let peak = cidSpectrum.FindPeak(msMsSearchUnit.Mz, cidTolerance)
+                                                                 select new MsMsSearchResult(msMsSearchUnit, peak)).ToList() : new List<MsMsSearchResult>();
                 var SearchResultList = HcdSearchResultList.Concat(CidSearchResultList).ToList();
                 if (precursorSpectrum != null)
                 {
@@ -215,8 +215,8 @@ namespace LiquidBackend.Util
                     };
                 }
 
-                if(hcdSpectrum != null) scanTracker.Add(hcdSpectrum.ScanNum);
-                if(cidSpectrum != null) scanTracker.Add(cidSpectrum.ScanNum);
+                if (hcdSpectrum != null) scanTracker.Add(hcdSpectrum.ScanNum);
+                if (cidSpectrum != null) scanTracker.Add(cidSpectrum.ScanNum);
 
                 if (SearchResultList.Count(x => x.ObservedPeak != null) < minMatches) continue;
                 spectrumSearchResultList.Add(spectrumSearchResult);
