@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liquid", "Liquid\Liquid_with_InformedProteomics.csproj", "{2A5C6782-CA51-4008-992F-6AB299DB8CAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liquid_with_InformedProteomics", "Liquid\Liquid_with_InformedProteomics.csproj", "{2A5C6782-CA51-4008-992F-6AB299DB8CAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiquidBackend", "LiquidBackend\LiquidBackend.csproj", "{2B7130B1-63BF-4348-B959-F01623F16844}"
 EndProject
@@ -22,18 +22,21 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Debug|Any CPU.Build.0 = Debug|x64
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Debug|x64.ActiveCfg = Debug|x64
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Debug|x64.Build.0 = Debug|x64
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Release|Any CPU.ActiveCfg = Release|x64
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Release|x64.ActiveCfg = Release|x64
 		{2A5C6782-CA51-4008-992F-6AB299DB8CAE}.Release|x64.Build.0 = Release|x64
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{2B7130B1-63BF-4348-B959-F01623F16844}.Debug|Any CPU.Build.0 = Debug|x64
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Debug|x64.ActiveCfg = Debug|x64
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Debug|x64.Build.0 = Debug|x64
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Release|Any CPU.ActiveCfg = Release|x64
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Release|x64.ActiveCfg = Release|x64
 		{2B7130B1-63BF-4348-B959-F01623F16844}.Release|x64.Build.0 = Release|x64
 		{54581833-2409-45DF-B80B-D0148260B096}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{54581833-2409-45DF-B80B-D0148260B096}.Debug|Any CPU.Build.0 = Debug|x64
 		{54581833-2409-45DF-B80B-D0148260B096}.Debug|x64.ActiveCfg = Debug|x64
 		{54581833-2409-45DF-B80B-D0148260B096}.Debug|x64.Build.0 = Debug|x64
 		{54581833-2409-45DF-B80B-D0148260B096}.Release|Any CPU.ActiveCfg = Release|x64
