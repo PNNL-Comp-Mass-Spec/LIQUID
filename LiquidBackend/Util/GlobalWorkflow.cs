@@ -316,7 +316,7 @@ namespace LiquidBackend.Util
             var fragScanPairs = GetSortedMsMsScans(lcmsRun);
 
             if (fragScanPairs.Count == 0)
-                throw new SystemException("File has not MS/MS spectra");
+                throw new SystemException("File has no MS/MS spectra");
 
             var scanPairCount = fragScanPairs.Count;
 
@@ -672,6 +672,11 @@ namespace LiquidBackend.Util
 
         private class FragmentationScanComparer : IComparer<FragmentationScanInfo>
         {
+            /// <summary>
+            /// Sort by m/z, then place HCD scans before other scans
+            /// </summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
             public int Compare(FragmentationScanInfo x, FragmentationScanInfo y)
             {
                 if (x.PrecursorMz > y.PrecursorMz)
