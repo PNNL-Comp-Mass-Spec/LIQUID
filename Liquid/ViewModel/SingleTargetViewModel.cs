@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using InformedProteomics.Backend.MassSpecData;
 using LiquidBackend.Domain;
 using LiquidBackend.IO;
@@ -304,42 +305,55 @@ namespace Liquid.ViewModel
 
         public void OnProcessAllTarget(double hcdError, double cidError, FragmentationMode fragmentationMode, int numResultsPerScanToInclude)
         {
-            IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
-
-            // Make sure to only look at targets that match the fragmentation mode
-            var targetsToProcess = LipidTargetList.Where(x => x.LipidTarget.FragmentationMode == fragmentationMode);
-
-            // Run global analysis
-            InitializeSearchResults();
-
-            IEnumerable<IGrouping<double, LipidGroupSearchResult>> resultsGrouped;
-            List<LipidGroupSearchResult> lipidGroupSearchResultList;
-            if (AverageSpec)
+            try
             {
-                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, LcMsRun, hcdError, cidError, ScoreModel);
-                resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum?.IsolationWindow.IsolationWindowTargetMz ?? x.SpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz);
-            }
-            else
-            {
-                lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, LcMsRun, hcdError, cidError, ScoreModel, progress);
-                resultsGrouped = lipidGroupSearchResultList.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum?.ScanNum ?? (double)x.SpectrumSearchResult.CidSpectrum.ScanNum);
-            }
+                IProgress<int> progress = new Progress<int>(ReportGlobalWorkflowProgress);
 
-            // Group results of same scan together
+                // Make sure to only look at targets that match the fragmentation mode
+                var targetsToProcess = LipidTargetList.Where(x => x.LipidTarget.FragmentationMode == fragmentationMode);
 
-            // Grab the result(s) with the best score
-            foreach (var group in resultsGrouped)
-            {
-                var groupOrdered = group.OrderByDescending(x => x.Score).ToList();
+                // Run global analysis
+                InitializeSearchResults();
 
-                for (var i = 0; i < numResultsPerScanToInclude && i < groupOrdered.Count; i++)
+                IEnumerable<IGrouping<double, LipidGroupSearchResult>> resultsGrouped;
+                List<LipidGroupSearchResult> lipidGroupSearchResultList;
+                if (AverageSpec)
                 {
-                    var resultToAdd = groupOrdered[i];
-                    LipidGroupSearchResultList.Add(resultToAdd);
+                    lipidGroupSearchResultList = GlobalWorkflow.RunGlobalWorkflowAvgSpec(targetsToProcess, LcMsRun, hcdError, cidError, ScoreModel);
+                    resultsGrouped = lipidGroupSearchResultList.GroupBy(x =>
+                        x.SpectrumSearchResult.HcdSpectrum?.IsolationWindow.IsolationWindowTargetMz ??
+                        x.SpectrumSearchResult.CidSpectrum.IsolationWindow.IsolationWindowTargetMz);
                 }
+                else
+                {
+                    lipidGroupSearchResultList =
+                        GlobalWorkflow.RunGlobalWorkflow(targetsToProcess, LcMsRun, hcdError, cidError, ScoreModel, progress);
+
+                    resultsGrouped = lipidGroupSearchResultList.GroupBy(x =>
+                        x.SpectrumSearchResult.HcdSpectrum?.ScanNum ?? (double)x.SpectrumSearchResult.CidSpectrum.ScanNum);
+                }
+
+                // Group results of same scan together
+
+                // Grab the result(s) with the best score
+                foreach (var group in resultsGrouped)
+                {
+                    var groupOrdered = group.OrderByDescending(x => x.Score).ToList();
+
+                    for (var i = 0; i < numResultsPerScanToInclude && i < groupOrdered.Count; i++)
+                    {
+                        var resultToAdd = groupOrdered[i];
+                        LipidGroupSearchResultList.Add(resultToAdd);
+                    }
+                }
+
+                OnPropertyChanged("LipidGroupSearchResultList");
+                progress.Report(0);
             }
-            OnPropertyChanged("LipidGroupSearchResultList");
-            progress.Report(0);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception caught: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         public void AddFragment(double mz, string ionType)
