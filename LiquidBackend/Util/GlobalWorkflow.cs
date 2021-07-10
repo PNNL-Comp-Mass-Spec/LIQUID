@@ -320,7 +320,7 @@ namespace LiquidBackend.Util
 
             var scanPairCount = fragScanPairs.Count;
 
-            for (var i = 0; i < scanPairCount; i++ )
+            for (var i = 0; i < scanPairCount; i++)
             {
                 var scanPair = fragScanPairs[i];
 
@@ -618,7 +618,14 @@ namespace LiquidBackend.Util
                     scanGroupScans.Add(scanInfo);
                 }
 
-                scanGroupScans.Sort(sortComparer);
+                if (lcmsRun.MinMsLevel > 1)
+                {
+                    // Do not sort the scans if the dataset only has MS2 and/or MS3 spectra
+                }
+                else
+                {
+                    scanGroupScans.Sort(sortComparer);
+                }
 
                 for (var scanIndex = 0; scanIndex < scanGroupScans.Count; scanIndex++)
                 {
