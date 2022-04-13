@@ -15,10 +15,5 @@ namespace Liquid.OxyPlot
         {
             return true;
         }
-
-        public override OxySize Measure(IRenderContext rc)
-        {
-            return new OxySize(0, 0);
-        }
     }
 }
