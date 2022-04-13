@@ -141,7 +141,7 @@ namespace LiquidBackend.Util
             foreach (var scan in msmsScanNumbers)
             {
                 // Lookup the MS/MS Spectrum
-                if (!(lcmsRun.GetSpectrum(scan) is ProductSpectrum MsMsSpectrum))
+                if (lcmsRun.GetSpectrum(scan) is not ProductSpectrum MsMsSpectrum)
                     continue;
 
                 ProductSpectrum MatchedSpectrum = null;

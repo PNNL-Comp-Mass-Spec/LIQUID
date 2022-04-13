@@ -70,7 +70,7 @@ namespace Liquid.ViewModel
 
         protected void OnYAxisChange(object sender, AxisChangedEventArgs e)
         {
-            if (!(sender is LinearAxis yAxis))
+            if (sender is not LinearAxis yAxis)
                 return;
 
             // Set to use 5 major labels no matter where you are zoomed

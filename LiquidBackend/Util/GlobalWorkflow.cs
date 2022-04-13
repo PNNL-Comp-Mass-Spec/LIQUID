@@ -604,8 +604,7 @@ namespace LiquidBackend.Util
 
                 foreach (var ms2Scan in scanGroup.Value)
                 {
-                    var spectrum = lcmsRun.GetSpectrum(ms2Scan) as ProductSpectrum;
-                    if (spectrum == null)
+                    if (lcmsRun.GetSpectrum(ms2Scan) is not ProductSpectrum spectrum)
                         continue;
 
                     var scanInfo = new FragmentationScanInfo
