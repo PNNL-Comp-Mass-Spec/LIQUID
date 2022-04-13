@@ -1,5 +1,4 @@
-﻿using OxyPlot;
-using OxyPlot.Axes;
+﻿using OxyPlot.Axes;
 
 namespace Liquid.OxyPlot
 {
