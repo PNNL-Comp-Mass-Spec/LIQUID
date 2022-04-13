@@ -1,0 +1,18 @@
+{
+   "description":"<p>LIQUID is a software tool for identifying lipids in LC-MS/MS-based lipidomics data. It is described in publication 'LIQUID: an-open source software for identifying lipids in LC-MS/MS-based lipidomics data' (doi: 10.1093/bioinformatics/btx046)</p>",
+
+   "license":"Apache-2.0",
+
+   "keywords":[
+      "Lipidomics",
+      "Mass spectrometry",
+      "LC-MS/MS",
+      "lipid"
+   ],
+
+   "communities":[
+      {
+         "identifier":"pnnl"
+      }
+   ]
+}
