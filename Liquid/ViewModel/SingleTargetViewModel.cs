@@ -189,12 +189,8 @@ namespace Liquid.ViewModel
             var fileInfo = new FileInfo(fileLocation);
 
             var lipidReader = new LipidMapsDbReader<Lipid>();
-            var lipidList = lipidReader.ReadFile(fileInfo, progress);
 
-            foreach (var lipid in lipidList)
-            {
-                LipidTargetList.Add(lipid);
-            }
+            LipidTargetList.AddRange(lipidReader.ReadFile(fileInfo, progress));
 
             OnPropertyChanged("LipidTargetList");
 
