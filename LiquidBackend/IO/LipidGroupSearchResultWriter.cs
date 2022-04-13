@@ -385,7 +385,7 @@ namespace LiquidBackend.IO
 
                 if (includeObservedAndTheoreticalPeaks)
                 {
-                    const string delim = ";;";
+                    const string delimiter = ";;";
 
                     var allObservedPeaks = new List<string>();
                     foreach (var cidPeak in spectrumSearchResult.MatchingCidResults())
@@ -408,8 +408,8 @@ namespace LiquidBackend.IO
 
                     var allTheoreticalPeaks = lipidTarget.SortedMsMsSearchUnits.Select(x => string.Format("{0},{1}", Math.Round(x.Mz, 4), x.DescriptionForUi));
 
-                    observedPeaks = string.Join(delim, allObservedPeaks);
-                    theoreticalPeaks = string.Join(delim, allTheoreticalPeaks);
+                    observedPeaks = string.Join(delimiter, allObservedPeaks);
+                    theoreticalPeaks = string.Join(delimiter, allTheoreticalPeaks);
                 }
 
                 foreach (var lipid in lipidGroupSearchResult.LipidList)
