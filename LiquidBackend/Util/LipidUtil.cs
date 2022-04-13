@@ -492,23 +492,15 @@ namespace LiquidBackend.Util
             var HexNAc = 0;
             const int DeoxyHex = 0;
 
-            switch (ganglioName[1])
+            NeuAc = ganglioName[1] switch
             {
-                case 'M':
-                    NeuAc = 1;
-                    break;
-                case 'D':
-                    NeuAc = 2;
-                    break;
-                case 'T':
-                    NeuAc = 3;
-                    break;
-                case 'Q':
-                    NeuAc = 4;
-                    break;
-                default:
-                    throw new SystemException(ganglioName[1] + " not a valid indicator of sialic acid residues for ganglioside target " + commonName);
-            }
+                'M' => 1,
+                'D' => 2,
+                'T' => 3,
+                'Q' => 4,
+                _ => throw new SystemException(ganglioName[1] + " not a valid indicator of sialic acid residues for ganglioside target " + commonName)
+            };
+
             switch (ganglioName[2])
             {
                 case '1':
