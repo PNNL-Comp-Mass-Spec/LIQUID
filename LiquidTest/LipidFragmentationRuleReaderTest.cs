@@ -18,9 +18,8 @@ namespace LiquidTest
             const string targetsFilePath = "/Users/leej324/Documents/projects/Liquid/LIQUID_Fragments_February2018_all_rules.txt";
             var targetsFileInfo = new FileInfo(targetsFilePath);
             var lipidFragmentationRuleReader = new LipidFragmentationRuleReaderFromTable<LipidFragmentationRuleFromTable>();
-            var lipidFragmentationRules = lipidFragmentationRuleReader.ReadFile(targetsFileInfo);
 
-            foreach (var rule in lipidFragmentationRules)
+            foreach (var rule in lipidFragmentationRuleReader.ReadFile(targetsFileInfo))
             {
                 Console.WriteLine(rule.GetComposition(3, 4).ToString());
             }
@@ -34,8 +33,7 @@ namespace LiquidTest
             var lipidFragmentationRuleReader = new LipidFragmentationRuleReaderFromTable<LipidFragmentationRuleFromTable>();
             var lipidFragmentationRules = lipidFragmentationRuleReader.ReadFile(targetsFileInfo);
 
-            var fragmentationRules = LipidUtil.GetFragmentationRulesForLipidSubClass("PC", FragmentationMode.Positive, lipidFragmentationRules);
-            foreach (var rule in fragmentationRules)
+            foreach (var rule in LipidUtil.GetFragmentationRulesForLipidSubClass("PC", FragmentationMode.Positive, lipidFragmentationRules))
             {
                 Console.WriteLine(rule.ToString());
                 Console.WriteLine(rule.GetComposition(3, 4).ToString());

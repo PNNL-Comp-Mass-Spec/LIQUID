@@ -19,9 +19,8 @@ namespace LiquidTest
             const string lipidFilePath = @"C:\Users\fuji510\Desktop\LIQUID_REVISED\LIQUID_Subclass_chain_parsing_cleaned.txt";
             var lipidFileInfo = new FileInfo(lipidFilePath);
             var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
-            var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
 
-            foreach (var rule in lipidCompositionRules)
+            foreach (var rule in lipidCompositionRuleReader.ReadFile(lipidFileInfo))
             {
                 Console.WriteLine(rule.ToString());
             }
@@ -44,9 +43,8 @@ namespace LiquidTest
             const string lipidFilePath = @"C:\Users\fuji510\Desktop\LIQUID_REVISED\LIQUID_Subclass_chain_parsing_cleaned.txt";
             var lipidFileInfo = new FileInfo(lipidFilePath);
             var lipidCompositionRuleReader = new LipidCompositionRuleReader<LipidCompositionRule>();
-            var lipidCompositionRules = lipidCompositionRuleReader.ReadFile(lipidFileInfo);
 
-            foreach (var rule in lipidCompositionRules)
+            foreach (var rule in lipidCompositionRuleReader.ReadFile(lipidFileInfo))
             {
                 var newComp = rule.GetComposition(carbons, dBonds);
                 if (newComp.Equals(oldComp))
@@ -131,6 +129,7 @@ namespace LiquidTest
             var lines = File.ReadAllLines(@"C:\Users\leej324\Downloads\LIQUID_UnitTest\Global_August2018_all_updated_ox_POS.txt");
             var numPosTargets = 0;
             var numCorrectPosTargets = 0;
+
             foreach (var line in lines)
             {
                 try

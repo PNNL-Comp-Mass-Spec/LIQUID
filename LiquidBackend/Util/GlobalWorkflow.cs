@@ -175,9 +175,9 @@ namespace LiquidBackend.Util
 
             var ms2scans = lcmsRun.GetScanNumbers(2);
             var ms2spectra = ms2scans.Select(scan => lcmsRun.GetSpectrum(scan) as ProductSpectrum).ToList();
-            var uniqueMz = (from spectrum in ms2spectra select GetMsMsPrecursorMz(spectrum)).ToList().Distinct().ToList();
 
-            foreach (var mz in uniqueMz)
+            // Step through the list of unique m/z values
+            foreach (var mz in (from spectrum in ms2spectra select GetMsMsPrecursorMz(spectrum)).ToList().Distinct())
             {
                 var hcdScans = ms2spectra.Where(x => Math.Abs(GetMsMsPrecursorMz(x) - mz) < float.Epsilon && x.ActivationMethod == ActivationMethod.HCD).Select(x => x.ScanNum).ToList();
                 var summedSpec = lcmsRun.GetSummedSpectrum(hcdScans);
