@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using InformedProteomics.Backend.Data.Composition;
@@ -157,10 +158,10 @@ namespace LiquidTest
                         datasetResults[header].Add(pieces[headerToIndex[header]]);
                     }
 
-                    datasetResults["Pearson Corr Score"].Add(pearsonCorrScore.ToString());
-                    datasetResults["Pearson Corr M-1 Score"].Add(pearsonCorrMinus1Score.ToString());
-                    datasetResults["Cosine Score"].Add(cosineScore.ToString());
-                    datasetResults["Cosine M-1 Score"].Add(cosineMinus1Score.ToString());
+                    datasetResults["Pearson Corr Score"].Add(pearsonCorrScore.ToString(CultureInfo.InvariantCulture));
+                    datasetResults["Pearson Corr M-1 Score"].Add(pearsonCorrMinus1Score.ToString(CultureInfo.InvariantCulture));
+                    datasetResults["Cosine Score"].Add(cosineScore.ToString(CultureInfo.InvariantCulture));
+                    datasetResults["Cosine M-1 Score"].Add(cosineMinus1Score.ToString(CultureInfo.InvariantCulture));
                 }
             }
 
