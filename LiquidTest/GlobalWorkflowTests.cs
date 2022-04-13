@@ -350,7 +350,7 @@ namespace LiquidTest
             }
         }
 
-        private List<LipidGroupSearchResult> GetBestResultPerSpectrum(List<LipidGroupSearchResult> results)
+        private List<LipidGroupSearchResult> GetBestResultPerSpectrum(IEnumerable<LipidGroupSearchResult> results)
         {
             return results.GroupBy(x => x.SpectrumSearchResult.HcdSpectrum?.ScanNum ?? x.SpectrumSearchResult.CidSpectrum.ScanNum)
                           .SelectMany(idGroup => idGroup.OrderByDescending(id => id.Score).Take(1))
