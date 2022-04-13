@@ -322,7 +322,7 @@ namespace LiquidTest
             {
                 sum += entry;
             }
-            var result = (double)sum / (double)percentage.Count * 100;
+            var result = sum / (double)percentage.Count * 100;
             Console.WriteLine("Percent Correct: " + result + "%");
         }
     }
