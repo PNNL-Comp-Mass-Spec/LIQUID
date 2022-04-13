@@ -13,6 +13,8 @@ namespace LiquidBackend.Util
 
     public static class LipidUtil
     {
+        // Ignore Spelling: amine, Coenzyme, ganglioside, glycan, glycosidic, ketene, plasmalogen, sialic, sulfogalactosyl
+
         public static LipidTarget CreateLipidTarget(string commonName, string empiricalFormula, LipidClass lipidClass, FragmentationMode fragmentationMode, IEnumerable<AcylChain> acylChainList)
         {
             var composition = Composition.ParseFromPlainString(empiricalFormula);
@@ -1967,7 +1969,7 @@ namespace LiquidBackend.Util
 
             var fragmentationRules = LipidUtil.GetFragmentationRulesForLipidSubClass(lipidSubClass, fragmentationMode, lipidFragmentationRules);
 
-            foreach (var acylChain in acylChainList)
+            for each (var acylChain in acylChainList)
             {
                 var numCarbons = acylChain.NumCarbons;
                 var numDoubleBonds = acylChain.NumDoubleBonds;
@@ -1975,7 +1977,7 @@ namespace LiquidBackend.Util
                 // Ignore any 0:0 chains
                 if (numCarbons == 0 && numDoubleBonds == 0) continue;
 
-                foreach (var rule in fragmentationRules)
+                for each (var rule in fragmentationRules)
                 {
                     msMsSearchUnitList.Add(rule.GetMsMsSearchUnit(precursorMz, numCarbons, numDoubleBonds, acylChain));
                 }
@@ -2045,7 +2047,8 @@ namespace LiquidBackend.Util
                         peakIndex = i;
                         break;
                     }
-                    if (peakMz <= maxMz)    // find match, move to prev isotope
+
+                    if (peakMz <= maxMz)    // find match, move to previous isotope
                     {
                         var peak = peaks[i];
                         if (observedPeaks[isotopeIndex] == null ||
@@ -2074,7 +2077,8 @@ namespace LiquidBackend.Util
                         peakIndex = i;
                         break;
                     }
-                    if (peakMz >= minMz)    // find match, move to prev isotope
+
+                    if (peakMz >= minMz)    // find match, move to previous isotope
                     {
                         var peak = peaks[i];
                         if (observedPeaks[isotopeIndex] == null ||

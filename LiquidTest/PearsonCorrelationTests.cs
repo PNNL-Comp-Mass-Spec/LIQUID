@@ -298,7 +298,7 @@ namespace LiquidTest
 
             var tolerance = new Tolerance(30, ToleranceUnit.Ppm);
 
-            // Get the values to use to calculate pearson correlation
+            // Get the values to use to calculate Pearson correlation
             var observedPeaks = LipidUtil.GetAllIsotopePeaks(spectrum, composition, tolerance,
                 relativeIntensityThreshold);
             if (observedPeaks == null) Console.WriteLine("Observed peaks is null for scan " + id);

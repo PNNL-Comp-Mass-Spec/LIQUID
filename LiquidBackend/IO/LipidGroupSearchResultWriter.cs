@@ -12,6 +12,8 @@ namespace LiquidBackend.IO
 {
     public static class LipidGroupSearchResultWriter
     {
+        // Ignore Spelling: Num
+
         public static void AddHeaderForScoring(LipidGroupSearchResult lipidGroupSearchResult, TextWriter textWriter)
         {
             var stringBuilder = new StringBuilder();
@@ -257,7 +259,7 @@ namespace LiquidBackend.IO
             textWriter.WriteLine("MTD\tquantification_method\t[, , LIQUID_Analysis, ]");
             textWriter.WriteLine("MTD\tsmall_molecule-quantification_unit\t[PRIDE, PRIDE:0000330, Arbitrary quantification unit, ]");
 
-            // Get the raw/mzml location
+            // Get the raw / mzML location
             textWriter.WriteLine("MTD\tms_run[1]-location\t{0}", rawFileName); //TODO:
             textWriter.WriteLine("MTD\tassay[1]-quantification_reagent\t[MS, MS:1002038, unlabeled sample, ]");
             textWriter.WriteLine("MTD\tassay[1]-ms_run_ref\tms_run[1]");
@@ -313,7 +315,7 @@ namespace LiquidBackend.IO
                     line.AppendFormat("{0}\t", lipidTarget.MzRounded);                                         // calc_mass_to_charge
                     line.Append("1\t");                                                                        // charge
                     line.AppendFormat("{0}\t", spectrumSearchResult.RetentionTime);                            // retention_time
-                    line.Append("null\t");                                                                     // taxid
+                    line.Append("null\t");                                                                     // tax id
                     line.Append("null\t");                                                                     // species
                     line.Append("null\t");                                                                     // database
                     line.Append("null\t");                                                                     // database_version

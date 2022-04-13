@@ -12,6 +12,8 @@ namespace LiquidTest
     [TestFixture]
     public class LipidFragmentationRuleReaderTest
     {
+        // Ignore Spelling: sialic
+
         [Test]
         public void TestLipidFragmentationRuleReader()
         {
@@ -48,7 +50,7 @@ namespace LiquidTest
         {
             var lipidFragmentationRulesList = new List<LipidFragmentationRule>();
 
-            foreach (var rule in lipidFragmentationRules)
+            for each (var rule in lipidFragmentationRules)
             {
                 if (rule.fragmentationMode.Equals(fragmentationMode) &&
                     rule.lpidClass.Equals(lipidClass))
@@ -82,7 +84,7 @@ namespace LiquidTest
             var sialic = commonName.Split('(')[0][1];
             var sugar = commonName.Split('(')[0][0];
 
-            foreach (var rule in lipidFragmentationRules)
+            for each (var rule in lipidFragmentationRules)
             {
                 if (rule.isFromHeader && rule.checkCountOfChains(countOfChains))
                 {
@@ -100,13 +102,13 @@ namespace LiquidTest
                     }
                     else
                     {
-                        foreach (var _idx in rule.targetAcylChainsIndices)
+                        for each (var _idx in rule.targetAcylChainsIndices)
                         {
-                            var idx = _idx - 1;
-                            if (acylChainList.Count > idx)
+                            var index = _idx - 1;
+                            if (acylChainList.Count > index)
                             {
-                                carbons += acylChainList[idx].NumCarbons;
-                                doubleBonds += acylChainList[idx].NumDoubleBonds;
+                                carbons += acylChainList[index].NumCarbons;
+                                doubleBonds += acylChainList[index].NumDoubleBonds;
                             }
                         }
                         var combinedChain = new AcylChain(carbons + ":" + doubleBonds);
@@ -128,7 +130,7 @@ namespace LiquidTest
 
             }
 
-            foreach (var acylChain in acylChainList)
+            for each (var acylChain in acylChainList)
             {
                 var numCarbons = acylChain.NumCarbons;
                 var numDoubleBonds = acylChain.NumDoubleBonds;
@@ -136,7 +138,7 @@ namespace LiquidTest
                 // Ignore any 0:0 chains
                 if (numCarbons == 0 && numDoubleBonds == 0) continue;
 
-                foreach (var rule in lipidFragmentationRules)
+                for each (var rule in lipidFragmentationRules)
                 {
                     if (rule.checkAcylChainConditions(acylChain.AcylChainType.ToString(),
                                                       numCarbons,
@@ -282,7 +284,7 @@ namespace LiquidTest
         //    var lipidTarget = LipidUtil.CreateLipidTarget(commonName, empiricalFormula, fragmentationMode);
         //    var msMsSearchUnitList = LipidUtil.CreateMsMsSearchUnits(lipidTarget.CommonName, lipidTarget.Composition.Mass, lipidTarget.LipidClass, fragmentationMode, lipidTarget.AcylChainList);
         //    Console.WriteLine(commonName + "\t" + empiricalFormula);
-        //    foreach (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
+        //    for each (var msMsSearchUnit in msMsSearchUnitList.OrderBy(x => x.Mz))
         //    {
         //        Console.WriteLine(msMsSearchUnit);
         //    }

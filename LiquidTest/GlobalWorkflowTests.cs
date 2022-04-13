@@ -11,6 +11,8 @@ namespace LiquidTest
 {
     public class GlobalWorkflowTests
     {
+        // Ignore Spelling: Pos, workflow
+
         [Test]
         public void TestGlobalWorkflowPositive()
         {

@@ -12,6 +12,8 @@ namespace LiquidTest
 {
     public class FdrUnitTests
     {
+        // Ignore Spelling: workflow
+
         [OneTimeSetUp]
         public void Setup()
         {
@@ -1086,7 +1088,7 @@ namespace LiquidTest
         }
 
         /// <summary>
-        /// Processing raw files similiar to RunWorkflowAndOutput but expects datasets to have already been copied locally
+        /// Processing raw files similar to RunWorkflowAndOutput but expects datasets to have already been copied locally
         /// </summary>
         /// <param name="targetsFilePath"></param>
         /// <param name="outputFileName"></param>
