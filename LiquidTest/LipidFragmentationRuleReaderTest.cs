@@ -9,10 +9,10 @@ using System.Linq;
 
 namespace LiquidTest
 {
-    [TestFixture()]
+    [TestFixture]
     public class LipidFragmentationRuleReaderTest
     {
-        [Test()]
+        [Test]
         public void TestLipidFragmentationRuleReader()
         {
             const string targetsFilePath = "/Users/leej324/Documents/projects/Liquid/LIQUID_Fragments_February2018_all_rules.txt";
@@ -26,7 +26,7 @@ namespace LiquidTest
             }
         }
 
-        [Test()]
+        [Test]
         public void TestGetFragmentationRulesForLipidSubClass()
         {
             const string targetsFilePath = "/Users/leej324/Documents/projects/Liquid/LIQUID_Fragments_February2018_all_rules.txt";
@@ -195,7 +195,7 @@ namespace LiquidTest
             return oldResults.Equals(newResults);
         }
 
-        [Test()]
+        [Test]
         public void TestGetFragmentationRules()
         {
             const string targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\extract_rules_from_code_equations_fixed.txt";
@@ -214,7 +214,7 @@ namespace LiquidTest
             CheckFragmentaionRules(commonName, empiricalFormula, fragmentationMode, lipidFragmentationRules);
         }
 
-        [Test()]
+        [Test]
         public void TestGetFragmentationRulesForLipidClass()
         {
             const string targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\extract_rules_from_code_equations_fixed.txt";

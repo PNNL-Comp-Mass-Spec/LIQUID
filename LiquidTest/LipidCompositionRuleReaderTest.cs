@@ -57,7 +57,7 @@ namespace LiquidTest
             }
         }
 
-        [Test()]
+        [Test]
         public void TestGetCompositionRulesForCommonName()
         {
             const string targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\LIQUID_composition_13Aug18_JK.txt";
@@ -118,7 +118,7 @@ namespace LiquidTest
             }
         }
 
-        [Test()]
+        [Test]
         public void TestGetCompositionRulesForLipidClass()
         {
             const string targetsFilePath = @"C:\Users\leej324\Downloads\LIQUID_UnitTest\LIQUID_composition_13Aug18_JK.txt";
