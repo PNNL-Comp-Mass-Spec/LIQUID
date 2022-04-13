@@ -4,6 +4,7 @@ using LiquidBackend.Domain;
 using LiquidBackend.Util;
 using OxyPlot;
 using OxyPlot.Axes;
+using OxyPlot.Legends;
 using OxyPlot.Series;
 
 namespace Liquid.ViewModel
@@ -268,10 +269,11 @@ namespace Liquid.ViewModel
                 Title = "Precursor"
             };
             plotModel.IsLegendVisible = true;
-            plotModel.LegendPosition = LegendPosition.TopRight;
-            plotModel.LegendPlacement = LegendPlacement.Inside;
-            plotModel.LegendMargin = 0;
-            plotModel.LegendFontSize = 10;
+            plotModel.Legends.Add(new Legend());
+            plotModel.Legends[0].LegendPosition = LegendPosition.TopRight;
+            plotModel.Legends[0].LegendPlacement = LegendPlacement.Inside;
+            plotModel.Legends[0].LegendMargin = 0;
+            plotModel.Legends[0].LegendFontSize = 10;
 
             double peakCenter = CurrentSpectrumSearchResult.ApexScanNum;
             var localMinScanLc = peakCenter - 500;
