@@ -341,10 +341,9 @@ namespace LiquidTest
                 catch (Exception)
                 {
                     Console.WriteLine("ERROR: Could not process dataset {0}.", datasetName);
-                    using (var streamWriter = new StreamWriter(errorFile, true))
-                    {
-                        streamWriter.WriteLine(datasetName);
-                    }
+
+                    using var streamWriter = new StreamWriter(errorFile, true);
+                    streamWriter.WriteLine(datasetName);
                 }
             }
         }

@@ -539,12 +539,11 @@ namespace LiquidTest
                 }
             }
 
-            using (var writer = new StreamWriter(outputFile))
+            using var writer = new StreamWriter(outputFile);
+
+            foreach (var x in output)
             {
-                foreach (var x in output)
-                {
-                    writer.WriteLine(x);
-                }
+                writer.WriteLine(x);
             }
         }
 
@@ -763,39 +762,38 @@ namespace LiquidTest
             var extension = Path.GetExtension(filePath);
             var outputPath = Path.Combine(directory, string.Format("{0}_truncated{1}", fileName, extension));
 
-            using (var writer = new StreamWriter(outputPath))
+            using var writer = new StreamWriter(outputPath);
+
+            // write headers
+            foreach (var header in columnHeaders)
             {
-                // write headers
+                writer.Write(header+"\t");
+            }
+
+            writer.WriteLine();
+
+            var headerDict = new Dictionary<string, int>();
+            var lineCount = 0;
+            foreach (var line in File.ReadLines(filePath))
+            {
+                var parts = line.Split('\t');
+
+                if (lineCount++ == 0)
+                { // store indices of headers in file
+                    for (var i = 0; i < parts.Length; i++)
+                    {
+                        headerDict.Add(parts[i], i);
+                    }
+                    continue;
+                }
+
                 foreach (var header in columnHeaders)
                 {
-                    writer.Write(header+"\t");
+                    var value = parts[headerDict[header]];
+                    writer.Write(value+"\t");
                 }
 
                 writer.WriteLine();
-
-                var headerDict = new Dictionary<string, int>();
-                var lineCount = 0;
-                foreach (var line in File.ReadLines(filePath))
-                {
-                    var parts = line.Split('\t');
-
-                    if (lineCount++ == 0)
-                    {   // store indices of headers in file
-                        for (var i = 0; i < parts.Length; i++)
-                        {
-                            headerDict.Add(parts[i], i);
-                        }
-                        continue;
-                    }
-
-                    foreach (var header in columnHeaders)
-                    {
-                        var value = parts[headerDict[header]];
-                        writer.Write(value+"\t");
-                    }
-
-                    writer.WriteLine();
-                }
             }
         }
 
