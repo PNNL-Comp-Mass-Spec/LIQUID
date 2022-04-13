@@ -448,7 +448,7 @@ namespace LiquidTest
             var subclasses = new Dictionary<string, List<string>>();
 
             using var reader = new StreamReader(new FileStream(inFilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-            
+
             // Read the header
             var header = reader.ReadLine();
 

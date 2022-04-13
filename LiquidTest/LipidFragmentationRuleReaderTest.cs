@@ -61,7 +61,7 @@ namespace LiquidTest
 
             return lipidFragmentationRulesList;
         }
-        
+
 
         public static List<MsMsSearchUnit> CreateMsMsSearchUnitsFromFragmentationRules(
             string commonName,

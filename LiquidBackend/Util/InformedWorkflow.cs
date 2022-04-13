@@ -54,7 +54,6 @@ namespace LiquidBackend.Util
             {
                 var scanPair = fragScanPairs[i];
 
-
                 ProductSpectrum firstMsMsSpectrum;
                 ProductSpectrum secondMsMsSpectrum;
                 if (scanPair.HasTwoScans)
